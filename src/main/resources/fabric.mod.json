@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "nether-archives",
+	"id": "netherarchives",
 	"version": "${version}",
 	"name": "Nether Archives",
 	"description": "This is an example description! Tell everyone what your mod is about!",
@@ -12,7 +12,7 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/nether-archives/icon.png",
+	"icon": "assets/netherarchives/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -35,9 +35,9 @@
 		]
 	},
 	"mixins": [
-		"nether-archives.mixins.json",
+		"netherarchives.mixins.json",
 		{
-			"config": "nether-archives.client.mixins.json",
+			"config": "netherarchives.client.mixins.json",
 			"environment": "client"
 		}
 	],

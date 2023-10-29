@@ -23,7 +23,7 @@ loom {
     splitEnvironmentSourceSets()
 
 	mods {
-		"nether-archives" {
+		"netherarchives" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
@@ -34,8 +34,9 @@ loom {
 			inherit server
 			name "Data Generation"
 			vmArg "-Dfabric-api.datagen"
+			vmArg "-Dfabric-api.datagen.strict-validation"
 			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-			vmArg "-Dfabric-api.datagen.modid=nether-archives"
+			vmArg "-Dfabric-api.datagen.modid=netherarchives"
  
 			runDir "build/datagen"
 		}
