@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "netherarchives:magnetite"
+    "netherarchives:magnetite",
+    "netherarchives:smoldering_magnetite"
   ]
 }

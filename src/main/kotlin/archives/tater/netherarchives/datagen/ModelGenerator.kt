@@ -10,6 +10,7 @@ class ModelGenerator(generator: FabricDataOutput): FabricModelProvider(generator
 
     override fun generateBlockStateModels(blockStateModelGenerator: BlockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.MAGNETITE)
+        blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SMOLDERING_MAGNETITE)
     }
 
     override fun generateItemModels(itemModelGenerator: ItemModelGenerator) {

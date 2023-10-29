@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 object NetherArchives : ModInitializer {
     const val NAMESPACE = "netherarchives"
 
-    private val logger = LoggerFactory.getLogger(NAMESPACE)
+    val logger = LoggerFactory.getLogger(NAMESPACE)
 
     override fun onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
