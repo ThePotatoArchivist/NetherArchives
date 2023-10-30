@@ -10,7 +10,6 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemGroups
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 
@@ -45,7 +44,7 @@ object NetherArchivesBlocks {
         BlockItem(SMOLDERING_MAGNETITE, FabricItemSettings())
     )
 
-    fun registerItems() {
+    fun registerItemGroups() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register {content ->
             content.add(MAGNETITE_ITEM)
             content.add(SMOLDERING_MAGNETITE_ITEM)

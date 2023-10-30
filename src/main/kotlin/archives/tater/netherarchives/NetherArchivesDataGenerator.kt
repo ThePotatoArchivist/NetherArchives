@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 
 object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
 	override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
-		val pack = fabricDataGenerator.createPack().apply {
+		fabricDataGenerator.createPack().apply {
 			addProvider(::ModelGenerator)
 			addProvider(::BlockTagGenerator)
 			addProvider(::BlockLootTableGenerator)
