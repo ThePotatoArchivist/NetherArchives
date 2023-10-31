@@ -20,8 +20,8 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .pattern("#X#")
             .pattern(" # ")
             .input('#', Items.IRON_INGOT)
-            .input('X', NetherArchivesBlocks.MAGNETITE_ITEM)
-            .criterion(hasItem(NetherArchivesBlocks.MAGNETITE_ITEM), conditionsFromItem(NetherArchivesBlocks.MAGNETITE_ITEM))
+            .input('X', NetherArchivesItems.MAGNETITE)
+            .criterion(hasItem(NetherArchivesItems.MAGNETITE), conditionsFromItem(NetherArchivesItems.MAGNETITE))
             .offerTo(exporter)
     }
 }
