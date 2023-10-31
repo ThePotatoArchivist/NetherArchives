@@ -1,6 +1,5 @@
 package archives.tater.netherarchives.mixin;
 
-import archives.tater.netherarchives.item.BurnedBlockItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.ItemEntity;
