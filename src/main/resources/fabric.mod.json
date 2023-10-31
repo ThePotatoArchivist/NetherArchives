@@ -1,54 +1,54 @@
 {
-	"schemaVersion": 1,
-	"id": "netherarchives",
-	"version": "${version}",
-	"name": "Nether Archives",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/netherarchives/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			{
-				"value": "archives.tater.netherarchives.NetherArchives",
-				"adapter": "kotlin"
-			}
-		],
-		"client": [
-			{
-				"value": "archives.tater.netherarchives.NetherArchivesClient",
-				"adapter": "kotlin"
-			}
-		],
-		"fabric-datagen": [
-			{
-				"value": "archives.tater.netherarchives.NetherArchivesDataGenerator",
-				"adapter": "kotlin"
-			}
-		]
-	},
-	"mixins": [
-		"netherarchives.mixins.json",
-		{
-			"config": "netherarchives.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.14.23",
-		"minecraft": "~1.20.2",
-		"java": ">=17",
-		"fabric-api": "*",
-		"fabric-language-kotlin": ">=1.9.10"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "schemaVersion": 1,
+  "id": "netherarchives",
+  "version": "${version}",
+  "name": "Nether Archives",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/netherarchives/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "value": "archives.tater.netherarchives.NetherArchives",
+        "adapter": "kotlin"
+      }
+    ],
+    "client": [
+      {
+        "value": "archives.tater.netherarchives.NetherArchivesClient",
+        "adapter": "kotlin"
+      }
+    ],
+    "fabric-datagen": [
+      {
+        "value": "archives.tater.netherarchives.NetherArchivesDataGenerator",
+        "adapter": "kotlin"
+      }
+    ]
+  },
+  "mixins": [
+    "netherarchives.mixins.json",
+    {
+      "config": "netherarchives.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.23",
+    "minecraft": "~1.20.2",
+    "java": ">=17",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=1.9.10"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
 }

@@ -12,21 +12,22 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
 
-class BlockTagGenerator(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) : FabricTagProvider.BlockTagProvider(output, completableFuture) {
-   companion object {
-      private val SHOVEL_MINEABLE: TagKey<Block> =
-         TagKey.of(RegistryKeys.BLOCK, Identifier("minecraft", "mineable/shovel"))
+class BlockTagGenerator(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    FabricTagProvider.BlockTagProvider(output, completableFuture) {
+    companion object {
+        private val SHOVEL_MINEABLE: TagKey<Block> =
+            TagKey.of(RegistryKeys.BLOCK, Identifier("minecraft", "mineable/shovel"))
 
-      val MAGNETIC: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "magnetic"))
-   }
+        val MAGNETIC: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "magnetic"))
+    }
 
-   override fun configure(arg: RegistryWrapper.WrapperLookup) {
-      getOrCreateTagBuilder(SHOVEL_MINEABLE).add(
-         NetherArchivesBlocks.MAGNETITE,
-         NetherArchivesBlocks.SMOLDERING_MAGNETITE
-      )
-      getOrCreateTagBuilder(MAGNETIC).add(
-         Blocks.LODESTONE
-      )
-   }
+    override fun configure(arg: RegistryWrapper.WrapperLookup) {
+        getOrCreateTagBuilder(SHOVEL_MINEABLE).add(
+            NetherArchivesBlocks.MAGNETITE,
+            NetherArchivesBlocks.SMOLDERING_MAGNETITE
+        )
+        getOrCreateTagBuilder(MAGNETIC).add(
+            Blocks.LODESTONE
+        )
+    }
 }

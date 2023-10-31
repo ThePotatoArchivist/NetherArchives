@@ -45,7 +45,7 @@ object NetherArchivesBlocks {
     )
 
     fun registerItemGroups() {
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register {content ->
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register { content ->
             content.add(MAGNETITE_ITEM)
             content.add(SMOLDERING_MAGNETITE_ITEM)
         }

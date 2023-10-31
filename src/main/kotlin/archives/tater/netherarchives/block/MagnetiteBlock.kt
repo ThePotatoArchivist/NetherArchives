@@ -2,7 +2,9 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.BlockTagGenerator
-import net.minecraft.block.*
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
+import net.minecraft.block.FallingBlock
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.server.world.ServerWorld
@@ -25,7 +27,7 @@ class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()
         }
 
         private fun updateDistanceFromLodestone(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
-            val minDistance = Direction.entries.minOf { getDistanceFromLodestone(world.getBlockState(pos.offset(it)))}
+            val minDistance = Direction.entries.minOf { getDistanceFromLodestone(world.getBlockState(pos.offset(it))) }
             NetherArchives.logger.debug("distance: $minDistance")
             return state.with(DISTANCE, if (minDistance < 7) minDistance + 1 else 7)
         }
@@ -44,8 +46,8 @@ class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()
     @Suppress("OVERRIDE_DEPRECATION")
     override fun randomTick(state: BlockState?, world: ServerWorld, pos: BlockPos, random: Random?) {
         if (Direction.entries.any {
-            world.getFluidState(pos.offset(it)).isIn(FluidTags.LAVA)
-        }) {
+                world.getFluidState(pos.offset(it)).isIn(FluidTags.LAVA)
+            }) {
             world.setBlockState(pos, NetherArchivesBlocks.SMOLDERING_MAGNETITE.defaultState)
         }
     }
