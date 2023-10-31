@@ -3,6 +3,7 @@
   "package": "archives.tater.netherarchives.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+	  "BlockItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
