@@ -29,7 +29,7 @@
     ],
     "fabric-datagen": [
       {
-        "value": "archives.tater.netherarchives.NetherArchivesDataGenerator",
+        "value": "archives.tater.netherarchives.datagen.NetherArchivesDataGenerator",
         "adapter": "kotlin"
       }
     ]
