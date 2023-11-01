@@ -21,6 +21,8 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
         private val NEEDS_STONE_TOOL: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier("minecraft", "needs_stone_tool"))
 
         val MAGNETIC: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "magnetic"))
+
+        val BLAZE_FIRE_TARGET: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "blaze_fire_target"))
     }
 
     override fun configure(arg: RegistryWrapper.WrapperLookup) {
@@ -34,5 +36,6 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
         getOrCreateTagBuilder(MAGNETIC).add(
             Blocks.LODESTONE
         )
+        getOrCreateTagBuilder(BLAZE_FIRE_TARGET)
     }
 }

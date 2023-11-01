@@ -4,6 +4,7 @@ import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
@@ -29,7 +30,19 @@ object NetherArchivesBlocks {
         )
     )
 
-    fun register() {
-    }
+    val BLAZE_FIRE: Block = Registry.register(
+        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "blaze_fire"), BlazeFireBlock(
+            FabricBlockSettings.create()
+                .replaceable()
+                .noCollision()
+                .breakInstantly()
+                .luminance { 15 }
+                .sounds(BlockSoundGroup.WOOL)
+                .pistonBehavior(PistonBehavior.DESTROY)
+                .nonOpaque()
+        )
+    )
+
+    fun register() {}
 
 }
