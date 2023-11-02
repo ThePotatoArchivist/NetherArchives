@@ -21,7 +21,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     companion object {
         val AGE: IntProperty = Properties.AGE_15
 
-        private fun getFireTickDelay(random: Random) = 30 + random.nextInt(10)
+        private fun getFireTickDelay(random: Random) = 10 + random.nextInt(10)
 
     }
 
@@ -62,35 +62,33 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         world.scheduleBlockTick(pos, this, getFireTickDelay(world.random))
         if (!world.gameRules.getBoolean(GameRules.DO_FIRE_TICK)) return
 
-        val blockState = world.getBlockState(pos.down())
-        val infiniburn = blockState.isIn(world.dimension.infiniburn())
+        val blockBelow = world.getBlockState(pos.down())
+        val infiniburn = blockBelow.isIn(world.dimension.infiniburn())
         val age = state.get(AGE);
         
-        if (!infiniburn && world.isRaining && random.nextFloat() < 0.2f + age * 0.03f) {
+        if (!infiniburn && world.isRaining && random.nextFloat() < 0.2f + age * 0.015f) {
             world.removeBlock(pos, false)
             return
         }
         
         val newAge = (age + random.nextInt(3) / 2).coerceAtMost(15)
 
-        NetherArchives.logger.info("Age: {}", newAge)
-        
         if (age != newAge) {
             val newState = state.with(AGE, newAge)
             world.setBlockState(pos, newState, Block.NO_REDRAW)
         }
         
-        if (!infiniburn) {
-            if (!canPlaceAt(state, world, pos) || age > 3) {
-                world.removeBlock(pos, false)
-                return
-            }
-            if (age == 15 && random.nextInt(4) == 0 && !isFlammable(blockState)) {
-                world.removeBlock(pos, false)
-                return
+        if (!infiniburn && !canPlaceAt(state, world, pos) || age > 6) {
+            world.removeBlock(pos, false)
+            return;
+        }
+
+        BlockPos.iterateOutwards(pos, 1, 1, 1).forEach {
+            if (world.getBlockState(it).block is BlazePowderBlock && world.random.nextFloat() > 0.5) {
+                world.setBlockState(it, this.defaultState)
             }
         }
-        
+
     }
 
     @Suppress("OVERRIDE_DEPRECATION")
