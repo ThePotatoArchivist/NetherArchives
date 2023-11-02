@@ -54,6 +54,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.MAGNETITE)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SMOLDERING_MAGNETITE)
         registerBlazeFire(blockStateModelGenerator)
+        blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_POWDER_BLOCK)
     }
 
 

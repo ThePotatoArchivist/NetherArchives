@@ -1,16 +1,20 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.datagen.BlockTagGenerator
+import archives.tater.netherarchives.NetherArchives
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.state.StateManager
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.GameRules
+import net.minecraft.world.World
+import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
 class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
@@ -24,8 +28,33 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     init {
         defaultState = stateManager.defaultState.with(AGE, 0);
     }
-    
+
+    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+        builder.add(AGE)
+    }
+
     override fun isFlammable(state: BlockState?) = true
+
+    @Suppress("OVERRIDE_DEPRECATION")
+    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
+        val blockPos = pos.down()
+        return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, Direction.UP)
+    }
+
+    @Suppress("OVERRIDE_DEPRECATION")
+    override fun getStateForNeighborUpdate(
+        state: BlockState,
+        direction: Direction,
+        neighborState: BlockState,
+        world: WorldAccess,
+        pos: BlockPos,
+        neighborPos: BlockPos
+    ): BlockState {
+        if (canPlaceAt(state, world, pos)) {
+            return state;
+        }
+        return Blocks.AIR.defaultState
+    }
 
     // Copied from FireBlock
     @Suppress("OVERRIDE_DEPRECATION")
@@ -42,7 +71,9 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             return
         }
         
-        val newAge = 15.coerceAtMost(age + random.nextInt(3) / 2)
+        val newAge = (age + random.nextInt(3) / 2).coerceAtMost(15)
+
+        NetherArchives.logger.info("Age: {}", newAge)
         
         if (age != newAge) {
             val newState = state.with(AGE, newAge)
@@ -50,7 +81,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         }
         
         if (!infiniburn) {
-            if (!world.getBlockState(pos).isSideSolidFullSquare(world, pos, Direction.UP) || age > 3) {
+            if (!canPlaceAt(state, world, pos) || age > 3) {
                 world.removeBlock(pos, false)
                 return
             }
@@ -60,6 +91,18 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             }
         }
         
+    }
+
+    @Suppress("OVERRIDE_DEPRECATION")
+    override fun onBlockAdded(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        oldState: BlockState,
+        notify: Boolean
+    ) {
+        super.onBlockAdded(state, world, pos, oldState, notify)
+        world.scheduleBlockTick(pos, this, getFireTickDelay(world.random))
     }
 
 }

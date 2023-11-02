@@ -17,11 +17,11 @@ class SmolderingMagnetiteBlock(settings: Settings) : Block(settings.ticksRandoml
     override fun hasRandomTicks(state: BlockState?) = true
 
     @Suppress("OVERRIDE_DEPRECATION")
-    override fun randomTick(state: BlockState?, world: ServerWorld, pos: BlockPos?, random: Random?) {
-        if (BlockPos.iterateOutwards(pos, 2, 2, 2).none {
-                world.getFluidState(it).isIn(FluidTags.LAVA)
+    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
+        if (Direction.entries.none {
+                world.getFluidState(pos.offset(it)).isIn(FluidTags.LAVA)
             }) {
-            world.setBlockState(pos, NetherArchivesBlocks.MAGNETITE.defaultState, FORCE_STATE)
+            world.setBlockState(pos, NetherArchivesBlocks.MAGNETITE.defaultState)
         }
 
     }

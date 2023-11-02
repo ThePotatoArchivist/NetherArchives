@@ -30,6 +30,7 @@ object NetherArchivesBlocks {
         )
     )
 
+    @JvmField
     val BLAZE_FIRE: Block = Registry.register(
         Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "blaze_fire"), BlazeFireBlock(
             FabricBlockSettings.create()
@@ -38,6 +39,17 @@ object NetherArchivesBlocks {
                 .breakInstantly()
                 .luminance { 15 }
                 .sounds(BlockSoundGroup.WOOL)
+                .pistonBehavior(PistonBehavior.DESTROY)
+                .nonOpaque()
+        )
+    )
+
+    val BLAZE_POWDER_BLOCK: Block = Registry.register(
+        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "blaze_powder"), BlazePowderBlock(
+            FabricBlockSettings.create()
+                .replaceable()
+                .noCollision()
+                .sounds(BlockSoundGroup.SAND)
                 .pistonBehavior(PistonBehavior.DESTROY)
                 .nonOpaque()
         )
