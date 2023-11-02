@@ -5,7 +5,8 @@
   "mixins": [
     "AbstractFireBlockMixin",
     "BlockItemMixin",
-    "FlintAndSteelItemMixin"
+    "FlintAndSteelItemMixin",
+    "ItemsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
