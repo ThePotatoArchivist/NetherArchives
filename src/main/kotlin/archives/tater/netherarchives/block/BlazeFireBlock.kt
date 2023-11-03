@@ -1,6 +1,5 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.NetherArchives
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -78,7 +77,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             world.setBlockState(pos, newState, Block.NO_REDRAW)
         }
         
-        if (!infiniburn && !canPlaceAt(state, world, pos) || age > 6) {
+        if (!infiniburn && (!canPlaceAt(state, world, pos) || age > 6)) {
             world.removeBlock(pos, false)
             return;
         }
