@@ -4,7 +4,6 @@ import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
-import net.minecraft.block.Blocks
 import net.minecraft.data.client.*
 import net.minecraft.data.client.VariantSettings.Rotation
 import net.minecraft.util.Identifier
@@ -54,12 +53,13 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.MAGNETITE)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SMOLDERING_MAGNETITE)
         registerBlazeFire(blockStateModelGenerator)
-        blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_POWDER_BLOCK)
+        blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
     }
 
 
     override fun generateItemModels(itemModelGenerator: ItemModelGenerator) {
 //        itemModelGenerator.register(NetherArchives.MAGNETITE_ITEM, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.IRON_SLAG, Models.GENERATED)
+        itemModelGenerator.register(NetherArchivesItems.BLAZE_DUST, Models.GENERATED)
     }
 }

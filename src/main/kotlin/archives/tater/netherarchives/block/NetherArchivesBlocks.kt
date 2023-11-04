@@ -45,8 +45,8 @@ object NetherArchivesBlocks {
     )
 
     @JvmField
-    val BLAZE_POWDER_BLOCK: Block = Registry.register(
-        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "blaze_powder"), BlazePowderBlock(
+    val BLAZE_DUST: Block = Registry.register(
+        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "blaze_dust"), BlazePowderBlock(
             FabricBlockSettings.create()
                 .replaceable()
                 .noCollision()

@@ -1,8 +1,8 @@
 {
   "ambientocclusion": false,
   "textures": {
-    "particle": "netherarchives:block/blaze_powder",
-    "line": "netherarchives:block/blaze_powder"
+    "particle": "netherarchives:block/blaze_dust",
+    "line": "netherarchives:block/blaze_dust"
   },
   "elements": [
     {

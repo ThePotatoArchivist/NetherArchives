@@ -1,6 +1,5 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
@@ -23,5 +22,7 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .input('X', NetherArchivesItems.MAGNETITE)
             .criterion(hasItem(NetherArchivesItems.MAGNETITE), conditionsFromItem(NetherArchivesItems.MAGNETITE))
             .offerTo(exporter)
+
+        RecipeProvider.offerShapelessRecipe(exporter, NetherArchivesItems.BLAZE_DUST, Items.BLAZE_POWDER, null, 4)
     }
 }

@@ -3,10 +3,8 @@
   "package": "archives.tater.netherarchives.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AbstractFireBlockMixin",
     "BlockItemMixin",
     "FlintAndSteelItemMixin",
-    "ItemsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
