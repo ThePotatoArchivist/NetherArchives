@@ -11,6 +11,8 @@ class EnglishLangGenerator(output: FabricDataOutput) : FabricLanguageProvider(ou
             add(NetherArchivesBlocks.MAGNETITE, "Magnetite")
             add(NetherArchivesBlocks.SMOLDERING_MAGNETITE, "Smoldering Magnetite")
             add(NetherArchivesItems.IRON_SLAG, "Iron Slag")
+            add(NetherArchivesBlocks.ROTTEN_FLESH, "Rotten Flesh Block")
+            add(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH, "Fermented Rotten Flesh Block")
         }
     }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "netherarchives:block/rotten_flesh_stage9"
+  }
+}

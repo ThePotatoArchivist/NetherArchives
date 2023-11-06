@@ -18,9 +18,14 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
         private val SHOVEL_MINEABLE: TagKey<Block> =
             TagKey.of(RegistryKeys.BLOCK, Identifier("minecraft", "mineable/shovel"))
 
+        private val HOE_MINEABLE: TagKey<Block> =
+            TagKey.of(RegistryKeys.BLOCK, Identifier("minecraft", "mineable/hoe"))
+
         private val NEEDS_STONE_TOOL: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier("minecraft", "needs_stone_tool"))
 
         val MAGNETIC: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "magnetic"))
+
+        val ROTTEN_FLESH_FERMENTER: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "rotten_flesh_fermenter"))
     }
 
     override fun configure(arg: RegistryWrapper.WrapperLookup) {
@@ -28,11 +33,19 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             NetherArchivesBlocks.MAGNETITE,
             NetherArchivesBlocks.SMOLDERING_MAGNETITE
         )
+        getOrCreateTagBuilder(HOE_MINEABLE).add(
+            NetherArchivesBlocks.ROTTEN_FLESH,
+            NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH
+        )
         getOrCreateTagBuilder(NEEDS_STONE_TOOL).add(
             NetherArchivesBlocks.SMOLDERING_MAGNETITE
         )
         getOrCreateTagBuilder(MAGNETIC).add(
             Blocks.LODESTONE
+        )
+        getOrCreateTagBuilder(ROTTEN_FLESH_FERMENTER).add(
+            Blocks.SOUL_FIRE,
+            Blocks.SOUL_CAMPFIRE
         )
     }
 }
