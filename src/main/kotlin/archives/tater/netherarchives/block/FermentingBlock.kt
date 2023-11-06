@@ -15,10 +15,9 @@ class FermentingBlock(
     private val fermentingTag: TagKey<Block>,
     private val fermentingChance: Float,
     private val resultBlock: Block, settings: Settings,
-    private val maxAge: Int = 15
 ): Block(settings.ticksRandomly()) {
     companion object {
-        val AGE: IntProperty = Properties.AGE_15
+        val AGE: IntProperty = Properties.AGE_7
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
@@ -31,7 +30,7 @@ class FermentingBlock(
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         if (!overValidBlock(world, pos)) return
         if (random.nextFloat() > fermentingChance) return
-        if (state.get(AGE) < maxAge) {
+        if (state.get(AGE) < 7) {
             world.setBlockState(pos, state.with(AGE, state.get(AGE) + 1))
             return
         }

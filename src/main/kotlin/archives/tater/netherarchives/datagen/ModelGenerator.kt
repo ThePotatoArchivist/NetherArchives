@@ -27,7 +27,6 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
     }
 
     override fun generateItemModels(itemModelGenerator: ItemModelGenerator) {
-//        itemModelGenerator.register(NetherArchives.MAGNETITE_ITEM, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.IRON_SLAG, Models.GENERATED)
     }
 }
