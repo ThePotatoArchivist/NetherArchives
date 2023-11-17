@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "netherarchives:block/fermented_rotten_flesh"
+  }
+}
