@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "netherarchives:rotten_flesh"
+              "minecraft:rotten_flesh"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:rotten_flesh"
+        "recipe": "netherarchives:rotten_flesh_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "netherarchives:rotten_flesh"
+      "netherarchives:rotten_flesh_block"
     ]
   },
   "sends_telemetry_event": false

@@ -55,17 +55,17 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SMOLDERING_MAGNETITE)
         registerBlazeFire(blockStateModelGenerator)
         blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
-        blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH)
+        blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
 
 
         val blockStateVariantMap = BlockStateVariantMap.create(FermentingBlock.AGE).register {
             val suffix = if(it == 0) "" else "_stage$it"
-            val textureMap: TextureMap = TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH, suffix))
+            val textureMap: TextureMap = TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix))
             val identifier: Identifier =
-                Models.CUBE_ALL.upload(NetherArchivesBlocks.ROTTEN_FLESH, suffix, textureMap, blockStateModelGenerator.modelCollector)
+                Models.CUBE_ALL.upload(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix, textureMap, blockStateModelGenerator.modelCollector)
             BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
         }
-        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH).coordinate(blockStateVariantMap))
+        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).coordinate(blockStateVariantMap))
     }
 
 

@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "netherarchives:block/rotten_flesh_block"
+    },
+    "age=1": {
+      "model": "netherarchives:block/rotten_flesh_block_stage1"
+    },
+    "age=2": {
+      "model": "netherarchives:block/rotten_flesh_block_stage2"
+    },
+    "age=3": {
+      "model": "netherarchives:block/rotten_flesh_block_stage3"
+    },
+    "age=4": {
+      "model": "netherarchives:block/rotten_flesh_block_stage4"
+    },
+    "age=5": {
+      "model": "netherarchives:block/rotten_flesh_block_stage5"
+    },
+    "age=6": {
+      "model": "netherarchives:block/rotten_flesh_block_stage6"
+    },
+    "age=7": {
+      "model": "netherarchives:block/rotten_flesh_block_stage7"
+    }
+  }
+}

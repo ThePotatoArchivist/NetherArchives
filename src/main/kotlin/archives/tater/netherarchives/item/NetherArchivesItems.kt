@@ -26,16 +26,16 @@ object NetherArchivesItems {
         BlockItem(NetherArchivesBlocks.SMOLDERING_MAGNETITE, FabricItemSettings())
     )
 
-    val ROTTEN_FLESH: BlockItem = Registry.register(
+    val ROTTEN_FLESH_BLOCK: BlockItem = Registry.register(
         Registries.ITEM,
-        Identifier(NetherArchives.NAMESPACE, "rotten_flesh"),
-        BlockItem(NetherArchivesBlocks.ROTTEN_FLESH, FabricItemSettings())
+        Identifier(NetherArchives.NAMESPACE, "rotten_flesh_block"),
+        BlockItem(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, FabricItemSettings())
     )
 
-    val FERMENTED_ROTTEN_FLESH: BlockItem = Registry.register(
+    val FERMENTED_ROTTEN_FLESH_BLOCK: BlockItem = Registry.register(
         Registries.ITEM,
-        Identifier(NetherArchives.NAMESPACE, "fermented_rotten_flesh"),
-        BlockItem(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH, FabricItemSettings())
+        Identifier(NetherArchives.NAMESPACE, "fermented_rotten_flesh_block"),
+        BlockItem(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, FabricItemSettings())
     )
 
     val IRON_SLAG: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "iron_slag"), Item(FabricItemSettings()))
@@ -49,8 +49,8 @@ object NetherArchivesItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register {
             it.add(MAGNETITE)
             it.add(SMOLDERING_MAGNETITE)
-            it.add(ROTTEN_FLESH)
-            it.add(FERMENTED_ROTTEN_FLESH)
+            it.add(ROTTEN_FLESH_BLOCK)
+            it.add(FERMENTED_ROTTEN_FLESH_BLOCK)
         }
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register {
             it.add(BLAZE_DUST)

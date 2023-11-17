@@ -19,9 +19,10 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 public class EntityRenderDispatcherMixin {
 
     @Unique
-    @SuppressWarnings("DEPRECATION")
+    @SuppressWarnings("deprecation")
     private static final SpriteIdentifier BLAZE_FIRE_0 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(NetherArchives.NAMESPACE, "block/blaze_fire_0"));
     @Unique
+    @SuppressWarnings("deprecation")
     private static final SpriteIdentifier BLAZE_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(NetherArchives.NAMESPACE, "block/blaze_fire_1"));
 
     @ModifyVariable(

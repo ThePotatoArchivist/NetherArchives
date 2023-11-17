@@ -24,9 +24,9 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .criterion(hasItem(NetherArchivesItems.MAGNETITE), conditionsFromItem(NetherArchivesItems.MAGNETITE))
             .offerTo(exporter)
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, NetherArchivesItems.ROTTEN_FLESH).input(Items.ROTTEN_FLESH, 9)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, NetherArchivesItems.ROTTEN_FLESH_BLOCK)
+            .input(Items.ROTTEN_FLESH, 9)
             .criterion(hasItem(Items.ROTTEN_FLESH), conditionsFromItem(Items.ROTTEN_FLESH))
-            .criterion(hasItem(NetherArchivesItems.ROTTEN_FLESH), conditionsFromItem(NetherArchivesItems.ROTTEN_FLESH))
             .offerTo(exporter);
 
         RecipeProvider.offerShapelessRecipe(exporter, NetherArchivesItems.BLAZE_DUST, Items.BLAZE_POWDER, null, 4)

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "netherarchives:rotten_flesh"
+          "name": "netherarchives:rotten_flesh_block"
         }
       ],
       "rolls": 1.0

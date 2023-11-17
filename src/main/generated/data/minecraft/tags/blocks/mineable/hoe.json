@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "netherarchives:rotten_flesh",
-    "netherarchives:fermented_rotten_flesh"
+    "netherarchives:rotten_flesh_block",
+    "netherarchives:fermented_rotten_flesh_block"
   ]
 }

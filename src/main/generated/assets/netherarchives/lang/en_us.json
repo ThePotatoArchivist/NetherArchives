@@ -1,8 +1,8 @@
 {
   "block.netherarchives.blaze_dust": "Blaze Dust",
-  "block.netherarchives.fermented_rotten_flesh": "Fermented Rotten Flesh Block",
+  "block.netherarchives.fermented_rotten_flesh_block": "Fermented Rotten Flesh Block",
   "block.netherarchives.magnetite": "Magnetite",
-  "block.netherarchives.rotten_flesh": "Rotten Flesh Block",
+  "block.netherarchives.rotten_flesh_block": "Rotten Flesh Block",
   "block.netherarchives.smoldering_magnetite": "Smoldering Magnetite",
   "item.netherarchives.iron_slag": "Iron Slag"
 }

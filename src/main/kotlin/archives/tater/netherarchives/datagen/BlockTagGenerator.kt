@@ -36,8 +36,8 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             NetherArchivesBlocks.SMOLDERING_MAGNETITE
         )
         getOrCreateTagBuilder(HOE_MINEABLE).add(
-            NetherArchivesBlocks.ROTTEN_FLESH,
-            NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH
+            NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
+            NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
         )
         getOrCreateTagBuilder(NEEDS_STONE_TOOL).add(
             NetherArchivesBlocks.SMOLDERING_MAGNETITE

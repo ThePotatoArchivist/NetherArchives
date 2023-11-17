@@ -7,8 +7,10 @@ import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.LootCondition
 import net.minecraft.loot.condition.MatchToolLootCondition
 import net.minecraft.loot.condition.SurvivesExplosionLootCondition
+import net.minecraft.loot.entry.AlternativeEntry
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LeafEntry
+import net.minecraft.loot.function.ApplyBonusLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.LootNumberProvider
@@ -44,8 +46,20 @@ class LootPoolBuilder(rolls: LootNumberProvider, bonusRolls: LootNumberProvider 
         output.with(ItemEntryBuilder(drop).also(init).output)
     }
 
+    fun alternatives(init: AlternativeEntryBuilder.() -> Unit) {
+        output.with(AlternativeEntryBuilder().also(init).output)
+    }
+
     fun condition(condition: Conditions.() -> LootCondition.Builder) {
         output.conditionally(Conditions.condition())
+    }
+}
+
+class AlternativeEntryBuilder() {
+    val output: AlternativeEntry.Builder = AlternativeEntry.builder()
+
+    fun entry(drop: ItemConvertible, init: ItemEntryBuilder.() -> Unit = {}) {
+        output.alternatively(ItemEntryBuilder(drop).also(init).output)
     }
 }
 
@@ -59,6 +73,11 @@ class ItemEntryBuilder(drop: ItemConvertible) {
     fun condition(condition: Conditions.() -> LootCondition.Builder) {
         output.conditionally(Conditions.condition())
     }
+
+    val fortune: Unit
+        get() {
+            output.apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
+        }
 }
 
 object Conditions {

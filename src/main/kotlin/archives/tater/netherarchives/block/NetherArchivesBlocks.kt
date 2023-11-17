@@ -57,19 +57,21 @@ object NetherArchivesBlocks {
         )
     )
 
-    val FERMENTED_ROTTEN_FLESH: Block = Registry.register(
-        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "fermented_rotten_flesh"), Block(
+    @JvmField
+    val FERMENTED_ROTTEN_FLESH_BLOCK: Block = Registry.register(
+        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "fermented_rotten_flesh_block"), Block(
             FabricBlockSettings.create()
                 .strength(1.5f, 1f)
                 .sounds(BlockSoundGroup.SLIME)
         )
     )
 
-    val ROTTEN_FLESH: Block = Registry.register(
-        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "rotten_flesh"), FermentingBlock(
+    @JvmField
+    val ROTTEN_FLESH_BLOCK: Block = Registry.register(
+        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "rotten_flesh_block"), FermentingBlock(
             BlockTagGenerator.ROTTEN_FLESH_FERMENTER,
             0.25f,
-            FERMENTED_ROTTEN_FLESH,
+            FERMENTED_ROTTEN_FLESH_BLOCK,
             FabricBlockSettings.create()
                 .strength(0.7f, 0.7f)
                 .sounds(BlockSoundGroup.SLIME)
