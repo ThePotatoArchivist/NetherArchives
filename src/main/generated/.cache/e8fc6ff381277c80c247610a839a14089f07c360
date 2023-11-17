@@ -1,6 +1,8 @@
-// 1.20.2	2023-11-03T18:27:16.453653236	Nether Archives/Recipes
+// 1.20.2	2023-11-17T10:57:33.4288868	Nether Archives/Recipes
 f8b05d3b7b94b7f36fda46e80eb0128b06e1ab3b data/netherarchives/advancements/recipes/misc/iron_nugget_from_blasting_iron_slag.json
 381fb679f01c25473ae2c5df08178e5a978ef997 data/netherarchives/recipes/compass.json
+9eec95c25f39f044b8dc6b3482a7a1bdf76f315d data/netherarchives/recipes/rotten_flesh.json
+2f1ab1477b1cf1663a34ec6df33a521f310df43a data/netherarchives/advancements/recipes/misc/rotten_flesh.json
 5480c029299265f1cfac37ec73def85bf9c1793e data/netherarchives/recipes/iron_nugget_from_blasting_iron_slag.json
 6cebe0a91211330fba395fe45e1fde75120046a7 data/netherarchives/recipes/blaze_dust_from_blaze_powder.json
 7f597bd6a2af0127d5768c1f72a3fe5fb5752f98 data/netherarchives/advancements/recipes/misc/iron_nugget_from_smelting_iron_slag.json
