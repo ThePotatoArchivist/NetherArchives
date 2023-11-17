@@ -6,6 +6,7 @@ import archives.tater.netherarchives.datagen.builder.uniform
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
+import net.minecraft.item.Items
 
 class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTableProvider(output) {
     override fun generate() {
@@ -21,6 +22,8 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
                 }
             }
         );
+
+        addDrop(NetherArchivesBlocks.BLAZE_DUST, drops(Items.BLAZE_POWDER))
 
     }
 }

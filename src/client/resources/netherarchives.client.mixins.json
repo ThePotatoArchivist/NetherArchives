@@ -3,6 +3,9 @@
   "package": "archives.tater.netherarchives.mixin.client",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "EntityRenderDispatcherMixin",
+    "WitherEntityRendererMixin",
+    "WitherSkeletonEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

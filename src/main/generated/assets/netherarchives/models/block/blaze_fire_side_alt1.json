@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fire_side_alt",
+  "textures": {
+    "fire": "netherarchives:block/blaze_fire_1"
+  }
+}

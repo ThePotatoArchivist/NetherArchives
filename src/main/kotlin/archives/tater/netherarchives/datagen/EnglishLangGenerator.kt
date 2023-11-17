@@ -10,6 +10,7 @@ class EnglishLangGenerator(output: FabricDataOutput) : FabricLanguageProvider(ou
         translationBuilder.apply {
             add(NetherArchivesBlocks.MAGNETITE, "Magnetite")
             add(NetherArchivesBlocks.SMOLDERING_MAGNETITE, "Smoldering Magnetite")
+            add(NetherArchivesBlocks.BLAZE_DUST, "Blaze Dust")
             add(NetherArchivesItems.IRON_SLAG, "Iron Slag")
         }
     }
