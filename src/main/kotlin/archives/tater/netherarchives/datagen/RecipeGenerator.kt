@@ -30,5 +30,14 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .offerTo(exporter);
 
         RecipeProvider.offerShapelessRecipe(exporter, NetherArchivesItems.BLAZE_DUST, Items.BLAZE_POWDER, null, 4)
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, NetherArchivesItems.BLAZE_LANTERN)
+            .pattern("###")
+            .pattern("#X#")
+            .pattern("###")
+            .input('#', Items.NETHER_BRICK)
+            .input('X', Items.BLAZE_POWDER)
+            .criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
+            .offerTo(exporter)
     }
 }
