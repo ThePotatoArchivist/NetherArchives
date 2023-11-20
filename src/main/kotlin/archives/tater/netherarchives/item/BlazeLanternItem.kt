@@ -28,7 +28,7 @@ class BlazeLanternItem(settings: Settings) : Item(settings) {
         if (!world.isClient) {
             val blazeLanternEntity = BlazeLanternEntity(world, user)
             blazeLanternEntity.setItem(itemStack)
-            blazeLanternEntity.setVelocity(user, user.pitch, user.yaw, 0.0f, 1.5f, 1.0f)
+            blazeLanternEntity.setVelocity(user, user.pitch, user.yaw, 0.2f, 1f, 1.0f)
             world.spawnEntity(blazeLanternEntity)
         }
         user.incrementStat(Stats.USED.getOrCreateStat(this))

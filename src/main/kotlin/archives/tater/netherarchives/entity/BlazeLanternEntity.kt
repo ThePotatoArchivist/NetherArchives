@@ -24,11 +24,11 @@ class BlazeLanternEntity : ThrownItemEntity {
 
     override fun onCollision(hitResult: HitResult) {
         super.onCollision(hitResult)
-        if (world.isClient) return;
+        if (world.isClient) return
         val pos = hitResult.pos
         val blockPos = BlockPos(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
-        world.playSound(null, blockPos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL)
-        world.playSound(null, blockPos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL)
+        world.playSound(null, blockPos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5f, 1.0f)
+        world.playSound(null, blockPos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 1.0f, 0.6f)
         BlockPos.iterateInSquare(blockPos, 1, Direction.NORTH, Direction.EAST)
             .map { it.mutableCopy() } // iterateInSquare uses the same blockPos object and mutates it
             .filter {
