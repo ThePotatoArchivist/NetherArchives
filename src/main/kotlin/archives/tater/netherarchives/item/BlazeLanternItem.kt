@@ -12,6 +12,16 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
 class BlazeLanternItem(settings: Settings) : Item(settings) {
+    // TODO this crashes
+//    init {
+//        DispenserBlock.registerBehavior(NetherArchivesItems.BLAZE_LANTERN, object: ProjectileDispenserBehavior() {
+//            override fun createProjectile(world: World, position: Position, stack: ItemStack): ProjectileEntity {
+//                return (Util.make(
+//                    BlazeLanternEntity(world, position.x, position.y, position.z)
+//                ) { entity: BlazeLanternEntity -> entity.setItem(stack) } as ProjectileEntity)
+//            }
+//        })
+//    }
 
     override fun use(world: World, user: PlayerEntity, hand: Hand?): TypedActionResult<ItemStack> {
         val itemStack = user.getStackInHand(hand)

@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.listCopy
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -77,12 +78,14 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             return;
         }
 
-        BlockPos.iterateOutwards(pos, 1, 1, 1).forEach {
-            if (world.getBlockState(it).block is BlazePowderBlock && world.random.nextFloat() > 0.5) {
+        BlockPos.iterateOutwards(pos, 1, 1, 1)
+            .listCopy()
+            .filter { world.getBlockState(it).block is BlazePowderBlock }
+            .shuffled()
+            .take(3)
+            .forEach {
                 world.setBlockState(it, this.defaultState)
             }
-        }
-
     }
 
     @Suppress("OVERRIDE_DEPRECATION")

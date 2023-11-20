@@ -2,6 +2,7 @@ package archives.tater.netherarchives.entity
 
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.item.NetherArchivesItems
+import archives.tater.netherarchives.listCopy
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.FallingBlockEntity
 import net.minecraft.entity.LivingEntity
@@ -29,14 +30,15 @@ class BlazeLanternEntity : ThrownItemEntity {
         val blockPos = BlockPos(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
         world.playSound(null, blockPos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5f, 1.0f)
         world.playSound(null, blockPos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 1.0f, 0.6f)
-        BlockPos.iterateInSquare(blockPos, 1, Direction.NORTH, Direction.EAST)
-            .map { it.mutableCopy() } // iterateInSquare uses the same blockPos object and mutates it
+        BlockPos.iterateInSquare(blockPos, 1, Direction.NORTH, Direction.EAST).listCopy()
             .filter {
                 @Suppress("DEPRECATION")
                 world.getBlockState(it).isAir && (world.getBlockState(it.down()).isAir || NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(world.getBlockState(it), world, it))
             }
             .shuffled()
-            .take(4)
+            .toMutableList().run {
+                (if (remove(blockPos)) listOf(blockPos) else emptyList()) + take(4)
+            }
             .forEach {
                 if (world.getBlockState(it.down()).isAir) {
                     FallingBlockEntity.spawnFromBlock(world, it, NetherArchivesBlocks.BLAZE_FIRE.defaultState)
