@@ -57,7 +57,6 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
 
-
         val blockStateVariantMap = BlockStateVariantMap.create(FermentingBlock.AGE).register {
             val suffix = if(it == 0) "" else "_stage$it"
             val textureMap: TextureMap = TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix))
@@ -72,5 +71,11 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
     override fun generateItemModels(itemModelGenerator: ItemModelGenerator) {
         itemModelGenerator.register(NetherArchivesItems.IRON_SLAG, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BLAZE_DUST, Models.GENERATED)
+
+        Models.TEMPLATE_LANTERN.upload(
+            ModelIds.getItemModelId(NetherArchivesItems.BLAZE_LANTERN),
+            TextureMap().put(TextureKey.LANTERN, TextureMap.getId(NetherArchivesItems.BLAZE_LANTERN)),
+            itemModelGenerator.writer
+        )
     }
 }

@@ -42,6 +42,8 @@ object NetherArchivesItems {
 
     val BLAZE_DUST: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "blaze_dust"), BlockItem(NetherArchivesBlocks.BLAZE_DUST, FabricItemSettings()))
 
+    val BLAZE_LANTERN: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "blaze_lantern"), BlazeLanternItem(FabricItemSettings()))
+
     fun registerItemGroups() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register {
             it.add(IRON_SLAG)
