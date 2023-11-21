@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:blaze_dust_from_blaze_powder"
+        "recipe": "netherarchives:blaze_dust"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:blaze_dust_from_blaze_powder"
+      "netherarchives:blaze_dust"
     ]
   },
   "sends_telemetry_event": false

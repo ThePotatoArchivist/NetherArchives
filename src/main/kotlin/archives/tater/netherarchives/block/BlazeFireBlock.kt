@@ -1,6 +1,7 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.listCopy
+import archives.tater.netherarchives.shuffled
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -81,7 +82,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         BlockPos.iterateOutwards(pos, 1, 1, 1)
             .listCopy()
             .filter { world.getBlockState(it).block is BlazePowderBlock }
-            .shuffled()
+            .shuffled(world.random)
             .take(3)
             .forEach {
                 world.setBlockState(it, this.defaultState)

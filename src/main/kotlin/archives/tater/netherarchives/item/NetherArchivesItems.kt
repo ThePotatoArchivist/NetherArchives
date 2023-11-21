@@ -42,20 +42,19 @@ object NetherArchivesItems {
 
     val BLAZE_DUST: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "blaze_dust"), BlockItem(NetherArchivesBlocks.BLAZE_DUST, FabricItemSettings()))
 
-    val BLAZE_LANTERN: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "blaze_lantern"), BlazeLanternItem(FabricItemSettings()))
+    val BLAZE_LANTERN: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "blaze_lantern"), BlazeLanternItem(FabricItemSettings().maxCount(16)))
+
+    private val itemGroups = mapOf(
+        ItemGroups.INGREDIENTS to setOf(IRON_SLAG),
+        ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK),
+        ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN)
+    )
 
     fun registerItemGroups() {
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register {
-            it.add(IRON_SLAG)
-        }
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register {
-            it.add(MAGNETITE)
-            it.add(SMOLDERING_MAGNETITE)
-            it.add(ROTTEN_FLESH_BLOCK)
-            it.add(FERMENTED_ROTTEN_FLESH_BLOCK)
-        }
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register {
-            it.add(BLAZE_DUST)
+        itemGroups.forEach { (group, items) ->
+            ItemGroupEvents.modifyEntriesEvent(group).register {
+                items.forEach(it::add)
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 package archives.tater.netherarchives.entity
 
+import archives.tater.netherarchives.block.BlazePowderBlock
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.item.NetherArchivesItems
 import archives.tater.netherarchives.listCopy
+import archives.tater.netherarchives.shuffled
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.FallingBlockEntity
 import net.minecraft.entity.LivingEntity
@@ -32,10 +34,13 @@ class BlazeLanternEntity : ThrownItemEntity {
         world.playSound(null, blockPos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 1.0f, 0.6f)
         BlockPos.iterateInSquare(blockPos, 1, Direction.NORTH, Direction.EAST).listCopy()
             .filter {
-                @Suppress("DEPRECATION")
-                world.getBlockState(it).isAir && (world.getBlockState(it.down()).isAir || NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(world.getBlockState(it), world, it))
+                val blockState = world.getBlockState(it)
+                blockState.block is BlazePowderBlock ||
+                        (blockState.isAir &&
+                                (world.getBlockState(it.down()).isAir ||
+                                NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(blockState, world, it)))
             }
-            .shuffled()
+            .shuffled(world.random)
             .toMutableList().run {
                 (if (remove(blockPos)) listOf(blockPos) else emptyList()) + take(4)
             }
