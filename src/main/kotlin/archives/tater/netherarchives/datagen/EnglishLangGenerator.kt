@@ -15,6 +15,7 @@ class EnglishLangGenerator(output: FabricDataOutput) : FabricLanguageProvider(ou
             add(NetherArchivesItems.IRON_SLAG, "Iron Slag")
             add(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, "Rotten Flesh Block")
             add(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, "Fermented Rotten Flesh Block")
+            add(NetherArchivesBlocks.SOUL_GLASS, "Soul Glass")
         }
     }
 }

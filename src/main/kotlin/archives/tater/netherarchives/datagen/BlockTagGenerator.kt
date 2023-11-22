@@ -31,6 +31,8 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
 
         val ROTTEN_FLESH_FERMENTER: TagKey<Block> =
             TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "rotten_flesh_fermenter"))
+
+        val SOUL_INVISIBLE_REVEAL: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.NAMESPACE, "soul_invisible_reveal"))
     }
 
     override fun configure(arg: RegistryWrapper.WrapperLookup) {
@@ -52,6 +54,9 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
         getOrCreateTagBuilder(ROTTEN_FLESH_FERMENTER).add(
             Blocks.SOUL_FIRE,
             Blocks.SOUL_CAMPFIRE
+        )
+        getOrCreateTagBuilder(SOUL_INVISIBLE_REVEAL).add(
+            NetherArchivesBlocks.SOUL_GLASS
         )
     }
 }

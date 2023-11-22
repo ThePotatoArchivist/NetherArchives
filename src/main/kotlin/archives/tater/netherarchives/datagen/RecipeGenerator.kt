@@ -15,6 +15,7 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
 
     private fun RecipeExporter.recipes() {
         oreSmelting(RecipeCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_NUGGET, 25, 0.08F)
+        smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SOUL_GLASS)
 
         shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeName = "compass_from_magnetite") {
             patterns(

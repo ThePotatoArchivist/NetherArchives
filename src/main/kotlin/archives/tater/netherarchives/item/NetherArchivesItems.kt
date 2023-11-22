@@ -56,10 +56,13 @@ object NetherArchivesItems {
         BlazeLanternItem(FabricItemSettings().maxCount(16))
     )
 
+    val SOUL_GLASS: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "soul_glass"), BlockItem(NetherArchivesBlocks.SOUL_GLASS, FabricItemSettings()))
+
     private val itemGroups = mapOf(
         ItemGroups.INGREDIENTS to setOf(IRON_SLAG),
         ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK),
-        ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN)
+        ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN),
+        ItemGroups.FUNCTIONAL to setOf(SOUL_GLASS)
     )
 
     fun registerItemGroups() {

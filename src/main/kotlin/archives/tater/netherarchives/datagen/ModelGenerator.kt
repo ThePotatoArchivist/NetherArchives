@@ -57,6 +57,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         registerBlazeFire(blockStateModelGenerator)
         blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
+        blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SOUL_GLASS)
 
         val blockStateVariantMap = BlockStateVariantMap.create(FermentingBlock.AGE).register {
             val suffix = if (it == 0) "" else "_stage$it"

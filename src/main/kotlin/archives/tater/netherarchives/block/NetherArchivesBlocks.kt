@@ -5,6 +5,7 @@ import archives.tater.netherarchives.datagen.BlockTagGenerator
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.GlassBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -75,6 +76,13 @@ object NetherArchivesBlocks {
             FabricBlockSettings.create()
                 .strength(0.7f, 0.7f)
                 .sounds(BlockSoundGroup.SLIME)
+        )
+    )
+
+    val SOUL_GLASS: Block = Registry.register(
+        Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, "soul_glass"), GlassBlock(FabricBlockSettings.create()
+            .strength(0.3f, 0.3f)
+            .sounds(BlockSoundGroup.GLASS)
         )
     )
 
