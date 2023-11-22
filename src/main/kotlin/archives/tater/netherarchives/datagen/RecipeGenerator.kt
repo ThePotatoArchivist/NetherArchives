@@ -1,5 +1,8 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.datagen.builder.crInput
+import archives.tater.netherarchives.datagen.builder.pattern
+import archives.tater.netherarchives.datagen.builder.shapedRecipe
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
@@ -12,19 +15,22 @@ import net.minecraft.recipe.book.RecipeCategory
 
 class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
     // TODO Recipe Builder
-    override fun generate(exporter: RecipeExporter?) {
+    override fun generate(exporter: RecipeExporter) {
         // TODO: These advancements try to trigger the minecraft: recipe for some reason?
         RecipeProvider.offerSmelting(exporter, listOf(NetherArchivesItems.IRON_SLAG), RecipeCategory.MISC, Items.IRON_NUGGET, 0F, 25, null)
         RecipeProvider.offerBlasting(exporter, listOf(NetherArchivesItems.IRON_SLAG), RecipeCategory.MISC, Items.IRON_NUGGET, 0F, 12, null)
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Items.COMPASS)
-            .pattern(" # ")
-            .pattern("#X#")
-            .pattern(" # ")
-            .input('#', Items.IRON_INGOT)
-            .input('X', NetherArchivesItems.MAGNETITE)
-            .criterion(hasItem(NetherArchivesItems.MAGNETITE), conditionsFromItem(NetherArchivesItems.MAGNETITE))
-            .offerTo(exporter)
+//        ShapedRecipeJsonBuilder.create(RecipeCategory.TOOLS, Items.COMPASS)
+
+        exporter.shapedRecipe(RecipeCategory.TOOLS, Items.COMPASS) {
+            pattern(
+                " # ",
+                "#X#",
+                " # "
+            )
+            input('#', Items.IRON_INGOT)
+            crInput('X', NetherArchivesItems.MAGNETITE)
+        }
 
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, NetherArchivesItems.ROTTEN_FLESH_BLOCK)
             .input(Items.ROTTEN_FLESH, 9)
