@@ -1,11 +1,11 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.NetherArchives
+import archives.tater.netherarchives.draw
+import archives.tater.netherarchives.listCopy
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
-import net.minecraft.entity.Entity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.IntProperty
@@ -79,12 +79,13 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             return;
         }
 
-        BlockPos.iterateOutwards(pos, 1, 1, 1).forEach {
-            if (world.getBlockState(it).block is BlazePowderBlock && world.random.nextFloat() > 0.5) {
+        BlockPos.iterateOutwards(pos, 1, 1, 1)
+            .listCopy()
+            .filter { world.getBlockState(it).block is BlazePowderBlock }
+            .draw(world.random, 3)
+            .forEach {
                 world.setBlockState(it, this.defaultState)
             }
-        }
-
     }
 
     @Suppress("OVERRIDE_DEPRECATION")
@@ -98,11 +99,4 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         super.onBlockAdded(state, world, pos, oldState, notify)
         world.scheduleBlockTick(pos, this, getFireTickDelay(world.random))
     }
-
-    @Suppress("OVERRIDE_DEPRECATION")
-    override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity) {
-        NetherArchives.logger.info("Collide {}", entity.fireTicks)
-        super.onEntityCollision(state, world, pos, entity)
-    }
-
 }

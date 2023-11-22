@@ -11,7 +11,9 @@ import net.minecraft.item.Items
 import net.minecraft.recipe.book.RecipeCategory
 
 class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
+    // TODO Recipe Builder
     override fun generate(exporter: RecipeExporter?) {
+        // TODO: These advancements try to trigger the minecraft: recipe for some reason?
         RecipeProvider.offerSmelting(exporter, listOf(NetherArchivesItems.IRON_SLAG), RecipeCategory.MISC, Items.IRON_NUGGET, 0F, 25, null)
         RecipeProvider.offerBlasting(exporter, listOf(NetherArchivesItems.IRON_SLAG), RecipeCategory.MISC, Items.IRON_NUGGET, 0F, 12, null)
 
@@ -29,6 +31,18 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             .criterion(hasItem(Items.ROTTEN_FLESH), conditionsFromItem(Items.ROTTEN_FLESH))
             .offerTo(exporter);
 
-        RecipeProvider.offerShapelessRecipe(exporter, NetherArchivesItems.BLAZE_DUST, Items.BLAZE_POWDER, null, 4)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.COMBAT, NetherArchivesItems.BLAZE_DUST, 4)
+            .input(Items.BLAZE_POWDER)
+            .criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
+            .offerTo(exporter)
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, NetherArchivesItems.BLAZE_LANTERN)
+            .pattern("###")
+            .pattern("#X#")
+            .pattern("###")
+            .input('#', Items.NETHER_BRICK)
+            .input('X', Items.BLAZE_POWDER)
+            .criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
+            .offerTo(exporter)
     }
 }
