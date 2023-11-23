@@ -17,11 +17,13 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
         oreSmelting(RecipeCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_NUGGET, 25, 0.08F)
 
         shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeName = "compass_from_magnetite") {
-            patterns("""
+            patterns(
+                """
                  # 
                 #X#
                  # 
-            """)
+            """
+            )
             inputs {
                 '#' to Items.IRON_INGOT
                 'X' to NetherArchivesItems.MAGNETITE
@@ -44,11 +46,13 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
         }
 
         shaped(RecipeCategory.COMBAT, NetherArchivesItems.BLAZE_LANTERN) {
-            patterns("""
+            patterns(
+                """
                 ###
                 #X#
                 ###
-            """)
+            """
+            )
             inputs {
                 '#' to Items.NETHER_BRICK
                 'X' to Items.BLAZE_POWDER

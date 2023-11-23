@@ -15,7 +15,12 @@ class WitherSkeletonEyesFeatureRenderer<T : AbstractSkeletonEntity>(featureRende
     EyesFeatureRenderer<T, SkeletonEntityModel<T>>(featureRendererContext) {
 
     companion object {
-        private val SKIN = RenderLayer.getEyes(Identifier(NetherArchives.NAMESPACE, "textures/entity/skeleton/wither_skeleton_eyes.png"))
+        private val SKIN = RenderLayer.getEyes(
+            Identifier(
+                NetherArchives.NAMESPACE,
+                "textures/entity/skeleton/wither_skeleton_eyes.png"
+            )
+        )
     }
 
     override fun getEyesTexture(): RenderLayer {

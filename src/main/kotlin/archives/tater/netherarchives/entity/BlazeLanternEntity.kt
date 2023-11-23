@@ -43,8 +43,8 @@ class BlazeLanternEntity : ThrownItemEntity {
                 blockState.block is BlazePowderBlock ||
                         (blockState.isAir &&
                                 (world.getBlockState(it.down()).isAir ||
-                                @Suppress("DEPRECATION")
-                                NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(blockState, world, it)))
+                                        @Suppress("DEPRECATION")
+                                        NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(blockState, world, it)))
             }
             .let {
                 val centerFlammable: Boolean

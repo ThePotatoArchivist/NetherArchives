@@ -1,10 +1,8 @@
 package archives.tater.netherarchives.mixin;
 
-import archives.tater.netherarchives.block.BlazeFireBlock;
 import archives.tater.netherarchives.block.BlazePowderBlock;
 import archives.tater.netherarchives.block.NetherArchivesBlocks;
 import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,7 +36,7 @@ public abstract class FlintAndSteelItemMixin {
             world.emitGameEvent(playerEntity, GameEvent.BLOCK_PLACE, blockPos);
             ItemStack itemStack = context.getStack();
             if (playerEntity instanceof ServerPlayerEntity) {
-                Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity)playerEntity, blockPos, itemStack);
+                Criteria.PLACED_BLOCK.trigger((ServerPlayerEntity) playerEntity, blockPos, itemStack);
                 itemStack.damage(1, playerEntity, p -> p.sendToolBreakStatus(context.getHand()));
             }
 

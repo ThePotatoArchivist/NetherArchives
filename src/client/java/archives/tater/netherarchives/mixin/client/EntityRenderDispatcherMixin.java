@@ -26,8 +26,8 @@ public class EntityRenderDispatcherMixin {
     private static final SpriteIdentifier BLAZE_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(NetherArchives.NAMESPACE, "block/blaze_fire_1"));
 
     @ModifyVariable(
-        method = "renderFire",
-        name = "sprite",
+            method = "renderFire",
+            name = "sprite",
             at = @At("STORE")
     )
     private Sprite setBlazeFireSprite0(Sprite originalSprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {

@@ -18,9 +18,10 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             val list: List<Identifier> = blockStateModelGenerator.getFireFloorModels(NetherArchivesBlocks.BLAZE_FIRE)
             val list2: List<Identifier> = blockStateModelGenerator.getFireSideModels(NetherArchivesBlocks.BLAZE_FIRE)
             blockStateModelGenerator.blockStateCollector.accept(
-                MultipartBlockStateSupplier.create(NetherArchivesBlocks.BLAZE_FIRE).with(BlockStateModelGenerator.buildBlockStateVariants(
-                    list
-                ) { blockStateVariant: BlockStateVariant? -> blockStateVariant })
+                MultipartBlockStateSupplier.create(NetherArchivesBlocks.BLAZE_FIRE)
+                    .with(BlockStateModelGenerator.buildBlockStateVariants(
+                        list
+                    ) { blockStateVariant: BlockStateVariant? -> blockStateVariant })
                     .with(BlockStateModelGenerator.buildBlockStateVariants(
                         list2
                     ) { blockStateVariant: BlockStateVariant? -> blockStateVariant })
@@ -58,13 +59,21 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
 
         val blockStateVariantMap = BlockStateVariantMap.create(FermentingBlock.AGE).register {
-            val suffix = if(it == 0) "" else "_stage$it"
-            val textureMap: TextureMap = TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix))
+            val suffix = if (it == 0) "" else "_stage$it"
+            val textureMap: TextureMap =
+                TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix))
             val identifier: Identifier =
-                Models.CUBE_ALL.upload(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix, textureMap, blockStateModelGenerator.modelCollector)
+                Models.CUBE_ALL.upload(
+                    NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
+                    suffix,
+                    textureMap,
+                    blockStateModelGenerator.modelCollector
+                )
             BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
         }
-        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).coordinate(blockStateVariantMap))
+        blockStateModelGenerator.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).coordinate(blockStateVariantMap)
+        )
     }
 
 

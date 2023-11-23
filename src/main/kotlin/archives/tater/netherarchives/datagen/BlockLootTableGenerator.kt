@@ -22,7 +22,7 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
                     condition { survivesExplosion }
                 }
             }
-        );
+        )
 
         addDrop(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, drops(NetherArchivesItems.ROTTEN_FLESH_BLOCK))
 

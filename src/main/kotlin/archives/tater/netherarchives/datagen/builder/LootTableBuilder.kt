@@ -55,7 +55,7 @@ class LootPoolBuilder(rolls: LootNumberProvider, bonusRolls: LootNumberProvider 
     }
 }
 
-class AlternativeEntryBuilder() {
+class AlternativeEntryBuilder {
     val output: AlternativeEntry.Builder = AlternativeEntry.builder()
 
     fun entry(drop: ItemConvertible, init: ItemEntryBuilder.() -> Unit = {}) {

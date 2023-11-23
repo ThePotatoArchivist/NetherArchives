@@ -27,7 +27,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     }
 
     init {
-        defaultState = stateManager.defaultState.with(AGE, 0);
+        defaultState = stateManager.defaultState.with(AGE, 0)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
@@ -52,7 +52,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         neighborPos: BlockPos
     ): BlockState {
         if (canPlaceAt(state, world, pos)) {
-            return state;
+            return state
         }
         return Blocks.AIR.defaultState
     }
@@ -65,18 +65,18 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
 
         val blockBelow = world.getBlockState(pos.down())
         val infiniburn = blockBelow.isIn(world.dimension.infiniburn())
-        val age = state.get(AGE);
-        
+        val age = state.get(AGE)
+
         val newAge = (age + random.nextInt(3) / 2).coerceAtMost(15)
 
         if (age != newAge) {
             val newState = state.with(AGE, newAge)
             world.setBlockState(pos, newState, Block.NO_REDRAW)
         }
-        
+
         if (!infiniburn && (!canPlaceAt(state, world, pos) || age > 6)) {
             world.removeBlock(pos, false)
-            return;
+            return
         }
 
         BlockPos.iterateOutwards(pos, 1, 1, 1)

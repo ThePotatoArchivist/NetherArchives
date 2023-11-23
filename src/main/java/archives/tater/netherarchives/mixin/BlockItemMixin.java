@@ -15,10 +15,10 @@ import java.util.stream.Stream;
 
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin {
-	@Inject(at = @At("HEAD"), method = "onItemEntityDestroyed")
-	private void lodestoneDrop(ItemEntity entity, CallbackInfo ci) {
-		if (((BlockItem) (Object) this).getBlock() == Blocks.LODESTONE && entity.isOnFire()) {
-			ItemUsage.spawnItemContents(entity, Stream.of(new ItemStack(Items.NETHERITE_INGOT, entity.getStack().getCount())));
-		}
-	}
+    @Inject(at = @At("HEAD"), method = "onItemEntityDestroyed")
+    private void lodestoneDrop(ItemEntity entity, CallbackInfo ci) {
+        if (((BlockItem) (Object) this).getBlock() == Blocks.LODESTONE && entity.isOnFire()) {
+            ItemUsage.spawnItemContents(entity, Stream.of(new ItemStack(Items.NETHERITE_INGOT, entity.getStack().getCount())));
+        }
+    }
 }

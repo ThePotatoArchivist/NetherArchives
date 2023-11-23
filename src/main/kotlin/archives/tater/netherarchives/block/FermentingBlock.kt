@@ -15,7 +15,7 @@ class FermentingBlock(
     private val fermentingTag: TagKey<Block>,
     private val fermentingChance: Float,
     private val resultBlock: Block, settings: Settings,
-): Block(settings.ticksRandomly()) {
+) : Block(settings.ticksRandomly()) {
     companion object {
         val AGE: IntProperty = Properties.AGE_7
     }

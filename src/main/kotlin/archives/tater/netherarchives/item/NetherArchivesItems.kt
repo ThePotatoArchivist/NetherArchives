@@ -38,11 +38,23 @@ object NetherArchivesItems {
         BlockItem(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, FabricItemSettings())
     )
 
-    val IRON_SLAG: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "iron_slag"), Item(FabricItemSettings()))
+    val IRON_SLAG: Item = Registry.register(
+        Registries.ITEM,
+        Identifier(NetherArchives.NAMESPACE, "iron_slag"),
+        Item(FabricItemSettings())
+    )
 
-    val BLAZE_DUST: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "blaze_dust"), BlockItem(NetherArchivesBlocks.BLAZE_DUST, FabricItemSettings()))
+    val BLAZE_DUST: Item = Registry.register(
+        Registries.ITEM,
+        Identifier(NetherArchives.NAMESPACE, "blaze_dust"),
+        BlockItem(NetherArchivesBlocks.BLAZE_DUST, FabricItemSettings())
+    )
 
-    val BLAZE_LANTERN: Item = Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, "blaze_lantern"), BlazeLanternItem(FabricItemSettings().maxCount(16)))
+    val BLAZE_LANTERN: Item = Registry.register(
+        Registries.ITEM,
+        Identifier(NetherArchives.NAMESPACE, "blaze_lantern"),
+        BlazeLanternItem(FabricItemSettings().maxCount(16))
+    )
 
     private val itemGroups = mapOf(
         ItemGroups.INGREDIENTS to setOf(IRON_SLAG),

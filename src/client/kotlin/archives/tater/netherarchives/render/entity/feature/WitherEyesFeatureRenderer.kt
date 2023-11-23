@@ -14,8 +14,14 @@ class WitherEyesFeatureRenderer<T : WitherEntity>(featureRendererContext: Featur
     EntityEyesFeatureRenderer<T, WitherEntityModel<T>>(featureRendererContext) {
 
     companion object {
-        private val SKIN = RenderLayer.getEyes(Identifier(NetherArchives.NAMESPACE, "textures/entity/wither/wither_eyes.png"))
-        private val INVULNERABLE_SKIN = RenderLayer.getEyes(Identifier(NetherArchives.NAMESPACE, "textures/entity/wither/wither_invulnerable_eyes.png"))
+        private val SKIN =
+            RenderLayer.getEyes(Identifier(NetherArchives.NAMESPACE, "textures/entity/wither/wither_eyes.png"))
+        private val INVULNERABLE_SKIN = RenderLayer.getEyes(
+            Identifier(
+                NetherArchives.NAMESPACE,
+                "textures/entity/wither/wither_invulnerable_eyes.png"
+            )
+        )
     }
 
     override fun getEyesTexture(entity: T?): RenderLayer {

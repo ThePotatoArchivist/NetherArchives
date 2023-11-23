@@ -21,8 +21,15 @@ const val NAMESPACE = NetherArchives.NAMESPACE
 
 // Shaped
 
-inline fun RecipeExporter.shaped(category: RecipeCategory, outputItem: ItemConvertible, count: Int = 1, recipeName: String =  outputItem.asItem().id.path, init: ShapedRecipeJsonBuilder.() -> Unit) {
-    ShapedRecipeJsonBuilder.create(category, outputItem, count).apply(init).offerTo(this, Identifier(NAMESPACE, recipeName))
+inline fun RecipeExporter.shaped(
+    category: RecipeCategory,
+    outputItem: ItemConvertible,
+    count: Int = 1,
+    recipeName: String = outputItem.asItem().id.path,
+    init: ShapedRecipeJsonBuilder.() -> Unit
+) {
+    ShapedRecipeJsonBuilder.create(category, outputItem, count).apply(init)
+        .offerTo(this, Identifier(NAMESPACE, recipeName))
 }
 
 fun ShapedRecipeJsonBuilder.patterns(rows: String) {
@@ -58,8 +65,15 @@ class ShapedIngredientsBuilder(private val recipeBuilder: ShapedRecipeJsonBuilde
 
 // Shapeless Recipe
 
-inline fun RecipeExporter.shapeless(category: RecipeCategory, outputItem: ItemConvertible, count: Int = 1, recipeName: String = outputItem.asItem().id.path, init: ShapelessRecipeJsonBuilder.() -> Unit) {
-    ShapelessRecipeJsonBuilder.create(category, outputItem, count).apply(init).offerTo(this, Identifier(NAMESPACE, recipeName))
+inline fun RecipeExporter.shapeless(
+    category: RecipeCategory,
+    outputItem: ItemConvertible,
+    count: Int = 1,
+    recipeName: String = outputItem.asItem().id.path,
+    init: ShapelessRecipeJsonBuilder.() -> Unit
+) {
+    ShapelessRecipeJsonBuilder.create(category, outputItem, count).apply(init)
+        .offerTo(this, Identifier(NAMESPACE, recipeName))
 }
 
 fun ShapelessRecipeJsonBuilder.itemCriterion(item: ItemConvertible) {
@@ -102,34 +116,93 @@ class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeJson
 val ItemConvertible.id
     get() = Registries.ITEM.getId(this as Item?)
 
-fun RecipeExporter.cookingRecipe(category: RecipeCategory, inputItem: ItemConvertible, outputItem: ItemConvertible, serializer: RecipeSerializer<out AbstractCookingRecipe>, method: String, cookingTime: Int = 100, experience: Float = 0F) {
-    CookingRecipeJsonBuilder.create(Ingredient.ofItems(inputItem), category, outputItem, experience, cookingTime, serializer)
+fun RecipeExporter.cookingRecipe(
+    category: RecipeCategory,
+    inputItem: ItemConvertible,
+    outputItem: ItemConvertible,
+    serializer: RecipeSerializer<out AbstractCookingRecipe>,
+    method: String,
+    cookingTime: Int = 100,
+    experience: Float = 0F
+) {
+    CookingRecipeJsonBuilder.create(
+        Ingredient.ofItems(inputItem),
+        category,
+        outputItem,
+        experience,
+        cookingTime,
+        serializer
+    )
         .criterion(FabricRecipeProvider.hasItem(inputItem), FabricRecipeProvider.conditionsFromItem(inputItem))
         .offerTo(this, Identifier(NAMESPACE, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
 }
 
-fun RecipeExporter.smelting(category: RecipeCategory, inputItem: ItemConvertible, outputItem: ItemConvertible, cookingTime: Int = 100, experience: Float = 0F) {
+fun RecipeExporter.smelting(
+    category: RecipeCategory,
+    inputItem: ItemConvertible,
+    outputItem: ItemConvertible,
+    cookingTime: Int = 100,
+    experience: Float = 0F
+) {
     cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING, "smelting", cookingTime, experience)
 }
 
-fun RecipeExporter.smoking(category: RecipeCategory, inputItem: ItemConvertible, outputItem: ItemConvertible, cookingTime: Int = 50, experience: Float = 0F) {
+fun RecipeExporter.smoking(
+    category: RecipeCategory,
+    inputItem: ItemConvertible,
+    outputItem: ItemConvertible,
+    cookingTime: Int = 50,
+    experience: Float = 0F
+) {
     cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING, "smoking", cookingTime, experience)
 }
 
-fun RecipeExporter.blasting(category: RecipeCategory, inputItem: ItemConvertible, outputItem: ItemConvertible, cookingTime: Int = 50, experience: Float = 0F) {
+fun RecipeExporter.blasting(
+    category: RecipeCategory,
+    inputItem: ItemConvertible,
+    outputItem: ItemConvertible,
+    cookingTime: Int = 50,
+    experience: Float = 0F
+) {
     cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING, "blasting", cookingTime, experience)
 }
 
-fun RecipeExporter.campfire(category: RecipeCategory, inputItem: ItemConvertible, outputItem: ItemConvertible, cookingTime: Int = 300, experience: Float = 0F) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING, "campfire", cookingTime, experience)
+fun RecipeExporter.campfire(
+    category: RecipeCategory,
+    inputItem: ItemConvertible,
+    outputItem: ItemConvertible,
+    cookingTime: Int = 300,
+    experience: Float = 0F
+) {
+    cookingRecipe(
+        category,
+        inputItem,
+        outputItem,
+        RecipeSerializer.CAMPFIRE_COOKING,
+        "campfire",
+        cookingTime,
+        experience
+    )
 }
 
-fun RecipeExporter.oreSmelting(category: RecipeCategory, inputItem: ItemConvertible, outputItem: ItemConvertible, cookingTime: Int = 100, experience: Float = 0F) {
+fun RecipeExporter.oreSmelting(
+    category: RecipeCategory,
+    inputItem: ItemConvertible,
+    outputItem: ItemConvertible,
+    cookingTime: Int = 100,
+    experience: Float = 0F
+) {
     smelting(category, inputItem, outputItem, cookingTime, experience)
     blasting(category, inputItem, outputItem, cookingTime / 2, experience)
 }
 
-fun RecipeExporter.foodCooking(category: RecipeCategory, inputItem: ItemConvertible, outputItem: ItemConvertible, cookingTime: Int = 100, experience: Float = 0F) {
+fun RecipeExporter.foodCooking(
+    category: RecipeCategory,
+    inputItem: ItemConvertible,
+    outputItem: ItemConvertible,
+    cookingTime: Int = 100,
+    experience: Float = 0F
+) {
     smelting(category, inputItem, outputItem, cookingTime, experience)
     smoking(category, inputItem, outputItem, cookingTime / 2, experience)
     campfire(category, inputItem, outputItem, cookingTime * 3, experience)
