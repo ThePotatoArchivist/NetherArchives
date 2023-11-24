@@ -1,12 +1,15 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.draw
 import archives.tater.netherarchives.listCopy
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.entity.Entity
+import net.minecraft.entity.ItemEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
@@ -22,7 +25,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     companion object {
         val AGE: IntProperty = Properties.AGE_15
 
-        private fun getFireTickDelay(random: Random) = 10 + random.nextInt(10)
+        private fun getFireTickDelay(random: Random) = 20 + random.nextInt(20)
 
     }
 
@@ -57,7 +60,6 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         return Blocks.AIR.defaultState
     }
 
-    // Copied from FireBlock
     @Suppress("OVERRIDE_DEPRECATION")
     override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         world.scheduleBlockTick(pos, this, getFireTickDelay(world.random))
@@ -74,7 +76,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             world.setBlockState(pos, newState, Block.NO_REDRAW)
         }
 
-        if (!infiniburn && (!canPlaceAt(state, world, pos) || age > 6)) {
+        if (!infiniburn && (!canPlaceAt(state, world, pos) || age > 12)) {
             world.removeBlock(pos, false)
             return
         }
@@ -82,9 +84,9 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         BlockPos.iterateOutwards(pos, 1, 1, 1)
             .listCopy()
             .filter { world.getBlockState(it).block is BlazePowderBlock }
-            .draw(world.random, 3)
-            .forEach {
-                world.setBlockState(it, this.defaultState)
+            .also {
+                if (it.isEmpty()) return;
+                world.setBlockState(it[random.nextInt(it.size)], this.defaultState)
             }
     }
 
@@ -97,6 +99,15 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         notify: Boolean
     ) {
         super.onBlockAdded(state, world, pos, oldState, notify)
-        world.scheduleBlockTick(pos, this, getFireTickDelay(world.random))
+        if (oldState.block !is BlazeFireBlock) {
+            world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 1.0f, 0.4f + 0.4f * world.random.nextFloat())
+        }
+        world.scheduleBlockTick(pos, this, world.random.nextInt(10))
+    }
+
+    @Suppress("OVERRIDE_DEPRECATION")
+    override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity?) {
+        if (entity is ItemEntity) return
+        super.onEntityCollision(state, world, pos, entity)
     }
 }
