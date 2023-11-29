@@ -1,5 +1,6 @@
 package archives.tater.netherarchives
 
+import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 
@@ -11,3 +12,6 @@ fun <T> Iterable<T>.draw(random: Random, count: Int = 1): List<T> {
     return (0 until count.coerceAtMost(pool.size))
         .map { pool.removeAt(random.nextInt(pool.size)) }
 }
+
+fun FabricBlockSettings(init: FabricBlockSettings.() -> Unit): FabricBlockSettings =
+    FabricBlockSettings.create().apply(init)
