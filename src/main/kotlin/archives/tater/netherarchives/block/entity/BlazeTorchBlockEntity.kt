@@ -12,6 +12,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import java.util.concurrent.CompletableFuture
 import kotlin.math.sqrt
 
 
@@ -35,13 +36,17 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
     var xVelocityCoef: Double? = null
     var zVelocityCoef: Double? = null
 
-    fun locateTarget() {
-        (world as ServerWorld).apply {
-            locateStructure(StructureTagGenerator.BLAZE_TORCH_LOCATED, pos, 128, false)?.let {
-                targetPos = it
-                NetherArchives.logger.info("Located at ${it.x}, ${it.y}, ${it.z}")
-                markDirty()
+    fun locateTarget(): CompletableFuture<BlockPos?> {
+        return CompletableFuture.supplyAsync {
+            (world as ServerWorld).run {
+                locateStructure(StructureTagGenerator.BLAZE_TORCH_LOCATED, pos, 128, false)
             }
+        }.thenApply {
+            if (it === null) return@thenApply null
+            targetPos = it
+            NetherArchives.logger.info("Located at ${it.x}, ${it.y}, ${it.z}")
+            markDirty()
+            it
         }
     }
 
