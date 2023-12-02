@@ -9,11 +9,15 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 
 object NetherArchivesClient : ClientModInitializer {
+    private val CUTOUT_BLOCKS = with(NetherArchivesBlocks) {
+        setOf(BLAZE_FIRE, BLAZE_DUST, BLAZE_TORCH, WALL_BLAZE_TORCH)
+    }
+
     override fun onInitializeClient() {
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
-        BlockRenderLayerMap.INSTANCE.putBlock(NetherArchivesBlocks.BLAZE_FIRE, RenderLayer.getCutout())
-        BlockRenderLayerMap.INSTANCE.putBlock(NetherArchivesBlocks.BLAZE_DUST, RenderLayer.getCutout())
-
+        CUTOUT_BLOCKS.forEach {
+            BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout())
+        }
         EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
     }
 }

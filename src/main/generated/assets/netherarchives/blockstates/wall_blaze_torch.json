@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "netherarchives:block/wall_blaze_torch"
+    },
+    "facing=north": {
+      "model": "netherarchives:block/wall_blaze_torch",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "netherarchives:block/wall_blaze_torch",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "netherarchives:block/wall_blaze_torch",
+      "y": 180
+    }
+  }
+}

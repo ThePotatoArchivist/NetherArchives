@@ -45,5 +45,7 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
 
         addDrop(NetherArchivesBlocks.BLAZE_DUST, drops(NetherArchivesItems.BLAZE_DUST))
 
+        addDrop(NetherArchivesBlocks.BLAZE_TORCH, drops(NetherArchivesItems.BLAZE_TORCH))
+
     }
 }

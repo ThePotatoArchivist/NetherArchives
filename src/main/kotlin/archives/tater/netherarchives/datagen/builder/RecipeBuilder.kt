@@ -113,13 +113,13 @@ class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeJson
 
 // Cooking
 
-val ItemConvertible.id
+val Item.id
     get() = Registries.ITEM.getId(this as Item?)
 
 fun RecipeExporter.cookingRecipe(
     category: RecipeCategory,
-    inputItem: ItemConvertible,
-    outputItem: ItemConvertible,
+    inputItem: Item,
+    outputItem: Item,
     serializer: RecipeSerializer<out AbstractCookingRecipe>,
     method: String,
     cookingTime: Int = 100,
@@ -139,8 +139,8 @@ fun RecipeExporter.cookingRecipe(
 
 fun RecipeExporter.smelting(
     category: RecipeCategory,
-    inputItem: ItemConvertible,
-    outputItem: ItemConvertible,
+    inputItem: Item,
+    outputItem: Item,
     cookingTime: Int = 100,
     experience: Float = 0F
 ) {
@@ -149,8 +149,8 @@ fun RecipeExporter.smelting(
 
 fun RecipeExporter.smoking(
     category: RecipeCategory,
-    inputItem: ItemConvertible,
-    outputItem: ItemConvertible,
+    inputItem: Item,
+    outputItem: Item,
     cookingTime: Int = 50,
     experience: Float = 0F
 ) {
@@ -159,8 +159,8 @@ fun RecipeExporter.smoking(
 
 fun RecipeExporter.blasting(
     category: RecipeCategory,
-    inputItem: ItemConvertible,
-    outputItem: ItemConvertible,
+    inputItem: Item,
+    outputItem: Item,
     cookingTime: Int = 50,
     experience: Float = 0F
 ) {
@@ -169,8 +169,8 @@ fun RecipeExporter.blasting(
 
 fun RecipeExporter.campfire(
     category: RecipeCategory,
-    inputItem: ItemConvertible,
-    outputItem: ItemConvertible,
+    inputItem: Item,
+    outputItem: Item,
     cookingTime: Int = 300,
     experience: Float = 0F
 ) {
@@ -187,8 +187,8 @@ fun RecipeExporter.campfire(
 
 fun RecipeExporter.oreSmelting(
     category: RecipeCategory,
-    inputItem: ItemConvertible,
-    outputItem: ItemConvertible,
+    inputItem: Item,
+    outputItem: Item,
     cookingTime: Int = 100,
     experience: Float = 0F
 ) {
@@ -198,8 +198,8 @@ fun RecipeExporter.oreSmelting(
 
 fun RecipeExporter.foodCooking(
     category: RecipeCategory,
-    inputItem: ItemConvertible,
-    outputItem: ItemConvertible,
+    inputItem: Item,
+    outputItem: Item,
     cookingTime: Int = 100,
     experience: Float = 0F
 ) {

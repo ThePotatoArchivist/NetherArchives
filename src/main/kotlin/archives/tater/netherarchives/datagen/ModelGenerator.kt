@@ -57,6 +57,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         registerBlazeFire(blockStateModelGenerator)
         blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
+        blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
 
         val blockStateVariantMap = BlockStateVariantMap.create(FermentingBlock.AGE).register {
             val suffix = if (it == 0) "" else "_stage$it"
@@ -74,6 +75,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.blockStateCollector.accept(
             VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).coordinate(blockStateVariantMap)
         )
+
     }
 
 

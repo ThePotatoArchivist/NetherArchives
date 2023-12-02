@@ -1,6 +1,7 @@
 package archives.tater.netherarchives
 
 import archives.tater.netherarchives.block.NetherArchivesBlocks
+import archives.tater.netherarchives.block.entity.NetherArchivesBlockEntities
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.api.ModInitializer
 import org.slf4j.Logger
@@ -17,6 +18,7 @@ object NetherArchives : ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
         NetherArchivesBlocks.register()
+        NetherArchivesBlockEntities.register()
         NetherArchivesItems.registerItemGroups()
         WorldGen.addFeatures()
     }

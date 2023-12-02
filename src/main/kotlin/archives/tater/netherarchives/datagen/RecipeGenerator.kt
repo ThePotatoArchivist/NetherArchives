@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Items
 import net.minecraft.recipe.book.RecipeCategory
+import net.minecraft.registry.tag.ItemTags
 
 class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
     override fun generate(exporter: RecipeExporter) {
@@ -56,6 +57,20 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             inputs {
                 '#' to Items.NETHER_BRICK
                 'X' to Items.BLAZE_POWDER
+            }
+            itemCriterion(Items.BLAZE_POWDER)
+        }
+
+        shaped(RecipeCategory.DECORATIONS, NetherArchivesItems.BLAZE_TORCH, 2) {
+            patterns("""
+                X
+                #
+                B
+            """)
+            inputs {
+                'X' to Items.BLAZE_POWDER
+                '#' to ItemTags.COALS
+                'B' to Items.BONE
             }
             itemCriterion(Items.BLAZE_POWDER)
         }

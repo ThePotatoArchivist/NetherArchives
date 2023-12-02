@@ -77,6 +77,29 @@ object NetherArchivesBlocks {
         }
     ))
 
+    @JvmField
+    val BLAZE_TORCH = register("blaze_torch", BlazeTorchBlock(
+        FabricBlockSettings {
+            noCollision()
+            breakInstantly()
+            luminance(15)
+            sounds(BlockSoundGroup.BONE)
+            pistonBehavior(PistonBehavior.DESTROY)
+        }
+    ))
+
+    @JvmField
+    val WALL_BLAZE_TORCH = register("wall_blaze_torch", WallBlazeTorchBlock(
+        FabricBlockSettings {
+            noCollision()
+            breakInstantly()
+            luminance(15)
+            sounds(BlockSoundGroup.BONE)
+            pistonBehavior(PistonBehavior.DESTROY)
+            dropsLike(BLAZE_TORCH)
+        }
+    ))
+
     fun register() {}
 
 }
