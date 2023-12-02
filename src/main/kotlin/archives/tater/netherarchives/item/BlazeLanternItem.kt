@@ -44,8 +44,8 @@ class BlazeLanternItem(settings: Settings) : Item(settings) {
         user.incrementStat(Stats.USED.getOrCreateStat(this))
         if (!user.abilities.creativeMode) {
             itemStack.decrement(1)
+            user.itemCooldownManager.set(this, 40)
         }
-        user.itemCooldownManager.set(this, 40)
         return TypedActionResult.success(itemStack, world.isClient())
     }
 }
