@@ -1,8 +1,7 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.block.NetherArchivesBlocks
-import archives.tater.netherarchives.datagen.builder.lootTableBuilder
-import archives.tater.netherarchives.datagen.builder.uniform
+import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
@@ -13,33 +12,33 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
         addDrop(NetherArchivesBlocks.MAGNETITE, drops(NetherArchivesItems.MAGNETITE))
 
         addDrop(NetherArchivesBlocks.SMOLDERING_MAGNETITE,
-            lootTableBuilder {
+            LootTableBuilder {
                 pool(1) {
-                    entry(NetherArchivesItems.IRON_SLAG) {
+                    item(NetherArchivesItems.IRON_SLAG) {
                         count(uniform(4, 12))
                         fortune
                     }
-                    condition { survivesExplosion }
+                    conditions { survivesExplosion }
                 }
             }
         )
 
         addDrop(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, drops(NetherArchivesItems.ROTTEN_FLESH_BLOCK))
 
-        addDrop(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, lootTableBuilder {
+        addDrop(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, LootTableBuilder {
             pool(1) {
                 alternatives {
-                    entry(NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK) {
-                        condition {
-                            tool { silkTouch }
+                    item(NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK) {
+                        conditions {
+                            tool {silkTouch}
                         }
                     }
-                    entry(Items.LEATHER) {
+                    item(Items.LEATHER) {
                         count(uniform(1, 3))
                         fortune
                     }
                 }
-                condition { survivesExplosion }
+                conditions { survivesExplosion }
             }
         })
 

@@ -5,6 +5,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.condition.LootCondition
+import net.minecraft.loot.condition.LootConditionConsumingBuilder
 import net.minecraft.loot.condition.MatchToolLootCondition
 import net.minecraft.loot.condition.SurvivesExplosionLootCondition
 import net.minecraft.loot.entry.AlternativeEntry
@@ -19,83 +20,62 @@ import net.minecraft.predicate.NumberRange
 import net.minecraft.predicate.item.EnchantmentPredicate
 import net.minecraft.predicate.item.ItemPredicate
 
-fun lootTableBuilder(init: LootTableBuilder.() -> Unit): LootTable.Builder {
-    return LootTableBuilder().also(init).output
+fun LootTableBuilder(init: LootTable.Builder.() -> Unit): LootTable.Builder {
+    return LootTable.builder().apply(init)
 }
 
-class LootTableBuilder {
-    val output = LootTable.Builder()
-
-    fun pool(rolls: LootNumberProvider, init: LootPoolBuilder.() -> Unit) {
-        output.pool(LootPoolBuilder(rolls).also(init).output)
-    }
-
-    fun pool(rolls: Int, init: LootPoolBuilder.() -> Unit) {
-        pool(constant(rolls), init)
-    }
-
-    fun pool(rolls: LootNumberProvider, bonusRolls: LootNumberProvider, init: LootPoolBuilder.() -> Unit) {
-        output.pool(LootPoolBuilder(rolls, bonusRolls).also(init).output)
-    }
+fun LootTable.Builder.pool(rolls: LootNumberProvider, init: LootPool.Builder.() -> Unit) {
+    pool(LootPool.builder().rolls(rolls).apply(init).build())
 }
 
-class LootPoolBuilder(rolls: LootNumberProvider, bonusRolls: LootNumberProvider = constant(0)) {
-    val output: LootPool.Builder = LootPool.builder().rolls(rolls).bonusRolls(bonusRolls)
-
-    fun entry(drop: ItemConvertible, init: ItemEntryBuilder.() -> Unit = {}) {
-        output.with(ItemEntryBuilder(drop).also(init).output)
-    }
-
-    fun alternatives(init: AlternativeEntryBuilder.() -> Unit) {
-        output.with(AlternativeEntryBuilder().also(init).output)
-    }
-
-    fun condition(condition: Conditions.() -> LootCondition.Builder) {
-        output.conditionally(Conditions.condition())
-    }
+fun LootTable.Builder.pool(rolls: Int, init: LootPool.Builder.() -> Unit) {
+    pool(constant(rolls), init)
 }
 
-class AlternativeEntryBuilder {
-    val output: AlternativeEntry.Builder = AlternativeEntry.builder()
-
-    fun entry(drop: ItemConvertible, init: ItemEntryBuilder.() -> Unit = {}) {
-        output.alternatively(ItemEntryBuilder(drop).also(init).output)
-    }
+fun LootPool.Builder.item(drop: ItemConvertible, init: LeafEntry.Builder<*>.() -> Unit) {
+    with(ItemEntry.builder(drop).apply(init).build())
 }
 
-class ItemEntryBuilder(drop: ItemConvertible) {
-    val output: LeafEntry.Builder<*> = ItemEntry.builder(drop)
+fun LootPool.Builder.alternatives(init: AlternativeEntry.Builder.() -> Unit) {
+    with(AlternativeEntry.builder().apply(init).build())
+}
 
-    fun count(number: LootNumberProvider) {
-        output.apply(SetCountLootFunction.builder(number))
+fun LootPool.Builder.conditions(init: Conditions.() -> Unit) {
+    Conditions(this).init()
+}
+
+fun LeafEntry.Builder<*>.count(count: LootNumberProvider) {
+    apply(SetCountLootFunction.builder(count))
+}
+
+val LeafEntry.Builder<*>.fortune: Unit
+    get() {
+        apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
     }
 
-    fun condition(condition: Conditions.() -> LootCondition.Builder) {
-        output.conditionally(Conditions.condition())
-    }
+fun LeafEntry.Builder<*>.conditions(init: Conditions.() -> Unit) {
+    Conditions(this).init()
+}
 
-    val fortune: Unit
+fun AlternativeEntry.Builder.item(drop: ItemConvertible, init: LeafEntry.Builder<*>.() -> Unit) {
+    alternatively(ItemEntry.builder(drop).apply(init))
+}
+
+class Conditions(private val parentBuilder: LootConditionConsumingBuilder<*>) {
+    val survivesExplosion: Unit
         get() {
-            output.apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
+            parentBuilder.conditionally(SurvivesExplosionLootCondition.builder())
         }
-}
 
-object Conditions {
-    val survivesExplosion: LootCondition.Builder = SurvivesExplosionLootCondition.builder()
-
-    fun tool(init: ItemPredicateBuilder.() -> Unit): LootCondition.Builder {
-        return MatchToolLootCondition.builder(ItemPredicateBuilder().also(init).output)
+    fun tool(init: ItemPredicate.Builder.() -> Unit) {
+        parentBuilder.conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().apply(init)))
     }
 }
 
-class ItemPredicateBuilder {
-    val output: ItemPredicate.Builder = ItemPredicate.Builder.create()
-
-    val silkTouch: Unit
-        get() {
-            output.enchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.ANY))
-        }
-}
+val ItemPredicate.Builder.silkTouch: Unit
+    get() {
+        enchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.ANY))
+    }
 
 fun constant(count: Float): ConstantLootNumberProvider = ConstantLootNumberProvider.create(count)
 fun constant(count: Int) = constant(count.toFloat())
