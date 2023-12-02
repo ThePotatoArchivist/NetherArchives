@@ -20,7 +20,7 @@ import net.minecraft.predicate.NumberRange
 import net.minecraft.predicate.item.EnchantmentPredicate
 import net.minecraft.predicate.item.ItemPredicate
 
-fun LootTableBuilder(init: LootTable.Builder.() -> Unit): LootTable.Builder {
+fun lootTable(init: LootTable.Builder.() -> Unit): LootTable.Builder {
     return LootTable.builder().apply(init)
 }
 
@@ -28,7 +28,7 @@ fun LootTable.Builder.pool(rolls: LootNumberProvider, init: LootPool.Builder.() 
     pool(LootPool.builder().rolls(rolls).apply(init).build())
 }
 
-fun LootTable.Builder.pool(rolls: Int, init: LootPool.Builder.() -> Unit) {
+fun LootTable.Builder.pool(rolls: Int = 1, init: LootPool.Builder.() -> Unit) {
     pool(constant(rolls), init)
 }
 

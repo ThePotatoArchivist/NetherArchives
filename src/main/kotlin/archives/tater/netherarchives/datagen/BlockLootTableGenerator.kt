@@ -5,32 +5,45 @@ import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
+import net.minecraft.block.Block
+import net.minecraft.item.Item
 import net.minecraft.item.Items
+import net.minecraft.loot.LootTable
 
 class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTableProvider(output) {
+    private infix fun Block.drops(lootTable: LootTable.Builder) {
+        addDrop(this, lootTable)
+    }
+
+    private infix fun Block.drops(item: Item) {
+        this drops this@BlockLootTableGenerator.drops(item)
+    }
+
+    private infix fun Block.drops(lootTableInit: LootTable.Builder.() -> Unit) {
+        this drops lootTable(lootTableInit)
+    }
+
     override fun generate() {
-        addDrop(NetherArchivesBlocks.MAGNETITE, drops(NetherArchivesItems.MAGNETITE))
+        NetherArchivesBlocks.MAGNETITE drops NetherArchivesItems.MAGNETITE
 
-        addDrop(NetherArchivesBlocks.SMOLDERING_MAGNETITE,
-            LootTableBuilder {
-                pool(1) {
-                    item(NetherArchivesItems.IRON_SLAG) {
-                        count(uniform(4, 12))
-                        fortune
-                    }
-                    conditions { survivesExplosion }
+        NetherArchivesBlocks.SMOLDERING_MAGNETITE drops {
+            pool {
+                item(NetherArchivesItems.IRON_SLAG) {
+                    count(uniform(4, 12))
+                    fortune
                 }
+                conditions { survivesExplosion }
             }
-        )
+        }
 
-        addDrop(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, drops(NetherArchivesItems.ROTTEN_FLESH_BLOCK))
+        NetherArchivesBlocks.ROTTEN_FLESH_BLOCK drops NetherArchivesItems.ROTTEN_FLESH_BLOCK
 
-        addDrop(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, LootTableBuilder {
-            pool(1) {
+        NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK drops {
+            pool {
                 alternatives {
                     item(NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK) {
                         conditions {
-                            tool {silkTouch}
+                            tool { silkTouch }
                         }
                     }
                     item(Items.LEATHER) {
@@ -40,11 +53,10 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
                 }
                 conditions { survivesExplosion }
             }
-        })
+        }
 
-        addDrop(NetherArchivesBlocks.BLAZE_DUST, drops(NetherArchivesItems.BLAZE_DUST))
+        NetherArchivesBlocks.BLAZE_DUST drops NetherArchivesItems.BLAZE_DUST
 
-        addDrop(NetherArchivesBlocks.BLAZE_TORCH, drops(NetherArchivesItems.BLAZE_TORCH))
-
+        NetherArchivesBlocks.BLAZE_TORCH drops NetherArchivesItems.BLAZE_TORCH
     }
 }

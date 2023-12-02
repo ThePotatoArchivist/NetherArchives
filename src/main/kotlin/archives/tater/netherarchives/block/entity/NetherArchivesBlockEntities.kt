@@ -13,14 +13,18 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 
 object NetherArchivesBlockEntities {
-    private fun register(path: String, blockEntity: (pos: BlockPos, state: BlockState) -> BlockEntity, block: Block): BlockEntityType<BlockEntity> =
+    private fun register(
+        path: String,
+        blockEntity: (pos: BlockPos, state: BlockState) -> BlockEntity,
+        block: Block
+    ): BlockEntityType<BlockEntity> =
         Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             Identifier(NetherArchives.NAMESPACE, path),
             FabricBlockEntityTypeBuilder.create(blockEntity, block).build()
         )
 
-    val BLAZE_TORCH_ENTITY = register("blaze_torch", ::BlazeTorchBlockEntity, NetherArchivesBlocks.BLAZE_TORCH )
+    val BLAZE_TORCH_ENTITY = register("blaze_torch", ::BlazeTorchBlockEntity, NetherArchivesBlocks.BLAZE_TORCH)
 
     fun register() {}
 }

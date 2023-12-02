@@ -62,11 +62,13 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
         }
 
         shaped(RecipeCategory.DECORATIONS, NetherArchivesItems.BLAZE_TORCH, 2) {
-            patterns("""
+            patterns(
+                """
                 X
                 #
                 B
-            """)
+            """
+            )
             inputs {
                 'X' to Items.BLAZE_POWDER
                 '#' to ItemTags.COALS

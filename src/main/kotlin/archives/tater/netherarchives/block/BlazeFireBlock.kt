@@ -85,7 +85,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             .listCopy()
             .filter { world.getBlockState(it).block is BlazePowderBlock }
             .also {
-                if (it.isEmpty()) return;
+                if (it.isEmpty()) return
                 world.setBlockState(it[random.nextInt(it.size)], this.defaultState)
             }
     }
@@ -100,7 +100,14 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     ) {
         super.onBlockAdded(state, world, pos, oldState, notify)
         if (oldState.block !is BlazeFireBlock) {
-            world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 1.0f, 0.4f + 0.4f * world.random.nextFloat())
+            world.playSound(
+                null,
+                pos,
+                SoundEvents.ITEM_FIRECHARGE_USE,
+                SoundCategory.NEUTRAL,
+                1.0f,
+                0.4f + 0.4f * world.random.nextFloat()
+            )
         }
         world.scheduleBlockTick(pos, this, world.random.nextInt(10))
     }

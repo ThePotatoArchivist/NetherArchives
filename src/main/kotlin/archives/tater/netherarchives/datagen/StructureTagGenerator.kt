@@ -17,7 +17,8 @@ class StructureTagGenerator(
 ) : FabricTagProvider<Structure>(output, RegistryKeys.STRUCTURE, registriesFuture) {
 
     companion object {
-        val BLAZE_TORCH_LOCATED: TagKey<Structure> = TagKey.of(RegistryKeys.STRUCTURE, Identifier(NetherArchives.NAMESPACE, "blaze_torch_located"))
+        val BLAZE_TORCH_LOCATED: TagKey<Structure> =
+            TagKey.of(RegistryKeys.STRUCTURE, Identifier(NetherArchives.NAMESPACE, "blaze_torch_located"))
     }
 
     override fun configure(arg: RegistryWrapper.WrapperLookup?) {

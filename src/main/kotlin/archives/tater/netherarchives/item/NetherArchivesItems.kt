@@ -18,6 +18,7 @@ import net.minecraft.util.math.Direction
 object NetherArchivesItems {
     private fun register(path: String, item: Item = Item(FabricItemSettings())): Item =
         Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, path), item)
+
     private fun register(block: Block, settings: FabricItemSettings = FabricItemSettings()): Item =
         register(Registries.BLOCK.getId(block).path, BlockItem(block, settings))
 

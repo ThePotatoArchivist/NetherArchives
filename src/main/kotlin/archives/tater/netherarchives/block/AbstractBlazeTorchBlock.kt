@@ -19,7 +19,7 @@ interface AbstractBlazeTorchBlock : BlockEntityProvider {
         world: World,
         pos: BlockPos,
     ) {
-        if (world.isClient) return;
+        if (world.isClient) return
         (world as ServerWorld).let {
             (world.getBlockEntity(pos) as? BlazeTorchBlockEntity)?.apply {
                 locateTarget()
@@ -28,9 +28,25 @@ interface AbstractBlazeTorchBlock : BlockEntityProvider {
         }
     }
 
-    fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random, originX: Double, originY: Double, originZ: Double) {
+    fun randomDisplayTick(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        random: Random,
+        originX: Double,
+        originY: Double,
+        originZ: Double
+    ) {
         val blockEntity = world.getBlockEntity(pos) as BlazeTorchBlockEntity
 
-        world.addImportantParticle(ParticleTypes.FLAME, originX, originY, originZ, 0.1 * (blockEntity.xVelocityCoef ?: 0.0), 0.02, 0.1 * (blockEntity.zVelocityCoef ?: 0.0) )
+        world.addImportantParticle(
+            ParticleTypes.FLAME,
+            originX,
+            originY,
+            originZ,
+            0.1 * (blockEntity.xVelocityCoef ?: 0.0),
+            0.02,
+            0.1 * (blockEntity.zVelocityCoef ?: 0.0)
+        )
     }
 }

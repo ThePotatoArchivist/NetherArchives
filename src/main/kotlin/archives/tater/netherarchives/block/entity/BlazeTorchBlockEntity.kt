@@ -15,7 +15,8 @@ import net.minecraft.world.World
 import kotlin.math.sqrt
 
 
-class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(NetherArchivesBlockEntities.BLAZE_TORCH_ENTITY, pos, state) {
+class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
+    BlockEntity(NetherArchivesBlockEntities.BLAZE_TORCH_ENTITY, pos, state) {
     companion object {
         const val TARGET_KEY = "targetPos"
     }
@@ -38,7 +39,7 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) : BlockEntity(Neth
         (world as ServerWorld).apply {
             locateStructure(StructureTagGenerator.BLAZE_TORCH_LOCATED, pos, 128, false)?.let {
                 targetPos = it
-                NetherArchives.logger.info("Located at ${it.x}, ${it?.y}, ${it?.z}")
+                NetherArchives.logger.info("Located at ${it.x}, ${it.y}, ${it.z}")
                 markDirty()
             }
         }
