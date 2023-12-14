@@ -39,11 +39,17 @@ class BlazeLanternEntity : ThrownItemEntity {
         BlockPos.iterateInSquare(blockPos, 1, Direction.NORTH, Direction.EAST).listCopy()
             .filter {
                 val blockState = world.getBlockState(it)
-                blockState.block is BlazePowderBlock ||
-                        (blockState.isAir &&
-                                (world.getBlockState(it.down()).isAir ||
-                                        @Suppress("DEPRECATION")
-                                        NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(blockState, world, it)))
+
+                if (blockState.block is BlazePowderBlock) return@filter true
+
+                // Must be either air or a replaceable, burnable block
+                if (!blockState.isAir && !(blockState.isReplaceable && blockState.isBurnable)) return@filter false
+
+                @Suppress("DEPRECATION")
+                // Must be able to place blaze fire here or let it fall
+                if (!world.getBlockState(it.down()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(blockState, world, it)) return@filter false
+
+                true
             }
             .let {
                 val centerFlammable: Boolean
