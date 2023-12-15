@@ -2,7 +2,6 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.FabricBlockSettings
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.datagen.BlockTagGenerator
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.piston.PistonBehavior
@@ -67,10 +66,7 @@ object NetherArchivesBlocks {
     ))
 
     @JvmField
-    val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", FermentingBlock(
-        BlockTagGenerator.ROTTEN_FLESH_FERMENTER,
-        0.25f,
-        FERMENTED_ROTTEN_FLESH_BLOCK,
+    val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", RottenFleshBlock(
         FabricBlockSettings {
             strength(0.7f, 0.7f)
             sounds(BlockSoundGroup.SLIME)

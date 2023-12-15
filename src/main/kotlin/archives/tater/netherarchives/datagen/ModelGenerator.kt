@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.block.FermentingBlock
+import archives.tater.netherarchives.block.RottenFleshBlock
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -59,7 +59,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
 
-        val blockStateVariantMap = BlockStateVariantMap.create(FermentingBlock.AGE).register {
+        val blockStateVariantMap = BlockStateVariantMap.create(RottenFleshBlock.AGE).register {
             val suffix = if (it == 0) "" else "_stage$it"
             val textureMap: TextureMap =
                 TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix))
