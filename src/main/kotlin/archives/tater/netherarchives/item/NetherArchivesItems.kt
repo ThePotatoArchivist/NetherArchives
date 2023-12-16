@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.item
 
+import archives.tater.netherarchives.FabricItemSettings
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
@@ -34,7 +35,9 @@ object NetherArchivesItems {
 
     val BLAZE_DUST = register(NetherArchivesBlocks.BLAZE_DUST)
 
-    val BLAZE_LANTERN = register("blaze_lantern", BlazeLanternItem(FabricItemSettings().maxCount(16)))
+    val BLAZE_LANTERN = register("blaze_lantern", BlazeLanternItem(FabricItemSettings {
+        maxCount(16)
+    }))
 
     val BLAZE_TORCH = register(
         "blaze_torch",

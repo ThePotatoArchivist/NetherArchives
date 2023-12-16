@@ -27,8 +27,8 @@ public class EntityRenderDispatcherMixin {
 
     @ModifyVariable(
             method = "renderFire",
-            name = "sprite",
-            at = @At("STORE")
+            ordinal = 0,
+            at = @At(value = "STORE")
     )
     private Sprite setBlazeFireSprite0(Sprite originalSprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
         return entity instanceof BlazeEntity ? BLAZE_FIRE_0.getSprite() : originalSprite;
@@ -36,8 +36,8 @@ public class EntityRenderDispatcherMixin {
 
     @ModifyVariable(
             method = "renderFire",
-            name = "sprite2",
-            at = @At("STORE")
+            ordinal = 1,
+            at = @At(value = "STORE")
     )
     private Sprite setBlazeFireSprite1(Sprite originalSprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
         return entity instanceof BlazeEntity ? BLAZE_FIRE_1.getSprite() : originalSprite;

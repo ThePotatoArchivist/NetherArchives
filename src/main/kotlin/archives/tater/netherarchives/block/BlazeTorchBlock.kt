@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-class BlazeTorchBlock(settings: Settings?) : TorchBlock(settings, ParticleTypes.FLAME), AbstractBlazeTorchBlock {
+class BlazeTorchBlock(settings: Settings) : TorchBlock(settings, ParticleTypes.FLAME), AbstractBlazeTorchBlock {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         val x = pos.x.toDouble() + 0.5
         val y = pos.y.toDouble() + 0.7
