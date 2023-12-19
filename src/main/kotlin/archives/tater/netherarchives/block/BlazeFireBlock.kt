@@ -1,10 +1,8 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.listCopy
-import net.minecraft.block.AbstractFireBlock
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
+import com.mojang.serialization.MapCodec
+import net.minecraft.block.*
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.server.world.ServerWorld
@@ -27,6 +25,11 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
 
         private fun getFireTickDelay(random: Random) = 20 + random.nextInt(20)
 
+        val CODEC: MapCodec<SoulFireBlock> = createCodec { settings: Settings? ->
+            SoulFireBlock(
+                settings
+            )
+        }
     }
 
     init {
@@ -44,6 +47,8 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         val blockPos = pos.down()
         return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, Direction.UP)
     }
+
+    override fun getCodec(): MapCodec<out AbstractFireBlock> = CODEC
 
     @Suppress("OVERRIDE_DEPRECATION")
     override fun getStateForNeighborUpdate(

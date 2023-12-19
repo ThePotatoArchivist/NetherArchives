@@ -4,19 +4,20 @@ import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.BlockTagGenerator
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.FallingBlock
+import net.minecraft.block.ColoredFallingBlock
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.IntProperty
 import net.minecraft.state.property.Properties
+import net.minecraft.util.ColorCode
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.WorldAccess
 
-class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()) {
+class MagnetiteBlock(settings: Settings) : ColoredFallingBlock(ColorCode(2565935), settings.ticksRandomly()) {
     companion object {
         val DISTANCE: IntProperty = Properties.DISTANCE_1_7
 

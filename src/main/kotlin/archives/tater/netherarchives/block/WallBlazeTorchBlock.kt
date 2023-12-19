@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-class WallBlazeTorchBlock(settings: Settings?) : WallTorchBlock(settings, ParticleTypes.FLAME),
+class WallBlazeTorchBlock(settings: Settings?) : WallTorchBlock(ParticleTypes.FLAME, settings),
     AbstractBlazeTorchBlock {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         val direction = state.get(FACING).opposite
