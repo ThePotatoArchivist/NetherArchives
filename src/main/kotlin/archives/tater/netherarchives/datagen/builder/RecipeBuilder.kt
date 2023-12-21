@@ -3,7 +3,7 @@ package archives.tater.netherarchives.datagen.builder
 import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder
-import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.data.server.recipe.RecipeJsonProvider
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder
 import net.minecraft.item.Item
@@ -15,6 +15,9 @@ import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
+import java.util.function.Consumer
+
+typealias RecipeExporter = Consumer<RecipeJsonProvider>
 
 // CHANGE THIS when copying this file into a new class
 const val NAMESPACE = NetherArchives.NAMESPACE
