@@ -19,4 +19,6 @@ object NetherArchivesEntities {
             trackedUpdateRate(10)
         }.build()
     )
+
+    fun register() {}
 }

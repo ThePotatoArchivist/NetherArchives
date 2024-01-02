@@ -2,6 +2,7 @@ package archives.tater.netherarchives
 
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.block.entity.NetherArchivesBlockEntities
+import archives.tater.netherarchives.entity.NetherArchivesEntities
 import archives.tater.netherarchives.item.NetherArchivesItems
 import archives.tater.netherarchives.modification.ModifyLootTables
 import archives.tater.netherarchives.modification.ModifyWorldGen
@@ -22,6 +23,7 @@ object NetherArchives : ModInitializer {
         NetherArchivesBlocks.register()
         NetherArchivesBlockEntities.register()
         NetherArchivesItems.registerItemGroups()
+        NetherArchivesEntities.register()
         ModifyWorldGen()
         ModifyLootTables()
     }
