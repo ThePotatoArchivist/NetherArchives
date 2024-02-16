@@ -8,10 +8,10 @@
     "ThePotatoArchivist"
   ],
   "contact": {
-    "homepage": "https://github.com/JosiahFu/NetherArchives",
+    "homepage": "https://modrinth.com/mod/nether-archives",
     "sources": "https://github.com/JosiahFu/NetherArchives"
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/netherarchives/icon.png",
   "environment": "*",
   "entrypoints": {
