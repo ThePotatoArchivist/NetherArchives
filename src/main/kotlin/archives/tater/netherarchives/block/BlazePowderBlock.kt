@@ -46,6 +46,7 @@ class BlazePowderBlock(settings: Settings) : Block(settings) {
         if (!state.canPlaceAt(world, pos)) {
             return Blocks.AIR.defaultState
         }
+        @Suppress("DEPRECATION")
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
@@ -63,6 +64,7 @@ class BlazePowderBlock(settings: Settings) : Block(settings) {
         if (type == NavigationType.AIR && !collidable) {
             return true
         }
+        @Suppress("DEPRECATION")
         return super.canPathfindThrough(state, world, pos, type)
     }
 

@@ -23,5 +23,12 @@ public abstract class WitherEntityRendererMixin extends MobEntityRenderer<Wither
         addFeature(new WitherEyesFeatureRenderer<>(this));
     }
 
+//    @ModifyConstant(
+//            method = "<clinit>",
+//            constant = @Constant(stringValue = "textures/entity/wither/wither.png")
+//    )
+//    private static String modifyTexture(String constant) {
+//        return "netherarchives:textures/entity/wither/wither.png";
+//    }
 }
 
