@@ -1,7 +1,7 @@
 plugins {
-	id 'fabric-loom' version '1.4-SNAPSHOT'
+	id 'fabric-loom' version '1.6-SNAPSHOT'
 	id 'maven-publish'
-  id "org.jetbrains.kotlin.jvm" version "1.9.10"
+    id "org.jetbrains.kotlin.jvm" version "1.9.23"
 	id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.0'
 }
 
@@ -28,6 +28,10 @@ repositories {
 		filter {
 			includeGroup "maven.modrinth"
 		}
+	}
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
 	}
 }
 
@@ -79,6 +83,9 @@ dependencies {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 	modImplementation("maven.modrinth:config:0.2.0")
 	include("maven.modrinth:config:0.2.0")
+
+	modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
+	modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
 }
 
 processResources {

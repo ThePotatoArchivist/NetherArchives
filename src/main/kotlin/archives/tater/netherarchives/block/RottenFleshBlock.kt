@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.datagen.BlockTagGenerator
+import archives.tater.netherarchives.NetherArchivesTags
 import archives.tater.netherarchives.listCopy
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
@@ -27,7 +27,7 @@ class RottenFleshBlock(settings: FabricBlockSettings) : Block(settings.ticksRand
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         // [Iterable.find] stops iterating when it finds the block so the object should still be on the same value
         val campfire = BlockPos.iterate(pos, pos.down(15)).find {
-            world.getBlockState(it).isIn(BlockTagGenerator.ROTTEN_FLESH_FERMENTER)
+            world.getBlockState(it).isIn(NetherArchivesTags.ROTTEN_FLESH_FERMENTER)
         }
         if (campfire === null) return
 

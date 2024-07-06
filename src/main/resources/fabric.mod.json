@@ -32,6 +32,12 @@
         "value": "archives.tater.netherarchives.datagen.NetherArchivesDataGenerator",
         "adapter": "kotlin"
       }
+    ],
+    "emi": [
+      {
+        "value": "archives.tater.netherarchives.emi.NetherArchivesEMIPlugin",
+        "adapter": "kotlin"
+      }
     ]
   },
   "mixins": [
@@ -49,6 +55,6 @@
     "fabric-language-kotlin": ">=1.9.10"
   },
   "suggests": {
-    "another-mod": "*"
+    "emi": "~1.1.10"
   }
 }

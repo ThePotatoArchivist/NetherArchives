@@ -1,10 +1,11 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.block.RottenFleshBlock
 import archives.tater.netherarchives.block.NetherArchivesBlocks
+import archives.tater.netherarchives.block.RottenFleshBlock
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
+import net.minecraft.block.Blocks
 import net.minecraft.data.client.*
 import net.minecraft.data.client.VariantSettings.Rotation
 import net.minecraft.util.Identifier
@@ -82,6 +83,9 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
     override fun generateItemModels(itemModelGenerator: ItemModelGenerator) {
         itemModelGenerator.register(NetherArchivesItems.IRON_SLAG, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BLAZE_DUST, Models.GENERATED)
+        Models.GENERATED.upload(ModelIds.getItemModelId(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMap().apply {
+            put(TextureKey.LAYER0, ModelIds.getBlockSubModelId(Blocks.SOUL_FIRE, "_0"))
+        }, itemModelGenerator.writer)
 
         Models.TEMPLATE_LANTERN.upload(
             ModelIds.getItemModelId(NetherArchivesItems.BLAZE_LANTERN),

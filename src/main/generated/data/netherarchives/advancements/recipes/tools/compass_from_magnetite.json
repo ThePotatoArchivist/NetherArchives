@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_magnetite"
+      "has_magnetite",
+      "has_the_recipe"
     ]
   ],
   "rewards": {

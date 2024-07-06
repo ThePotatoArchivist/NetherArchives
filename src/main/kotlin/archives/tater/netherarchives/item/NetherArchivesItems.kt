@@ -17,8 +17,11 @@ import net.minecraft.util.math.Direction
 
 
 object NetherArchivesItems {
+    private fun register(identifier: Identifier, item: Item = Item(FabricItemSettings())): Item =
+        Registry.register(Registries.ITEM, identifier, item)
+
     private fun register(path: String, item: Item = Item(FabricItemSettings())): Item =
-        Registry.register(Registries.ITEM, Identifier(NetherArchives.NAMESPACE, path), item)
+        register(Identifier(NetherArchives.NAMESPACE, path), item)
 
     private fun register(block: Block, settings: FabricItemSettings = FabricItemSettings()): Item =
         register(Registries.BLOCK.getId(block).path, BlockItem(block, settings))
@@ -48,6 +51,9 @@ object NetherArchivesItems {
             Direction.DOWN
         )
     )
+
+    // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
+    val DUMMY_SOUL_FIRE = register(Identifier("netherarchives/dummy/soul_fire"))
 
     private val itemGroups = mapOf(
         ItemGroups.INGREDIENTS to setOf(IRON_SLAG),

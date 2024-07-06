@@ -8,6 +8,7 @@ object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
         fabricDataGenerator.createPack().apply {
             addProvider(::ModelGenerator)
             addProvider(::BlockTagGenerator)
+            addProvider(::ItemTagGenerator)
             addProvider(::StructureTagGenerator)
             addProvider(::BlockLootTableGenerator)
             addProvider(::RecipeGenerator)
