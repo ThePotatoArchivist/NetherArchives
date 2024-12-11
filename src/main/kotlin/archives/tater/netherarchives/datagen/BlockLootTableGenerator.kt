@@ -58,5 +58,21 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
         NetherArchivesBlocks.BLAZE_DUST drops NetherArchivesItems.BLAZE_DUST
 
         NetherArchivesBlocks.BLAZE_TORCH drops NetherArchivesItems.BLAZE_TORCH
+
+        NetherArchivesBlocks.BASALT_GEYSER drops {
+            pool {
+                alternatives {
+                    item(NetherArchivesItems.BASALT_GEYSER) {
+                        conditions {
+                            tool { silkTouch }
+                        }
+                    }
+                    item(Items.BASALT)
+                }
+                conditions {
+                    survivesExplosion
+                }
+            }
+        }
     }
 }

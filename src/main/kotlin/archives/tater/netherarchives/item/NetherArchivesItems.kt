@@ -58,13 +58,16 @@ object NetherArchivesItems {
         maxDamage(ToolMaterials.STONE.durability)
     }))
 
+    val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
+
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
     val DUMMY_SOUL_FIRE = register(Identifier("netherarchives/dummy/soul_fire"))
 
     private val itemGroups = mapOf(
         ItemGroups.INGREDIENTS to setOf(IRON_SLAG),
-        ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK),
+        ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
         ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN),
+        ItemGroups.TOOLS to setOf(BASALT_SKIS, BASALT_OAR),
         ItemGroups.FUNCTIONAL to setOf(BLAZE_TORCH),
     )
 

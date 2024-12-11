@@ -27,7 +27,7 @@ object NetherArchivesBlocks {
         FabricBlockSettings {
             strength(0.6f, 1.25f)
             sounds(BlockSoundGroup.BASALT)
-            luminance { 3 }
+            luminance(3)
             emissiveLighting(Blocks::always)
             requiresTool()
         }
@@ -95,6 +95,13 @@ object NetherArchivesBlocks {
             dropsLike(BLAZE_TORCH)
         }
     ))
+
+    val BASALT_GEYSER = register("basalt_geyser", BasaltGeyserBlock(FabricBlockSettings {
+        strength(1.2f, 4.2f)
+        luminance(7)
+        sounds(BlockSoundGroup.BASALT)
+        requiresTool()
+    }))
 
     fun register() {}
 

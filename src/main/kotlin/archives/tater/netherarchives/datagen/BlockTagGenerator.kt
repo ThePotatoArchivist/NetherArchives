@@ -23,8 +23,12 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
             NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
         )
+        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(
+            NetherArchivesBlocks.BASALT_GEYSER,
+        )
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(
-            NetherArchivesBlocks.SMOLDERING_MAGNETITE
+            NetherArchivesBlocks.SMOLDERING_MAGNETITE,
+            NetherArchivesBlocks.BASALT_GEYSER,
         )
         getOrCreateTagBuilder(MAGNETIC).add(
             Blocks.LODESTONE

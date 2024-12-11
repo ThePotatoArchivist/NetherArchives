@@ -1,7 +1,8 @@
-// 1.20.1	2024-12-11T01:51:20.882923676	Nether Archives/Tags for minecraft:block
+// 1.20.1	2024-12-11T11:49:41.875799464	Nether Archives/Tags for minecraft:block
 f25c79a252f03c20189fdccfea0adb6febc71bbe data/netherarchives/tags/blocks/rotten_flesh_fermenter.json
 0a6df4946b8ed1dbd178251916dc5b1deb858b0d data/minecraft/tags/blocks/mineable/hoe.json
 a94411f94ff4b3994cd62e49802686d4a9df6781 data/minecraft/tags/blocks/mineable/shovel.json
 8a23702b05296c8af5014d6aa6e9265ded85c7d9 data/netherarchives/tags/blocks/blaze_fire_target.json
 612d2f86c4c3fc59eae916f6c69dc152d02eb409 data/netherarchives/tags/blocks/magnetic.json
-3ea43b467bef24e9112a20c07cf848dcce922ede data/minecraft/tags/blocks/needs_stone_tool.json
+40e550f4fa41707d50e5d3652988fd16090c5a67 data/minecraft/tags/blocks/mineable/pickaxe.json
+2583ff7224fa1c7ed06c176b9da044119757b374 data/minecraft/tags/blocks/needs_stone_tool.json

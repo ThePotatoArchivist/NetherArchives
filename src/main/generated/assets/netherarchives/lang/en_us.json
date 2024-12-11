@@ -1,4 +1,5 @@
 {
+  "block.netherarchives.basalt_geyser": "Basalt Geyser",
   "block.netherarchives.blaze_dust": "Blaze Dust",
   "block.netherarchives.blaze_torch": "Blaze Torch",
   "block.netherarchives.fermented_rotten_flesh_block": "Fermented Rotten Flesh Block",
@@ -6,6 +7,8 @@
   "block.netherarchives.rotten_flesh_block": "Rotten Flesh Block",
   "block.netherarchives.smoldering_magnetite": "Smoldering Magnetite",
   "item.minecraft.netherarchives.dummy.soul_fire": "Soul Fire",
+  "item.netherarchives.basalt_oar": "Basalt Oar",
+  "item.netherarchives.basalt_skis": "Basalt Skis",
   "item.netherarchives.blaze_lantern": "Volatile Blaze Lantern",
   "item.netherarchives.iron_slag": "Iron Slag"
 }

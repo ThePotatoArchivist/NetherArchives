@@ -57,7 +57,7 @@ fun LeafEntry.Builder<*>.conditions(init: Conditions.() -> Unit) {
     Conditions(this).init()
 }
 
-fun AlternativeEntry.Builder.item(drop: ItemConvertible, init: LeafEntry.Builder<*>.() -> Unit) {
+fun AlternativeEntry.Builder.item(drop: ItemConvertible, init: LeafEntry.Builder<*>.() -> Unit = {}) {
     alternatively(ItemEntry.builder(drop).apply(init))
 }
 

@@ -60,21 +60,31 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
 
-        val blockStateVariantMap = BlockStateVariantMap.create(RottenFleshBlock.AGE).register {
-            val suffix = if (it == 0) "" else "_stage$it"
-            val textureMap: TextureMap =
-                TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix))
-            val identifier: Identifier =
-                Models.CUBE_ALL.upload(
-                    NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
-                    suffix,
-                    textureMap,
-                    blockStateModelGenerator.modelCollector
-                )
-            BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+        Models.CUBE_BOTTOM_TOP.upload(NetherArchivesBlocks.BASALT_GEYSER, TextureMap().apply {
+            put(TextureKey.TOP, ModelIds.getBlockSubModelId(NetherArchivesBlocks.BASALT_GEYSER, "_top"))
+            put(TextureKey.SIDE, ModelIds.getBlockSubModelId(Blocks.BASALT, "_side"))
+            put(TextureKey.BOTTOM, ModelIds.getBlockSubModelId(Blocks.BASALT, "_top"))
+        }, blockStateModelGenerator.modelCollector).also {
+            blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(NetherArchivesBlocks.BASALT_GEYSER, it))
         }
+
         blockStateModelGenerator.blockStateCollector.accept(
-            VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).coordinate(blockStateVariantMap)
+            VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).coordinate(
+                BlockStateVariantMap.create(
+                    RottenFleshBlock.AGE
+                ).register {
+                    val suffix = if (it == 0) "" else "_stage$it"
+                    val textureMap: TextureMap =
+                        TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix))
+                    val identifier: Identifier =
+                        Models.CUBE_ALL.upload(
+                            NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
+                            suffix,
+                            textureMap,
+                            blockStateModelGenerator.modelCollector
+                        )
+                    BlockStateVariant.create().put(VariantSettings.MODEL, identifier)
+                })
         )
 
     }
