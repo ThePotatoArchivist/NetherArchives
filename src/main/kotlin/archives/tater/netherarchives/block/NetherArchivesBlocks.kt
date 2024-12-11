@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier
 
 object NetherArchivesBlocks {
     private fun register(path: String, block: Block): Block =
-        Registry.register(Registries.BLOCK, Identifier(NetherArchives.NAMESPACE, path), block)
+        Registry.register(Registries.BLOCK, Identifier(NetherArchives.MOD_ID, path), block)
 
     @JvmField
     val MAGNETITE = register("magnetite", MagnetiteBlock(

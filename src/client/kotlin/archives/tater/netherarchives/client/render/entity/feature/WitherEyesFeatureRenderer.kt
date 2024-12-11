@@ -1,4 +1,4 @@
-package archives.tater.netherarchives.render.entity.feature
+package archives.tater.netherarchives.client.render.entity.feature
 
 import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.api.EnvType
@@ -15,10 +15,10 @@ class WitherEyesFeatureRenderer<T : WitherEntity>(featureRendererContext: Featur
 
     companion object {
         private val SKIN =
-            RenderLayer.getEyes(Identifier(NetherArchives.NAMESPACE, "textures/entity/wither/wither_eyes.png"))
+            RenderLayer.getEyes(Identifier(NetherArchives.MOD_ID, "textures/entity/wither/wither_eyes.png"))
         private val INVULNERABLE_SKIN = RenderLayer.getEyes(
             Identifier(
-                NetherArchives.NAMESPACE,
+                NetherArchives.MOD_ID,
                 "textures/entity/wither/wither_invulnerable_eyes.png"
             )
         )

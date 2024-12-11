@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier
 object NetherArchivesEntities {
     val BLAZE_LANTERN: EntityType<BlazeLanternEntity> = Registry.register(
         Registries.ENTITY_TYPE,
-        Identifier(NetherArchives.NAMESPACE, "blaze_lantern"),
+        Identifier(NetherArchives.MOD_ID, "blaze_lantern"),
         FabricEntityTypeBuilder.create(SpawnGroup.MISC, ::BlazeLanternEntity).apply {
             dimensions(EntityDimensions.fixed(0.25f, 0.25f))
             trackRangeChunks(4)

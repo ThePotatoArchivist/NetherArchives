@@ -1,4 +1,4 @@
-package archives.tater.netherarchives.render.entity.feature
+package archives.tater.netherarchives.client.render.entity.feature
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

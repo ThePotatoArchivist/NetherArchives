@@ -18,7 +18,7 @@ object NetherArchivesItems {
         Registry.register(Registries.ITEM, identifier, item)
 
     private fun register(path: String, item: Item = Item(FabricItemSettings())): Item =
-        register(Identifier(NetherArchives.NAMESPACE, path), item)
+        register(Identifier(NetherArchives.MOD_ID, path), item)
 
     private fun register(block: Block, settings: FabricItemSettings = FabricItemSettings()): Item =
         register(Registries.BLOCK.getId(block).path, BlockItem(block, settings))

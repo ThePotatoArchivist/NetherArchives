@@ -20,7 +20,7 @@ import java.util.function.Consumer
 typealias RecipeExporter = Consumer<RecipeJsonProvider>
 
 // CHANGE THIS when copying this file into a new class
-const val NAMESPACE = NetherArchives.NAMESPACE
+const val NAMESPACE = NetherArchives.MOD_ID
 
 // Shaped
 

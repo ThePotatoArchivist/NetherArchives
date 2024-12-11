@@ -35,7 +35,7 @@
     ],
     "emi": [
       {
-        "value": "archives.tater.netherarchives.emi.NetherArchivesEMIPlugin",
+        "value": "archives.tater.netherarchives.emi.NetherArchivesEmiPlugin",
         "adapter": "kotlin"
       }
     ]

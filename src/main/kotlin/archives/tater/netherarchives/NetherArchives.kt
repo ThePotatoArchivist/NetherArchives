@@ -11,10 +11,10 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 object NetherArchives : ModInitializer {
-    const val NAMESPACE = "netherarchives"
+    const val MOD_ID = "netherarchives"
 
     @JvmField
-    val logger: Logger = LoggerFactory.getLogger(NAMESPACE)
+    val logger: Logger = LoggerFactory.getLogger(MOD_ID)
 
     val config = NetherArchivesConfig(true).load() as NetherArchivesConfig
 

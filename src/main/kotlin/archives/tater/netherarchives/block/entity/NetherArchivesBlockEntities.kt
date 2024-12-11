@@ -20,7 +20,7 @@ object NetherArchivesBlockEntities {
     ): BlockEntityType<BlockEntity> =
         Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
-            Identifier(NetherArchives.NAMESPACE, path),
+            Identifier(NetherArchives.MOD_ID, path),
             FabricBlockEntityTypeBuilder.create(blockEntity, block).build()
         )
 

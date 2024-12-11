@@ -1,4 +1,4 @@
-package archives.tater.netherarchives.render.entity.feature
+package archives.tater.netherarchives.client.render.entity.feature
 
 import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.api.EnvType
@@ -17,7 +17,7 @@ class WitherSkeletonEyesFeatureRenderer<T : AbstractSkeletonEntity>(featureRende
     companion object {
         private val SKIN = RenderLayer.getEyes(
             Identifier(
-                NetherArchives.NAMESPACE,
+                NetherArchives.MOD_ID,
                 "textures/entity/skeleton/wither_skeleton_eyes.png"
             )
         )

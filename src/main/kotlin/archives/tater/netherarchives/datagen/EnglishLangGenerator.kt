@@ -1,7 +1,5 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.NetherArchivesTags
-import archives.tater.netherarchives.NetherArchivesTags.translationKey
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -19,7 +17,6 @@ class EnglishLangGenerator(output: FabricDataOutput) : FabricLanguageProvider(ou
             add(NetherArchivesItems.BLAZE_LANTERN, "Volatile Blaze Lantern")
             add(NetherArchivesItems.IRON_SLAG, "Iron Slag")
             add(NetherArchivesItems.DUMMY_SOUL_FIRE, "Soul Fire")
-            add(NetherArchivesTags.EMI_ROTTEN_FLESH_FERMENTER.translationKey, "Rotten Flesh Fermenter")
         }
     }
 }

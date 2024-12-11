@@ -12,9 +12,9 @@ import net.minecraft.world.gen.GenerationStep
 
 object ModifyWorldGen {
     private val MAGNETITE_DELTA =
-        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.NAMESPACE, "magnetite_delta"))
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "magnetite_delta"))
     private val MAGNETITE_BLOBS =
-        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.NAMESPACE, "magnetite_blobs"))
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "magnetite_blobs"))
 
     operator fun invoke() {
         BiomeModifications.addFeature(

@@ -1,4 +1,4 @@
-package archives.tater.netherarchives.mixin.client
+package archives.tater.netherarchives.client
 
 import archives.tater.netherarchives.NetherArchives
 import org.objectweb.asm.tree.ClassNode
@@ -7,13 +7,8 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo
 
 class NetherArchivesClientMixinPlugin : IMixinConfigPlugin {
     companion object {
-        val eyesMixins = listOf(
-            "archives.tater.netherarchives.mixin.client.WitherSkeletonEntityRendererMixin",
-            "archives.tater.netherarchives.mixin.client.WitherEntityRendererMixin",
-            "archives.tater.netherarchives.mixin.client.WitherArmorFeatureRendererMixin",
-        )
-
-        val blazeMixin = "archives.tater.netherarchives.mixin.client.EntityRenderDispatcherMixin"
+        const val WITHER_ARMOR_MIXIN = "archives.tater.netherarchives.mixin.client.WitherArmorFeatureRendererMixin"
+        const val BLAZE_MIXIN = "archives.tater.netherarchives.mixin.client.EntityRenderDispatcherMixin"
     }
 
     override fun onLoad(mixinPackage: String?) {}
@@ -22,8 +17,8 @@ class NetherArchivesClientMixinPlugin : IMixinConfigPlugin {
 
     override fun shouldApplyMixin(targetClassName: String, mixinClassName: String): Boolean {
         return when(mixinClassName) {
-            in eyesMixins -> NetherArchives.config.skeletonEyes
-            blazeMixin -> NetherArchives.config.blazeEntityYellowFire
+            WITHER_ARMOR_MIXIN -> NetherArchives.config.skeletonEyes
+            BLAZE_MIXIN -> NetherArchives.config.blazeEntityYellowFire
             else -> true
         }
     }
