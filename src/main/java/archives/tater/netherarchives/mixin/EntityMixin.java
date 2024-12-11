@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(Entity.class)
-public class EntityMixin {
+public abstract class EntityMixin {
     @ModifyConstant(
             method = "isInLava",
             constant = @Constant(doubleValue = 0.0)

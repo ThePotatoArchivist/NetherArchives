@@ -98,7 +98,7 @@ object NetherArchivesBlocks {
 
     val BASALT_GEYSER = register("basalt_geyser", BasaltGeyserBlock(FabricBlockSettings {
         strength(1.2f, 4.2f)
-        luminance(7)
+        luminance(5)
         sounds(BlockSoundGroup.BASALT)
         requiresTool()
     }))

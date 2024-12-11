@@ -2,6 +2,8 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
 import archives.tater.netherarchives.block.entity.NetherArchivesBlockEntities
+import archives.tater.netherarchives.duck.isAirSkiing
+import archives.tater.netherarchives.item.SkisItem
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
@@ -51,8 +53,11 @@ class BasaltGeyserBlock(settings: Settings) : Block(settings), BlockEntityProvid
         private const val MAX_BOOST_VELOCITY = 0.7
 
         override fun tick(world: World, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
-            world.getOtherEntities(null, Box(pos, pos.add(1, BOOST_RANGE + 1, 1))) { it.isLogicalSideForUpdatingMovement }.forEach {
+            world.getOtherEntities(null, Box(pos, pos.add(1, BOOST_RANGE + 1, 1))) { true }.forEach {
                 it.addVelocity(0.0, MAX_BOOST_VELOCITY * (1 - (it.y - pos.y + 1) / BOOST_RANGE.toDouble()),0.0)
+                if (it is LivingEntity && SkisItem.wearsSkis(it)) {
+                    it.isAirSkiing = true
+                }
             }
         }
     }
