@@ -22,12 +22,11 @@ class SkisItem(material: ArmorMaterial, settings: Settings) : ArmorItem(material
         val BASALT_ARMOR_MATERIAL = object : ArmorMaterial by ArmorMaterials.CHAIN {
             // TODO add custom sound?
             override fun getEquipSound(): SoundEvent = SoundEvents.ITEM_ARMOR_EQUIP_GENERIC
-            override fun getName(): String = "netherarchives_basalt"
             override fun getRepairIngredient(): Ingredient = Ingredient.ofItems(Items.POLISHED_BASALT)
         }
 
         @JvmField
-        val FLUID_SKI_COLLISION_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
+        val FLUID_SKI_COLLISION_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
 
         @JvmStatic
         fun wearsSkis(entity: Entity?) = if (entity is LivingEntity) wearsSkis(entity) else false
