@@ -1,4 +1,4 @@
-// 1.20.1	2024-07-06T00:30:42.980372536	Nether Archives/Model Definitions
+// 1.20.1	2024-12-10T21:54:24.155509714	Nether Archives/Model Definitions
 df703380a9aa01bf9c376f53354d832bb5a06883 assets/netherarchives/models/item/blaze_dust.json
 a4572ce703d323a1a84431f2b22e53dc42162a23 assets/netherarchives/models/item/blaze_torch.json
 e5e4fc4c794bec4a022779c08a093ee881f3bdcc assets/netherarchives/models/block/smoldering_magnetite.json
@@ -11,6 +11,7 @@ aff79648d80c990f0e24e1c29bc3c43fd3227bf8 assets/netherarchives/models/block/rott
 541b5233c31916319029232a914bfb514a480b0b assets/netherarchives/models/block/blaze_torch.json
 8a61b518e1afec72bc67369538109d5e42662925 assets/netherarchives/blockstates/smoldering_magnetite.json
 bbe39b18429df011cc2ba15fefb3cf5503190314 assets/netherarchives/models/block/rotten_flesh_block_stage2.json
+da52fc359a600a224b45a557844f5a42b3961d2b assets/netherarchives/models/item/basalt_skis.json
 33594d812b587d1e51f437045c02cf909737795b assets/netherarchives/models/block/blaze_fire_floor0.json
 fda65f64abe982f929863dc9b65df7f5b6583380 assets/netherarchives/models/block/rotten_flesh_block_stage5.json
 79a9aa67769095030e2effcb4279cb0a1f257374 assets/netherarchives/models/item/rotten_flesh_block.json
@@ -25,8 +26,10 @@ f6a4da954c2e0091ce7c7cd204ab19bcd6bc126a assets/netherarchives/models/block/blaz
 7dac05a6e054619af0be7285c4b250e964feaa9e assets/minecraft/models/item/netherarchives/dummy/soul_fire.json
 d24243d940628106d5db195553f52b6374bab02a assets/netherarchives/blockstates/magnetite.json
 6ba76f74b5fc9a2f4124076d989034bf42006019 assets/netherarchives/blockstates/blaze_torch.json
+4f1b0f43f04cf07ce5186146e7c8aed101f30b83 assets/netherarchives/models/item/netherite_skis.json
 92bc4416ca8e43f5d265c3057564b802ed9b8797 assets/netherarchives/models/block/blaze_fire_side_alt0.json
 e05d8004743b069aea01161cbf12b9b8b714e8c3 assets/netherarchives/models/block/rotten_flesh_block_stage4.json
+7458b8d7b335c0076b62d51004c75fd7f5ffc2c3 assets/netherarchives/models/item/basalt_oar.json
 60aec95b79fe0420a28110d67d64d04970f1112b assets/netherarchives/blockstates/rotten_flesh_block.json
 ec3ebe73c4106a60fb7a7b5f23ef0941d451f9e8 assets/netherarchives/models/item/fermented_rotten_flesh_block.json
 f912c27a1deb480cd8c1dfc549900e146a6ec455 assets/netherarchives/models/block/blaze_fire_side_alt1.json

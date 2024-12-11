@@ -6,10 +6,7 @@ import archives.tater.netherarchives.block.NetherArchivesBlocks
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
-import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
-import net.minecraft.item.ItemGroups
-import net.minecraft.item.VerticallyAttachableBlockItem
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
@@ -51,6 +48,15 @@ object NetherArchivesItems {
             Direction.DOWN
         )
     )
+
+    val BASALT_SKIS = register("basalt_skis", SkisItem(SkisItem.BASALT_ARMOR_MATERIAL, FabricItemSettings()))
+    val NETHERITE_SKIS = register("netherite_skis", SkisItem(ArmorMaterials.NETHERITE, FabricItemSettings {
+        fireproof()
+    }))
+    val BASALT_OAR = register("basalt_oar", OarItem(FabricItemSettings {
+        maxCount(1)
+        maxDamage(ToolMaterials.STONE.durability)
+    }))
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
     val DUMMY_SOUL_FIRE = register(Identifier("netherarchives/dummy/soul_fire"))

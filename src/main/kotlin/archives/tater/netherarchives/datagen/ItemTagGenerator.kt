@@ -25,5 +25,4 @@ class ItemTagGenerator(
             NetherArchivesItems.DUMMY_SOUL_FIRE,
         )
     }
-
 }

@@ -1,6 +1,7 @@
 package archives.tater.netherarchives
 
 import net.minecraft.block.Block
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
@@ -18,6 +19,12 @@ object NetherArchivesTags {
 
     val EMI_ROTTEN_FLESH_FERMENTER: TagKey<Item> =
         TagKey.of(RegistryKeys.ITEM, Identifier(NetherArchives.NAMESPACE, "emi/rotten_flesh_fermenter"))
+
+    @JvmField
+    val SKIS_CAN_WALK_ON: TagKey<Fluid> =
+        TagKey.of(RegistryKeys.FLUID, Identifier(NetherArchives.NAMESPACE, "skis_can_walk_on"))
+    val BURNS_WHEN_PADDLE: TagKey<Fluid> =
+        TagKey.of(RegistryKeys.FLUID, Identifier(NetherArchives.NAMESPACE, "burns_when_paddle"))
 
     val <T> TagKey<T>.translationKey: String
         get() {

@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "archives.tater.netherarchives.mixin.client.NetherArchivesClientMixinPlugin",
   "client": [
+    "ClientPlayerEntityMixin",
     "EntityRenderDispatcherMixin",
     "WitherArmorFeatureRendererMixin",
     "WitherEntityRendererMixin",
