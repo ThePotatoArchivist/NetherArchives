@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "netherarchives:item/netherite_skis"
+    "layer0": "netherarchives:item/basalt_oar"
   }
 }

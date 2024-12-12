@@ -1,0 +1,28 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "netherarchives:item/basalt_oar_in_hand"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, 90, 55],
+      "translation": [0, -9.25, 0.25],
+      "scale": [1.7, 1.7, 0.85]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, -90, -55],
+      "translation": [0, -9.25, 0.25],
+      "scale": [1.7, 1.7, 0.85]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, 90, -45],
+      "translation": [1.13, -4, 0.75],
+      "scale": [1.36, 1.36, 0.68]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, -90, 45],
+      "translation": [1.13, -4, 0.75],
+      "scale": [1.36, 1.36, 0.68]
+    }
+  }
+}

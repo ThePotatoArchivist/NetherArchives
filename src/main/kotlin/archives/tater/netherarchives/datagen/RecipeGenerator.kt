@@ -75,5 +75,43 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             }
             itemCriterion(Items.BLAZE_POWDER)
         }
+
+        shaped(RecipeCategory.MISC, NetherArchivesItems.BASALT_ROD, 2) {
+            patterns("""
+                  #
+                 # 
+                #  
+            """.trimIndent())
+            inputs {
+                '#' to Items.POLISHED_BASALT
+            }
+            itemCriterion(Items.BASALT)
+        }
+
+        shaped(RecipeCategory.TOOLS, NetherArchivesItems.BASALT_SKIS) {
+            patterns("""
+                # #
+                # #
+                % %
+            """.trimIndent())
+            inputs {
+                '#' to Items.POLISHED_BASALT
+                '%' to NetherArchivesItems.BASALT_ROD
+            }
+            itemCriterion(NetherArchivesItems.BASALT_ROD)
+        }
+
+        shaped(RecipeCategory.TOOLS, NetherArchivesItems.BASALT_OAR) {
+            patterns("""
+                %
+                %
+                #
+            """.trimIndent())
+            inputs {
+                '#' to Items.POLISHED_BASALT
+                '%' to NetherArchivesItems.BASALT_ROD
+            }
+            itemCriterion(NetherArchivesItems.BASALT_ROD)
+        }
     }
 }

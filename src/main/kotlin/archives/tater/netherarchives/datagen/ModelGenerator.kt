@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.Model
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.block.RottenFleshBlock
 import archives.tater.netherarchives.item.NetherArchivesItems
@@ -60,10 +61,11 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
 
-        Models.CUBE_BOTTOM_TOP.upload(NetherArchivesBlocks.BASALT_GEYSER, TextureMap().apply {
+        Model(TextureKey.TOP, TextureKey.SIDE, TextureKey.BOTTOM, TextureKey.PARTICLE, parent = Identifier("block/cube_bottom_top")).upload(NetherArchivesBlocks.BASALT_GEYSER, TextureMap().apply {
             put(TextureKey.TOP, ModelIds.getBlockSubModelId(NetherArchivesBlocks.BASALT_GEYSER, "_top"))
             put(TextureKey.SIDE, ModelIds.getBlockSubModelId(Blocks.BASALT, "_side"))
             put(TextureKey.BOTTOM, ModelIds.getBlockSubModelId(Blocks.BASALT, "_top"))
+            put(TextureKey.PARTICLE, ModelIds.getBlockSubModelId(NetherArchivesBlocks.BASALT_GEYSER, "_top"))
         }, blockStateModelGenerator.modelCollector).also {
             blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(NetherArchivesBlocks.BASALT_GEYSER, it))
         }
@@ -94,8 +96,8 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         itemModelGenerator.register(NetherArchivesItems.IRON_SLAG, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BLAZE_DUST, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BASALT_SKIS, Models.GENERATED)
-        itemModelGenerator.register(NetherArchivesItems.NETHERITE_SKIS, Models.GENERATED)
-        itemModelGenerator.register(NetherArchivesItems.BASALT_OAR, Models.HANDHELD_ROD)
+        Models.GENERATED.upload(ModelIds.getItemSubModelId(NetherArchivesItems.BASALT_OAR, "_inventory"), TextureMap.layer0(NetherArchivesItems.BASALT_OAR), itemModelGenerator.writer)
+        itemModelGenerator.register(NetherArchivesItems.BASALT_ROD, Models.HANDHELD_ROD)
 
         Models.GENERATED.upload(ModelIds.getItemModelId(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMap().apply {
             put(TextureKey.LAYER0, ModelIds.getBlockSubModelId(Blocks.SOUL_FIRE, "_0"))

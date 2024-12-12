@@ -50,13 +50,11 @@ object NetherArchivesItems {
     )
 
     val BASALT_SKIS = register("basalt_skis", SkisItem(SkisItem.BASALT_ARMOR_MATERIAL, FabricItemSettings()))
-    val NETHERITE_SKIS = register("netherite_skis", SkisItem(ArmorMaterials.NETHERITE, FabricItemSettings {
-        fireproof()
-    }))
     val BASALT_OAR = register("basalt_oar", OarItem(FabricItemSettings {
         maxCount(1)
         maxDamage(ToolMaterials.STONE.durability)
     }))
+    val BASALT_ROD = register("basalt_rod")
 
     val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
 
@@ -64,7 +62,7 @@ object NetherArchivesItems {
     val DUMMY_SOUL_FIRE = register(Identifier("netherarchives/dummy/soul_fire"))
 
     private val itemGroups = mapOf(
-        ItemGroups.INGREDIENTS to setOf(IRON_SLAG),
+        ItemGroups.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD),
         ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
         ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN),
         ItemGroups.TOOLS to setOf(BASALT_SKIS, BASALT_OAR),
