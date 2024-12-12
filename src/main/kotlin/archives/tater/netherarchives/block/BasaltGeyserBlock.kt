@@ -21,12 +21,12 @@ import net.minecraft.world.World
 
 class BasaltGeyserBlock(settings: Settings) : Block(settings), BlockEntityProvider {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
-        repeat(3) {
-            world.addParticle(ParticleTypes.LARGE_SMOKE, it == 1, random.nextTriangular(pos.x + 0.5, 0.5), pos.y + 1.0, random.nextTriangular(pos.z + 0.5, 0.5), 0.0, 0.5 * random.nextDouble() + 0.25, 0.0);
+        repeat(4) {
+            world.addParticle(ParticleTypes.LARGE_SMOKE, random.nextTriangular(pos.x + 0.5, 0.5), pos.y + 1.0, random.nextTriangular(pos.z + 0.5, 0.5), 0.0, 0.15 * random.nextDouble() + 0.15, 0.0);
         }
         world.addParticle(ParticleTypes.LAVA, pos.x + 0.5, pos.y + 1.0, pos.z + 0.5, random.nextTriangular(0.0, 0.5), random.nextDouble() + 0.5, random.nextTriangular(0.0, 0.5));
-        if (random.nextInt(2) == 0)
-            world.addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, random.nextTriangular(pos.x + 0.5, 0.25), pos.y + 1.0, random.nextTriangular(pos.z + 0.5, 0.25), 0.0, 0.05 * random.nextDouble() + 0.05, 0.0);
+        if (random.nextInt(4) < 3)
+            world.addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, true, random.nextTriangular(pos.x + 0.5, 0.25), pos.y + 1.0, random.nextTriangular(pos.z + 0.5, 0.25), 0.0, 0.05 * random.nextDouble() + 0.05, 0.0);
     }
 
     override fun onSteppedOn(world: World, pos: BlockPos, state: BlockState, entity: Entity) {
@@ -50,7 +50,7 @@ class BasaltGeyserBlock(settings: Settings) : Block(settings), BlockEntityProvid
 
     companion object : BlockEntityTicker<BasaltGeyserBlockEntity> {
         private const val BOOST_RANGE = 10
-        private const val MAX_BOOST_VELOCITY = 0.7
+        private const val MAX_BOOST_VELOCITY = 0.5
 
         override fun tick(world: World, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
             world.getOtherEntities(null, Box(pos, pos.add(1, BOOST_RANGE + 1, 1))) { true }.forEach {

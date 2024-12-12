@@ -15,6 +15,10 @@ object ModifyWorldGen {
         RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "magnetite_delta"))
     private val MAGNETITE_BLOBS =
         RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "magnetite_blobs"))
+    private val BASALT_GEYSER =
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "basalt_geyser"))
+    private val BASALT_GEYSER_SUBMERGED =
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "basalt_geyser_submerged"))
 
     operator fun invoke() {
         BiomeModifications.addFeature(
@@ -26,6 +30,16 @@ object ModifyWorldGen {
             BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
             GenerationStep.Feature.SURFACE_STRUCTURES,
             MAGNETITE_BLOBS
+        )
+        BiomeModifications.addFeature(
+            BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
+            GenerationStep.Feature.TOP_LAYER_MODIFICATION,
+            BASALT_GEYSER
+        )
+        BiomeModifications.addFeature(
+            BiomeSelectors.includeByKey(BiomeKeys.BASALT_DELTAS),
+            GenerationStep.Feature.TOP_LAYER_MODIFICATION,
+            BASALT_GEYSER_SUBMERGED
         )
     }
 }

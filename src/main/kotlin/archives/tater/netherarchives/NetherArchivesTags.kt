@@ -16,6 +16,11 @@ object NetherArchivesTags {
     val ROTTEN_FLESH_FERMENTER: TagKey<Block> =
         TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.MOD_ID, "rotten_flesh_fermenter"))
 
+    val BASALT_GEYSER_REPLACEABLE: TagKey<Block> =
+        TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.MOD_ID, "basalt_geyser_replaceable"))
+    val BASALT_GEYSER_REPLACEABLE_SUBMERGED: TagKey<Block> =
+        TagKey.of(RegistryKeys.BLOCK, Identifier(NetherArchives.MOD_ID, "basalt_geyser_replaceable_submerged"))
+
     @JvmField
     val SKIS_CAN_WALK_ON: TagKey<Fluid> =
         TagKey.of(RegistryKeys.FLUID, Identifier(NetherArchives.MOD_ID, "skis_can_walk_on"))

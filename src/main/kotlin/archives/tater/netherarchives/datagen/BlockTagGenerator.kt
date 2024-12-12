@@ -1,5 +1,7 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE
+import archives.tater.netherarchives.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED
 import archives.tater.netherarchives.NetherArchivesTags.BLAZE_FIRE_TARGET
 import archives.tater.netherarchives.NetherArchivesTags.MAGNETIC
 import archives.tater.netherarchives.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
@@ -38,5 +40,12 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             Blocks.SOUL_FIRE,
             Blocks.SOUL_CAMPFIRE
         )
+        getOrCreateTagBuilder(BASALT_GEYSER_REPLACEABLE).add(
+            Blocks.BASALT
+        )
+        getOrCreateTagBuilder(BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
+            forceAddTag(BlockTags.BASE_STONE_NETHER)
+            add(NetherArchivesBlocks.MAGNETITE)
+        }
     }
 }
