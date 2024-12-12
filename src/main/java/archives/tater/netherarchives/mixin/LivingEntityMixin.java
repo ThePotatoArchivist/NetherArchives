@@ -94,7 +94,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getOffGroundSpeed()F")
     )
     private float increasedAirSkiMovement(float original) {
-        return netherarchives$isAirSkiing ? 0.5f * getMovementSpeed() : original;
+        return netherarchives$isAirSkiing ? 0.35f * getMovementSpeed() : original;
     }
 
     @Inject(
