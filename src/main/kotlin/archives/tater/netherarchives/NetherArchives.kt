@@ -26,6 +26,7 @@ object NetherArchives : ModInitializer {
         NetherArchivesBlockEntities.register()
         NetherArchivesItems.registerItemGroups()
         NetherArchivesEntities.register()
+        NetherArchivesDamageTypes.register()
         ModifyWorldGen()
         ModifyLootTables()
     }

@@ -1,0 +1,15 @@
+package archives.tater.netherarchives
+
+import net.minecraft.entity.damage.DamageSources
+import net.minecraft.entity.damage.DamageType
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.util.Identifier
+
+object NetherArchivesDamageTypes {
+    val PADDLE_BURN: RegistryKey<DamageType> = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier(NetherArchives.MOD_ID, "paddle_burn"))
+
+    val DamageSources.paddleBurn get() = create(PADDLE_BURN)
+
+    fun register() {}
+}

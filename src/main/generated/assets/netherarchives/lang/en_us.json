@@ -6,6 +6,8 @@
   "block.netherarchives.magnetite": "Magnetite",
   "block.netherarchives.rotten_flesh_block": "Rotten Flesh Block",
   "block.netherarchives.smoldering_magnetite": "Smoldering Magnetite",
+  "death.attack.netherarchives.paddleBurn": "%s wiped out into lava",
+  "death.attack.netherarchives.paddleBurn.player": "%s wiped out into lava while trying to escape %s",
   "item.minecraft.netherarchives.dummy.soul_fire": "Soul Fire",
   "item.netherarchives.basalt_oar": "Basalt Oar",
   "item.netherarchives.basalt_skis": "Basalt Skis",
