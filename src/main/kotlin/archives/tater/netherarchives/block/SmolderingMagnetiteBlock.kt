@@ -1,6 +1,5 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.item.SkisItem
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.enchantment.EnchantmentHelper
@@ -29,7 +28,7 @@ class SmolderingMagnetiteBlock(settings: Settings) : Block(settings.ticksRandoml
 
     // Copied from Magma Block
     override fun onSteppedOn(world: World, pos: BlockPos?, state: BlockState?, entity: Entity) {
-        if (!entity.bypassesSteppingEffects() && entity is LivingEntity && !EnchantmentHelper.hasFrostWalker(entity) && !SkisItem.wearsSkis(entity)) {
+        if (!entity.bypassesSteppingEffects() && entity is LivingEntity && !EnchantmentHelper.hasFrostWalker(entity)) {
             entity.damage(world.damageSources.hotFloor(), 1.0f)
         }
         super.onSteppedOn(world, pos, state, entity)

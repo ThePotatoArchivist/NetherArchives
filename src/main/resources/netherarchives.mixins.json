@@ -9,7 +9,6 @@
     "FlintAndSteelItemMixin",
     "FluidBlockMixin",
     "LivingEntityMixin",
-    "MagmaBlockMixin",
     "PlayerEntityMixin"
   ],
   "injectors": {
