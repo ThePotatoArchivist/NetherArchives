@@ -120,7 +120,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z", ordinal = 0)
     )
     private boolean slowFallingWhileAirSkiing(LivingEntity instance, StatusEffect effect, Operation<Boolean> original) {
-        return original.call(instance, effect) || netherarchives$isAirSkiing;
+        return original.call(instance, effect) || netherarchives$isAirSkiing && !instance.isSneaking();
     }
 
     @Inject(

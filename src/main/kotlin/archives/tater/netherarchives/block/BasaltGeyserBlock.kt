@@ -12,8 +12,8 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.passive.StriderEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.math.BlockPos
@@ -46,7 +46,6 @@ class BasaltGeyserBlock(settings: Settings) : Block(settings), BlockEntityProvid
         )
         world.addParticle(
             ParticleTypes.CAMPFIRE_COSY_SMOKE,
-            true,
             world.random.nextTriangular(pos.x + 0.5, 0.25),
             pos.y + 1.0,
             world.random.nextTriangular(pos.z + 0.5, 0.25),
@@ -57,9 +56,9 @@ class BasaltGeyserBlock(settings: Settings) : Block(settings), BlockEntityProvid
     }
 
     override fun onSteppedOn(world: World, pos: BlockPos, state: BlockState, entity: Entity) {
-        if (entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.FEET).isEmpty) {
-            entity.damage(world.damageSources.hotFloor(), 1f)
-        }
+//        if (entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.FEET).isEmpty) {
+//            entity.damage(world.damageSources.hotFloor(), 1f)
+//        }
     }
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
@@ -78,14 +77,28 @@ class BasaltGeyserBlock(settings: Settings) : Block(settings), BlockEntityProvid
     companion object : BlockEntityTicker<BasaltGeyserBlockEntity> {
         private const val BOOST_RANGE = 10
         private const val MAX_BOOST_VELOCITY = 0.5
+        private const val SNEAKING_MAX_BOOST_VELOCITY = 0.12
 
         override fun tick(world: World, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
-            world.getOtherEntities(null, Box(pos, pos.add(1, BOOST_RANGE + 1, 1))) { it !is PlayerEntity || !it.abilities.flying }.forEach {
-                it.velocity += Vec3d(0.0, MAX_BOOST_VELOCITY * (1 - (it.y - pos.y + 1) / BOOST_RANGE.toDouble()), 0.0)
+            world.getOtherEntities(null, Box(pos, pos.add(1, BOOST_RANGE + 1, 1))) { it !is StriderEntity && (it !is PlayerEntity || !it.abilities.flying) }.forEach {
+                it.velocity += Vec3d(0.0, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * (1 - (it.y - pos.y + 1) / BOOST_RANGE.toDouble()), 0.0)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
                     it.isAirSkiing = true
                 }
+                // Cancel fall damage
+                it.onLanding()
             }
+            if (world.isClient && world.random.nextFloat() < 0.04)
+                world.addParticle(
+                    ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                    true,
+                    world.random.nextTriangular(pos.x + 0.5, 0.25),
+                    pos.y + 1.0,
+                    world.random.nextTriangular(pos.z + 0.5, 0.25),
+                    0.0,
+                    0.05 * world.random.nextDouble() + 0.05,
+                    0.0
+                )
         }
     }
 }
