@@ -75,7 +75,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;updateLimbs(Z)V")
     )
     private void damageSkisAndNoSkiLimbs(LivingEntity instance, boolean flutter, Operation<Void> original, @Share("isSkiing") LocalBooleanRef isSkiing) {
-        if ((isSkiing.get() || netherarchives$isAirSkiing) && getVelocity().length() > SkisItem.MIN_DAMAGE_VELOCITY) {
+        if (!getWorld().isClient && (isSkiing.get() || netherarchives$isAirSkiing) && getVelocity().length() > SkisItem.MIN_DAMAGE_VELOCITY) {
             netherarchives$ticksSkiing += 1;
             if (netherarchives$ticksSkiing >= SkisItem.DAMAGE_FREQUENCY) {
                 getEquippedStack(EquipmentSlot.FEET).damage(1, (LivingEntity) (Object) this, p -> p.sendEquipmentBreakStatus(EquipmentSlot.FEET));
