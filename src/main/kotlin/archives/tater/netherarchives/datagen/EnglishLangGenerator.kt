@@ -20,6 +20,7 @@ class EnglishLangGenerator(output: FabricDataOutput) : FabricLanguageProvider(ou
             add(NetherArchivesItems.DUMMY_SOUL_FIRE, "Soul Fire")
             add(NetherArchivesItems.BASALT_SKIS, "Basalt Skis")
             add(NetherArchivesItems.BASALT_OAR, "Basalt Oar")
+            add(NetherArchivesItems.BASALT_ROD, "Basalt Rod")
             add("death.attack.netherarchives.paddleBurn", "%s wiped out into lava")
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
         }

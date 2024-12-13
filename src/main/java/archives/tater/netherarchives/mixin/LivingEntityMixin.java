@@ -16,7 +16,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LimbAnimator;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.util.math.BlockPos;
@@ -36,8 +35,6 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
     @Shadow @Final public LimbAnimator limbAnimator;
 
     @Shadow public abstract boolean isFallFlying();
-
-    @Shadow protected abstract void onStatusEffectRemoved(StatusEffectInstance effect);
 
     @Shadow public abstract float getMovementSpeed();
 
