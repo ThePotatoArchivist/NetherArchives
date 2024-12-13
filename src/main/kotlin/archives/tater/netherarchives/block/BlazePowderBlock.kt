@@ -17,7 +17,7 @@ import net.minecraft.world.WorldView
 
 class BlazePowderBlock(settings: Settings) : Block(settings) {
     companion object {
-        val SHAPE: VoxelShape = createCuboidShape(3.0, 0.0, 3.0, 13.0, 1.0, 13.0)
+        val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0)
     }
 
     @Suppress("OVERRIDE_DEPRECATION")
