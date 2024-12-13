@@ -26,6 +26,8 @@ class SkisItem(material: ArmorMaterial, settings: Settings) : ArmorItem(material
         }
 
         const val MAX_FLUID_DEPTH = 0.1875 // 3 pixels
+        const val MIN_DAMAGE_VELOCITY = 0.1
+        const val DAMAGE_FREQUENCY = 100 // 5 seconds
 
         @JvmField
         val FLUID_SKI_COLLISION_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
