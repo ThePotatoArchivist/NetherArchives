@@ -22,6 +22,6 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
     )
     private boolean preventSprintingWithSkies(boolean original) {
         //noinspection ConstantValue
-        return original && !(SkisItem.wearsSkis((ClientPlayerEntity) (Object) this) || getAbilities().flying);
+        return original && (!SkisItem.wearsSkis((ClientPlayerEntity) (Object) this) || getAbilities().flying);
     }
 }
