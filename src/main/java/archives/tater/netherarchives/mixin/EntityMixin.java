@@ -14,6 +14,6 @@ public abstract class EntityMixin {
     )
     private double handleSkis(double constant) {
         //noinspection ConstantValue
-        return constant < 0.375 && SkisItem.wearsSkis((Entity) (Object) this) ? 0.375 : constant;
+        return constant < SkisItem.MAX_FLUID_DEPTH && SkisItem.wearsSkis((Entity) (Object) this) ? SkisItem.MAX_FLUID_DEPTH : constant;
     }
 }

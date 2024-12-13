@@ -18,6 +18,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -50,7 +51,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             at = @At("HEAD"),
             cancellable = true)
     private void checkBasaltSkis(FluidState state, CallbackInfoReturnable<Boolean> cir) {
-        if (SkisItem.canSki((LivingEntity) (Object) this, state))
+        if (SkisItem.canSki((LivingEntity) (Object) this, state) && getFluidHeight(FluidTags.WATER) <= SkisItem.MAX_FLUID_DEPTH && getFluidHeight(FluidTags.LAVA) <= SkisItem.MAX_FLUID_DEPTH)
             cir.setReturnValue(true);
     }
 

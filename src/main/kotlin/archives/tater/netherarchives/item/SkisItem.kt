@@ -25,6 +25,8 @@ class SkisItem(material: ArmorMaterial, settings: Settings) : ArmorItem(material
             override fun getRepairIngredient(): Ingredient = Ingredient.ofItems(Items.POLISHED_BASALT)
         }
 
+        const val MAX_FLUID_DEPTH = 0.1875 // 3 pixels
+
         @JvmField
         val FLUID_SKI_COLLISION_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
 
@@ -38,7 +40,6 @@ class SkisItem(material: ArmorMaterial, settings: Settings) : ArmorItem(material
             wearsSkis(entity) &&
             fluidState isIn NetherArchivesTags.SKIS_CAN_WALK_ON
         @JvmStatic
-        fun isSkiing(entity: LivingEntity) = (entity.isOnGround) && canSki(entity, entity.world.getBlockState(entity.blockPos).fluidState)
-
+        fun isSkiing(entity: LivingEntity) = (entity.isOnGround) && canSki(entity, entity.world.getFluidState(entity.blockPos))
     }
 }
