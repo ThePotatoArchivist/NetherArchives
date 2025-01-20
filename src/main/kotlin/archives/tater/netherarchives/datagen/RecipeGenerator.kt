@@ -106,12 +106,25 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
                 %
                 %
                 #
-            """.trimIndent())
+            """)
             inputs {
                 '#' to Items.POLISHED_BASALT
                 '%' to NetherArchivesItems.BASALT_ROD
             }
             itemCriterion(NetherArchivesItems.BASALT_ROD)
+        }
+
+        shaped(RecipeCategory.MISC, Items.LODESTONE, recipeName = "lodestone_from_magnetite") {
+            patterns("""
+                ###
+                #%#
+                ###
+            """)
+            inputs {
+                '#' to Items.CHISELED_STONE_BRICKS
+                '%' to NetherArchivesItems.MAGNETITE
+            }
+            itemCriterion(NetherArchivesItems.MAGNETITE)
         }
     }
 }

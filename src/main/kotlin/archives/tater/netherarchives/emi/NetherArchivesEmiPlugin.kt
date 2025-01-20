@@ -10,12 +10,10 @@ import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 
 object NetherArchivesEmiPlugin : EmiPlugin {
-    @Suppress("DEPRECATION")
     override fun register(registry: EmiRegistry) {
         registry.apply {
             addRecipe(EmiWorldInteractionRecipe.builder().apply {
@@ -33,13 +31,6 @@ object NetherArchivesEmiPlugin : EmiPlugin {
                 leftInput(EmiStack.of(NetherArchivesItems.MAGNETITE))
                 rightInput(EmiStack.of(Fluids.LAVA), true)
                 output(EmiStack.of(NetherArchivesItems.SMOLDERING_MAGNETITE))
-            }.build())
-
-            addRecipe(EmiWorldInteractionRecipe.builder().apply {
-                id(Identifier(NetherArchives.MOD_ID, "/world/unique/netherite_ingot_from_lodestone"))
-                leftInput(EmiStack.of(Items.LODESTONE))
-                rightInput(EmiStack.of(Fluids.LAVA), true)
-                output(EmiStack.of(Items.NETHERITE_INGOT))
             }.build())
         }
     }

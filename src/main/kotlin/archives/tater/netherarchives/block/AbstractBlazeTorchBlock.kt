@@ -5,6 +5,7 @@ import net.minecraft.block.Block.NOTIFY_LISTENERS
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
@@ -19,11 +20,10 @@ interface AbstractBlazeTorchBlock : BlockEntityProvider {
         pos: BlockPos,
     ) {
         if (world.isClient) return
-        (world.getBlockEntity(pos) as BlazeTorchBlockEntity).locateTarget()
-            .thenAccept {
-                if (it === null) return@thenAccept
-                world.updateListeners(pos, state, state, NOTIFY_LISTENERS)
-            }
+        (world as ServerWorld).server.execute {
+            (world.getBlockEntity(pos) as BlazeTorchBlockEntity).locateTarget() ?: return@execute
+            world.updateListeners(pos, state, state, NOTIFY_LISTENERS)
+        }
     }
 
     fun randomDisplayTick(

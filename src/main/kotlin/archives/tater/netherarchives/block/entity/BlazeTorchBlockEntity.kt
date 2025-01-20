@@ -12,7 +12,6 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import java.util.concurrent.CompletableFuture
 import kotlin.math.sqrt
 
 
@@ -23,7 +22,7 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     var targetPos: BlockPos? = null
-        set(value) {
+        private set(value) {
             field = value
             if (value === null) return
             val xDiff = value.x - pos.x
@@ -36,18 +35,14 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
     var xVelocityCoef: Double? = null
     var zVelocityCoef: Double? = null
 
-    fun locateTarget(): CompletableFuture<BlockPos?> {
-        return CompletableFuture.supplyAsync {
-            (world as ServerWorld).run {
-                locateStructure(StructureTagGenerator.BLAZE_TORCH_LOCATED, pos, 128, false)
-            }
-        }.thenApply {
-            if (it === null) return@thenApply null
-            targetPos = it
-            NetherArchives.logger.info("Located at ${it.x}, ${it.y}, ${it.z}")
-            markDirty()
-            it
-        }
+    fun locateTarget(): BlockPos? {
+        val pos = (world as ServerWorld).run {
+            locateStructure(StructureTagGenerator.BLAZE_TORCH_LOCATED, pos, 128, false)
+        } ?: return null
+        targetPos = pos
+        NetherArchives.logger.info("Located at ${pos.x}, ${pos.y}, ${pos.z}")
+        markDirty()
+        return pos
     }
 
     override fun toUpdatePacket(): Packet<ClientPlayPacketListener>? {

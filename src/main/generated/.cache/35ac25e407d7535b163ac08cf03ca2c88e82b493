@@ -1,12 +1,12 @@
-// 1.20.1	2024-12-12T16:08:07.807584683	Nether Archives/Model Definitions
+// 1.20.1	2025-01-19T02:06:33.325807676	Nether Archives/Model Definitions
 df703380a9aa01bf9c376f53354d832bb5a06883 assets/netherarchives/models/item/blaze_dust.json
 a4572ce703d323a1a84431f2b22e53dc42162a23 assets/netherarchives/models/item/blaze_torch.json
 e5e4fc4c794bec4a022779c08a093ee881f3bdcc assets/netherarchives/models/block/smoldering_magnetite.json
 a3bae539af8d4e9ae0a49ae19f11d268610923e3 assets/netherarchives/models/block/magnetite.json
 f29adb57865f8431b82cc11af73d585eeaefa384 assets/netherarchives/blockstates/wall_blaze_torch.json
 6059f1554513ff5509c6f016ec677d137ff7bb37 assets/netherarchives/models/block/fermented_rotten_flesh_block.json
-30ff7f58896252ba89f53de1a9d5e4199986c284 assets/netherarchives/blockstates/blaze_dust.json
 66ef27ec1fd8ad2fcaec51f34273ba93a274e04e assets/netherarchives/blockstates/fermented_rotten_flesh_block.json
+30ff7f58896252ba89f53de1a9d5e4199986c284 assets/netherarchives/blockstates/blaze_dust.json
 4814d2dac13d83b2d96b20fe86bc622002197b12 assets/netherarchives/blockstates/basalt_geyser.json
 aff79648d80c990f0e24e1c29bc3c43fd3227bf8 assets/netherarchives/models/block/rotten_flesh_block_stage1.json
 541b5233c31916319029232a914bfb514a480b0b assets/netherarchives/models/block/blaze_torch.json
