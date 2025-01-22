@@ -37,7 +37,7 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
 
     fun locateTarget(): BlockPos? {
         val pos = (world as ServerWorld).run {
-            locateStructure(StructureTagGenerator.BLAZE_TORCH_LOCATED, pos, 128, false)
+            locateStructure(StructureTagGenerator.BLAZE_TORCH_LOCATED, pos, 50, false)
         } ?: return null
         targetPos = pos
         NetherArchives.logger.info("Located at ${pos.x}, ${pos.y}, ${pos.z}")
