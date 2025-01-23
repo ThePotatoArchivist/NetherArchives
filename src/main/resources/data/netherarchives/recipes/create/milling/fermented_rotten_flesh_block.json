@@ -1,0 +1,27 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "netherarchives:fermented_rotten_flesh_block"
+    }
+  ],
+  "processingTime": 150,
+  "results": [
+    {
+      "count": 2,
+      "item": "minecraft:leather"
+    },
+    {
+      "chance": 0.5,
+      "item": "minecraft:leather"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "create"
+      ]
+    }
+  ]
+}

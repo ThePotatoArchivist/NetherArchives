@@ -32,6 +32,9 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             NetherArchivesBlocks.SMOLDERING_MAGNETITE,
             NetherArchivesBlocks.BASALT_GEYSER,
         )
+        getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
+            NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK,
+        )
         getOrCreateTagBuilder(MAGNETIC).add(
             Blocks.LODESTONE
         )

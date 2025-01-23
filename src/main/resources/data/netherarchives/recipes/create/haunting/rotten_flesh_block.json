@@ -1,0 +1,21 @@
+{
+  "type": "create:haunting",
+  "ingredients": [
+    {
+      "item": "netherarchives:rotten_flesh_block"
+    }
+  ],
+  "results": [
+    {
+      "item": "netherarchives:fermented_rotten_flesh_block"
+    }
+  ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "create"
+      ]
+    }
+  ]
+}

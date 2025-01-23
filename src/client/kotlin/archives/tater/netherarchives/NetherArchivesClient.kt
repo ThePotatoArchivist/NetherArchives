@@ -5,13 +5,16 @@ import archives.tater.netherarchives.client.registerArmorRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherSkeletonEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
+import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.entity.NetherArchivesEntities
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.*
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.entity.WitherEntityRenderer
@@ -99,5 +102,9 @@ object NetherArchivesClient : ClientModInitializer {
             )
             matrices.pop()
         }
+
+        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Factory)
+        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
+        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
     }
 }

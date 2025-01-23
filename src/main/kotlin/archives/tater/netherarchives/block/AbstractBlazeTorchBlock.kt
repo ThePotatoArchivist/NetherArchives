@@ -1,10 +1,10 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.NetherArchivesParticles
 import archives.tater.netherarchives.block.entity.BlazeTorchBlockEntity
 import net.minecraft.block.Block.NOTIFY_LISTENERS
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
-import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
@@ -35,7 +35,7 @@ interface AbstractBlazeTorchBlock : BlockEntityProvider {
         val blockEntity = world.getBlockEntity(pos) as BlazeTorchBlockEntity
 
         world.addImportantParticle(
-            ParticleTypes.FLAME,
+            NetherArchivesParticles.BLAZE_FLAME,
             originX,
             originY,
             originZ,
@@ -43,5 +43,16 @@ interface AbstractBlazeTorchBlock : BlockEntityProvider {
             0.02,
             0.1 * (blockEntity.zVelocityCoef ?: 0.0)
         )
+
+        world.addParticle(
+            NetherArchivesParticles.SMALL_BLAZE_SPARK,
+            originX + 0.4 * random.nextDouble() - 0.2,
+            originY + 0.4 * random.nextDouble() - 0.2,
+            originZ + 0.4 * random.nextDouble() - 0.2,
+            0.0,
+            0.0,
+            0.0,
+        )
+
     }
 }

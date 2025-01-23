@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.NetherArchivesParticles
 import archives.tater.netherarchives.listCopy
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
@@ -116,5 +117,19 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity?) {
         if (entity is ItemEntity) return
         super.onEntityCollision(state, world, pos, entity)
+    }
+
+    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
+        repeat(random.nextInt(2) + 2) {
+            world.addParticle(
+                NetherArchivesParticles.BLAZE_SPARK,
+                pos.x + random.nextDouble(),
+                pos.y + 0.25 + 0.5 * random.nextDouble(),
+                pos.z + random.nextDouble(),
+                0.0,
+                0.0,
+                0.0
+            )
+        }
     }
 }

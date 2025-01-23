@@ -95,18 +95,12 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
     override fun generateItemModels(itemModelGenerator: ItemModelGenerator) {
         itemModelGenerator.register(NetherArchivesItems.IRON_SLAG, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BLAZE_DUST, Models.GENERATED)
+        itemModelGenerator.register(NetherArchivesItems.BLAZE_LANTERN, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BASALT_SKIS, Models.GENERATED)
         Models.GENERATED.upload(ModelIds.getItemSubModelId(NetherArchivesItems.BASALT_OAR, "_inventory"), TextureMap.layer0(NetherArchivesItems.BASALT_OAR), itemModelGenerator.writer)
         itemModelGenerator.register(NetherArchivesItems.BASALT_ROD, Models.HANDHELD_ROD)
 
         Models.GENERATED.upload(ModelIds.getItemModelId(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMap().apply {
             put(TextureKey.LAYER0, ModelIds.getBlockSubModelId(Blocks.SOUL_FIRE, "_0"))
-        }, itemModelGenerator.writer)
-
-        Models.TEMPLATE_LANTERN.upload(
-            ModelIds.getItemModelId(NetherArchivesItems.BLAZE_LANTERN),
-            TextureMap().put(TextureKey.LANTERN, TextureMap.getId(NetherArchivesItems.BLAZE_LANTERN)),
-            itemModelGenerator.writer
-        )
-    }
+        }, itemModelGenerator.writer) }
 }

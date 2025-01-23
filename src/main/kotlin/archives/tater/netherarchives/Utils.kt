@@ -4,6 +4,7 @@ package archives.tater.netherarchives
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
+import net.minecraft.block.BlockState
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
 import net.minecraft.fluid.Fluid
@@ -15,6 +16,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
+import net.minecraft.world.World
 import java.util.*
 
 // iterateInSquare uses the same blockPos object and mutates it, so we need this to use proper collection operations
@@ -39,3 +41,8 @@ internal inline operator fun Vec3d.plus(other: Vec3d) = add(other)
 
 internal inline fun Model(vararg requiredTextureKeys: TextureKey, parent: Identifier? = null, variant: String? = null): Model =
     Model(Optional.ofNullable(parent), Optional.ofNullable(variant), *requiredTextureKeys)
+
+internal inline operator fun World.get(pos: BlockPos): BlockState = getBlockState(pos)
+internal inline operator fun World.set(pos: BlockPos, state: BlockState) {
+    setBlockState(pos, state)
+}

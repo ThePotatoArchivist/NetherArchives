@@ -9,10 +9,15 @@ import net.minecraft.world.World
 
 class BlazeTorchBlock(settings: Settings) : TorchBlock(settings, ParticleTypes.FLAME), AbstractBlazeTorchBlock {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
-        val x = pos.x.toDouble() + 0.5
-        val y = pos.y.toDouble() + 0.7
-        val z = pos.z.toDouble() + 0.5
-        super<AbstractBlazeTorchBlock>.randomDisplayTick(state, world, pos, random, x, y, z)
+        super<AbstractBlazeTorchBlock>.randomDisplayTick(
+            state,
+            world,
+            pos,
+            random,
+            pos.x.toDouble() + 0.5,
+            pos.y.toDouble() + 0.8125,
+            pos.z.toDouble() + 0.5
+        )
     }
 
     @Suppress("OVERRIDE_DEPRECATION")

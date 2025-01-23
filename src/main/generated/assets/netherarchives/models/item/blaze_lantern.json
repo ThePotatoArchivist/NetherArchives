@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/template_lantern",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "lantern": "netherarchives:item/blaze_lantern"
+    "layer0": "netherarchives:item/blaze_lantern"
   }
 }

@@ -2,6 +2,7 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.FabricBlockSettings
 import archives.tater.netherarchives.NetherArchives
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.piston.PistonBehavior
@@ -103,6 +104,8 @@ object NetherArchivesBlocks {
         requiresTool()
     }))
 
-    fun register() {}
+    fun register() {
+        FlammableBlockRegistry.getDefaultInstance().add(ROTTEN_FLESH_BLOCK, 15, 30)
+    }
 
 }
