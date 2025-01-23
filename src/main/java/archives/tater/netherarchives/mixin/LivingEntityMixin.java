@@ -12,7 +12,6 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -20,12 +19,10 @@ import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -126,12 +123,12 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
         netherarchives$isAirSkiing = airSkiing;
     }
 
-    @WrapOperation(
+    @ModifyVariable(
             method = "travel",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z", ordinal = 0)
     )
-    private boolean slowFallingWhileAirSkiing(LivingEntity instance, StatusEffect effect, Operation<Boolean> original) {
-        return original.call(instance, effect) || netherarchives$isAirSkiing && !instance.isSneaking();
+    private double slowFallingWhileAirSkiing(double original) {
+        return netherarchives$isAirSkiing && !isSneaking() ? 0.01 : original;
     }
 
     @Inject(
