@@ -61,14 +61,20 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
 
-        Model(TextureKey.TOP, TextureKey.SIDE, TextureKey.BOTTOM, TextureKey.PARTICLE, parent = Identifier.ofVanilla("block/cube_bottom_top")).upload(NetherArchivesBlocks.BASALT_GEYSER, TextureMap().apply {
-            put(TextureKey.TOP, ModelIds.getBlockSubModelId(NetherArchivesBlocks.BASALT_GEYSER, "_top"))
-            put(TextureKey.SIDE, ModelIds.getBlockSubModelId(Blocks.BASALT, "_side"))
-            put(TextureKey.BOTTOM, ModelIds.getBlockSubModelId(Blocks.BASALT, "_top"))
-            put(TextureKey.PARTICLE, ModelIds.getBlockSubModelId(NetherArchivesBlocks.BASALT_GEYSER, "_top"))
-        }, blockStateModelGenerator.modelCollector).also {
-            blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSingletonBlockState(NetherArchivesBlocks.BASALT_GEYSER, it))
-        }
+        Model(TextureKey.TOP, TextureKey.SIDE, TextureKey.BOTTOM, TextureKey.PARTICLE, parent = Identifier.ofVanilla("block/cube_bottom_top"))
+            .upload(NetherArchivesBlocks.BASALT_GEYSER, TextureMap().apply {
+                put(TextureKey.TOP, ModelIds.getBlockSubModelId(NetherArchivesBlocks.BASALT_GEYSER, "_top"))
+                put(TextureKey.SIDE, ModelIds.getBlockSubModelId(Blocks.BASALT, "_side"))
+                put(TextureKey.BOTTOM, ModelIds.getBlockSubModelId(Blocks.BASALT, "_top"))
+                put(TextureKey.PARTICLE, ModelIds.getBlockSubModelId(NetherArchivesBlocks.BASALT_GEYSER, "_top"))
+            }, blockStateModelGenerator.modelCollector).also {
+                blockStateModelGenerator.blockStateCollector.accept(
+                    VariantsBlockStateSupplier.create(
+                        NetherArchivesBlocks.BASALT_GEYSER,
+                        BlockStateVariant.create().put(VariantSettings.MODEL, it)
+                    ).coordinate(blockStateModelGenerator.createUpDefaultFacingVariantMap())
+                )
+            }
 
         blockStateModelGenerator.blockStateCollector.accept(
             VariantsBlockStateSupplier.create(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).coordinate(

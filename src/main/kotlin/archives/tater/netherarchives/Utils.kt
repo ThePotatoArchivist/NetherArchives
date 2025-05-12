@@ -2,6 +2,7 @@
 
 package archives.tater.netherarchives
 
+import com.google.common.collect.AbstractIterator
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BlockState
 import net.minecraft.data.client.Model
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
@@ -33,8 +35,8 @@ internal inline fun blockSettings(init: AbstractBlock.Settings.() -> Unit = {}):
 internal inline fun itemSettings(init: Item.Settings.() -> Unit = {}): Item.Settings =
     Item.Settings().apply(init)
 
-internal infix fun ItemStack.isIn(tag: TagKey<Item>): Boolean = this.isIn(tag)
-internal infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.isIn(tag)
+internal inline infix fun ItemStack.isIn(tag: TagKey<Item>): Boolean = this.isIn(tag)
+internal inline infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.isIn(tag)
 
 internal inline operator fun Vec3d.plus(other: Vec3d) = add(other)
 
@@ -44,4 +46,25 @@ internal inline fun Model(vararg requiredTextureKeys: TextureKey, parent: Identi
 internal inline operator fun World.get(pos: BlockPos): BlockState = getBlockState(pos)
 internal inline operator fun World.set(pos: BlockPos, state: BlockState) {
     setBlockState(pos, state)
+}
+
+internal inline operator fun Vec3d.unaryMinus(): Vec3d = multiply(-1.0)
+internal inline operator fun Vec3d.minus(other: Vec3d): Vec3d = subtract(other)
+internal inline operator fun Vec3d.component1() = x
+internal inline operator fun Vec3d.component2() = y
+internal inline operator fun Vec3d.component3() = z
+
+fun iterateLinearBlockPos(origin: BlockPos, direction: Direction, distance: Int) = Iterable {
+    object : AbstractIterator<BlockPos>() {
+        private val pos = BlockPos.Mutable(origin.x, origin.y, origin.z)
+        private var index = 0
+
+        override fun computeNext(): BlockPos? {
+            pos.move(direction)
+            index++
+            if (index > distance)
+                return endOfData()
+            return pos
+        }
+    }
 }
