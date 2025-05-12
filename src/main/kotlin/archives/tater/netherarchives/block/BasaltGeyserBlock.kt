@@ -93,7 +93,7 @@ class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockEntity
     companion object : BlockEntityTicker<BasaltGeyserBlockEntity> {
         val CODEC: MapCodec<BasaltGeyserBlock> = createCodec(::BasaltGeyserBlock)
 
-        private const val BOOST_RANGE = 10
+        private const val BOOST_RANGE = 8
         private const val MAX_BOOST_VELOCITY = 0.5
         private const val SNEAKING_MAX_BOOST_VELOCITY = 0.12
 
