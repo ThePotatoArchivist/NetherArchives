@@ -1,19 +1,18 @@
 package archives.tater.netherarchives.mixin;
 
 import archives.tater.netherarchives.item.SkisItem;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
-    @Inject(
+    @ModifyReturnValue(
             method = "getMovementSpeed()F",
-            at = @At("HEAD"),
-            cancellable = true)
-    private void preventMovementOnSkis(CallbackInfoReturnable<Float> cir) {
-        if (SkisItem.isSkiing((PlayerEntity) (Object) this)) cir.setReturnValue(0.0f);
+            at = @At("RETURN")
+    )
+    private float preventMovementOnSkis(float original) {
+        return (SkisItem.isSkiing((PlayerEntity) (Object) this)) ? 0f : original;
     }
 }

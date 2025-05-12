@@ -1,45 +1,40 @@
 package archives.tater.netherarchives.mixin.client;
 
 import archives.tater.netherarchives.NetherArchives;
-import net.minecraft.client.render.VertexConsumerProvider;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
-import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.SpriteIdentifier;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.BlazeEntity;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(EntityRenderDispatcher.class)
 public class EntityRenderDispatcherMixin {
 
     @Unique
     @SuppressWarnings("deprecation")
-    private static final SpriteIdentifier BLAZE_FIRE_0 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(NetherArchives.MOD_ID, "block/blaze_fire_0"));
+    private static final SpriteIdentifier BLAZE_FIRE_0 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, NetherArchives.id("block/blaze_fire_0"));
     @Unique
     @SuppressWarnings("deprecation")
-    private static final SpriteIdentifier BLAZE_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(NetherArchives.MOD_ID, "block/blaze_fire_1"));
+    private static final SpriteIdentifier BLAZE_FIRE_1 = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, NetherArchives.id("block/blaze_fire_1"));
 
-    @ModifyVariable(
+    @ModifyExpressionValue(
             method = "renderFire",
-            ordinal = 0,
-            at = @At(value = "STORE")
+            at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/model/ModelLoader;FIRE_0:Lnet/minecraft/client/util/SpriteIdentifier;")
     )
-    private Sprite setBlazeFireSprite0(Sprite originalSprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-        return entity instanceof BlazeEntity ? BLAZE_FIRE_0.getSprite() : originalSprite;
+    private SpriteIdentifier setBlazeFireSprite0(SpriteIdentifier original, @Local(argsOnly = true) Entity entity) {
+        return entity instanceof BlazeEntity ? BLAZE_FIRE_0 : original;
     }
 
-    @ModifyVariable(
+    @ModifyExpressionValue(
             method = "renderFire",
-            ordinal = 1,
-            at = @At(value = "STORE")
+            at = @At(value = "FIELD", target = "Lnet/minecraft/client/render/model/ModelLoader;FIRE_1:Lnet/minecraft/client/util/SpriteIdentifier;")
     )
-    private Sprite setBlazeFireSprite1(Sprite originalSprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity) {
-        return entity instanceof BlazeEntity ? BLAZE_FIRE_1.getSprite() : originalSprite;
+    private SpriteIdentifier setBlazeFireSprite1(SpriteIdentifier original, @Local(argsOnly = true) Entity entity) {
+        return entity instanceof BlazeEntity ? BLAZE_FIRE_1 : original;
     }
 }

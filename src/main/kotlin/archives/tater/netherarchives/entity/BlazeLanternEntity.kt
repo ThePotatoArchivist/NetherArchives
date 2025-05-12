@@ -33,7 +33,7 @@ class BlazeLanternEntity : ThrownItemEntity {
         world.playSound(null, blockPos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5f, 1.0f)
 
         world.getOtherEntities(this, Box.of(blockPos.toCenterPos(), 1.5, 1.5, 1.5)).forEach {
-            it.setOnFireFor(5)
+            it.setOnFireForTicks(20 * 5)
         }
 
         BlockPos.iterateInSquare(blockPos, 1, Direction.NORTH, Direction.EAST).listCopy()
@@ -45,9 +45,8 @@ class BlazeLanternEntity : ThrownItemEntity {
                 // Must be either air or a replaceable, burnable block
                 if (!blockState.isAir && !(blockState.isReplaceable && blockState.isBurnable)) return@filter false
 
-                @Suppress("DEPRECATION")
                 // Must be able to place blaze fire here or let it fall
-                if (!world.getBlockState(it.down()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.canPlaceAt(blockState, world, it)) return@filter false
+                if (!world.getBlockState(it.down()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.defaultState.canPlaceAt(world, it)) return@filter false
 
                 true
             }

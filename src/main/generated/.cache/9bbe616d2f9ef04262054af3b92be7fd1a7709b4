@@ -1,3 +1,3 @@
-// 1.20.1	2025-01-23T01:56:38.106138401	Nether Archives/Tags for minecraft:item
-2dbde7601e44213a18e91c21f58f30525ef1db35 data/minecraft/tags/items/soul_fire_base_blocks.json
-b3d6c8855aacedd595e217445996af3371ab71b8 data/c/tags/items/hidden_from_recipe_viewers.json
+// 1.21.1	2025-05-11T23:34:27.253844429	Nether Archives/Tags for minecraft:item
+49f568df9c122bf6dfebd0659b0dea2af7b48ca4 data/minecraft/tags/item/soul_fire_base_blocks.json
+56d7cdc50a58daab2c8c09bd9f103e8fae080f8d data/c/tags/item/hidden_from_recipe_viewers.json

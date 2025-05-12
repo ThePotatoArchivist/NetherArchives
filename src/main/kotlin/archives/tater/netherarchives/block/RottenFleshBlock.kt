@@ -4,7 +4,6 @@ import archives.tater.netherarchives.NetherArchivesTags
 import archives.tater.netherarchives.get
 import archives.tater.netherarchives.listCopy
 import archives.tater.netherarchives.set
-import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.particle.ParticleTypes
@@ -18,7 +17,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-class RottenFleshBlock(settings: FabricBlockSettings) : Block(settings.ticksRandomly()) {
+class RottenFleshBlock(settings: Settings) : Block(settings.ticksRandomly()) {
     init {
         defaultState = stateManager.defaultState
             .with(AGE, 0)
@@ -51,7 +50,6 @@ class RottenFleshBlock(settings: FabricBlockSettings) : Block(settings.ticksRand
         return distance
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         val distance = findCampfireDistance(world, pos)
 

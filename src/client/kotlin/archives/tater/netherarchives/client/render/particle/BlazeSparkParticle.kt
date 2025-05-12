@@ -2,7 +2,7 @@ package archives.tater.netherarchives.client.render.particle
 
 import net.minecraft.client.particle.*
 import net.minecraft.client.world.ClientWorld
-import net.minecraft.particle.DefaultParticleType
+import net.minecraft.particle.SimpleParticleType
 
 class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Double, scale: Float, private val spriteProvider: SpriteProvider) :
     SpriteBillboardParticle(clientWorld, x, y, z) {
@@ -32,9 +32,9 @@ class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Doub
         velocityY += velocityStep
     }
 
-    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
+    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<SimpleParticleType> {
         override fun createParticle(
-            parameters: DefaultParticleType,
+            parameters: SimpleParticleType,
             world: ClientWorld,
             x: Double,
             y: Double,
@@ -47,9 +47,9 @@ class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Doub
         }
     }
 
-    class SmallFactory(private val spriteProvider: SpriteProvider) : ParticleFactory<DefaultParticleType> {
+    class SmallFactory(private val spriteProvider: SpriteProvider) : ParticleFactory<SimpleParticleType> {
         override fun createParticle(
-            parameters: DefaultParticleType,
+            parameters: SimpleParticleType,
             world: ClientWorld,
             x: Double,
             y: Double,

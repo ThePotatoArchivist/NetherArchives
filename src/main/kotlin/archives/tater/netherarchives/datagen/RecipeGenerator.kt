@@ -1,14 +1,20 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Items
 import net.minecraft.recipe.book.RecipeCategory
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
+import java.util.concurrent.CompletableFuture
 
-class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
+class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>?) :
+    FabricRecipeProvider(output, registriesFuture) {
+
     override fun generate(exporter: RecipeExporter) {
         exporter.recipes()
     }
@@ -16,7 +22,7 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
     private fun RecipeExporter.recipes() {
         oreSmelting(RecipeCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_NUGGET, 25, 0.08F)
 
-        shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeName = "compass_from_magnetite") {
+        shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeId = NetherArchives.id("compass_from_magnetite")) {
             patterns(
                 """
                  # 
@@ -114,7 +120,7 @@ class RecipeGenerator(output: FabricDataOutput) : FabricRecipeProvider(output) {
             itemCriterion(NetherArchivesItems.BASALT_ROD)
         }
 
-        shaped(RecipeCategory.MISC, Items.LODESTONE, recipeName = "lodestone_from_magnetite") {
+        shaped(RecipeCategory.MISC, Items.LODESTONE, recipeId = NetherArchives.id("lodestone_from_magnetite")) {
             patterns("""
                 ###
                 #%#

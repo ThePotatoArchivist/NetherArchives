@@ -2,8 +2,7 @@
 
 package archives.tater.netherarchives
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings
-import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
+import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BlockState
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
@@ -28,11 +27,11 @@ internal fun <T> Iterable<T>.draw(random: Random, count: Int = 1): List<T> {
         .map { pool.removeAt(random.nextInt(pool.size)) }
 }
 
-internal fun FabricBlockSettings(init: FabricBlockSettings.() -> Unit): FabricBlockSettings =
-    FabricBlockSettings.create().apply(init)
+internal inline fun blockSettings(init: AbstractBlock.Settings.() -> Unit = {}): AbstractBlock.Settings =
+    AbstractBlock.Settings.create().apply(init)
 
-internal fun FabricItemSettings(init: FabricItemSettings.() -> Unit): FabricItemSettings =
-    FabricItemSettings().apply(init)
+internal inline fun itemSettings(init: Item.Settings.() -> Unit = {}): Item.Settings =
+    Item.Settings().apply(init)
 
 internal infix fun ItemStack.isIn(tag: TagKey<Item>): Boolean = this.isIn(tag)
 internal infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.isIn(tag)

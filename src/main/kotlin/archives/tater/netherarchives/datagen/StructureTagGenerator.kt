@@ -18,7 +18,7 @@ class StructureTagGenerator(
 
     companion object {
         val BLAZE_TORCH_LOCATED: TagKey<Structure> =
-            TagKey.of(RegistryKeys.STRUCTURE, Identifier(NetherArchives.MOD_ID, "blaze_torch_located"))
+            TagKey.of(RegistryKeys.STRUCTURE, NetherArchives.id("blaze_torch_located"))
     }
 
     override fun configure(arg: RegistryWrapper.WrapperLookup?) {

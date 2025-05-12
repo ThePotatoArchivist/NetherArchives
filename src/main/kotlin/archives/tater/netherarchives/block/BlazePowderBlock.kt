@@ -6,15 +6,16 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext
 import net.minecraft.entity.Entity
-import net.minecraft.entity.ai.pathing.NavigationType
+import net.minecraft.entity.LivingEntity.getSlotForHand
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
+import net.minecraft.util.ItemActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -25,7 +26,6 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 import net.minecraft.world.event.GameEvent
 
-@Suppress("OVERRIDE_DEPRECATION")
 class BlazePowderBlock(settings: Settings) : Block(settings) {
     companion object {
         val SHAPE: VoxelShape = createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0)
@@ -54,7 +54,6 @@ class BlazePowderBlock(settings: Settings) : Block(settings) {
         if (!state.canPlaceAt(world, pos)) {
             return Blocks.AIR.defaultState
         }
-        @Suppress("DEPRECATION")
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
@@ -62,29 +61,16 @@ class BlazePowderBlock(settings: Settings) : Block(settings) {
         return state.fluidState.isEmpty
     }
 
-    override fun canPathfindThrough(
-        state: BlockState?,
-        world: BlockView?,
-        pos: BlockPos?,
-        type: NavigationType
-    ): Boolean {
-        if (type == NavigationType.AIR && !collidable) {
-            return true
-        }
-        @Suppress("DEPRECATION")
-        return super.canPathfindThrough(state, world, pos, type)
-    }
-
-    override fun onUse(
+    override fun onUseWithItem(
+        stack: ItemStack,
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
         hand: Hand,
-        hit: BlockHitResult
-    ): ActionResult {
-        val stack = player.getStackInHand(hand)
-        if (!stack.isOf(Items.FLINT_AND_STEEL) && !stack.isOf(Items.FIRE_CHARGE)) return ActionResult.PASS
+        hit: BlockHitResult,
+    ): ItemActionResult {
+        if (!stack.isOf(Items.FLINT_AND_STEEL) && !stack.isOf(Items.FIRE_CHARGE)) return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
         world.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f)
         val blockState = NetherArchivesBlocks.BLAZE_FIRE.defaultState
@@ -93,10 +79,10 @@ class BlazePowderBlock(settings: Settings) : Block(settings) {
         if (player is ServerPlayerEntity)
             Criteria.PLACED_BLOCK.trigger(player, pos, stack)
         if (stack.isOf(Items.FLINT_AND_STEEL))
-            stack.damage(1, player) { it.sendToolBreakStatus(hand) }
+            stack.damage(1, player, getSlotForHand(hand))
         else
             stack.decrement(1)
-        return ActionResult.SUCCESS
+        return ItemActionResult.SUCCESS
     }
 
     override fun onEntityCollision(state: BlockState, world: World, pos: BlockPos, entity: Entity) {

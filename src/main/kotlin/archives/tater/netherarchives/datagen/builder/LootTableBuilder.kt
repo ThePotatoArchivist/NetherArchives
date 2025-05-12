@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.datagen.builder
 
-import net.minecraft.enchantment.Enchantments
+import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.ItemConvertible
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
@@ -16,9 +16,8 @@ import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.LootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
-import net.minecraft.predicate.NumberRange
-import net.minecraft.predicate.item.EnchantmentPredicate
 import net.minecraft.predicate.item.ItemPredicate
+import net.minecraft.registry.entry.RegistryEntry
 
 fun lootTable(init: LootTable.Builder.() -> Unit): LootTable.Builder {
     return LootTable.builder().apply(init)
@@ -48,10 +47,9 @@ fun LeafEntry.Builder<*>.count(count: LootNumberProvider) {
     apply(SetCountLootFunction.builder(count))
 }
 
-val LeafEntry.Builder<*>.fortune: Unit
-    get() {
-        apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE))
-    }
+fun LeafEntry.Builder<*>.oreDrops(enchantment: RegistryEntry<Enchantment>) {
+    apply(ApplyBonusLootFunction.oreDrops(enchantment))
+}
 
 fun LeafEntry.Builder<*>.conditions(init: Conditions.() -> Unit) {
     Conditions(this).init()
@@ -62,20 +60,14 @@ fun AlternativeEntry.Builder.item(drop: ItemConvertible, init: LeafEntry.Builder
 }
 
 class Conditions(private val parentBuilder: LootConditionConsumingBuilder<*>) {
-    val survivesExplosion: Unit
-        get() {
-            parentBuilder.conditionally(SurvivesExplosionLootCondition.builder())
-        }
+    fun survivesExplosion() {
+        parentBuilder.conditionally(SurvivesExplosionLootCondition.builder())
+    }
 
     fun tool(init: ItemPredicate.Builder.() -> Unit) {
         parentBuilder.conditionally(MatchToolLootCondition.builder(ItemPredicate.Builder.create().apply(init)))
     }
 }
-
-val ItemPredicate.Builder.silkTouch: Unit
-    get() {
-        enchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, NumberRange.IntRange.ANY))
-    }
 
 fun constant(count: Float): ConstantLootNumberProvider = ConstantLootNumberProvider.create(count)
 fun constant(count: Int) = constant(count.toFloat())

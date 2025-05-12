@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-class BlazeTorchBlock(settings: Settings) : TorchBlock(settings, ParticleTypes.FLAME), AbstractBlazeTorchBlock {
+class BlazeTorchBlock(settings: Settings) : TorchBlock(ParticleTypes.FLAME, settings), AbstractBlazeTorchBlock {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         super<AbstractBlazeTorchBlock>.randomDisplayTick(
             state,
@@ -20,7 +20,6 @@ class BlazeTorchBlock(settings: Settings) : TorchBlock(settings, ParticleTypes.F
         )
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, notify: Boolean) {
         super<AbstractBlazeTorchBlock>.onBlockAdded(state, world, pos)
     }

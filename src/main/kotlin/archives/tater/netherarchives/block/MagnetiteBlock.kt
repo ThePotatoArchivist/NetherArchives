@@ -2,6 +2,7 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.NetherArchivesTags
+import com.mojang.serialization.MapCodec
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.FallingBlock
@@ -17,22 +18,6 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.WorldAccess
 
 class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()) {
-    companion object {
-        val DISTANCE: IntProperty = Properties.DISTANCE_1_7
-
-        private fun getDistanceFromLodestone(state: BlockState): Int {
-            if (state.isIn(NetherArchivesTags.MAGNETIC)) return 0
-            if (state.block == NetherArchivesBlocks.MAGNETITE) return state.get(DISTANCE)
-            return 7
-        }
-
-        private fun updateDistanceFromLodestone(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
-            val minDistance = Direction.entries.minOf { getDistanceFromLodestone(world.getBlockState(pos.offset(it))) }
-            NetherArchives.logger.debug("distance: $minDistance")
-            return state.with(DISTANCE, if (minDistance < 7) minDistance + 1 else 7)
-        }
-    }
-
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
         return updateDistanceFromLodestone(defaultState, ctx.world, ctx.blockPos)
     }
@@ -43,7 +28,6 @@ class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()
 
     override fun hasRandomTicks(state: BlockState?) = true
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun randomTick(state: BlockState?, world: ServerWorld, pos: BlockPos, random: Random?) {
         if (Direction.entries.any {
                 world.getFluidState(pos.offset(it)).isIn(FluidTags.LAVA)
@@ -52,7 +36,6 @@ class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()
         }
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random?) {
         world.setBlockState(pos, updateDistanceFromLodestone(state, world, pos))
         if (state.get(DISTANCE) == 7) {
@@ -60,7 +43,8 @@ class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()
         }
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
+    override fun getCodec(): MapCodec<out FallingBlock> = CODEC
+
     override fun getStateForNeighborUpdate(
         state: BlockState,
         direction: Direction,
@@ -75,5 +59,22 @@ class MagnetiteBlock(settings: Settings) : FallingBlock(settings.ticksRandomly()
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos)
     }
 
+    companion object {
+        val CODEC: MapCodec<MagnetiteBlock> = createCodec(::MagnetiteBlock)
+
+        val DISTANCE: IntProperty = Properties.DISTANCE_1_7
+
+        private fun getDistanceFromLodestone(state: BlockState): Int {
+            if (state.isIn(NetherArchivesTags.MAGNETIC)) return 0
+            if (state.block == NetherArchivesBlocks.MAGNETITE) return state.get(DISTANCE)
+            return 7
+        }
+
+        private fun updateDistanceFromLodestone(state: BlockState, world: WorldAccess, pos: BlockPos): BlockState {
+            val minDistance = Direction.entries.minOf { getDistanceFromLodestone(world.getBlockState(pos.offset(it))) }
+            NetherArchives.logger.debug("distance: $minDistance")
+            return state.with(DISTANCE, if (minDistance < 7) minDistance + 1 else 7)
+        }
+    }
 
 }

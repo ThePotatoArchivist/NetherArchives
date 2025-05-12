@@ -2,6 +2,7 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.NetherArchivesParticles
 import archives.tater.netherarchives.listCopy
+import com.mojang.serialization.MapCodec
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -23,13 +24,6 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
 class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
-    companion object {
-        val AGE: IntProperty = Properties.AGE_15
-
-        private fun getFireTickDelay(random: Random) = 20 + random.nextInt(20)
-
-    }
-
     init {
         defaultState = stateManager.defaultState.with(AGE, 0)
     }
@@ -40,13 +34,13 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
 
     override fun isFlammable(state: BlockState?) = true
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
         val blockPos = pos.down()
         return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, Direction.UP)
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
+    override fun getCodec(): MapCodec<out AbstractFireBlock> = CODEC
+
     override fun getStateForNeighborUpdate(
         state: BlockState,
         direction: Direction,
@@ -61,7 +55,6 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         return Blocks.AIR.defaultState
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         world.scheduleBlockTick(pos, this, getFireTickDelay(world.random))
         if (!world.gameRules.getBoolean(GameRules.DO_FIRE_TICK)) return
@@ -91,7 +84,6 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             }
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun onBlockAdded(
         state: BlockState,
         world: World,
@@ -113,13 +105,24 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         world.scheduleBlockTick(pos, this, world.random.nextInt(10))
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity?) {
         if (entity is ItemEntity) return
         super.onEntityCollision(state, world, pos, entity)
     }
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
+        if (random.nextInt(24) == 0) {
+            world.playSound(
+                pos.x + 0.5,
+                pos.y + 0.5,
+                pos.z + 0.5,
+                SoundEvents.BLOCK_FIRE_AMBIENT,
+                SoundCategory.BLOCKS,
+                1.0f + random.nextFloat(),
+                random.nextFloat() * 0.7f + 0.3f,
+                false
+            )
+        }
         repeat(random.nextInt(2) + 2) {
             world.addParticle(
                 NetherArchivesParticles.BLAZE_SPARK,
@@ -131,5 +134,13 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
                 0.0
             )
         }
+    }
+
+    companion object {
+        val AGE: IntProperty = Properties.AGE_15
+
+        private fun getFireTickDelay(random: Random) = 20 + random.nextInt(20)
+
+        val CODEC: MapCodec<BlazeFireBlock> = createCodec(::BlazeFireBlock)
     }
 }

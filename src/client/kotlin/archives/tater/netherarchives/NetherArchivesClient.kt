@@ -30,16 +30,16 @@ object NetherArchivesClient : ClientModInitializer {
         setOf(BLAZE_FIRE, BLAZE_DUST, BLAZE_TORCH, WALL_BLAZE_TORCH)
     }
 
-    private val SKIS_MODEL_LAYER = EntityModelLayer(Identifier(NetherArchives.MOD_ID, "skis"), "main")
+    private val SKIS_MODEL_LAYER = EntityModelLayer(NetherArchives.id("skis"), "main")
 
-    private val BASALT_SKIS_LOCATION = Identifier(NetherArchives.MOD_ID, "textures/models/basalt_skis.png")
+    private val BASALT_SKIS_LOCATION = NetherArchives.id("textures/models/basalt_skis.png")
     private lateinit var basaltSkisModel: SkisEntityModel<LivingEntity>
 
-    private val BASALT_OAR_IN_HAND_ID = Identifier(NetherArchives.MOD_ID, "item/basalt_oar_in_hand")
+    private val BASALT_OAR_IN_HAND_ID = NetherArchives.id("item/basalt_oar_in_hand")
     private val BASALT_OAR_IN_HAND_MODEL by lazy {
         MinecraftClient.getInstance().bakedModelManager.getModel(BASALT_OAR_IN_HAND_ID)
     }
-    private val BASALT_OAR_INVENTORY_ID = Identifier(NetherArchives.MOD_ID, "item/basalt_oar_inventory")
+    private val BASALT_OAR_INVENTORY_ID = NetherArchives.id("item/basalt_oar_inventory")
     private val BASALT_OAR_INVENTORY_MODEL by lazy {
         MinecraftClient.getInstance().bakedModelManager.getModel(BASALT_OAR_INVENTORY_ID)
     }

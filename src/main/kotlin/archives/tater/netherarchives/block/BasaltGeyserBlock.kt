@@ -80,7 +80,7 @@ class BasaltGeyserBlock(settings: Settings) : Block(settings), BlockEntityProvid
         private const val SNEAKING_MAX_BOOST_VELOCITY = 0.12
 
         override fun tick(world: World, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
-            world.getOtherEntities(null, Box(pos, pos.add(1, BOOST_RANGE + 1, 1))) { it !is StriderEntity && (it !is PlayerEntity || !it.abilities.flying) }.forEach {
+            world.getOtherEntities(null, Box.enclosing(pos, pos.add(0, BOOST_RANGE, 0))) { it !is StriderEntity && (it !is PlayerEntity || !it.abilities.flying) }.forEach {
                 it.velocity += Vec3d(0.0, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * (1 - (it.y - pos.y + 1) / BOOST_RANGE.toDouble()), 0.0)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
                     it.isAirSkiing = true

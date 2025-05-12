@@ -9,9 +9,11 @@ import net.minecraft.nbt.NbtHelper
 import net.minecraft.network.listener.ClientPlayPacketListener
 import net.minecraft.network.packet.Packet
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
+import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.RegistryWrapper.WrapperLookup
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
+import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sqrt
 
 
@@ -49,25 +51,19 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
         return BlockEntityUpdateS2CPacket.create(this)
     }
 
-    override fun toInitialChunkDataNbt(): NbtCompound {
-        return createNbt()
+    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {
+        return createNbt(registryLookup)
     }
 
-    // Serialize the BlockEntity
-    public override fun writeNbt(nbt: NbtCompound) {
+    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         // Save the current value of the number to the nbt
         if (targetPos !== null)
             nbt.put(TARGET_KEY, targetPos.let(NbtHelper::fromBlockPos))
-        super.writeNbt(nbt)
     }
 
     // Deserialize the BlockEntity
-    override fun readNbt(nbt: NbtCompound) {
-        super.readNbt(nbt)
+    override fun readNbt(nbt: NbtCompound, registryLookup: WrapperLookup) {
         if (!nbt.contains(TARGET_KEY)) return
-        nbt.getCompound(TARGET_KEY).let(NbtHelper::toBlockPos).let {
-            if (!World.isValid(it)) return
-            targetPos = it
-        }
+        targetPos = NbtHelper.toBlockPos(nbt, TARGET_KEY).getOrNull()
     }
 }

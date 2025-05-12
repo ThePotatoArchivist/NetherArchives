@@ -7,16 +7,20 @@ import archives.tater.netherarchives.item.NetherArchivesItems
 import archives.tater.netherarchives.modification.ModifyLootTables
 import archives.tater.netherarchives.modification.ModifyWorldGen
 import net.fabricmc.api.ModInitializer
+import net.minecraft.util.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 object NetherArchives : ModInitializer {
     const val MOD_ID = "netherarchives"
 
+    @JvmStatic
+    fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
+
     @JvmField
     val logger: Logger = LoggerFactory.getLogger(MOD_ID)
 
-    val config = NetherArchivesConfig(true).load() as NetherArchivesConfig
+    val config = NetherArchivesConfig()
 
     override fun onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.

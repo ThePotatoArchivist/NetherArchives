@@ -1,26 +1,18 @@
 package archives.tater.netherarchives.datagen.builder
 
-import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder
-import net.minecraft.data.server.recipe.RecipeJsonProvider
+import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
-import net.minecraft.recipe.AbstractCookingRecipe
-import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RecipeSerializer
+import net.minecraft.recipe.*
+import net.minecraft.recipe.AbstractCookingRecipe.RecipeFactory
 import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
-import java.util.function.Consumer
-
-typealias RecipeExporter = Consumer<RecipeJsonProvider>
-
-// CHANGE THIS when copying this file into a new class
-const val NAMESPACE = NetherArchives.MOD_ID
 
 // Shaped
 
@@ -28,11 +20,11 @@ inline fun RecipeExporter.shaped(
     category: RecipeCategory,
     outputItem: ItemConvertible,
     count: Int = 1,
-    recipeName: String = outputItem.asItem().id.path,
+    recipeId: Identifier = outputItem.asItem().id,
     init: ShapedRecipeJsonBuilder.() -> Unit
 ) {
     ShapedRecipeJsonBuilder.create(category, outputItem, count).apply(init)
-        .offerTo(this, Identifier(NAMESPACE, recipeName))
+        .offerTo(this, recipeId)
 }
 
 fun ShapedRecipeJsonBuilder.patterns(rows: String) {
@@ -72,11 +64,11 @@ inline fun RecipeExporter.shapeless(
     category: RecipeCategory,
     outputItem: ItemConvertible,
     count: Int = 1,
-    recipeName: String = outputItem.asItem().id.path,
+    recipeId: Identifier = outputItem.asItem().id,
     init: ShapelessRecipeJsonBuilder.() -> Unit
 ) {
     ShapelessRecipeJsonBuilder.create(category, outputItem, count).apply(init)
-        .offerTo(this, Identifier(NAMESPACE, recipeName))
+        .offerTo(this, recipeId)
 }
 
 fun ShapelessRecipeJsonBuilder.itemCriterion(item: ItemConvertible) {
@@ -119,11 +111,12 @@ class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeJson
 val Item.id
     get() = Registries.ITEM.getId(this as Item?)
 
-fun RecipeExporter.cookingRecipe(
+fun <T: AbstractCookingRecipe> RecipeExporter.cookingRecipe(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
-    serializer: RecipeSerializer<out AbstractCookingRecipe>,
+    serializer: RecipeSerializer<T>,
+    recipeFactory: RecipeFactory<T>,
     method: String,
     cookingTime: Int = 100,
     experience: Float = 0F
@@ -134,10 +127,11 @@ fun RecipeExporter.cookingRecipe(
         outputItem,
         experience,
         cookingTime,
-        serializer
+        serializer,
+        recipeFactory,
     )
         .criterion(FabricRecipeProvider.hasItem(inputItem), FabricRecipeProvider.conditionsFromItem(inputItem))
-        .offerTo(this, Identifier(NAMESPACE, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
+        .offerTo(this, Identifier.of(outputItem.id.namespace, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
 }
 
 fun RecipeExporter.smelting(
@@ -147,7 +141,7 @@ fun RecipeExporter.smelting(
     cookingTime: Int = 100,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING, "smelting", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING, ::SmeltingRecipe, "smelting", cookingTime, experience)
 }
 
 fun RecipeExporter.smoking(
@@ -157,7 +151,7 @@ fun RecipeExporter.smoking(
     cookingTime: Int = 50,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING, "smoking", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING, ::SmokingRecipe, "smoking", cookingTime, experience)
 }
 
 fun RecipeExporter.blasting(
@@ -167,7 +161,7 @@ fun RecipeExporter.blasting(
     cookingTime: Int = 50,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING, "blasting", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING, ::BlastingRecipe, "blasting", cookingTime, experience)
 }
 
 fun RecipeExporter.campfire(
@@ -177,15 +171,7 @@ fun RecipeExporter.campfire(
     cookingTime: Int = 300,
     experience: Float = 0F
 ) {
-    cookingRecipe(
-        category,
-        inputItem,
-        outputItem,
-        RecipeSerializer.CAMPFIRE_COOKING,
-        "campfire",
-        cookingTime,
-        experience
-    )
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
 }
 
 fun RecipeExporter.oreSmelting(

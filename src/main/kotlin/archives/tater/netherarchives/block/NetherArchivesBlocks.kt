@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.FabricBlockSettings
 import archives.tater.netherarchives.NetherArchives
+import archives.tater.netherarchives.blockSettings
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -9,15 +9,14 @@ import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.util.Identifier
 
 object NetherArchivesBlocks {
     private fun register(path: String, block: Block): Block =
-        Registry.register(Registries.BLOCK, Identifier(NetherArchives.MOD_ID, path), block)
+        Registry.register(Registries.BLOCK, NetherArchives.id(path), block)
 
     @JvmField
     val MAGNETITE = register("magnetite", MagnetiteBlock(
-        FabricBlockSettings {
+        blockSettings {
             strength(0.8f, 9.0f)
             sounds(BlockSoundGroup.BASALT)
         }
@@ -25,10 +24,10 @@ object NetherArchivesBlocks {
 
     @JvmField
     val SMOLDERING_MAGNETITE = register("smoldering_magnetite", SmolderingMagnetiteBlock(
-        FabricBlockSettings {
+        blockSettings {
             strength(0.6f, 1.25f)
             sounds(BlockSoundGroup.BASALT)
-            luminance(3)
+            luminance { 3 }
             emissiveLighting(Blocks::always)
             requiresTool()
         }
@@ -36,11 +35,11 @@ object NetherArchivesBlocks {
 
     @JvmField
     val BLAZE_FIRE = register("blaze_fire", BlazeFireBlock(
-        FabricBlockSettings {
+        blockSettings {
             replaceable()
             noCollision()
             breakInstantly()
-            luminance(15)
+            luminance { 15 }
             sounds(BlockSoundGroup.WOOL)
             pistonBehavior(PistonBehavior.DESTROY)
             nonOpaque()
@@ -49,7 +48,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val BLAZE_DUST = register("blaze_dust", BlazePowderBlock(
-        FabricBlockSettings {
+        blockSettings {
             replaceable()
             noCollision()
             sounds(BlockSoundGroup.SAND)
@@ -60,7 +59,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val FERMENTED_ROTTEN_FLESH_BLOCK = register("fermented_rotten_flesh_block", Block(
-        FabricBlockSettings {
+        blockSettings {
             strength(1.5f, 1f)
             sounds(BlockSoundGroup.SLIME)
         }
@@ -68,7 +67,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", RottenFleshBlock(
-        FabricBlockSettings {
+        blockSettings {
             strength(0.7f, 0.7f)
             sounds(BlockSoundGroup.SLIME)
         }
@@ -76,10 +75,10 @@ object NetherArchivesBlocks {
 
     @JvmField
     val BLAZE_TORCH = register("blaze_torch", BlazeTorchBlock(
-        FabricBlockSettings {
+        blockSettings {
             noCollision()
             breakInstantly()
-            luminance(15)
+            luminance { 15 }
             sounds(BlockSoundGroup.BONE)
             pistonBehavior(PistonBehavior.DESTROY)
         }
@@ -87,19 +86,19 @@ object NetherArchivesBlocks {
 
     @JvmField
     val WALL_BLAZE_TORCH = register("wall_blaze_torch", WallBlazeTorchBlock(
-        FabricBlockSettings {
+        blockSettings {
             noCollision()
             breakInstantly()
-            luminance(15)
+            luminance { 15 }
             sounds(BlockSoundGroup.BONE)
             pistonBehavior(PistonBehavior.DESTROY)
             dropsLike(BLAZE_TORCH)
         }
     ))
 
-    val BASALT_GEYSER = register("basalt_geyser", BasaltGeyserBlock(FabricBlockSettings {
+    val BASALT_GEYSER = register("basalt_geyser", BasaltGeyserBlock(blockSettings {
         strength(1.2f, 4.2f)
-        luminance(5)
+        luminance { 5 }
         sounds(BlockSoundGroup.BASALT)
         requiresTool()
     }))

@@ -2,7 +2,6 @@ package archives.tater.netherarchives.block
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.particle.ParticleTypes
@@ -16,7 +15,6 @@ import net.minecraft.world.World
 class SmolderingMagnetiteBlock(settings: Settings) : Block(settings.ticksRandomly()) {
     override fun hasRandomTicks(state: BlockState?) = true
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         if (Direction.entries.none {
                 world.getFluidState(pos.offset(it)).isIn(FluidTags.LAVA)
@@ -28,7 +26,7 @@ class SmolderingMagnetiteBlock(settings: Settings) : Block(settings.ticksRandoml
 
     // Copied from Magma Block
     override fun onSteppedOn(world: World, pos: BlockPos?, state: BlockState?, entity: Entity) {
-        if (!entity.bypassesSteppingEffects() && entity is LivingEntity && !EnchantmentHelper.hasFrostWalker(entity)) {
+        if (!entity.bypassesSteppingEffects() && entity is LivingEntity) {
             entity.damage(world.damageSources.hotFloor(), 1.0f)
         }
         super.onSteppedOn(world, pos, state, entity)

@@ -3,6 +3,7 @@ package archives.tater.netherarchives.item
 import archives.tater.netherarchives.NetherArchivesDamageTypes.paddleBurn
 import archives.tater.netherarchives.NetherArchivesTags
 import archives.tater.netherarchives.isIn
+import net.minecraft.entity.LivingEntity.getSlotForHand
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -38,7 +39,7 @@ class OarItem(settings: Settings) : Item(settings) {
         else
             user.playSound(SoundEvents.ENTITY_BOAT_PADDLE_WATER, 3f, 1f)
         user.itemCooldownManager.set(itemStack.item, 10)
-        itemStack.damage(1, user) { it.sendToolBreakStatus(hand) }
+        itemStack.damage(1, user, getSlotForHand(hand))
         user.addExhaustion(0.2f)
         return TypedActionResult.success(itemStack)
     }

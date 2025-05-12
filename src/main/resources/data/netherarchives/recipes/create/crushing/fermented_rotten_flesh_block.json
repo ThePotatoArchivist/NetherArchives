@@ -5,20 +5,20 @@
       "item": "netherarchives:fermented_rotten_flesh_block"
     }
   ],
-  "processingTime": 200,
+  "processing_time": 200,
   "results": [
     {
       "count": 3,
-      "item": "minecraft:leather"
+      "id": "minecraft:leather"
     },
     {
       "chance": 0.25,
       "count": 2,
-      "item": "minecraft:leather"
+      "id": "minecraft:leather"
     },
     {
       "chance": 0.125,
-      "item": "minecraft:rotten_flesh"
+      "id": "minecraft:rotten_flesh"
     }
   ],
   "fabric:load_conditions": [

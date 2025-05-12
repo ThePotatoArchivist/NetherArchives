@@ -75,7 +75,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
         if (!getWorld().isClient && (isSkiing.get() || netherarchives$isAirSkiing) && getVelocity().length() > SkisItem.MIN_DAMAGE_VELOCITY) {
             netherarchives$ticksSkiing += 1;
             if (netherarchives$ticksSkiing >= SkisItem.DAMAGE_FREQUENCY) {
-                getEquippedStack(EquipmentSlot.FEET).damage(1, (LivingEntity) (Object) this, p -> p.sendEquipmentBreakStatus(EquipmentSlot.FEET));
+                getEquippedStack(EquipmentSlot.FEET).damage(1, (LivingEntity) (Object) this, EquipmentSlot.FEET);
                 netherarchives$ticksSkiing = 0;
             }
         }
@@ -125,7 +125,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
 
     @ModifyVariable(
             method = "travel",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z", ordinal = 0)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z", ordinal = 0)
     )
     private double slowFallingWhileAirSkiing(double original) {
         return netherarchives$isAirSkiing && !isSneaking() ? 0.01 : original;

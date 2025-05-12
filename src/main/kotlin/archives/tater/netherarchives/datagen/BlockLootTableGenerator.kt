@@ -6,11 +6,17 @@ import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
+import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.loot.LootTable
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.RegistryWrapper
+import java.util.concurrent.CompletableFuture
 
-class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTableProvider(output) {
+class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    FabricBlockLootTableProvider(output, registriesFuture) {
+
     private infix fun Block.drops(lootTable: LootTable.Builder) {
         addDrop(this, lootTable)
     }
@@ -24,15 +30,17 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
     }
 
     override fun generate() {
+        val fortune = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)
+
         NetherArchivesBlocks.MAGNETITE drops NetherArchivesItems.MAGNETITE
 
         NetherArchivesBlocks.SMOLDERING_MAGNETITE drops {
             pool {
                 item(NetherArchivesItems.IRON_SLAG) {
                     count(uniform(4, 12))
-                    fortune
+                    oreDrops(fortune)
                 }
-                conditions { survivesExplosion }
+                conditions { survivesExplosion() }
             }
         }
 
@@ -42,16 +50,14 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
             pool {
                 alternatives {
                     item(NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK) {
-                        conditions {
-                            tool { silkTouch }
-                        }
+                        conditionally(createSilkTouchCondition())
                     }
                     item(Items.LEATHER) {
                         count(uniform(1, 3))
-                        fortune
+                        oreDrops(fortune)
                     }
                 }
-                conditions { survivesExplosion }
+                conditions { survivesExplosion() }
             }
         }
 
@@ -63,14 +69,12 @@ class BlockLootTableGenerator(output: FabricDataOutput) : FabricBlockLootTablePr
             pool {
                 alternatives {
                     item(NetherArchivesItems.BASALT_GEYSER) {
-                        conditions {
-                            tool { silkTouch }
-                        }
+                        conditionally(createSilkTouchCondition())
                     }
                     item(Items.BASALT)
                 }
                 conditions {
-                    survivesExplosion
+                    survivesExplosion()
                 }
             }
         }

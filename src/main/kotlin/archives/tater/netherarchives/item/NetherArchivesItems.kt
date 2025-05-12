@@ -1,27 +1,32 @@
 package archives.tater.netherarchives.item
 
-import archives.tater.netherarchives.FabricItemSettings
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.NetherArchivesBlocks
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings
+import archives.tater.netherarchives.itemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
 import net.minecraft.item.*
+import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 
 
 object NetherArchivesItems {
-    private fun register(identifier: Identifier, item: Item = Item(FabricItemSettings())): Item =
+    private fun register(identifier: Identifier, item: Item = Item(itemSettings())): Item =
         Registry.register(Registries.ITEM, identifier, item)
 
-    private fun register(path: String, item: Item = Item(FabricItemSettings())): Item =
-        register(Identifier(NetherArchives.MOD_ID, path), item)
+    private fun register(path: String, item: Item = Item(itemSettings())): Item =
+        register(NetherArchives.id(path), item)
 
-    private fun register(block: Block, settings: FabricItemSettings = FabricItemSettings()): Item =
+    private fun register(block: Block, settings: Item.Settings = itemSettings()): Item =
         register(Registries.BLOCK.getId(block).path, BlockItem(block, settings))
+
+    private fun register(identifier: Identifier, armorMaterial: ArmorMaterial): RegistryEntry<ArmorMaterial> =
+        Registry.registerReference(Registries.ARMOR_MATERIAL, identifier, armorMaterial)
 
     val MAGNETITE = register(NetherArchivesBlocks.MAGNETITE)
 
@@ -35,7 +40,7 @@ object NetherArchivesItems {
 
     val BLAZE_DUST = register(NetherArchivesBlocks.BLAZE_DUST)
 
-    val BLAZE_LANTERN = register("blaze_lantern", BlazeLanternItem(FabricItemSettings {
+    val BLAZE_LANTERN = register("blaze_lantern", BlazeLanternItem(itemSettings {
         maxCount(16)
     }))
 
@@ -44,13 +49,24 @@ object NetherArchivesItems {
         VerticallyAttachableBlockItem(
             NetherArchivesBlocks.BLAZE_TORCH,
             NetherArchivesBlocks.WALL_BLAZE_TORCH,
-            FabricItemSettings(),
+            itemSettings(),
             Direction.DOWN
         )
     )
 
-    val BASALT_SKIS = register("basalt_skis", SkisItem(SkisItem.BASALT_ARMOR_MATERIAL, FabricItemSettings()))
-    val BASALT_OAR = register("basalt_oar", OarItem(FabricItemSettings {
+    val BASALT_ARMOR_MATERIAL = register(NetherArchives.id("basalt"), ArmorMaterial(
+        ArmorMaterials.CHAIN.value().defense,
+        ArmorMaterials.CHAIN.value().enchantability,
+//            // TODO add custom sound?
+        SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
+        { Ingredient.ofItems(Items.POLISHED_BASALT) },
+        listOf(), // uses custom rendering
+        ArmorMaterials.CHAIN.value().toughness,
+        ArmorMaterials.CHAIN.value().knockbackResistance,
+    ))
+
+    val BASALT_SKIS = register("basalt_skis", SkisItem(BASALT_ARMOR_MATERIAL, itemSettings()))
+    val BASALT_OAR = register("basalt_oar", OarItem(itemSettings {
         maxCount(1)
         maxDamage(ToolMaterials.STONE.durability)
     }))
@@ -59,7 +75,7 @@ object NetherArchivesItems {
     val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
-    val DUMMY_SOUL_FIRE = register(Identifier("netherarchives/dummy/soul_fire"))
+    val DUMMY_SOUL_FIRE = register(Identifier.ofVanilla("netherarchives/dummy/soul_fire"))
 
     private val itemGroups = mapOf(
         ItemGroups.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD),

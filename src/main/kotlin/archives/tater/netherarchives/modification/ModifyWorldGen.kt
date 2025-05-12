@@ -12,13 +12,13 @@ import net.minecraft.world.gen.GenerationStep
 
 object ModifyWorldGen {
     private val MAGNETITE_DELTA =
-        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "magnetite_delta"))
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, NetherArchives.id("magnetite_delta"))
     private val MAGNETITE_BLOBS =
-        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "magnetite_blobs"))
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, NetherArchives.id("magnetite_blobs"))
     private val BASALT_GEYSER =
-        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "basalt_geyser"))
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, NetherArchives.id("basalt_geyser"))
     private val BASALT_GEYSER_SUBMERGED =
-        RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier(NetherArchives.MOD_ID, "basalt_geyser_submerged"))
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, NetherArchives.id("basalt_geyser_submerged"))
 
     operator fun invoke() {
         BiomeModifications.addFeature(

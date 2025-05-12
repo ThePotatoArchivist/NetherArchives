@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-class WallBlazeTorchBlock(settings: Settings?) : WallTorchBlock(settings, ParticleTypes.FLAME),
+class WallBlazeTorchBlock(settings: Settings?) : WallTorchBlock(ParticleTypes.FLAME, settings),
     AbstractBlazeTorchBlock {
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         val direction = state.get(FACING).opposite
@@ -23,7 +23,6 @@ class WallBlazeTorchBlock(settings: Settings?) : WallTorchBlock(settings, Partic
         )
     }
 
-    @Suppress("OVERRIDE_DEPRECATION")
     override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, notify: Boolean) {
         super<AbstractBlazeTorchBlock>.onBlockAdded(state, world, pos)
     }
