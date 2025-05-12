@@ -74,6 +74,8 @@ object NetherArchivesItems {
 
     val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
 
+    val SOUL_GLASS = register(NetherArchivesBlocks.SOUL_GLASS)
+
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
     val DUMMY_SOUL_FIRE = register(Identifier.ofVanilla("netherarchives/dummy/soul_fire"))
 

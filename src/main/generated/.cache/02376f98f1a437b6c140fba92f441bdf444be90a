@@ -1,8 +1,9 @@
-// 1.21.1	2025-05-12T00:21:29.760058978	Nether Archives/Block Loot Tables
+// 1.21.1	2025-05-12T02:23:16.484332089	Nether Archives/Block Loot Tables
 cd3e1bbe22ef3aa23af0fe6bca7ee5a2c83dbac7 data/netherarchives/loot_table/blocks/fermented_rotten_flesh_block.json
 4d8df8ba2d5b9d9b1ae113a29fc45b1dcf3212de data/netherarchives/loot_table/blocks/smoldering_magnetite.json
 1041f3ff348d6f6920036921f7e945622d6b9a55 data/netherarchives/loot_table/blocks/blaze_dust.json
 0641b2866bffdca83eeac9c3672d3c4c59e96d80 data/netherarchives/loot_table/blocks/blaze_torch.json
 20b0b3a79be2b88490916c0f2d40c1e5e537aa68 data/netherarchives/loot_table/blocks/magnetite.json
+69529d0ba8ecaabcdccd2c2453cf032fbf0a52b6 data/netherarchives/loot_table/blocks/soul_glass.json
 64b26beb2f832102fb90d98507d3c0bf68051f47 data/netherarchives/loot_table/blocks/rotten_flesh_block.json
 6365f534970fdee0c1e4563b5f011ce91516af99 data/netherarchives/loot_table/blocks/basalt_geyser.json

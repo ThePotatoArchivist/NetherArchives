@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:nether_brick"
+    },
+    "X": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "netherarchives:blaze_lantern"
+  }
+}

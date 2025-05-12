@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:polished_basalt"
+    },
+    "%": {
+      "item": "netherarchives:basalt_rod"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "% %"
+  ],
+  "result": {
+    "count": 1,
+    "id": "netherarchives:basalt_skis"
+  }
+}

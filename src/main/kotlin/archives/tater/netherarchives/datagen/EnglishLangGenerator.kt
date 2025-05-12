@@ -19,6 +19,7 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, "Fermented Rotten Flesh Block")
             add(NetherArchivesBlocks.BLAZE_TORCH, "Blaze Torch")
             add(NetherArchivesBlocks.BASALT_GEYSER, "Basalt Geyser")
+            add(NetherArchivesBlocks.SOUL_GLASS, "Soul Glass")
             add(NetherArchivesItems.BLAZE_LANTERN, "Volatile Blaze Lantern")
             add(NetherArchivesItems.IRON_SLAG, "Iron Slag")
             add(NetherArchivesItems.DUMMY_SOUL_FIRE, "Soul Fire")

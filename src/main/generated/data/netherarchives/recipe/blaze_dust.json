@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:blaze_powder"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "netherarchives:blaze_dust"
+  }
+}

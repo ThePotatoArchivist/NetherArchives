@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "minecraft:soul_sand"
+  },
+  "result": {
+    "id": "netherarchives:soul_glass"
+  }
+}

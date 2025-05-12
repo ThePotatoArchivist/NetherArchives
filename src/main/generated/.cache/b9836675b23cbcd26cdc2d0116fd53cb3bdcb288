@@ -1,11 +1,12 @@
-// 1.21.1	2025-05-12T00:21:29.758239497	Nether Archives/Tags for minecraft:block
+// 1.21.1	2025-05-12T02:23:16.482664093	Nether Archives/Tags for minecraft:block
+e5833f57a5121d4b4e72250158b1f15e699ec7f8 data/c/tags/block/glass_blocks.json
 10301bdb96b850d0955ffd2f25977e28473c03ed data/netherarchives/tags/block/basalt_geyser_replaceable_submerged.json
 4edc2d3ddd2e01b2cfac7b1e40b19da3850becf9 data/minecraft/tags/block/mineable/pickaxe.json
 c9d56eab9f6820080271724ea5f4d062abf3c72a data/minecraft/tags/block/mineable/shovel.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/netherarchives/tags/block/blaze_fire_target.json
 021e56fb4f3bc77adeaa60eee6c7be4e61116e3e data/minecraft/tags/block/mineable/hoe.json
 49f568df9c122bf6dfebd0659b0dea2af7b48ca4 data/minecraft/tags/block/soul_fire_base_blocks.json
-70ba04cfbc181ef062dcf604583c1a7903149023 data/netherarchives/tags/block/magnetic.json
+be9d06ef96ef51b94ed6e2e32ce3b1232c2a25ba data/netherarchives/tags/block/magnetic.json
 8373652c9a9a6b38d7dd195478bf30eeb5ffbf53 data/minecraft/tags/block/needs_stone_tool.json
 c5a8e9863f73bdad2a131270da9a2c9f09c840e0 data/netherarchives/tags/block/basalt_geyser_replaceable.json
 d8dfe60bd1ae85f7a46defc4a7cc4bf42b5cf87e data/netherarchives/tags/block/rotten_flesh_fermenter.json

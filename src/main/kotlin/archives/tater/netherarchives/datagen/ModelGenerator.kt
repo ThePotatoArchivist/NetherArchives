@@ -60,6 +60,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
+        blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SOUL_GLASS)
 
         Model(TextureKey.TOP, TextureKey.SIDE, TextureKey.BOTTOM, TextureKey.PARTICLE, parent = Identifier.ofVanilla("block/cube_bottom_top"))
             .upload(NetherArchivesBlocks.BASALT_GEYSER, TextureMap().apply {

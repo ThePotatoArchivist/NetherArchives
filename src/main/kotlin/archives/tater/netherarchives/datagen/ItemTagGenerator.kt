@@ -19,5 +19,8 @@ class ItemTagGenerator(
         getOrCreateTagBuilder(ItemTags.SOUL_FIRE_BASE_BLOCKS).add(
             NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK,
         )
+        getOrCreateTagBuilder(ConventionalItemTags.GLASS_BLOCKS).add(
+            NetherArchivesItems.SOUL_GLASS
+        )
     }
 }

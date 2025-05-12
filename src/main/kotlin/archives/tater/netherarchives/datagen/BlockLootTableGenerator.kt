@@ -32,7 +32,7 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
     override fun generate() {
         val fortune = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)
 
-        NetherArchivesBlocks.MAGNETITE drops NetherArchivesItems.MAGNETITE
+        addDrop(NetherArchivesBlocks.MAGNETITE)
 
         NetherArchivesBlocks.SMOLDERING_MAGNETITE drops {
             pool {
@@ -44,7 +44,7 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
             }
         }
 
-        NetherArchivesBlocks.ROTTEN_FLESH_BLOCK drops NetherArchivesItems.ROTTEN_FLESH_BLOCK
+        addDrop(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK)
 
         NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK drops {
             pool {
@@ -61,9 +61,9 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
             }
         }
 
-        NetherArchivesBlocks.BLAZE_DUST drops NetherArchivesItems.BLAZE_DUST
+        addDrop(NetherArchivesBlocks.BLAZE_DUST)
 
-        NetherArchivesBlocks.BLAZE_TORCH drops NetherArchivesItems.BLAZE_TORCH
+        addDrop(NetherArchivesBlocks.BLAZE_TORCH)
 
         NetherArchivesBlocks.BASALT_GEYSER drops {
             pool {
@@ -78,5 +78,7 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
                 }
             }
         }
+
+        addDrop(NetherArchivesBlocks.SOUL_GLASS)
     }
 }

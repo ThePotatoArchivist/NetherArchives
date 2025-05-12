@@ -8,6 +8,7 @@ import archives.tater.netherarchives.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
 import archives.tater.netherarchives.block.NetherArchivesBlocks
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
 import net.minecraft.block.Blocks
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
@@ -36,7 +37,8 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK,
         )
         getOrCreateTagBuilder(MAGNETIC).add(
-            Blocks.LODESTONE
+            Blocks.LODESTONE,
+            Blocks.NETHERITE_BLOCK,
         )
         getOrCreateTagBuilder(BLAZE_FIRE_TARGET)
         getOrCreateTagBuilder(ROTTEN_FLESH_FERMENTER).add(
@@ -50,5 +52,8 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             forceAddTag(BlockTags.BASE_STONE_NETHER)
             add(NetherArchivesBlocks.MAGNETITE)
         }
+        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_BLOCKS).add(
+            NetherArchivesBlocks.SOUL_GLASS
+        )
     }
 }

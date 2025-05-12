@@ -132,5 +132,7 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             }
             itemCriterion(NetherArchivesItems.MAGNETITE)
         }
+
+        smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SOUL_GLASS)
     }
 }

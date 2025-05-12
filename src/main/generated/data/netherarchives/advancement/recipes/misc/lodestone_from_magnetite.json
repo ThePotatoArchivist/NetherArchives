@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_magnetite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "netherarchives:magnetite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "netherarchives:lodestone_from_magnetite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_magnetite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "netherarchives:lodestone_from_magnetite"
+    ]
+  }
+}

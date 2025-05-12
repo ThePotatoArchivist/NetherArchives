@@ -5,6 +5,7 @@ import archives.tater.netherarchives.blockSettings
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.enums.NoteBlockInstrument
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -101,6 +102,17 @@ object NetherArchivesBlocks {
         luminance { 5 }
         sounds(BlockSoundGroup.BASALT)
         requiresTool()
+    }))
+
+    val SOUL_GLASS = register("soul_glass", SoulGlassBlock(blockSettings {
+        instrument(NoteBlockInstrument.HAT)
+        strength(0.3F)
+        sounds(BlockSoundGroup.GLASS)
+        nonOpaque()
+        allowsSpawning(Blocks::never)
+        solidBlock(Blocks::never)
+        suffocates(Blocks::never)
+        blockVision(Blocks::never)
     }))
 
     fun register() {

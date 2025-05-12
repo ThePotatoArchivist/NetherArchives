@@ -1,7 +1,9 @@
 package archives.tater.netherarchives
 
 import archives.tater.netherarchives.block.NetherArchivesBlocks
+import archives.tater.netherarchives.block.entity.NetherArchivesBlockEntities
 import archives.tater.netherarchives.client.registerArmorRenderer
+import archives.tater.netherarchives.client.render.blockentity.SoulGlassBlockEntityRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherSkeletonEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
@@ -16,6 +18,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.*
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.entity.WitherEntityRenderer
 import net.minecraft.client.render.entity.WitherSkeletonEntityRenderer
@@ -23,7 +26,6 @@ import net.minecraft.client.render.entity.model.EntityModelLayer
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
-import net.minecraft.util.Identifier
 
 object NetherArchivesClient : ClientModInitializer {
     private val CUTOUT_BLOCKS = with(NetherArchivesBlocks) {
@@ -53,11 +55,14 @@ object NetherArchivesClient : ClientModInitializer {
 
     override fun onInitializeClient() {
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
-        CUTOUT_BLOCKS.forEach {
-            BlockRenderLayerMap.INSTANCE.putBlock(it, RenderLayer.getCutout())
-        }
+        for (block in CUTOUT_BLOCKS)
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
+        BlockRenderLayerMap.INSTANCE.putBlock(NetherArchivesBlocks.SOUL_GLASS, RenderLayer.getTranslucent())
+
 
         EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
+
+        BlockEntityRendererFactories.register(NetherArchivesBlockEntities.SOUL_GLASS_BLOCK_ENTITY, ::SoulGlassBlockEntityRenderer)
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
             if (NetherArchives.config.skeletonEyes)
