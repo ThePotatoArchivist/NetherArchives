@@ -107,9 +107,9 @@ class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockEntity
             if (distance == 0) return
 
             world.getOtherEntities(null, Box.enclosing(pos, pos.offset(facing, distance))) { it !is StriderEntity && (it !is PlayerEntity || !it.abilities.flying) }.forEach {
-                val closeness = 1 - abs((it.pos - pos.toCenterPos()).getComponentAlongAxis(facing.axis)) / BOOST_RANGE.toDouble()
+                val closeness = (1 - abs((it.pos - pos.toCenterPos().offset(facing, 0.5)).getComponentAlongAxis(facing.axis)) / BOOST_RANGE.toDouble()).coerceAtLeast(0.0)
 
-                it.velocity += facing.rotate(Vec3d(0.0, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness, 0.0))
+                it.velocity += Vec3d.ZERO.offset(facing, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
                     it.isAirSkiing = true
                 }
