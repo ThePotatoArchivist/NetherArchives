@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    },
+    {
+      "item": "netherarchives:soul_glass_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "netherarchives:shattered_soul_glass"
+  }
+}

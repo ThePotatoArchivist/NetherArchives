@@ -133,6 +133,10 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             itemCriterion(NetherArchivesItems.MAGNETITE)
         }
 
-        smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SOUL_GLASS)
+        smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SOUL_GLASS_SHARD)
+
+        offerCompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SOUL_GLASS, NetherArchivesItems.SOUL_GLASS_SHARD)
+
+        smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SOUL_GLASS, NetherArchivesItems.SOUL_GLASS)
     }
 }

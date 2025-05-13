@@ -79,6 +79,8 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
             }
         }
 
-        addDrop(NetherArchivesBlocks.SOUL_GLASS)
+        NetherArchivesBlocks.SOUL_GLASS drops drops(NetherArchivesBlocks.SOUL_GLASS, NetherArchivesBlocks.SHATTERED_SOUL_GLASS)
+
+        addDrop(NetherArchivesBlocks.SHATTERED_SOUL_GLASS)
     }
 }

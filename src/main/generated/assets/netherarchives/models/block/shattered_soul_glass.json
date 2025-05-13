@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "netherarchives:block/shattered_soul_glass"
+  }
+}

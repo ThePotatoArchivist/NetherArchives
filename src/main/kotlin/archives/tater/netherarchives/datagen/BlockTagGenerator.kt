@@ -53,7 +53,8 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
             add(NetherArchivesBlocks.MAGNETITE)
         }
         getOrCreateTagBuilder(ConventionalBlockTags.GLASS_BLOCKS).add(
-            NetherArchivesBlocks.SOUL_GLASS
+            NetherArchivesBlocks.SOUL_GLASS,
+            NetherArchivesBlocks.SHATTERED_SOUL_GLASS
         )
     }
 }

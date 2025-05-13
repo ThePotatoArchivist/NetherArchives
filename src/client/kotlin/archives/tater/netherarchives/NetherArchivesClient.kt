@@ -28,9 +28,6 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 
 object NetherArchivesClient : ClientModInitializer {
-    private val CUTOUT_BLOCKS = with(NetherArchivesBlocks) {
-        setOf(BLAZE_FIRE, BLAZE_DUST, BLAZE_TORCH, WALL_BLAZE_TORCH)
-    }
 
     private val SKIS_MODEL_LAYER = EntityModelLayer(NetherArchives.id("skis"), "main")
 
@@ -55,10 +52,15 @@ object NetherArchivesClient : ClientModInitializer {
 
     override fun onInitializeClient() {
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
-        for (block in CUTOUT_BLOCKS)
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
-        BlockRenderLayerMap.INSTANCE.putBlock(NetherArchivesBlocks.SOUL_GLASS, RenderLayer.getTranslucent())
-
+        with (NetherArchivesBlocks) {
+            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+                BLAZE_FIRE, BLAZE_DUST, BLAZE_TORCH, WALL_BLAZE_TORCH
+            )
+            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+                SOUL_GLASS,
+                SHATTERED_SOUL_GLASS,
+            )
+        }
 
         EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
 

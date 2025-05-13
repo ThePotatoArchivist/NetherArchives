@@ -1,23 +1,27 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.BlockSettings
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.blockSettings
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.block.enums.NoteBlockInstrument
+import net.minecraft.block.TransparentBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.block.AbstractBlock.Settings as BlockSettings
 
 object NetherArchivesBlocks {
     private fun register(path: String, block: Block): Block =
         Registry.register(Registries.BLOCK, NetherArchives.id(path), block)
 
+    private fun register(path: String, settingsInit: BlockSettings.() -> Unit): Block =
+        register(path, Block(BlockSettings(settingsInit)))
+
     @JvmField
     val MAGNETITE = register("magnetite", MagnetiteBlock(
-        blockSettings {
+        BlockSettings {
             strength(0.8f, 9.0f)
             sounds(BlockSoundGroup.BASALT)
         }
@@ -25,7 +29,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val SMOLDERING_MAGNETITE = register("smoldering_magnetite", SmolderingMagnetiteBlock(
-        blockSettings {
+        BlockSettings {
             strength(0.6f, 1.25f)
             sounds(BlockSoundGroup.BASALT)
             luminance { 3 }
@@ -36,7 +40,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val BLAZE_FIRE = register("blaze_fire", BlazeFireBlock(
-        blockSettings {
+        BlockSettings {
             replaceable()
             noCollision()
             breakInstantly()
@@ -49,7 +53,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val BLAZE_DUST = register("blaze_dust", BlazePowderBlock(
-        blockSettings {
+        BlockSettings {
             replaceable()
             noCollision()
             sounds(BlockSoundGroup.SAND)
@@ -60,7 +64,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val FERMENTED_ROTTEN_FLESH_BLOCK = register("fermented_rotten_flesh_block", Block(
-        blockSettings {
+        BlockSettings {
             strength(1.5f, 1f)
             sounds(BlockSoundGroup.SLIME)
         }
@@ -68,7 +72,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", RottenFleshBlock(
-        blockSettings {
+        BlockSettings {
             strength(0.7f, 0.7f)
             sounds(BlockSoundGroup.SLIME)
         }
@@ -76,7 +80,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val BLAZE_TORCH = register("blaze_torch", BlazeTorchBlock(
-        blockSettings {
+        BlockSettings {
             noCollision()
             breakInstantly()
             luminance { 15 }
@@ -87,7 +91,7 @@ object NetherArchivesBlocks {
 
     @JvmField
     val WALL_BLAZE_TORCH = register("wall_blaze_torch", WallBlazeTorchBlock(
-        blockSettings {
+        BlockSettings {
             noCollision()
             breakInstantly()
             luminance { 15 }
@@ -97,22 +101,17 @@ object NetherArchivesBlocks {
         }
     ))
 
-    val BASALT_GEYSER = register("basalt_geyser", BasaltGeyserBlock(blockSettings {
+    val BASALT_GEYSER = register("basalt_geyser", BasaltGeyserBlock(BlockSettings {
         strength(1.2f, 4.2f)
         luminance { 5 }
         sounds(BlockSoundGroup.BASALT)
         requiresTool()
     }))
 
-    val SOUL_GLASS = register("soul_glass", SoulGlassBlock(blockSettings {
-        instrument(NoteBlockInstrument.HAT)
-        strength(0.3F)
-        sounds(BlockSoundGroup.GLASS)
-        nonOpaque()
-        allowsSpawning(Blocks::never)
-        solidBlock(Blocks::never)
-        suffocates(Blocks::never)
-        blockVision(Blocks::never)
+    val SHATTERED_SOUL_GLASS = register("shattered_soul_glass", TransparentBlock(BlockSettings.copy(Blocks.GLASS)))
+
+    val SOUL_GLASS = register("soul_glass", SoulGlassBlock(SHATTERED_SOUL_GLASS, BlockSettings.copy(SHATTERED_SOUL_GLASS).apply {
+            strength(0.3f, 3f)
     }))
 
     fun register() {

@@ -3,7 +3,6 @@
 package archives.tater.netherarchives
 
 import com.google.common.collect.AbstractIterator
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BlockState
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
@@ -19,6 +18,8 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 import java.util.*
+import net.minecraft.block.AbstractBlock.Settings as BlockSettings
+import net.minecraft.item.Item.Settings as ItemSettings
 
 // iterateInSquare uses the same blockPos object and mutates it, so we need this to use proper collection operations
 internal fun Iterable<BlockPos>.listCopy(): List<BlockPos> = map(BlockPos::mutableCopy)
@@ -29,11 +30,11 @@ internal fun <T> Iterable<T>.draw(random: Random, count: Int = 1): List<T> {
         .map { pool.removeAt(random.nextInt(pool.size)) }
 }
 
-internal inline fun blockSettings(init: AbstractBlock.Settings.() -> Unit = {}): AbstractBlock.Settings =
-    AbstractBlock.Settings.create().apply(init)
+internal inline fun BlockSettings(init: BlockSettings.() -> Unit = {}): BlockSettings =
+    BlockSettings.create().apply(init)
 
-internal inline fun itemSettings(init: Item.Settings.() -> Unit = {}): Item.Settings =
-    Item.Settings().apply(init)
+internal inline fun ItemSettings(init: ItemSettings.() -> Unit = {}): ItemSettings =
+    ItemSettings().apply(init)
 
 internal inline infix fun ItemStack.isIn(tag: TagKey<Item>): Boolean = this.isIn(tag)
 internal inline infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.isIn(tag)

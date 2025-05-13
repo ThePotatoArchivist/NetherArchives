@@ -61,6 +61,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SOUL_GLASS)
+        blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SHATTERED_SOUL_GLASS)
 
         Model(TextureKey.TOP, TextureKey.SIDE, TextureKey.BOTTOM, TextureKey.PARTICLE, parent = Identifier.ofVanilla("block/cube_bottom_top"))
             .upload(NetherArchivesBlocks.BASALT_GEYSER, TextureMap().apply {
@@ -104,6 +105,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         itemModelGenerator.register(NetherArchivesItems.BLAZE_DUST, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BLAZE_LANTERN, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BASALT_SKIS, Models.GENERATED)
+        itemModelGenerator.register(NetherArchivesItems.SOUL_GLASS_SHARD, Models.GENERATED)
         Models.GENERATED.upload(ModelIds.getItemSubModelId(NetherArchivesItems.BASALT_OAR, "_inventory"), TextureMap.layer0(NetherArchivesItems.BASALT_OAR), itemModelGenerator.writer)
         itemModelGenerator.register(NetherArchivesItems.BASALT_ROD, Models.HANDHELD_ROD)
 
