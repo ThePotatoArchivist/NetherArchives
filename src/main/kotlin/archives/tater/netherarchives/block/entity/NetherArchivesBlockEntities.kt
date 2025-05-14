@@ -26,7 +26,5 @@ object NetherArchivesBlockEntities {
 
     val BASALT_GEYSER_ENTITY = register("basalt_geyser", ::BasaltGeyserBlockEntity, NetherArchivesBlocks.BASALT_GEYSER)
 
-    val SOUL_GLASS_BLOCK_ENTITY = register("soul_glass", ::SoulGlassBlockEntity, NetherArchivesBlocks.SOUL_GLASS)
-
     fun register() {}
 }

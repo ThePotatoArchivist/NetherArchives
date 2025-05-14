@@ -1,9 +1,7 @@
 package archives.tater.netherarchives
 
 import archives.tater.netherarchives.block.NetherArchivesBlocks
-import archives.tater.netherarchives.block.entity.NetherArchivesBlockEntities
 import archives.tater.netherarchives.client.registerArmorRenderer
-import archives.tater.netherarchives.client.render.blockentity.SoulGlassBlockEntityRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherSkeletonEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
@@ -19,7 +17,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.*
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.entity.WitherEntityRenderer
 import net.minecraft.client.render.entity.WitherSkeletonEntityRenderer
@@ -28,14 +25,13 @@ import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.util.hit.HitResult
+import net.minecraft.util.math.Box
+import net.minecraft.util.math.MathHelper.clamp
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.BlockStateRaycastContext
 import java.util.*
 
 object NetherArchivesClient : ClientModInitializer {
-
-    @JvmField
-    internal var renderingSoulGlass = false
 
     @JvmField
     internal val soulGlassRevealed = WeakHashMap<LivingEntity, Boolean>()
@@ -67,15 +63,14 @@ object NetherArchivesClient : ClientModInitializer {
             BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
                 BLAZE_FIRE, BLAZE_DUST, BLAZE_TORCH, WALL_BLAZE_TORCH
             )
-            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+            BlockRenderLayerMap.INSTANCE.putBlocks(
+                RenderLayer.getTranslucent(),
                 SOUL_GLASS,
                 SHATTERED_SOUL_GLASS,
             )
         }
 
         EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
-
-        BlockEntityRendererFactories.register(NetherArchivesBlockEntities.SOUL_GLASS_BLOCK_ENTITY, ::SoulGlassBlockEntityRenderer)
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
             if (NetherArchives.config.skeletonEyes)
@@ -125,20 +120,22 @@ object NetherArchivesClient : ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
 
-        WorldRenderEvents.AFTER_ENTITIES.register {
-            renderingSoulGlass = false
-        }
-
         ClientTickEvents.START_WORLD_TICK.register { world ->
-            if (renderingSoulGlass)
-                for (entity in world.entities) {
-                    if (entity !is LivingEntity || !entity.isInvisible) continue
-
-                    soulGlassRevealed[entity] = world.raycast(BlockStateRaycastContext(
-                            MinecraftClient.getInstance().gameRenderer.camera.pos,
-                            Vec3d(entity.x, entity.getBodyY(0.5), entity.z),
-                        ) { it isOf NetherArchivesBlocks.SOUL_GLASS }).type != HitResult.Type.MISS
-                }
+            val client = MinecraftClient.getInstance()
+            val cameraPos = client.gameRenderer.camera.pos
+            val distance = 64 * clamp(client.options.clampedViewDistance / 8.0, 1.0, 2.5) *
+                    client.options.entityDistanceScaling.value
+            for (entity in world.getEntitiesByClass(
+                LivingEntity::class.java,
+                Box.of(cameraPos, distance, distance, distance)
+            ) {
+                it.isInvisible || it.isInvisibleTo(client.player)
+            }) {
+                soulGlassRevealed[entity] = world.raycast(BlockStateRaycastContext(
+                        cameraPos,
+                        Vec3d(entity.x, entity.getBodyY(0.5), entity.z),
+                    ) { it isOf NetherArchivesBlocks.SOUL_GLASS }).type != HitResult.Type.MISS
+            }
         }
     }
 }
