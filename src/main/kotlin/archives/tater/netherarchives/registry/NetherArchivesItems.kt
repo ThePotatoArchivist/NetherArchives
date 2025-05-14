@@ -1,8 +1,10 @@
-package archives.tater.netherarchives.item
+package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.ItemSettings
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.block.NetherArchivesBlocks
+import archives.tater.netherarchives.item.BlazeLanternItem
+import archives.tater.netherarchives.item.OarItem
+import archives.tater.netherarchives.item.SkisItem
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
 import net.minecraft.item.*

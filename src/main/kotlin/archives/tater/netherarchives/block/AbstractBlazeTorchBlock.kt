@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.NetherArchivesParticles
+import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.block.entity.BlazeTorchBlockEntity
 import net.minecraft.block.Block.NOTIFY_LISTENERS
 import net.minecraft.block.BlockEntityProvider

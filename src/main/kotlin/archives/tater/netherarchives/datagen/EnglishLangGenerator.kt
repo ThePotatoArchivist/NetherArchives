@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.block.NetherArchivesBlocks
-import archives.tater.netherarchives.item.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.registry.RegistryWrapper

@@ -1,13 +1,14 @@
 package archives.tater.netherarchives
 
-import archives.tater.netherarchives.block.NetherArchivesBlocks
 import archives.tater.netherarchives.client.registerArmorRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherSkeletonEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
-import archives.tater.netherarchives.entity.NetherArchivesEntities
-import archives.tater.netherarchives.item.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesEntities
+import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesParticles
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents

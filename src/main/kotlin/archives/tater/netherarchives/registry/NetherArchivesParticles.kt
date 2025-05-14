@@ -1,5 +1,6 @@
-package archives.tater.netherarchives
+package archives.tater.netherarchives.registry
 
+import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
 import net.minecraft.particle.ParticleType
 import net.minecraft.particle.SimpleParticleType

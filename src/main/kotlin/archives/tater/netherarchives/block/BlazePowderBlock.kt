@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import net.minecraft.advancement.criterion.Criteria
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

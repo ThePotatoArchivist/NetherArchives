@@ -1,7 +1,8 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.NetherArchivesTags
+import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

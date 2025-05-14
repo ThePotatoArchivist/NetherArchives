@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.modification
 
 import archives.tater.netherarchives.datagen.builder.item
-import archives.tater.netherarchives.item.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.minecraft.loot.LootTables
 

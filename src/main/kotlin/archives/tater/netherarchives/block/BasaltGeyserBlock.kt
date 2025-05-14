@@ -2,7 +2,7 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.*
 import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
-import archives.tater.netherarchives.block.entity.NetherArchivesBlockEntities
+import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.duck.isAirSkiing
 import archives.tater.netherarchives.item.SkisItem
 import com.mojang.serialization.MapCodec

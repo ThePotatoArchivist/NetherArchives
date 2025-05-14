@@ -1,8 +1,8 @@
 package archives.tater.netherarchives.emi
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.NetherArchivesTags
-import archives.tater.netherarchives.item.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.NetherArchivesItems
 import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe

@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.NetherArchivesParticles
 import archives.tater.netherarchives.listCopy
+import archives.tater.netherarchives.registry.NetherArchivesParticles
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block

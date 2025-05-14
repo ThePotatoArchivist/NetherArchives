@@ -1,6 +1,7 @@
-package archives.tater.netherarchives.entity
+package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
+import archives.tater.netherarchives.entity.BlazeLanternEntity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnGroup
 import net.minecraft.registry.Registries

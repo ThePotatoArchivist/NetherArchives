@@ -1,10 +1,10 @@
-package archives.tater.netherarchives
+package archives.tater.netherarchives.registry
 
+import archives.tater.netherarchives.NetherArchives
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 
 object NetherArchivesTags {

@@ -2,6 +2,7 @@ package archives.tater.netherarchives.block.entity
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.StructureTagGenerator
+import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.nbt.NbtCompound

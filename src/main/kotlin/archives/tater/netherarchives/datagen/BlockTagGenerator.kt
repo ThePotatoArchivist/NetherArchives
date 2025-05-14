@@ -1,11 +1,11 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE
-import archives.tater.netherarchives.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED
-import archives.tater.netherarchives.NetherArchivesTags.BLAZE_FIRE_TARGET
-import archives.tater.netherarchives.NetherArchivesTags.MAGNETIC
-import archives.tater.netherarchives.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
-import archives.tater.netherarchives.block.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE
+import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED
+import archives.tater.netherarchives.registry.NetherArchivesTags.BLAZE_FIRE_TARGET
+import archives.tater.netherarchives.registry.NetherArchivesTags.MAGNETIC
+import archives.tater.netherarchives.registry.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags

@@ -1,7 +1,8 @@
-package archives.tater.netherarchives.block.entity
+package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.block.NetherArchivesBlocks
+import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
+import archives.tater.netherarchives.block.entity.BlazeTorchBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity

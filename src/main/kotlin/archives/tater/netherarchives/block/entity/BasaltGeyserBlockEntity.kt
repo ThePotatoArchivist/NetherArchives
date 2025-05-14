@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.block.entity
 
+import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.util.math.BlockPos

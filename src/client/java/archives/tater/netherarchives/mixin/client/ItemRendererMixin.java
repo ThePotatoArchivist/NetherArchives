@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.mixin.client;
 
 import archives.tater.netherarchives.NetherArchivesClient;
-import archives.tater.netherarchives.item.NetherArchivesItems;
+import archives.tater.netherarchives.registry.NetherArchivesItems;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.render.item.ItemModels;

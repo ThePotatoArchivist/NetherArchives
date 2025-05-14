@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.item
 
-import archives.tater.netherarchives.NetherArchivesDamageTypes.paddleBurn
-import archives.tater.netherarchives.NetherArchivesTags
+import archives.tater.netherarchives.registry.NetherArchivesDamageTypes.paddleBurn
+import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.isIn
 import net.minecraft.entity.LivingEntity.getSlotForHand
 import net.minecraft.entity.player.PlayerEntity

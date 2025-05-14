@@ -1,12 +1,9 @@
 package archives.tater.netherarchives
 
-import archives.tater.netherarchives.block.NetherArchivesBlocks
-import archives.tater.netherarchives.block.entity.NetherArchivesBlockEntities
-import archives.tater.netherarchives.entity.NetherArchivesEntities
-import archives.tater.netherarchives.item.NetherArchivesItems
 import archives.tater.netherarchives.mixin.StriderEntityAccessor
 import archives.tater.netherarchives.modification.ModifyLootTables
 import archives.tater.netherarchives.modification.ModifyWorldGen
+import archives.tater.netherarchives.registry.*
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags

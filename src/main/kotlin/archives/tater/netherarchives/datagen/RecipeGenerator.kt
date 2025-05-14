@@ -2,7 +2,7 @@ package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.builder.*
-import archives.tater.netherarchives.item.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.minecraft.data.server.recipe.RecipeExporter
