@@ -5,7 +5,6 @@ import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.block.TransparentBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -108,9 +107,9 @@ object NetherArchivesBlocks {
         requiresTool()
     }))
 
-    val SHATTERED_SOUL_GLASS = register("shattered_soul_glass", TransparentBlock(BlockSettings.copy(Blocks.GLASS)))
+    val SHATTERED_SOUL_GLASS = register("shattered_soul_glass", SoulGlassBlock(BlockSettings.copy(Blocks.GLASS)))
 
-    val SOUL_GLASS = register("soul_glass", SoulGlassBlock(SHATTERED_SOUL_GLASS, BlockSettings.copy(SHATTERED_SOUL_GLASS).apply {
+    val SOUL_GLASS = register("soul_glass", ActiveSoulGlassBlock(SHATTERED_SOUL_GLASS, BlockSettings.copy(SHATTERED_SOUL_GLASS).apply {
             strength(0.3f, 3f)
     }))
 
