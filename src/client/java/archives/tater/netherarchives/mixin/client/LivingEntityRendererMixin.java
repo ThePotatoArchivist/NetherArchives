@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.mixin.client;
 
-import archives.tater.netherarchives.NetherArchivesClient;
+import archives.tater.netherarchives.SoulGlassRendering;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
@@ -17,12 +17,15 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> extends EntityRenderer<T> implements FeatureRendererContext<T, M> {
+
+    @Shadow protected M model;
 
     protected LivingEntityRendererMixin(EntityRendererFactory.Context ctx) {
         super(ctx);
@@ -38,9 +41,9 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
         if (originalLayer != null) return originalLayer;
 
         invisible.set(true);
-        NetherArchivesClient.getInvisibleFramebuffer().beginWrite(true);
+        SoulGlassRendering.getInvisibleFramebuffer().beginWrite(false);
 
-        return RenderLayer.getItemEntityTranslucentCull(getTexture(entity));
+        return model.getLayer(getTexture(entity));
     }
 
     @Inject(
@@ -49,7 +52,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     )
     private void resetFb(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci, @Share("invisible") LocalBooleanRef invisible) {
         if (!invisible.get()) return;
-        NetherArchivesClient.getInvisibleFramebuffer().endWrite();
+        SoulGlassRendering.getInvisibleFramebuffer().endWrite();
         MinecraftClient.getInstance().getFramebuffer().beginWrite(false);
     }
 }

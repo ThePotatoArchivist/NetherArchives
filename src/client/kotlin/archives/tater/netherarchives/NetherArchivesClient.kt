@@ -10,16 +10,12 @@ import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.entity.NetherArchivesEntities
 import archives.tater.netherarchives.item.NetherArchivesItems
-import com.mojang.blaze3d.platform.GlStateManager
-import com.mojang.blaze3d.systems.RenderSystem
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.*
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gl.Framebuffer
-import net.minecraft.client.gl.SimpleFramebuffer
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
@@ -50,11 +46,6 @@ object NetherArchivesClient : ClientModInitializer {
         MinecraftClient.getInstance().bakedModelManager.getModel(BASALT_OAR_INVENTORY_ID)
     }
 
-    @JvmStatic
-    val invisibleFramebuffer: Framebuffer by lazy {
-        MinecraftClient.getInstance().framebuffer.run { SimpleFramebuffer(viewportWidth, viewportHeight, true, false) }
-    }
-
     private val inHandRenderModes = setOf(
         ModelTransformationMode.FIRST_PERSON_LEFT_HAND,
         ModelTransformationMode.FIRST_PERSON_RIGHT_HAND,
@@ -68,30 +59,7 @@ object NetherArchivesClient : ClientModInitializer {
             BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
         BlockRenderLayerMap.INSTANCE.putBlock(NetherArchivesBlocks.SOUL_GLASS, RenderLayer.getTranslucent())
 
-        WorldRenderEvents.BEFORE_ENTITIES.register { context ->
-            invisibleFramebuffer.clear(MinecraftClient.IS_SYSTEM_MAC)
-//            invisibleFramebuffer.beginWrite(false)
-//
-//            context.gameRenderer().client.itemRenderer.renderItem(Items.GLASS_BOTTLE.defaultStack, ModelTransformationMode.NONE, LightmapTextureManager.MAX_LIGHT_COORDINATE, OverlayTexture.DEFAULT_UV, context.matrixStack(), context.consumers(), context.world(), 0)
-//
-//            invisibleFramebuffer.endWrite()
-//            MinecraftClient.getInstance().framebuffer.beginWrite(false)
-        }
-
-        WorldRenderEvents.AFTER_ENTITIES.register { context ->
-            invisibleFramebuffer.copyDepthFrom(MinecraftClient.getInstance().framebuffer)
-//            context.worldRenderer().drawEntityOutlinesFramebuffer()
-            // or?
-            RenderSystem.enableBlend()
-            RenderSystem.blendFuncSeparate(
-                GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ZERO, GlStateManager.DstFactor.ONE
-            )
-            invisibleFramebuffer.draw(MinecraftClient.getInstance().window.framebufferWidth / 2, MinecraftClient.getInstance().window.framebufferHeight / 2, false);
-            RenderSystem.disableBlend()
-            RenderSystem.defaultBlendFunc()
-
-            MinecraftClient.getInstance().framebuffer.beginWrite(false)
-        }
+        SoulGlassRendering.register()
 
         EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
 
