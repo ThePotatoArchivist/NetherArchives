@@ -43,8 +43,8 @@ object NetherArchives : ModInitializer {
         ModifyWorldGen()
         ModifyLootTables()
 
-        UseEntityCallback.EVENT.register { player, world, hand, entity, hit ->
-            if (entity !is StriderEntity || !entity.isSaddled || !(player.getStackInHand(hand) isIn ConventionalItemTags.SHEAR_TOOLS))
+        UseEntityCallback.EVENT.register { player, world, hand, entity, _ ->
+            if (entity !is StriderEntity || !entity.isSaddled || entity.hasPassengers() || !(player.getStackInHand(hand) isIn ConventionalItemTags.SHEAR_TOOLS))
                 ActionResult.PASS
             else if (world.isClient)
                 ActionResult.SUCCESS
