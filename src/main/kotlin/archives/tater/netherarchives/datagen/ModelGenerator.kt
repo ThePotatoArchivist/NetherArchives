@@ -106,7 +106,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         itemModelGenerator.register(NetherArchivesItems.BLAZE_LANTERN, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BASALT_SKIS, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.SOUL_GLASS_SHARD, Models.GENERATED)
-        Models.GENERATED.upload(ModelIds.getItemSubModelId(NetherArchivesItems.BASALT_OAR, "_inventory"), TextureMap.layer0(NetherArchivesItems.BASALT_OAR), itemModelGenerator.writer)
+        itemModelGenerator.register(NetherArchivesItems.BASALT_OAR, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BASALT_ROD, Models.HANDHELD_ROD)
 
         Models.GENERATED.upload(ModelIds.getItemModelId(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMap().apply {

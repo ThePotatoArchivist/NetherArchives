@@ -13,7 +13,10 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.*
+import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.RenderLayer
@@ -41,16 +44,11 @@ object NetherArchivesClient : ClientModInitializer {
     private val BASALT_SKIS_LOCATION = NetherArchives.id("textures/models/basalt_skis.png")
     private lateinit var basaltSkisModel: SkisEntityModel<LivingEntity>
 
-    private val BASALT_OAR_IN_HAND_ID = NetherArchives.id("item/basalt_oar_in_hand")
-    private val BASALT_OAR_IN_HAND_MODEL by lazy {
-        MinecraftClient.getInstance().bakedModelManager.getModel(BASALT_OAR_IN_HAND_ID)
-    }
-    private val BASALT_OAR_INVENTORY_ID = NetherArchives.id("item/basalt_oar_inventory")
-    private val BASALT_OAR_INVENTORY_MODEL by lazy {
-        MinecraftClient.getInstance().bakedModelManager.getModel(BASALT_OAR_INVENTORY_ID)
-    }
+    @JvmField
+    val BASALT_OAR_IN_HAND_ID = NetherArchives.id("item/basalt_oar_in_hand")
 
-    private val inHandRenderModes = setOf(
+    @JvmField
+    internal val inHandRenderModes = setOf(
         ModelTransformationMode.FIRST_PERSON_LEFT_HAND,
         ModelTransformationMode.FIRST_PERSON_RIGHT_HAND,
         ModelTransformationMode.THIRD_PERSON_LEFT_HAND,
@@ -95,25 +93,6 @@ object NetherArchivesClient : ClientModInitializer {
 
         ModelLoadingPlugin.register { ctx ->
             ctx.addModels(BASALT_OAR_IN_HAND_ID)
-            ctx.addModels(BASALT_OAR_INVENTORY_ID)
-        }
-
-        BuiltinItemRendererRegistry.INSTANCE.register(NetherArchivesItems.BASALT_OAR) {
-            stack, mode, matrices, vertexConsumers, light, overlay ->
-            matrices.push()
-            matrices.translate(0.5, 0.5, 0.5)
-            MinecraftClient.getInstance().itemRenderer.renderItem(
-                stack,
-                mode,
-                mode == ModelTransformationMode.FIRST_PERSON_LEFT_HAND || mode == ModelTransformationMode.THIRD_PERSON_LEFT_HAND,
-                matrices,
-                vertexConsumers,
-                light,
-                overlay,
-                MinecraftClient.getInstance().bakedModelManager.getModel(
-                    if (mode in inHandRenderModes) BASALT_OAR_IN_HAND_ID else BASALT_OAR_INVENTORY_ID)
-            )
-            matrices.pop()
         }
 
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Factory)

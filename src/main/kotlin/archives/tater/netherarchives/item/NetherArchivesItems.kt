@@ -66,6 +66,7 @@ object NetherArchivesItems {
     ))
 
     val BASALT_SKIS = register("basalt_skis", SkisItem(BASALT_ARMOR_MATERIAL, ItemSettings()))
+    @JvmField
     val BASALT_OAR = register("basalt_oar", OarItem(ItemSettings {
         maxCount(1)
         maxDamage(ToolMaterials.STONE.durability)
