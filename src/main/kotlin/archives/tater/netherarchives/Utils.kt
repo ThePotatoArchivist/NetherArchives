@@ -3,6 +3,7 @@
 package archives.tater.netherarchives
 
 import com.google.common.collect.AbstractIterator
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
@@ -38,6 +39,8 @@ internal inline fun ItemSettings(init: ItemSettings.() -> Unit = {}): ItemSettin
 
 internal inline infix fun ItemStack.isIn(tag: TagKey<Item>): Boolean = this.isIn(tag)
 internal inline infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.isIn(tag)
+
+inline infix fun BlockState.isOf(block: Block): Boolean = this.isOf(block)
 
 internal inline operator fun Vec3d.plus(other: Vec3d) = add(other)
 

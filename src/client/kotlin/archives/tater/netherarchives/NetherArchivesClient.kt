@@ -12,6 +12,7 @@ import archives.tater.netherarchives.entity.NetherArchivesEntities
 import archives.tater.netherarchives.item.NetherArchivesItems
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.*
@@ -26,8 +27,18 @@ import net.minecraft.client.render.entity.model.EntityModelLayer
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
+import net.minecraft.util.hit.HitResult
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.BlockStateRaycastContext
+import java.util.*
 
 object NetherArchivesClient : ClientModInitializer {
+
+    @JvmField
+    internal var renderingSoulGlass = false
+
+    @JvmField
+    internal val soulGlassRevealed = WeakHashMap<LivingEntity, Boolean>()
 
     private val SKIS_MODEL_LAYER = EntityModelLayer(NetherArchives.id("skis"), "main")
 
@@ -113,5 +124,21 @@ object NetherArchivesClient : ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
+
+        WorldRenderEvents.AFTER_ENTITIES.register {
+            renderingSoulGlass = false
+        }
+
+        ClientTickEvents.START_WORLD_TICK.register { world ->
+            if (renderingSoulGlass)
+                for (entity in world.entities) {
+                    if (entity !is LivingEntity || !entity.isInvisible) continue
+
+                    soulGlassRevealed[entity] = world.raycast(BlockStateRaycastContext(
+                            MinecraftClient.getInstance().gameRenderer.camera.pos,
+                            Vec3d(entity.x, entity.getBodyY(0.5), entity.z),
+                        ) { it isOf NetherArchivesBlocks.SOUL_GLASS }).type != HitResult.Type.MISS
+                }
+        }
     }
 }
