@@ -19,7 +19,7 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.Explosion.DestructionType
 import java.util.function.BiConsumer
 
-class ActiveSoulGlassBlock(private val shattersTo: Block, settings: Settings) : SoulGlassBlock(settings) {
+class BreakableSoulGlassBlock(private val shattersTo: Block, settings: Settings) : SoulGlassBlock(settings) {
 
     override fun onExploded(
         state: BlockState,

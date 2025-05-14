@@ -109,7 +109,7 @@ object NetherArchivesBlocks {
 
     val SHATTERED_SOUL_GLASS = register("shattered_soul_glass", SoulGlassBlock(BlockSettings.copy(Blocks.GLASS)))
 
-    val SOUL_GLASS = register("soul_glass", ActiveSoulGlassBlock(SHATTERED_SOUL_GLASS, BlockSettings.copy(SHATTERED_SOUL_GLASS).apply {
+    val SOUL_GLASS = register("soul_glass", BreakableSoulGlassBlock(SHATTERED_SOUL_GLASS, BlockSettings.copy(SHATTERED_SOUL_GLASS).apply {
             strength(0.3f, 3f)
     }))
 
