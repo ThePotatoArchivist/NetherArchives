@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:soul_glass_shard_from_smelting_soul_sand"
+        "recipe": "netherarchives:spectreglass_shard_from_smelting_soul_sand"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "netherarchives:soul_glass_shard_from_smelting_soul_sand"
+      "netherarchives:spectreglass_shard_from_smelting_soul_sand"
     ]
   }
 }

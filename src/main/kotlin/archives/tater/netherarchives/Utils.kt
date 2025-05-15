@@ -7,6 +7,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
+import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
@@ -39,6 +40,7 @@ internal inline fun ItemSettings(init: ItemSettings.() -> Unit = {}): ItemSettin
 
 internal inline infix fun ItemStack.isIn(tag: TagKey<Item>): Boolean = this.isIn(tag)
 internal inline infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.isIn(tag)
+internal inline infix fun EntityType<*>.isIn(tag: TagKey<EntityType<*>>): Boolean = this.isIn(tag)
 
 inline infix fun BlockState.isOf(block: Block): Boolean = this.isOf(block)
 

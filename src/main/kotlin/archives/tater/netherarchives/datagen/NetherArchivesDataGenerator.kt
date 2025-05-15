@@ -10,6 +10,7 @@ object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
             addProvider(::BlockTagGenerator)
             addProvider(::ItemTagGenerator)
             addProvider(::FluidTagGenerator)
+            addProvider(::EntityTagGenerator)
             addProvider(::StructureTagGenerator)
             addProvider(::BlockLootTableGenerator)
             addProvider(::RecipeGenerator)

@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smelting",
-  "category": "misc",
+  "category": "blocks",
   "cookingtime": 100,
   "experience": 0.0,
   "ingredient": {
-    "item": "minecraft:soul_sand"
+    "item": "netherarchives:shattered_spectreglass"
   },
   "result": {
-    "id": "netherarchives:soul_glass_shard"
+    "id": "netherarchives:spectreglass"
   }
 }

@@ -77,17 +77,17 @@ object NetherArchivesItems {
 
     val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
 
-    val SOUL_GLASS_SHARD = register("soul_glass_shard")
+    val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
-    val SOUL_GLASS = register(NetherArchivesBlocks.SOUL_GLASS)
+    val SOUL_GLASS = register(NetherArchivesBlocks.SPECTREGLASS)
 
-    val SHATTERED_SOUL_GLASS = register(NetherArchivesBlocks.SHATTERED_SOUL_GLASS)
+    val SHATTERED_SOUL_GLASS = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
     val DUMMY_SOUL_FIRE = register(Identifier.ofVanilla("netherarchives/dummy/soul_fire"))
 
     private val itemGroups = mapOf(
-        ItemGroups.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SOUL_GLASS_SHARD),
+        ItemGroups.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
         ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
         ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN),
         ItemGroups.TOOLS to setOf(BASALT_SKIS, BASALT_OAR),

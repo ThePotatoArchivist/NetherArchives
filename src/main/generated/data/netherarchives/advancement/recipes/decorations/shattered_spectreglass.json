@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_shattered_soul_glass": {
+    "has_spectreglass_shard": {
       "conditions": {
         "items": [
           {
-            "items": "netherarchives:shattered_soul_glass"
+            "items": "netherarchives:spectreglass_shard"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:soul_glass_from_smelting_shattered_soul_glass"
+        "recipe": "netherarchives:shattered_spectreglass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_shattered_soul_glass"
+      "has_spectreglass_shard"
     ]
   ],
   "rewards": {
     "recipes": [
-      "netherarchives:soul_glass_from_smelting_shattered_soul_glass"
+      "netherarchives:shattered_spectreglass"
     ]
   }
 }

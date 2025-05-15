@@ -5,9 +5,9 @@
   "block.netherarchives.fermented_rotten_flesh_block": "Fermented Rotten Flesh Block",
   "block.netherarchives.magnetite": "Magnetite",
   "block.netherarchives.rotten_flesh_block": "Rotten Flesh Block",
-  "block.netherarchives.shattered_soul_glass": "Shattered Soul Glass",
+  "block.netherarchives.shattered_spectreglass": "Shattered Spectreglass",
   "block.netherarchives.smoldering_magnetite": "Smoldering Magnetite",
-  "block.netherarchives.soul_glass": "Soul Glass",
+  "block.netherarchives.spectreglass": "Spectreglass",
   "death.attack.netherarchives.paddleBurn": "%s wiped out into lava",
   "death.attack.netherarchives.paddleBurn.player": "%s wiped out into lava while trying to escape %s",
   "item.minecraft.netherarchives.dummy.soul_fire": "Soul Fire",
@@ -16,5 +16,5 @@
   "item.netherarchives.basalt_skis": "Basalt Skis",
   "item.netherarchives.blaze_lantern": "Volatile Blaze Lantern",
   "item.netherarchives.iron_slag": "Iron Slag",
-  "item.netherarchives.soul_glass_shard": "Soul Glass Shard"
+  "item.netherarchives.spectreglass_shard": "Spectreglass Shard"
 }

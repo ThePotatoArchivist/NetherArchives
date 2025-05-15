@@ -108,14 +108,14 @@ object NetherArchivesBlocks {
         requiresTool()
     }))
 
-    val SHATTERED_SOUL_GLASS = register("shattered_soul_glass", SoulGlassBlock(BlockSettings.copy(Blocks.GLASS)))
+    val SHATTERED_SPECTREGLASS = register("shattered_spectreglass", SoulGlassBlock(BlockSettings.copy(Blocks.GLASS)))
 
-    val SOUL_GLASS = register("soul_glass", BreakableSoulGlassBlock(
-        SHATTERED_SOUL_GLASS, BlockSettings.copy(
-            SHATTERED_SOUL_GLASS
+    val SPECTREGLASS = register("spectreglass", BreakableSoulGlassBlock(
+        SHATTERED_SPECTREGLASS, BlockSettings.copy(
+            SHATTERED_SPECTREGLASS
         ).apply {
             strength(0.3f, 3f)
-    })
+        })
     )
 
     fun register() {

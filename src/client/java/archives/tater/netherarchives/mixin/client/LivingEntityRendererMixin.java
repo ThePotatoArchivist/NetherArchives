@@ -18,6 +18,6 @@ public class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityM
     private boolean checkSoulGlass(LivingEntityRenderer<T, M> instance, T entity, Operation<Boolean> original) {
         //noinspection MixinExtrasOperationParameters
         return original.call(instance, entity)
-                || NetherArchivesClient.soulGlassRevealed.getOrDefault(entity, false);
+                || NetherArchivesClient.spectreglassRevealed.getOrDefault(entity, false);
     }
 }

@@ -1,10 +1,14 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.get
+import archives.tater.netherarchives.isIn
 import archives.tater.netherarchives.isOf
+import archives.tater.netherarchives.mixin.FireworkRocketEntityAccessor
+import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.set
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.entity.projectile.FireworkRocketEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.particle.BlockStateParticleEffect
@@ -40,6 +44,13 @@ class BreakableSoulGlassBlock(private val shattersTo: Block, settings: Settings)
     ) {
         val pos = hit.blockPos
         if (world.isClient || !projectile.canModifyAt(world, pos) || !projectile.canBreakBlocks(world)) return
+
+        if (projectile.type isIn NetherArchivesTags.NON_CHAIN_SHATTER_PROJECTILES ||
+            (projectile is FireworkRocketEntity && !(projectile as FireworkRocketEntityAccessor).invokeHasExplosionEffects())) {
+
+            shatter(world, pos, state)
+            return
+        }
         shatterChain(world, pos, state, 0.5f)
     }
 

@@ -2,6 +2,7 @@ package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
 import net.minecraft.block.Block
+import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
@@ -26,6 +27,9 @@ object NetherArchivesTags {
         TagKey.of(RegistryKeys.FLUID, NetherArchives.id("skis_can_walk_on"))
     val BURNS_WHEN_PADDLE: TagKey<Fluid> =
         TagKey.of(RegistryKeys.FLUID, NetherArchives.id("burns_when_paddle"))
+
+    val NON_CHAIN_SHATTER_PROJECTILES: TagKey<EntityType<*>> =
+        TagKey.of(RegistryKeys.ENTITY_TYPE, NetherArchives.id("chain_shatter_projectile"))
 
     val <T> TagKey<T>.translationKey: String
         get() {

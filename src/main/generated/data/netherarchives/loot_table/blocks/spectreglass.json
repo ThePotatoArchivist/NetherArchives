@@ -26,7 +26,7 @@
                   }
                 }
               ],
-              "name": "netherarchives:soul_glass"
+              "name": "netherarchives:spectreglass"
             },
             {
               "type": "minecraft:item",
@@ -35,7 +35,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "netherarchives:shattered_soul_glass"
+              "name": "netherarchives:shattered_spectreglass"
             }
           ]
         }

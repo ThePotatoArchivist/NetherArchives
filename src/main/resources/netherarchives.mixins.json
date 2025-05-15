@@ -5,6 +5,7 @@
   "mixins": [
     "BlockMixin",
     "EntityMixin",
+    "FireworkRocketEntityAccessor",
     "FluidBlockMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",

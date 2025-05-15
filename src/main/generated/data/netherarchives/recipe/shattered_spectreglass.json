@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    },
+    {
+      "item": "netherarchives:spectreglass_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "netherarchives:shattered_spectreglass"
+  }
+}

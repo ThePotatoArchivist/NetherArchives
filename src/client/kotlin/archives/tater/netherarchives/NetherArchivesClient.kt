@@ -38,7 +38,7 @@ import java.util.*
 object NetherArchivesClient : ClientModInitializer {
 
     @JvmField
-    internal val soulGlassRevealed = WeakHashMap<LivingEntity, Boolean>()
+    internal val spectreglassRevealed = WeakHashMap<LivingEntity, Boolean>()
 
     private val SKIS_MODEL_LAYER = EntityModelLayer(NetherArchives.id("skis"), "main")
 
@@ -64,8 +64,8 @@ object NetherArchivesClient : ClientModInitializer {
             )
             BlockRenderLayerMap.INSTANCE.putBlocks(
                 RenderLayer.getTranslucent(),
-                SOUL_GLASS,
-                SHATTERED_SOUL_GLASS,
+                SPECTREGLASS,
+                SHATTERED_SPECTREGLASS,
             )
         }
 
@@ -111,10 +111,10 @@ object NetherArchivesClient : ClientModInitializer {
             ) {
                 it.isInvisible || it.isInvisibleTo(client.player)
             }) {
-                soulGlassRevealed[entity] = world.raycast(BlockStateRaycastContext(
+                spectreglassRevealed[entity] = world.raycast(BlockStateRaycastContext(
                         cameraPos,
                         Vec3d(entity.x, entity.getBodyY(0.5), entity.z),
-                    ) { it isOf NetherArchivesBlocks.SOUL_GLASS }).type != HitResult.Type.MISS
+                    ) { it isOf NetherArchivesBlocks.SPECTREGLASS }).type != HitResult.Type.MISS
             }
         }
     }
