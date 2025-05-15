@@ -23,8 +23,22 @@ class ItemTagGenerator(
             NetherArchivesItems.SPECTREGLASS,
             NetherArchivesItems.SHATTERED_SPECTREGLASS,
         )
+        getOrCreateTagBuilder(ItemTags.ARMOR_ENCHANTABLE).add(
+            NetherArchivesItems.BASALT_SKIS,
+        )
         getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
-            NetherArchivesItems.SPECTREGLASS_KNIFE
+            NetherArchivesItems.SPECTREGLASS_KNIFE,
+        )
+        getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(
+            NetherArchivesItems.BASALT_SKIS,
+            NetherArchivesItems.BASALT_OAR,
+            NetherArchivesItems.SPECTREGLASS_KNIFE,
+        )
+        getOrCreateTagBuilder(ItemTags.BREAKS_DECORATED_POTS).add(
+            NetherArchivesItems.SPECTREGLASS_KNIFE,
+        )
+        getOrCreateTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(
+            NetherArchivesItems.SPECTREGLASS_KNIFE,
         )
     }
 }

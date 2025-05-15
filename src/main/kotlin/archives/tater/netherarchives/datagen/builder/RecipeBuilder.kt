@@ -118,7 +118,7 @@ fun <T: AbstractCookingRecipe> RecipeExporter.cookingRecipe(
     serializer: RecipeSerializer<T>,
     recipeFactory: RecipeFactory<T>,
     method: String,
-    cookingTime: Int = 100,
+    cookingTime: Int = 200,
     experience: Float = 0F
 ) {
     CookingRecipeJsonBuilder.create(
@@ -138,7 +138,7 @@ fun RecipeExporter.smelting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
-    cookingTime: Int = 100,
+    cookingTime: Int = 200,
     experience: Float = 0F
 ) {
     cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING, ::SmeltingRecipe, "smelting", cookingTime, experience)
@@ -148,7 +148,7 @@ fun RecipeExporter.smoking(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
-    cookingTime: Int = 50,
+    cookingTime: Int = 100,
     experience: Float = 0F
 ) {
     cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING, ::SmokingRecipe, "smoking", cookingTime, experience)
@@ -168,7 +168,7 @@ fun RecipeExporter.campfire(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
-    cookingTime: Int = 300,
+    cookingTime: Int = 600,
     experience: Float = 0F
 ) {
     cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
@@ -178,7 +178,7 @@ fun RecipeExporter.oreSmelting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
-    cookingTime: Int = 100,
+    cookingTime: Int = 200,
     experience: Float = 0F
 ) {
     smelting(category, inputItem, outputItem, cookingTime, experience)
@@ -189,7 +189,7 @@ fun RecipeExporter.foodCooking(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
-    cookingTime: Int = 100,
+    cookingTime: Int = 200,
     experience: Float = 0F
 ) {
     smelting(category, inputItem, outputItem, cookingTime, experience)

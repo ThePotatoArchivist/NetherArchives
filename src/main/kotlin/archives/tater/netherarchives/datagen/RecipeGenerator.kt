@@ -136,7 +136,7 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
 
         smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SPECTREGLASS_SHARD, experience = 0.1f)
 
-        offerCompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
+        offer2x2CompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
 
         smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS)
 

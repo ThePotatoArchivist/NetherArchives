@@ -1,11 +1,11 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE
 import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED
 import archives.tater.netherarchives.registry.NetherArchivesTags.BLAZE_FIRE_TARGET
 import archives.tater.netherarchives.registry.NetherArchivesTags.MAGNETIC
 import archives.tater.netherarchives.registry.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
@@ -35,6 +35,13 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
         )
         getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
             NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK,
+        )
+        getOrCreateTagBuilder(BlockTags.FIRE).add(
+            NetherArchivesBlocks.BLAZE_FIRE,
+        )
+        getOrCreateTagBuilder(BlockTags.IMPERMEABLE).add(
+            NetherArchivesBlocks.SPECTREGLASS,
+            NetherArchivesBlocks.SHATTERED_SPECTREGLASS,
         )
         getOrCreateTagBuilder(MAGNETIC).add(
             Blocks.LODESTONE,
