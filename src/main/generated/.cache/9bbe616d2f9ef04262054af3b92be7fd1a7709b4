@@ -1,4 +1,5 @@
-// 1.21.1	2025-05-15T00:06:53.185727501	Nether Archives/Tags for minecraft:item
+// 1.21.1	2025-05-15T00:51:45.047174344	Nether Archives/Tags for minecraft:item
+cda67c0d82a8d0b44d79c4e00574387b972330f0 data/c/tags/item/tools/melee_weapon.json
 d0ce52695227d2e3fb0f68864a69bcdd1d3531d6 data/c/tags/item/glass_blocks.json
 49f568df9c122bf6dfebd0659b0dea2af7b48ca4 data/minecraft/tags/item/soul_fire_base_blocks.json
 56d7cdc50a58daab2c8c09bd9f103e8fae080f8d data/c/tags/item/hidden_from_recipe_viewers.json

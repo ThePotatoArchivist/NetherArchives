@@ -3,19 +3,19 @@
   "category": "equipment",
   "key": {
     "#": {
-      "tag": "c:bricks/nether"
+      "item": "netherarchives:spectreglass_shard"
     },
-    "X": {
-      "item": "minecraft:blaze_powder"
+    "%": {
+      "tag": "c:bones"
     }
   },
   "pattern": [
-    "###",
-    "#X#",
-    "###"
+    "#",
+    "#",
+    "%"
   ],
   "result": {
     "count": 1,
-    "id": "netherarchives:blaze_lantern"
+    "id": "netherarchives:spectreglass_knife"
   }
 }

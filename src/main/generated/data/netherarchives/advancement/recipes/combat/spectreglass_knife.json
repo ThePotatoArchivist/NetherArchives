@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_spectreglass_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "netherarchives:spectreglass_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "netherarchives:spectreglass_knife"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_spectreglass_shard"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "netherarchives:spectreglass_knife"
+    ]
+  }
+}

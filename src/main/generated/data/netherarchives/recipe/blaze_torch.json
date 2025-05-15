@@ -6,7 +6,7 @@
       "tag": "minecraft:coals"
     },
     "B": {
-      "item": "minecraft:bone"
+      "tag": "c:bones"
     },
     "X": {
       "item": "minecraft:blaze_powder"

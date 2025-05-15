@@ -20,7 +20,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityM
     )
     private boolean checkSoulGlass(LivingEntity instance, PlayerEntity player, Operation<Boolean> original) {
         return original.call(instance, player)
-                && !NetherArchivesClient.spectreglassRevealed.getOrDefault(instance, false);
+                && !NetherArchivesClient.isRevealed(instance);
     }
 
     @ModifyExpressionValue(
@@ -28,6 +28,6 @@ public class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityM
             at = @At(value = "CONSTANT", args = "intValue=654311423")
     )
     private int soulColor(int original, @Local(argsOnly = true) T entity) {
-        return NetherArchivesClient.spectreglassRevealed.getOrDefault(entity, false) ? 0x999FFFFF : original;
+        return NetherArchivesClient.isRevealed(entity) ? 0x999FFFFF : original;
     }
 }

@@ -5,6 +5,7 @@ import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Items
 import net.minecraft.recipe.book.RecipeCategory
@@ -31,7 +32,7 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             """
             )
             inputs {
-                '#' to Items.IRON_INGOT
+                '#' to ConventionalItemTags.IRON_INGOTS
                 'X' to NetherArchivesItems.MAGNETITE
             }
             itemCriterion(NetherArchivesItems.MAGNETITE)
@@ -60,7 +61,7 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             """
             )
             inputs {
-                '#' to Items.NETHER_BRICK
+                '#' to ConventionalItemTags.NETHER_BRICKS
                 'X' to Items.BLAZE_POWDER
             }
             itemCriterion(Items.BLAZE_POWDER)
@@ -77,7 +78,7 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             inputs {
                 'X' to Items.BLAZE_POWDER
                 '#' to ItemTags.COALS
-                'B' to Items.BONE
+                'B' to ConventionalItemTags.BONES
             }
             itemCriterion(Items.BLAZE_POWDER)
         }
@@ -135,8 +136,21 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
 
         smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SPECTREGLASS_SHARD, experience = 0.1f)
 
-        offerCompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SOUL_GLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
+        offerCompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
 
-        smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SOUL_GLASS, NetherArchivesItems.SOUL_GLASS)
+        smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS)
+
+        shaped(RecipeCategory.COMBAT, NetherArchivesItems.SPECTREGLASS_KNIFE) {
+            patterns("""
+                #
+                #
+                %
+            """)
+            inputs {
+                '#' to NetherArchivesItems.SPECTREGLASS_SHARD
+                '%' to ConventionalItemTags.BONES
+            }
+            itemCriterion(NetherArchivesItems.SPECTREGLASS_SHARD)
+        }
     }
 }

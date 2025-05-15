@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "#": {
-      "item": "minecraft:iron_ingot"
+      "tag": "c:ingots/iron"
     },
     "X": {
       "item": "netherarchives:magnetite"

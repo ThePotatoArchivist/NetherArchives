@@ -28,6 +28,7 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add(NetherArchivesItems.BASALT_OAR, "Basalt Oar")
             add(NetherArchivesItems.BASALT_ROD, "Basalt Rod")
             add(NetherArchivesItems.SPECTREGLASS_SHARD, "Spectreglass Shard")
+            add(NetherArchivesItems.SPECTREGLASS_KNIFE, "Spectreglass Knife")
             add("death.attack.netherarchives.paddleBurn", "%s wiped out into lava")
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
             add("netherarchives.emi.explosion", "Any Explosion")

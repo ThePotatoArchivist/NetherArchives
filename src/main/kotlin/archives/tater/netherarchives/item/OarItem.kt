@@ -1,8 +1,9 @@
 package archives.tater.netherarchives.item
 
+import archives.tater.netherarchives.get
+import archives.tater.netherarchives.isIn
 import archives.tater.netherarchives.registry.NetherArchivesDamageTypes.paddleBurn
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import archives.tater.netherarchives.isIn
 import net.minecraft.entity.LivingEntity.getSlotForHand
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -21,7 +22,7 @@ class OarItem(settings: Settings) : Item(settings) {
 
         val fluidState = world.getFluidState(user.blockPos)
 
-        val itemStack = user.getStackInHand(hand)
+        val itemStack = user[hand]
 
         val yawRads = user.yaw * MathHelper.RADIANS_PER_DEGREE
         if (user.isLogicalSideForUpdatingMovement) {

@@ -20,8 +20,11 @@ class ItemTagGenerator(
             NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK,
         )
         getOrCreateTagBuilder(ConventionalItemTags.GLASS_BLOCKS).add(
-            NetherArchivesItems.SOUL_GLASS,
-            NetherArchivesItems.SHATTERED_SOUL_GLASS,
+            NetherArchivesItems.SPECTREGLASS,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS,
+        )
+        getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
+            NetherArchivesItems.SPECTREGLASS_KNIFE
         )
     }
 }

@@ -5,14 +5,17 @@ package archives.tater.netherarchives
 import com.google.common.collect.AbstractIterator
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.LivingEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -49,6 +52,7 @@ internal inline operator fun Vec3d.plus(other: Vec3d) = add(other)
 internal inline fun Model(vararg requiredTextureKeys: TextureKey, parent: Identifier? = null, variant: String? = null): Model =
     Model(Optional.ofNullable(parent), Optional.ofNullable(variant), *requiredTextureKeys)
 
+internal inline operator fun LivingEntity.get(hand: Hand): ItemStack = getStackInHand(hand)
 internal inline operator fun World.get(pos: BlockPos): BlockState = getBlockState(pos)
 internal inline operator fun World.set(pos: BlockPos, state: BlockState) {
     setBlockState(pos, state)
@@ -74,3 +78,6 @@ fun iterateLinearBlockPos(origin: BlockPos, direction: Direction, distance: Int)
         }
     }
 }
+
+fun AttributeModifiersComponent(init: AttributeModifiersComponent.Builder.() -> Unit): AttributeModifiersComponent =
+    AttributeModifiersComponent.builder().apply(init).build()

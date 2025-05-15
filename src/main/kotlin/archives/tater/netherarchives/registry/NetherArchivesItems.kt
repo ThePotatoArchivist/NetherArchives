@@ -5,8 +5,10 @@ import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.item.BlazeLanternItem
 import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SkisItem
+import archives.tater.netherarchives.item.SoulGlassKnifeItem
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.item.*
 import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.Registries
@@ -79,9 +81,15 @@ object NetherArchivesItems {
 
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
-    val SOUL_GLASS = register(NetherArchivesBlocks.SPECTREGLASS)
+    val SPECTREGLASS_KNIFE = register("spectreglass_knife", SoulGlassKnifeItem(ItemSettings {
+        maxDamage(16)
+        attributeModifiers(SoulGlassKnifeItem.attributeModifiers)
+        component(DataComponentTypes.TOOL, SoulGlassKnifeItem.toolComponent)
+    }))
 
-    val SHATTERED_SOUL_GLASS = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
+    val SPECTREGLASS = register(NetherArchivesBlocks.SPECTREGLASS)
+
+    val SHATTERED_SPECTREGLASS = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
     val DUMMY_SOUL_FIRE = register(Identifier.ofVanilla("netherarchives/dummy/soul_fire"))
@@ -89,9 +97,9 @@ object NetherArchivesItems {
     private val itemGroups = mapOf(
         ItemGroups.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
         ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
-        ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN),
+        ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
         ItemGroups.TOOLS to setOf(BASALT_SKIS, BASALT_OAR),
-        ItemGroups.FUNCTIONAL to setOf(BLAZE_TORCH, SOUL_GLASS, SHATTERED_SOUL_GLASS),
+        ItemGroups.FUNCTIONAL to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS),
     )
 
     fun registerItemGroups() {

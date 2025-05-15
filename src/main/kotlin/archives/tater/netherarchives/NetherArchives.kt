@@ -41,7 +41,7 @@ object NetherArchives : ModInitializer {
         modifyLootTables()
 
         UseEntityCallback.EVENT.register { player, world, hand, entity, _ ->
-            if (entity !is StriderEntity || !entity.isSaddled || entity.hasPassengers() || !(player.getStackInHand(hand) isIn ConventionalItemTags.SHEAR_TOOLS))
+            if (entity !is StriderEntity || !entity.isSaddled || entity.hasPassengers() || !(player[hand] isIn ConventionalItemTags.SHEAR_TOOLS))
                 ActionResult.PASS
             else if (world.isClient)
                 ActionResult.SUCCESS
@@ -49,7 +49,7 @@ object NetherArchives : ModInitializer {
                 (entity as StriderEntityAccessor).saddledComponent.isSaddled = false
                 entity.dropItem(Items.SADDLE)
                 world.playSoundFromEntity(null, entity, SoundEvents.ENTITY_SHEEP_SHEAR, player.soundCategory, 1f, 1f) // TODO custom sound
-                player.getStackInHand(hand).damage(1, player, LivingEntity.getSlotForHand(hand))
+                player[hand].damage(1, player, LivingEntity.getSlotForHand(hand))
                 ActionResult.SUCCESS
             }
         }
