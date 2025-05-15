@@ -1,8 +1,8 @@
 package archives.tater.netherarchives
 
 import archives.tater.netherarchives.mixin.StriderEntityAccessor
-import archives.tater.netherarchives.modification.ModifyLootTables
-import archives.tater.netherarchives.modification.ModifyWorldGen
+import archives.tater.netherarchives.modification.modifyLootTables
+import archives.tater.netherarchives.modification.modifyWorldGen
 import archives.tater.netherarchives.registry.*
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
@@ -37,8 +37,8 @@ object NetherArchives : ModInitializer {
         NetherArchivesEntities.register()
         NetherArchivesDamageTypes.register()
         NetherArchivesParticles.register()
-        ModifyWorldGen()
-        ModifyLootTables()
+        modifyWorldGen()
+        modifyLootTables()
 
         UseEntityCallback.EVENT.register { player, world, hand, entity, _ ->
             if (entity !is StriderEntity || !entity.isSaddled || entity.hasPassengers() || !(player.getStackInHand(hand) isIn ConventionalItemTags.SHEAR_TOOLS))

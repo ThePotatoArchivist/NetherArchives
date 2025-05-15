@@ -16,5 +16,6 @@
   "item.netherarchives.basalt_skis": "Basalt Skis",
   "item.netherarchives.blaze_lantern": "Volatile Blaze Lantern",
   "item.netherarchives.iron_slag": "Iron Slag",
-  "item.netherarchives.spectreglass_shard": "Spectreglass Shard"
+  "item.netherarchives.spectreglass_shard": "Spectreglass Shard",
+  "netherarchives.emi.explosion": "Any Explosion"
 }

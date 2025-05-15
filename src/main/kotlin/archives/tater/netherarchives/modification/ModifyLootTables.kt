@@ -5,12 +5,14 @@ import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.minecraft.loot.LootTables
 
-object ModifyLootTables {
-    operator fun invoke() {
-        LootTableEvents.MODIFY.register { key, tableBuilder, source, _ ->
-            if (!(source.isBuiltin && key.value == LootTables.PIGLIN_BARTERING_GAMEPLAY.value)) return@register
+private val BARTERING = LootTables.PIGLIN_BARTERING_GAMEPLAY.value
 
-            tableBuilder.modifyPools {
+internal fun modifyLootTables() {
+    LootTableEvents.MODIFY.register { key, tableBuilder, source, _ ->
+        if (!(source.isBuiltin)) return@register
+
+        when (key.value) {
+            BARTERING -> tableBuilder.modifyPools {
                 it.item(NetherArchivesItems.BLAZE_TORCH) {
                     weight(20)
                 }
