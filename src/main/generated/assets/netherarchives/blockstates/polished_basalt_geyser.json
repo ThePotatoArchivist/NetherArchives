@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "netherarchives:block/polished_basalt_geyser",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "netherarchives:block/polished_basalt_geyser",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "netherarchives:block/polished_basalt_geyser",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "netherarchives:block/polished_basalt_geyser",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "netherarchives:block/polished_basalt_geyser"
+    },
+    "facing=west": {
+      "model": "netherarchives:block/polished_basalt_geyser",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

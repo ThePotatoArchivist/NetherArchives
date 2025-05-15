@@ -5,6 +5,7 @@ import archives.tater.netherarchives.registry.NetherArchivesBlocks.BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.BLAZE_FIRE
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.MAGNETITE
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.POLISHED_BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SMOLDERING_MAGNETITE
@@ -39,10 +40,10 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
         )
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(
             BASALT_GEYSER,
+            POLISHED_BASALT_GEYSER,
         )
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(
             SMOLDERING_MAGNETITE,
-            BASALT_GEYSER,
         )
         getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
             FERMENTED_ROTTEN_FLESH_BLOCK,

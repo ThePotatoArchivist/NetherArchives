@@ -79,6 +79,8 @@ object NetherArchivesItems {
 
     val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
 
+    val POLISHED_BASALT_GEYSER = register(NetherArchivesBlocks.POLISHED_BASALT_GEYSER)
+
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
     val SPECTREGLASS_KNIFE = register("spectreglass_knife", SoulGlassKnifeItem(ItemSettings {

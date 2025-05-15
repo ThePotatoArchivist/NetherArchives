@@ -6,8 +6,11 @@ import com.google.common.collect.AbstractIterator
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.component.type.AttributeModifiersComponent
+import net.minecraft.data.client.BlockStateVariant
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
+import net.minecraft.data.client.VariantSettings
+import net.minecraft.data.client.VariantSettings.Rotation
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.fluid.Fluid
@@ -86,4 +89,18 @@ fun AttributeModifiersComponent(init: AttributeModifiersComponent.Builder.() -> 
 internal fun invertArgb(argb: Int): Int {
     return ((argb and 0xff000000u.toInt())
         or (0x00ffffff - (argb and 0x00ffffff)))
+}
+
+fun BlockStateVariant(
+    model: Identifier? = null,
+    x: Rotation? = null,
+    y: Rotation? = null,
+    uvLock: Boolean? = null,
+    weight: Int? = null,
+): BlockStateVariant = BlockStateVariant().apply {
+    model?.let { put(VariantSettings.MODEL, it) }
+    x?.let { put(VariantSettings.X, it) }
+    y?.let { put(VariantSettings.Y, it) }
+    uvLock?.let { put(VariantSettings.UVLOCK, it) }
+    weight?.let { put(VariantSettings.WEIGHT, it) }
 }

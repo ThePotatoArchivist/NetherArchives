@@ -2,9 +2,9 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.*
 import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
-import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.duck.isAirSkiing
 import archives.tater.netherarchives.item.SkisItem
+import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
@@ -13,7 +13,6 @@ import net.minecraft.block.FacingBlock
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.passive.StriderEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -29,7 +28,7 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 import kotlin.math.abs
 
-class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockEntityProvider {
+open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockEntityProvider {
     init {
         defaultState = stateManager.defaultState.with(FACING, Direction.UP)
     }
@@ -71,10 +70,15 @@ class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockEntity
         )
     }
 
-    override fun onSteppedOn(world: World, pos: BlockPos, state: BlockState, entity: Entity) {
-//        if (entity is LivingEntity && entity.getEquippedStack(EquipmentSlot.FEET).isEmpty) {
-//            entity.damage(world.damageSources.hotFloor(), 1f)
-//        }
+    protected open fun addImportantParticles(world: World, pos: BlockPos, facing: Direction) {
+        world.addFaceParticle(
+            ParticleTypes.CAMPFIRE_COSY_SMOKE,
+            facing,
+            pos,
+            0.05 * world.random.nextDouble() + 0.05,
+            posSpread = 0.25,
+            alwaysSpawn = true,
+        )
     }
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
@@ -117,18 +121,12 @@ class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockEntity
                 it.onLanding()
             }
             if (world.isClient && world.random.nextFloat() < 0.04) {
-                world.addFaceParticle(
-                    ParticleTypes.CAMPFIRE_COSY_SMOKE,
-                    facing,
-                    pos,
-                    0.05 * world.random.nextDouble() + 0.05,
-                    posSpread = 0.25,
-                    alwaysSpawn = true,
-                )
+                (state.block as? BasaltGeyserBlock)?.addImportantParticles(world, pos, facing)
             }
         }
 
-        private fun World.addFaceParticle(
+        @JvmStatic
+        protected fun World.addFaceParticle(
             parameters: ParticleEffect,
             face: Direction,
             pos: BlockPos,

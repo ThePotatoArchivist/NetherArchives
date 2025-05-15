@@ -3,7 +3,7 @@
   "textures": {
     "bottom": "minecraft:block/basalt_top",
     "particle": "netherarchives:block/basalt_geyser_top",
-    "side": "minecraft:block/basalt_side",
+    "side": "netherarchives:block/basalt_geyser_side",
     "top": "netherarchives:block/basalt_geyser_top"
   }
 }

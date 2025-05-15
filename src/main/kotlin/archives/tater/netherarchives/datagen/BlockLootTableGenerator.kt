@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.datagen.builder.*
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
@@ -78,6 +78,8 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
                 }
             }
         }
+
+        addDrop(NetherArchivesBlocks.POLISHED_BASALT_GEYSER)
 
         NetherArchivesBlocks.SPECTREGLASS drops drops(NetherArchivesBlocks.SPECTREGLASS, NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
 

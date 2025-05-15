@@ -1,11 +1,11 @@
-// 1.21.1	2025-05-15T13:08:53.175042455	Nether Archives/Tags for minecraft:block
-4edc2d3ddd2e01b2cfac7b1e40b19da3850becf9 data/minecraft/tags/block/mineable/pickaxe.json
+// 1.21.1	2025-05-15T16:21:43.856227549	Nether Archives/Tags for minecraft:block
+6e4817bcd6a8431aeb25d41ea3382edddeb26a73 data/minecraft/tags/block/mineable/pickaxe.json
 d0ce52695227d2e3fb0f68864a69bcdd1d3531d6 data/minecraft/tags/block/impermeable.json
 52df0e64c523825cd95373826a62fb759a4ba731 data/c/tags/block/glass_panes.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/netherarchives/tags/block/blaze_fire_target.json
 021e56fb4f3bc77adeaa60eee6c7be4e61116e3e data/minecraft/tags/block/mineable/hoe.json
 49f568df9c122bf6dfebd0659b0dea2af7b48ca4 data/minecraft/tags/block/soul_fire_base_blocks.json
-8373652c9a9a6b38d7dd195478bf30eeb5ffbf53 data/minecraft/tags/block/needs_stone_tool.json
+8839c01ab475ce44c93dce3803f2a77c69dfda20 data/minecraft/tags/block/needs_stone_tool.json
 d8dfe60bd1ae85f7a46defc4a7cc4bf42b5cf87e data/netherarchives/tags/block/rotten_flesh_fermenter.json
 c7a37a8994debf0b61175ae8984089dcce763711 data/netherarchives/tags/block/reveals_invisibles.json
 c794f4f25cdde8ae5da30a22e632a48ce5fc8a34 data/netherarchives/tags/block/inverts_beacon.json

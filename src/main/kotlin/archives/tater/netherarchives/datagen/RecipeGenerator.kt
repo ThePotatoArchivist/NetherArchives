@@ -134,6 +134,9 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             itemCriterion(NetherArchivesItems.MAGNETITE)
         }
 
+        offerPolishedStoneRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.POLISHED_BASALT_GEYSER, NetherArchivesItems.BASALT_GEYSER)
+        offerStonecuttingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.POLISHED_BASALT_GEYSER, NetherArchivesItems.BASALT_GEYSER)
+
         smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SPECTREGLASS_SHARD, experience = 0.1f)
 
         offer2x2CompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)

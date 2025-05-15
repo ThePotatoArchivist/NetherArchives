@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "netherarchives:basalt_geyser"
+  },
+  "result": {
+    "count": 1,
+    "id": "netherarchives:polished_basalt_geyser"
+  }
+}
