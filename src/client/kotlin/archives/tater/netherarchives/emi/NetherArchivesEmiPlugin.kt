@@ -53,6 +53,25 @@ object NetherArchivesEmiPlugin : EmiPlugin {
                 }), true)
                 output(EmiStack.of(Items.NETHER_STAR))
             }
+
+            addWorldRecipe("unique/shattered_spectreglass") {
+                leftInput(EmiStack.of(NetherArchivesItems.SPECTREGLASS))
+                rightInput(EmiIngredient.of(listOf(
+                    Items.ARROW,
+                    Items.SNOWBALL,
+                    Items.EGG,
+                    Items.TRIDENT,
+                    Items.FIREWORK_ROCKET,
+                    Items.FIRE_CHARGE,
+                    Items.WIND_CHARGE,
+                ).map {
+                    EmiStack.of(ItemStack(it).apply {
+                        this[DataComponentTypes.ITEM_NAME] = Text.translatable("netherarchives.emi.projectile")
+                        this[DataComponentTypes.RARITY] = Rarity.COMMON
+                    })
+                }), true)
+                output(EmiStack.of(NetherArchivesItems.SHATTERED_SPECTREGLASS))
+            }
         }
     }
 

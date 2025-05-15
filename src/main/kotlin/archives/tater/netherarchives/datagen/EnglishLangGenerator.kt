@@ -32,6 +32,7 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add("death.attack.netherarchives.paddleBurn", "%s wiped out into lava")
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
             add("netherarchives.emi.explosion", "Any Explosion")
+            add("netherarchives.emi.projectile", "Impact Projectiles")
         }
     }
 }
