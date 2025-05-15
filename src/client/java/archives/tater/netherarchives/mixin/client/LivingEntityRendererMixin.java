@@ -1,11 +1,14 @@
 package archives.tater.netherarchives.mixin.client;
 
 import archives.tater.netherarchives.NetherArchivesClient;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -13,11 +16,18 @@ import org.spongepowered.asm.mixin.injection.At;
 public class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> {
     @WrapOperation(
             method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;isVisible(Lnet/minecraft/entity/LivingEntity;)Z")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isInvisibleTo(Lnet/minecraft/entity/player/PlayerEntity;)Z")
     )
-    private boolean checkSoulGlass(LivingEntityRenderer<T, M> instance, T entity, Operation<Boolean> original) {
-        //noinspection MixinExtrasOperationParameters
-        return original.call(instance, entity)
-                || NetherArchivesClient.spectreglassRevealed.getOrDefault(entity, false);
+    private boolean checkSoulGlass(LivingEntity instance, PlayerEntity player, Operation<Boolean> original) {
+        return original.call(instance, player)
+                && !NetherArchivesClient.spectreglassRevealed.getOrDefault(instance, false);
+    }
+
+    @ModifyExpressionValue(
+            method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
+            at = @At(value = "CONSTANT", args = "intValue=654311423")
+    )
+    private int soulColor(int original, @Local(argsOnly = true) T entity) {
+        return NetherArchivesClient.spectreglassRevealed.getOrDefault(entity, false) ? 0x999FFFFF : original;
     }
 }
