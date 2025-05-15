@@ -21,6 +21,8 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add(NetherArchivesBlocks.BASALT_GEYSER, "Basalt Geyser")
             add(NetherArchivesBlocks.SPECTREGLASS, "Spectreglass")
             add(NetherArchivesBlocks.SHATTERED_SPECTREGLASS, "Shattered Spectreglass")
+            add(NetherArchivesBlocks.SPECTREGLASS_PANE, "Spectreglass Pane")
+            add(NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE, "Shattered Spectreglass Pane")
             add(NetherArchivesItems.BLAZE_LANTERN, "Volatile Blaze Lantern")
             add(NetherArchivesItems.IRON_SLAG, "Iron Slag")
             add(NetherArchivesItems.DUMMY_SOUL_FIRE, "Soul Fire")

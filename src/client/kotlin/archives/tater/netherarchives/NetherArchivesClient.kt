@@ -5,10 +5,7 @@ import archives.tater.netherarchives.client.render.entity.feature.WitherEyesFeat
 import archives.tater.netherarchives.client.render.entity.feature.WitherSkeletonEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesEntities
-import archives.tater.netherarchives.registry.NetherArchivesItems
-import archives.tater.netherarchives.registry.NetherArchivesParticles
+import archives.tater.netherarchives.registry.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -71,12 +68,16 @@ object NetherArchivesClient : ClientModInitializer {
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
         with (NetherArchivesBlocks) {
             BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
-                BLAZE_FIRE, BLAZE_DUST, BLAZE_TORCH, WALL_BLAZE_TORCH
+                BLAZE_FIRE,
+                BLAZE_DUST,
+                BLAZE_TORCH,
+                WALL_BLAZE_TORCH
             )
-            BlockRenderLayerMap.INSTANCE.putBlocks(
-                RenderLayer.getTranslucent(),
+            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
                 SPECTREGLASS,
                 SHATTERED_SPECTREGLASS,
+                SPECTREGLASS_PANE,
+                SHATTERED_SPECTREGLASS_PANE,
             )
         }
 
@@ -134,7 +135,7 @@ object NetherArchivesClient : ClientModInitializer {
                 spectreglassRevealed[entity] = world.raycast(BlockStateRaycastContext(
                         cameraPos,
                         Vec3d(entity.x, entity.getBodyY(0.5), entity.z),
-                    ) { it isOf NetherArchivesBlocks.SPECTREGLASS }).type != HitResult.Type.MISS
+                    ) { it isIn NetherArchivesTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
             }
         }
     }

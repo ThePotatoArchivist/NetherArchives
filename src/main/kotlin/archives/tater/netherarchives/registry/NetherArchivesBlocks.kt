@@ -6,10 +6,12 @@ import archives.tater.netherarchives.block.*
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.StainedGlassPaneBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.util.DyeColor
 import net.minecraft.block.AbstractBlock.Settings as BlockSettings
 
 object NetherArchivesBlocks {
@@ -110,9 +112,19 @@ object NetherArchivesBlocks {
 
     val SHATTERED_SPECTREGLASS = register("shattered_spectreglass", SoulGlassBlock(BlockSettings.copy(Blocks.GLASS)))
 
-    val SPECTREGLASS = register("spectreglass", BreakableSoulGlassBlock(
+    val SPECTREGLASS = register("spectreglass", ShatterableSoulGlassBlock(
         SHATTERED_SPECTREGLASS, BlockSettings.copy(
             SHATTERED_SPECTREGLASS
+        ).apply {
+            strength(0.3f, 3f)
+        })
+    )
+
+    val SHATTERED_SPECTREGLASS_PANE = register("shattered_spectreglass_pane", StainedGlassPaneBlock(DyeColor.BLACK, BlockSettings.copy(Blocks.GLASS_PANE)))
+
+    val SPECTREGLASS_PANE = register("spectreglass_pane", ShatterableGlassPaneBlock(
+        SHATTERED_SPECTREGLASS_PANE, BlockSettings.copy(
+            SHATTERED_SPECTREGLASS_PANE
         ).apply {
             strength(0.3f, 3f)
         })

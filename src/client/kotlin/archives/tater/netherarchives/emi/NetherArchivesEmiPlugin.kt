@@ -1,6 +1,7 @@
 package archives.tater.netherarchives.emi
 
 import archives.tater.netherarchives.NetherArchives
+import archives.tater.netherarchives.datagen.builder.id
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.registry.NetherArchivesTags
 import dev.emi.emi.api.EmiPlugin
@@ -54,24 +55,29 @@ object NetherArchivesEmiPlugin : EmiPlugin {
                 output(EmiStack.of(Items.NETHER_STAR))
             }
 
-            addWorldRecipe("unique/shattered_spectreglass") {
-                leftInput(EmiStack.of(NetherArchivesItems.SPECTREGLASS))
-                rightInput(EmiIngredient.of(listOf(
-                    Items.ARROW,
-                    Items.SNOWBALL,
-                    Items.EGG,
-                    Items.TRIDENT,
-                    Items.FIREWORK_ROCKET,
-                    Items.FIRE_CHARGE,
-                    Items.WIND_CHARGE,
-                ).map {
-                    EmiStack.of(ItemStack(it).apply {
-                        this[DataComponentTypes.ITEM_NAME] = Text.translatable("netherarchives.emi.projectile")
-                        this[DataComponentTypes.RARITY] = Rarity.COMMON
-                    })
-                }), true)
-                output(EmiStack.of(NetherArchivesItems.SHATTERED_SPECTREGLASS))
-            }
+            for ((normal, shattered) in listOf(
+                NetherArchivesItems.SPECTREGLASS to NetherArchivesItems.SHATTERED_SPECTREGLASS,
+                NetherArchivesItems.SPECTREGLASS_PANE to NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE,
+            ))
+                addWorldRecipe("unique/${shattered.id.path}") {
+                    leftInput(EmiStack.of(normal))
+                    rightInput(EmiIngredient.of(listOf(
+                        Items.ARROW,
+                        Items.SNOWBALL,
+                        Items.EGG,
+                        Items.TRIDENT,
+                        Items.FIREWORK_ROCKET,
+                        Items.FIRE_CHARGE,
+                        Items.WIND_CHARGE,
+                        Items.WITHER_SKELETON_SKULL,
+                    ).map {
+                        EmiStack.of(ItemStack(it).apply {
+                            this[DataComponentTypes.ITEM_NAME] = Text.translatable("netherarchives.emi.projectile")
+                            this[DataComponentTypes.RARITY] = Rarity.COMMON
+                        })
+                    }), true)
+                    output(EmiStack.of(shattered))
+                }
         }
     }
 

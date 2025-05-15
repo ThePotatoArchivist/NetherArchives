@@ -44,6 +44,7 @@ internal inline fun ItemSettings(init: ItemSettings.() -> Unit = {}): ItemSettin
 internal inline infix fun ItemStack.isIn(tag: TagKey<Item>): Boolean = this.isIn(tag)
 internal inline infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.isIn(tag)
 internal inline infix fun EntityType<*>.isIn(tag: TagKey<EntityType<*>>): Boolean = this.isIn(tag)
+inline infix fun BlockState.isIn(tag: TagKey<Block>): Boolean = this.isIn(tag)
 
 inline infix fun BlockState.isOf(block: Block): Boolean = this.isOf(block)
 

@@ -2,7 +2,6 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.get
 import archives.tater.netherarchives.isIn
-import archives.tater.netherarchives.isOf
 import archives.tater.netherarchives.mixin.FireworkRocketEntityAccessor
 import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.set
@@ -15,6 +14,7 @@ import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvent
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
@@ -23,9 +23,12 @@ import net.minecraft.world.explosion.Explosion
 import net.minecraft.world.explosion.Explosion.DestructionType
 import java.util.function.BiConsumer
 
-class BreakableSoulGlassBlock(private val shattersTo: Block, settings: Settings) : SoulGlassBlock(settings) {
+interface Shatterable {
+    val shattersTo: Block
 
-    override fun onExploded(
+    val shatterSound: SoundEvent
+
+    fun onExploded(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -36,7 +39,7 @@ class BreakableSoulGlassBlock(private val shattersTo: Block, settings: Settings)
         shatter(world, pos, state)
     }
 
-    override fun onProjectileHit(
+    fun onProjectileHit(
         world: World,
         state: BlockState,
         hit: BlockHitResult,
@@ -54,20 +57,22 @@ class BreakableSoulGlassBlock(private val shattersTo: Block, settings: Settings)
         shatterChain(world, pos, state, 0.5f)
     }
 
-    override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random?) {
+    fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random?) {
         shatterChain(world, pos, world[pos], 0.1f)
     }
 
-    private fun shatterChain(world: World, pos: BlockPos, state: BlockState, chance: Float) {
+    fun shatterChain(world: World, pos: BlockPos, state: BlockState, chance: Float) {
         shatter(world, pos, state)
-        for (otherPos in BlockPos.iterateOutwards(pos, 1, 1, 1))
-            if (world[otherPos] isOf this && world.random.nextFloat() < chance)
-                world.scheduleBlockTick(otherPos, this, world.random.nextBetween(3, 8))
+        for (otherPos in BlockPos.iterateOutwards(pos, 1, 1, 1)) {
+            val block = world[otherPos].block
+            if (block is Shatterable && world.random.nextFloat() < chance)
+                world.scheduleBlockTick(otherPos, block, world.random.nextBetween(3, 8))
+        }
     }
 
-    private fun shatter(world: World, pos: BlockPos, state: BlockState) {
-        world[pos] = shattersTo.defaultState
-        world.playSound(null, pos, soundGroup.breakSound, SoundCategory.BLOCKS, 1f, 1f)
+    fun shatter(world: World, pos: BlockPos, state: BlockState) {
+        world[pos] = shattersTo.getStateWithProperties(state)
+        world.playSound(null, pos, shatterSound, SoundCategory.BLOCKS, 1f, 1f)
         (world as? ServerWorld)?.spawnParticles(
             BlockStateParticleEffect(ParticleTypes.BLOCK, state),
             pos.x + 0.5,

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_glass_pane_side_alt",
+  "textures": {
+    "edge": "netherarchives:block/shattered_spectreglass_pane_top",
+    "pane": "netherarchives:block/shattered_spectreglass"
+  }
+}

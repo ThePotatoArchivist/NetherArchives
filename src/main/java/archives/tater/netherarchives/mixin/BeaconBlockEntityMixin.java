@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.mixin;
 
-import archives.tater.netherarchives.block.SoulGlassBlock;
+import archives.tater.netherarchives.registry.NetherArchivesTags;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -25,7 +25,7 @@ public class BeaconBlockEntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DyeColor;getEntityColor()I")
     )
     private static int soulGlassInvertColor(int value, @Local(ordinal = 1) BlockState state, @Local @Nullable BeaconBlockEntity.BeamSegment beamSegment, @Share("inverted") LocalBooleanRef inverted) {
-        if (!(state.getBlock() instanceof SoulGlassBlock)) return value;
+        if (!(state.isIn(NetherArchivesTags.INVERTS_BEACON))) return value;
         inverted.set(true);
         return invertArgb(beamSegment == null ? DyeColor.WHITE.getEntityColor() : beamSegment.getColor());
     }

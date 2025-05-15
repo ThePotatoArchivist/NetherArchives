@@ -1,10 +1,21 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.BASALT_GEYSER
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.BLAZE_FIRE
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.MAGNETITE
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.SMOLDERING_MAGNETITE
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.SPECTREGLASS
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.SPECTREGLASS_PANE
 import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE
 import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED
 import archives.tater.netherarchives.registry.NetherArchivesTags.BLAZE_FIRE_TARGET
+import archives.tater.netherarchives.registry.NetherArchivesTags.INVERTS_BEACON
 import archives.tater.netherarchives.registry.NetherArchivesTags.MAGNETIC
+import archives.tater.netherarchives.registry.NetherArchivesTags.REVEALS_INVISIBLES
 import archives.tater.netherarchives.registry.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -19,29 +30,29 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
 
     override fun configure(arg: RegistryWrapper.WrapperLookup) {
         getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
-            NetherArchivesBlocks.MAGNETITE,
-            NetherArchivesBlocks.SMOLDERING_MAGNETITE
+            MAGNETITE,
+            SMOLDERING_MAGNETITE
         )
         getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
             NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
-            NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
+            FERMENTED_ROTTEN_FLESH_BLOCK
         )
         getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(
-            NetherArchivesBlocks.BASALT_GEYSER,
+            BASALT_GEYSER,
         )
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(
-            NetherArchivesBlocks.SMOLDERING_MAGNETITE,
-            NetherArchivesBlocks.BASALT_GEYSER,
+            SMOLDERING_MAGNETITE,
+            BASALT_GEYSER,
         )
         getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
-            NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK,
+            FERMENTED_ROTTEN_FLESH_BLOCK,
         )
         getOrCreateTagBuilder(BlockTags.FIRE).add(
-            NetherArchivesBlocks.BLAZE_FIRE,
+            BLAZE_FIRE,
         )
         getOrCreateTagBuilder(BlockTags.IMPERMEABLE).add(
-            NetherArchivesBlocks.SPECTREGLASS,
-            NetherArchivesBlocks.SHATTERED_SPECTREGLASS,
+            SPECTREGLASS,
+            SHATTERED_SPECTREGLASS,
         )
         getOrCreateTagBuilder(MAGNETIC).add(
             Blocks.LODESTONE,
@@ -57,11 +68,25 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
         )
         getOrCreateTagBuilder(BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
             forceAddTag(BlockTags.BASE_STONE_NETHER)
-            add(NetherArchivesBlocks.MAGNETITE)
+            add(MAGNETITE)
         }
         getOrCreateTagBuilder(ConventionalBlockTags.GLASS_BLOCKS).add(
-            NetherArchivesBlocks.SPECTREGLASS,
-            NetherArchivesBlocks.SHATTERED_SPECTREGLASS
+            SPECTREGLASS,
+            SHATTERED_SPECTREGLASS
+        )
+        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_PANES).add(
+            SPECTREGLASS_PANE,
+            SHATTERED_SPECTREGLASS_PANE,
+        )
+        getOrCreateTagBuilder(REVEALS_INVISIBLES).add(
+            SPECTREGLASS,
+            SPECTREGLASS_PANE,
+        )
+        getOrCreateTagBuilder(INVERTS_BEACON).add(
+            SPECTREGLASS,
+            SHATTERED_SPECTREGLASS,
+            SPECTREGLASS_PANE,
+            SHATTERED_SPECTREGLASS_PANE,
         )
     }
 }

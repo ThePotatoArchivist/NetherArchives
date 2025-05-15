@@ -1,6 +1,14 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_OAR
+import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_SKIS
+import archives.tater.netherarchives.registry.NetherArchivesItems.DUMMY_SOUL_FIRE
+import archives.tater.netherarchives.registry.NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK
+import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPECTREGLASS
+import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE
+import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS
+import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_KNIFE
+import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_PANE
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -14,31 +22,35 @@ class ItemTagGenerator(
 ) : FabricTagProvider.ItemTagProvider(output, registriesFuture) {
     override fun configure(arg: RegistryWrapper.WrapperLookup?) {
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
-            NetherArchivesItems.DUMMY_SOUL_FIRE,
+            DUMMY_SOUL_FIRE,
         )
         getOrCreateTagBuilder(ItemTags.SOUL_FIRE_BASE_BLOCKS).add(
-            NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK,
+            FERMENTED_ROTTEN_FLESH_BLOCK,
         )
         getOrCreateTagBuilder(ConventionalItemTags.GLASS_BLOCKS).add(
-            NetherArchivesItems.SPECTREGLASS,
-            NetherArchivesItems.SHATTERED_SPECTREGLASS,
+            SPECTREGLASS,
+            SHATTERED_SPECTREGLASS,
+        )
+        getOrCreateTagBuilder(ConventionalItemTags.GLASS_PANES).add(
+            SPECTREGLASS_PANE,
+            SHATTERED_SPECTREGLASS_PANE,
         )
         getOrCreateTagBuilder(ItemTags.ARMOR_ENCHANTABLE).add(
-            NetherArchivesItems.BASALT_SKIS,
+            BASALT_SKIS,
         )
         getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
-            NetherArchivesItems.SPECTREGLASS_KNIFE,
+            SPECTREGLASS_KNIFE,
         )
         getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(
-            NetherArchivesItems.BASALT_SKIS,
-            NetherArchivesItems.BASALT_OAR,
-            NetherArchivesItems.SPECTREGLASS_KNIFE,
+            BASALT_SKIS,
+            BASALT_OAR,
+            SPECTREGLASS_KNIFE,
         )
         getOrCreateTagBuilder(ItemTags.BREAKS_DECORATED_POTS).add(
-            NetherArchivesItems.SPECTREGLASS_KNIFE,
+            SPECTREGLASS_KNIFE,
         )
         getOrCreateTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(
-            NetherArchivesItems.SPECTREGLASS_KNIFE,
+            SPECTREGLASS_KNIFE,
         )
     }
 }
