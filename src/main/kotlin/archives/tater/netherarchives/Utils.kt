@@ -81,3 +81,8 @@ fun iterateLinearBlockPos(origin: BlockPos, direction: Direction, distance: Int)
 
 fun AttributeModifiersComponent(init: AttributeModifiersComponent.Builder.() -> Unit): AttributeModifiersComponent =
     AttributeModifiersComponent.builder().apply(init).build()
+
+internal fun invertArgb(argb: Int): Int {
+    return ((argb and 0xff000000u.toInt())
+        or (0x00ffffff - (argb and 0x00ffffff)))
+}
