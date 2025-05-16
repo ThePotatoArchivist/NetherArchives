@@ -81,6 +81,8 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
         )
     }
 
+    protected open fun getPushDistance(world: World, pos: BlockPos, state: BlockState) = BOOST_RANGE
+
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         return BasaltGeyserBlockEntity(pos, state)
     }
@@ -102,16 +104,19 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
         private const val SNEAKING_MAX_BOOST_VELOCITY = 0.12
 
         override fun tick(world: World, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
+            val geyserBlock = world[pos].block as? BasaltGeyserBlock ?: return
+            val pushDistance = geyserBlock.getPushDistance(world, pos, state)
+            if (pushDistance == 0) return
             val facing = state[FACING]
 
-            val distance = iterateLinearBlockPos(pos, facing, BOOST_RANGE)
+            val distance = iterateLinearBlockPos(pos, facing, pushDistance)
                 .indexOfFirst { world[it].run { isSideSolidFullSquare(world, it, facing) or isSideSolidFullSquare(world, it, facing.opposite) } }
-                .let { if (it == -1) BOOST_RANGE else it }
+                .let { if (it == -1) pushDistance else it }
 
             if (distance == 0) return
 
             world.getOtherEntities(null, Box.enclosing(pos, pos.offset(facing, distance))) { it !is StriderEntity && (it !is PlayerEntity || !it.abilities.flying) }.forEach {
-                val closeness = (1 - abs((it.pos - pos.toCenterPos().offset(facing, 0.5)).getComponentAlongAxis(facing.axis)) / BOOST_RANGE.toDouble()).coerceAtLeast(0.0)
+                val closeness = (1 - abs((it.pos - pos.toCenterPos().offset(facing, 0.5)).getComponentAlongAxis(facing.axis)) / pushDistance.toDouble()).coerceAtLeast(0.0)
 
                 it.velocity += Vec3d.ZERO.offset(facing, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
@@ -121,7 +126,7 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
                 it.onLanding()
             }
             if (world.isClient && world.random.nextFloat() < 0.04) {
-                (state.block as? BasaltGeyserBlock)?.addImportantParticles(world, pos, facing)
+                geyserBlock.addImportantParticles(world, pos, facing)
             }
         }
 

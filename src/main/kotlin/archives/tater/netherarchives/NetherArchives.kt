@@ -33,7 +33,7 @@ object NetherArchives : ModInitializer {
         // Proceed with mild caution.
         NetherArchivesBlocks.register()
         NetherArchivesBlockEntities.register()
-        NetherArchivesItems.registerItemGroups()
+        NetherArchivesItems.register()
         NetherArchivesEntities.register()
         NetherArchivesDamageTypes.register()
         NetherArchivesParticles.register()

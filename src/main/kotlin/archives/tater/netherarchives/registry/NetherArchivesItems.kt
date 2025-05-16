@@ -69,7 +69,9 @@ object NetherArchivesItems {
         ArmorMaterials.CHAIN.value().knockbackResistance,
     ))
 
-    val BASALT_SKIS = register("basalt_skis", SkisItem(BASALT_ARMOR_MATERIAL, ItemSettings()))
+    val BASALT_SKIS = register("basalt_skis", SkisItem(BASALT_ARMOR_MATERIAL, ItemSettings {
+        maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15)) // Matches vanilla chainmail, but what is this number??
+    }))
     @JvmField
     val BASALT_OAR = register("basalt_oar", OarItem(ItemSettings {
         maxCount(1)
@@ -106,9 +108,10 @@ object NetherArchivesItems {
         ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
         ItemGroups.TOOLS to setOf(BASALT_SKIS, BASALT_OAR),
         ItemGroups.FUNCTIONAL to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE),
+        ItemGroups.REDSTONE to setOf(POLISHED_BASALT_GEYSER)
     )
 
-    fun registerItemGroups() {
+    fun register() {
         itemGroups.forEach { (group, items) ->
             ItemGroupEvents.modifyEntriesEvent(group).register {
                 items.forEach(it::add)
