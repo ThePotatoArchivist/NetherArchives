@@ -1,28 +1,54 @@
 {
   "variants": {
-    "facing=down": {
+    "facing=down,powered=false": {
       "model": "netherarchives:block/polished_basalt_geyser",
       "x": 180
     },
-    "facing=east": {
+    "facing=down,powered=true": {
+      "model": "netherarchives:block/polished_basalt_geyser_on",
+      "x": 180
+    },
+    "facing=east,powered=false": {
       "model": "netherarchives:block/polished_basalt_geyser",
       "x": 90,
       "y": 90
     },
-    "facing=north": {
+    "facing=east,powered=true": {
+      "model": "netherarchives:block/polished_basalt_geyser_on",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north,powered=false": {
       "model": "netherarchives:block/polished_basalt_geyser",
       "x": 90
     },
-    "facing=south": {
+    "facing=north,powered=true": {
+      "model": "netherarchives:block/polished_basalt_geyser_on",
+      "x": 90
+    },
+    "facing=south,powered=false": {
       "model": "netherarchives:block/polished_basalt_geyser",
       "x": 90,
       "y": 180
     },
-    "facing=up": {
+    "facing=south,powered=true": {
+      "model": "netherarchives:block/polished_basalt_geyser_on",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up,powered=false": {
       "model": "netherarchives:block/polished_basalt_geyser"
     },
-    "facing=west": {
+    "facing=up,powered=true": {
+      "model": "netherarchives:block/polished_basalt_geyser_on"
+    },
+    "facing=west,powered=false": {
       "model": "netherarchives:block/polished_basalt_geyser",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west,powered=true": {
+      "model": "netherarchives:block/polished_basalt_geyser_on",
       "x": 90,
       "y": 270
     }

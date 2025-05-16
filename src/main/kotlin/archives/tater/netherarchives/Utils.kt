@@ -9,6 +9,7 @@ import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.data.client.BlockStateVariant
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
+import net.minecraft.data.client.TextureMap
 import net.minecraft.data.client.VariantSettings
 import net.minecraft.data.client.VariantSettings.Rotation
 import net.minecraft.entity.EntityType
@@ -103,4 +104,9 @@ fun BlockStateVariant(
     y?.let { put(VariantSettings.Y, it) }
     uvLock?.let { put(VariantSettings.UVLOCK, it) }
     weight?.let { put(VariantSettings.WEIGHT, it) }
+}
+
+fun TextureMap(vararg entries: Pair<TextureKey, Identifier>) = TextureMap().apply {
+    for ((key, id) in entries)
+        put(key, id)
 }
