@@ -14,7 +14,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-class PolishedBasaltGeyserBlock(settings: Settings) : BasaltGeyserBlock(settings) {
+class AdjustableBasaltGeyserBlock(settings: Settings) : BasaltGeyserBlock(settings) {
     init {
         defaultState = defaultState.with(POWERED, false)
     }

@@ -79,7 +79,7 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
             }
         }
 
-        addDrop(NetherArchivesBlocks.POLISHED_BASALT_GEYSER)
+        addDrop(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER)
 
         NetherArchivesBlocks.SPECTREGLASS drops drops(NetherArchivesBlocks.SPECTREGLASS, NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
 

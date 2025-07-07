@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "netherarchives:polished_basalt_geyser"
+          "name": "netherarchives:adjustable_basalt_geyser"
         }
       ],
       "rolls": 1.0

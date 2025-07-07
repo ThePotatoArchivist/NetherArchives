@@ -134,7 +134,7 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             itemCriterion(NetherArchivesItems.MAGNETITE)
         }
 
-        shaped(RecipeCategory.REDSTONE, NetherArchivesItems.POLISHED_BASALT_GEYSER) {
+        shaped(RecipeCategory.REDSTONE, NetherArchivesItems.ADJUSTABLE_BASALT_GEYSER) {
             patterns("""
                  & 
                 #$#

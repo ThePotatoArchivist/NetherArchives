@@ -3,7 +3,7 @@ package archives.tater.netherarchives.datagen
 import archives.tater.netherarchives.BlockStateVariant
 import archives.tater.netherarchives.Model
 import archives.tater.netherarchives.TextureMap
-import archives.tater.netherarchives.block.PolishedBasaltGeyserBlock
+import archives.tater.netherarchives.block.AdjustableBasaltGeyserBlock
 import archives.tater.netherarchives.block.RottenFleshBlock
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
@@ -40,15 +40,15 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             coordinate(blockStateModelGenerator.createUpDefaultFacingVariantMap())
         }
 
-        blockStateModelGenerator.acceptVariants(NetherArchivesBlocks.POLISHED_BASALT_GEYSER) {
-            coordinate(BlockStateVariantMap.create(PolishedBasaltGeyserBlock.POWERED).register { powered ->
+        blockStateModelGenerator.acceptVariants(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER) {
+            coordinate(BlockStateVariantMap.create(AdjustableBasaltGeyserBlock.POWERED).register { powered ->
                 val suffix = if (powered) "_on" else ""
                 BlockStateVariant(
                     model = CUBE_BOTTOM_TOP_PARTICLE_MODEL.upload(
-                        ModelIds.getBlockSubModelId(NetherArchivesBlocks.POLISHED_BASALT_GEYSER, suffix),
+                        ModelIds.getBlockSubModelId(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, suffix),
                         cubeBottomTopParticle(
-                            top = NetherArchivesBlocks.POLISHED_BASALT_GEYSER,
-                            bottom = NetherArchivesBlocks.POLISHED_BASALT_GEYSER,
+                            top = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
+                            bottom = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
                             suffix = suffix,
                             topSuffixed = false,
                         ),

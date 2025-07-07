@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "netherarchives:block/adjustable_basalt_geyser_bottom",
+    "particle": "netherarchives:block/adjustable_basalt_geyser_top",
+    "side": "netherarchives:block/adjustable_basalt_geyser_side",
+    "top": "netherarchives:block/adjustable_basalt_geyser_top"
+  }
+}

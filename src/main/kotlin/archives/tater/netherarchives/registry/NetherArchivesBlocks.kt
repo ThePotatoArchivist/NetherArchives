@@ -110,7 +110,11 @@ object NetherArchivesBlocks {
         requiresTool()
     }))
 
-    val POLISHED_BASALT_GEYSER = register("polished_basalt_geyser", PolishedBasaltGeyserBlock(BlockSettings.copy(BASALT_GEYSER)))
+    val ADJUSTABLE_BASALT_GEYSER = register("adjustable_basalt_geyser", AdjustableBasaltGeyserBlock(BlockSettings {
+        strength(1.2f, 4.2f)
+        luminance { 5 }
+        sounds(BlockSoundGroup.BASALT)
+    }))
 
     val SHATTERED_SPECTREGLASS = register("shattered_spectreglass", SoulGlassBlock(BlockSettings.copy(Blocks.GLASS)))
 

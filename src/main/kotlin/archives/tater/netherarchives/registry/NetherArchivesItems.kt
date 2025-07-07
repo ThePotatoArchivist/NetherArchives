@@ -81,7 +81,7 @@ object NetherArchivesItems {
 
     val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
 
-    val POLISHED_BASALT_GEYSER = register(NetherArchivesBlocks.POLISHED_BASALT_GEYSER)
+    val ADJUSTABLE_BASALT_GEYSER = register(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER)
 
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
@@ -108,7 +108,7 @@ object NetherArchivesItems {
         ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
         ItemGroups.TOOLS to setOf(BASALT_SKIS, BASALT_OAR),
         ItemGroups.FUNCTIONAL to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE),
-        ItemGroups.REDSTONE to setOf(POLISHED_BASALT_GEYSER)
+        ItemGroups.REDSTONE to setOf(ADJUSTABLE_BASALT_GEYSER)
     )
 
     fun register() {

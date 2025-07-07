@@ -25,7 +25,7 @@ object NetherArchivesBlockEntities {
 
     val BLAZE_TORCH_ENTITY = register("blaze_torch", ::BlazeTorchBlockEntity, NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
 
-    val BASALT_GEYSER_ENTITY = register("basalt_geyser", ::BasaltGeyserBlockEntity, NetherArchivesBlocks.BASALT_GEYSER, NetherArchivesBlocks.POLISHED_BASALT_GEYSER)
+    val BASALT_GEYSER_ENTITY = register("basalt_geyser", ::BasaltGeyserBlockEntity, NetherArchivesBlocks.BASALT_GEYSER, NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER)
 
     fun register() {}
 }

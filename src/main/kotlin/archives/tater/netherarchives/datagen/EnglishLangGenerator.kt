@@ -19,7 +19,7 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, "Fermented Rotten Flesh Block")
             add(NetherArchivesBlocks.BLAZE_TORCH, "Blaze Torch")
             add(NetherArchivesBlocks.BASALT_GEYSER, "Basalt Geyser")
-            add(NetherArchivesBlocks.POLISHED_BASALT_GEYSER, "Polished Basalt Geyser")
+            add(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, "Adjustable Basalt Geyser")
             add(NetherArchivesBlocks.SPECTREGLASS, "Spectreglass")
             add(NetherArchivesBlocks.SHATTERED_SPECTREGLASS, "Shattered Spectreglass")
             add(NetherArchivesBlocks.SPECTREGLASS_PANE, "Spectreglass Pane")

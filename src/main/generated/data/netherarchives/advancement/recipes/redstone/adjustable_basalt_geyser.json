@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:polished_basalt_geyser"
+        "recipe": "netherarchives:adjustable_basalt_geyser"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "netherarchives:polished_basalt_geyser"
+      "netherarchives:adjustable_basalt_geyser"
     ]
   }
 }
