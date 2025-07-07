@@ -50,6 +50,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
                             top = NetherArchivesBlocks.POLISHED_BASALT_GEYSER,
                             bottom = NetherArchivesBlocks.POLISHED_BASALT_GEYSER,
                             suffix = suffix,
+                            topSuffixed = false,
                         ),
                         blockStateModelGenerator.modelCollector
                     )
@@ -96,8 +97,8 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             parent = Identifier.ofVanilla("block/cube_bottom_top")
         )
 
-        fun cubeBottomTopParticle(top: Block, bottom: Block, side: Block = top, suffix: String = "", bottomSuffix: String = "_bottom") = TextureMap(
-            TextureKey.TOP to ModelIds.getBlockSubModelId(top, "_top$suffix"),
+        fun cubeBottomTopParticle(top: Block, bottom: Block, side: Block = top, suffix: String = "", bottomSuffix: String = "_bottom", topSuffixed: Boolean = true) = TextureMap(
+            TextureKey.TOP to ModelIds.getBlockSubModelId(top, if (topSuffixed) "_top$suffix" else "_top"),
             TextureKey.SIDE to ModelIds.getBlockSubModelId(side, "_side$suffix"),
             TextureKey.BOTTOM to ModelIds.getBlockSubModelId(bottom, "$bottomSuffix$suffix"),
             TextureKey.PARTICLE to ModelIds.getBlockSubModelId(top, "_top$suffix"),

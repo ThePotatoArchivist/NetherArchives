@@ -1,9 +1,9 @@
-// 1.21.1	2025-05-16T01:45:32.947111248	Nether Archives/Model Definitions
+// 1.21.1	2025-07-08T02:27:30.905832268	Nether Archives/Model Definitions
 df703380a9aa01bf9c376f53354d832bb5a06883 assets/netherarchives/models/item/blaze_dust.json
 e5e4fc4c794bec4a022779c08a093ee881f3bdcc assets/netherarchives/models/block/smoldering_magnetite.json
 bb825982361d7a7ce168068dc31151fa9854604d assets/netherarchives/models/item/shattered_spectreglass_pane.json
 816e97ac665971f8fb03d718d642fda24ab880f5 assets/netherarchives/blockstates/shattered_spectreglass.json
-b46fadc57c3f684d5771aaa517192e974076f996 assets/netherarchives/models/block/polished_basalt_geyser_on.json
+f2f8df48aa2c820724028a48e8832e956b22c8dc assets/netherarchives/models/block/polished_basalt_geyser_on.json
 6059f1554513ff5509c6f016ec677d137ff7bb37 assets/netherarchives/models/block/fermented_rotten_flesh_block.json
 66ef27ec1fd8ad2fcaec51f34273ba93a274e04e assets/netherarchives/blockstates/fermented_rotten_flesh_block.json
 69dd641f9eea9da6cdd227c1f8a92d872a67914b assets/netherarchives/models/block/shattered_spectreglass_pane_noside.json

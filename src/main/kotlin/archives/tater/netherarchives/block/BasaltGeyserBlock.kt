@@ -123,7 +123,8 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
                     it.isAirSkiing = true
                 }
                 // Cancel fall damage
-                it.onLanding()
+                if (facing == Direction.UP)
+                    it.onLanding()
             }
             if (world.isClient && world.random.nextFloat() < 0.04) {
                 geyserBlock.addImportantParticles(world, pos, facing)
