@@ -1,17 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "redstone",
   "key": {
-    "S": {
+    "#": {
+      "tag": "c:ingots/iron"
+    },
+    "$": {
       "item": "netherarchives:basalt_geyser"
+    },
+    "%": {
+      "tag": "c:dusts/redstone"
+    },
+    "&": {
+      "item": "minecraft:iron_trapdoor"
     }
   },
   "pattern": [
-    "SS",
-    "SS"
+    " & ",
+    "#$#",
+    " % "
   ],
   "result": {
-    "count": 4,
+    "count": 1,
     "id": "netherarchives:polished_basalt_geyser"
   }
 }

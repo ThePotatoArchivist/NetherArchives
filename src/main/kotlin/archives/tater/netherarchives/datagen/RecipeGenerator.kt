@@ -134,8 +134,20 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             itemCriterion(NetherArchivesItems.MAGNETITE)
         }
 
-        offerPolishedStoneRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.POLISHED_BASALT_GEYSER, NetherArchivesItems.BASALT_GEYSER)
-        offerStonecuttingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.POLISHED_BASALT_GEYSER, NetherArchivesItems.BASALT_GEYSER)
+        shaped(RecipeCategory.REDSTONE, NetherArchivesItems.POLISHED_BASALT_GEYSER) {
+            patterns("""
+                 & 
+                #$#
+                 % 
+            """)
+            inputs {
+                '&' to Items.IRON_TRAPDOOR
+                '#' to ConventionalItemTags.IRON_INGOTS
+                '$' to NetherArchivesItems.BASALT_GEYSER
+                '%' to ConventionalItemTags.REDSTONE_DUSTS
+            }
+            itemCriterion(NetherArchivesItems.BASALT_GEYSER)
+        }
 
         smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SPECTREGLASS_SHARD, experience = 0.1f)
 

@@ -1,4 +1,4 @@
-// 1.21.1	2025-07-08T02:27:30.905832268	Nether Archives/Model Definitions
+// 1.21.1	2025-07-08T03:45:56.989703986	Nether Archives/Model Definitions
 df703380a9aa01bf9c376f53354d832bb5a06883 assets/netherarchives/models/item/blaze_dust.json
 e5e4fc4c794bec4a022779c08a093ee881f3bdcc assets/netherarchives/models/block/smoldering_magnetite.json
 bb825982361d7a7ce168068dc31151fa9854604d assets/netherarchives/models/item/shattered_spectreglass_pane.json
@@ -23,8 +23,8 @@ eca2cb2cc9aaa69adcbbc62f5da5f69ae9e04d16 assets/netherarchives/blockstates/spect
 d2375408fc5e783cc5e05bf133bc05ebbf1640ac assets/netherarchives/models/block/spectreglass_pane_side.json
 2bd8fcee19200187357b7079d027029daf5fa26a assets/netherarchives/models/block/wall_blaze_torch.json
 7dac05a6e054619af0be7285c4b250e964feaa9e assets/minecraft/models/item/netherarchives/dummy/soul_fire.json
-d24243d940628106d5db195553f52b6374bab02a assets/netherarchives/blockstates/magnetite.json
 6ba76f74b5fc9a2f4124076d989034bf42006019 assets/netherarchives/blockstates/blaze_torch.json
+d24243d940628106d5db195553f52b6374bab02a assets/netherarchives/blockstates/magnetite.json
 92bc4416ca8e43f5d265c3057564b802ed9b8797 assets/netherarchives/models/block/blaze_fire_side_alt0.json
 5f048c5dbd6c65c996ba7bbe56583e03307a7e3e assets/netherarchives/blockstates/rotten_flesh_block.json
 ec3ebe73c4106a60fb7a7b5f23ef0941d451f9e8 assets/netherarchives/models/item/fermented_rotten_flesh_block.json
