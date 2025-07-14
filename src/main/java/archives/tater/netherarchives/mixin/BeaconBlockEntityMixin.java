@@ -20,7 +20,8 @@ import static archives.tater.netherarchives.UtilsKt.invertArgb;
 public class BeaconBlockEntityMixin {
     @ModifyExpressionValue(
             method = "tick",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DyeColor;getEntityColor()I")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/util/DyeColor;getEntityColor()I"),
+            require = 0 // Fails on sinytra
     )
     private static int soulGlassInvertColor(int value, @Local(ordinal = 1) BlockState state, @Local @Nullable BeaconBlockEntity.BeamSegment beamSegment, @Share("inverted") LocalBooleanRef inverted) {
         if (!(state.isIn(NetherArchivesTags.INVERTS_BEACON))) {
