@@ -7,6 +7,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys.*
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Util
+import net.minecraft.world.gen.structure.Structure
 
 object NetherArchivesTags {
     private fun <T> of(registry: RegistryKey<Registry<T>>, path: String): TagKey<T> =
@@ -26,6 +27,8 @@ object NetherArchivesTags {
     val BURNS_WHEN_PADDLE: TagKey<Fluid> = of(FLUID, "burns_when_paddle")
 
     val NON_CHAIN_SHATTER_PROJECTILES = of(ENTITY_TYPE, "non_chain_shatter_projectile")
+
+    val BLAZE_TORCH_LOCATED: TagKey<Structure> = of(STRUCTURE, "blaze_torch_located")
 
     val <T> TagKey<T>.translationKey: String
         get() {
