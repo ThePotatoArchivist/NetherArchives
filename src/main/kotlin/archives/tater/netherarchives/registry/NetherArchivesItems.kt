@@ -17,20 +17,24 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
+import net.minecraft.item.Item.Settings as ItemSettings
 
 
 object NetherArchivesItems {
-    private fun register(identifier: Identifier, item: Item = Item(ItemSettings())): Item =
-        Registry.register(Registries.ITEM, identifier, item)
+    private fun register(id: Identifier, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item =
+        Registry.register(Registries.ITEM, id, item(settings))
 
-    private fun register(path: String, item: Item = Item(ItemSettings())): Item =
-        register(NetherArchives.id(path), item)
+    private fun register(path: String, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item =
+        register(NetherArchives.id(path), item, settings)
 
-    private fun register(block: Block, settings: Item.Settings = ItemSettings()): Item =
-        register(Registries.BLOCK.getId(block).path, BlockItem(block, settings))
+    private fun register(path: String, item: (ItemSettings) -> Item = ::Item, settingsInit: ItemSettings.() -> Unit): Item =
+        register(NetherArchives.id(path), item, ItemSettings(settingsInit))
 
-    private fun register(identifier: Identifier, armorMaterial: ArmorMaterial): RegistryEntry<ArmorMaterial> =
-        Registry.registerReference(Registries.ARMOR_MATERIAL, identifier, armorMaterial)
+    private fun register(block: Block, settings: ItemSettings = ItemSettings()): Item =
+        register(Registries.BLOCK.getId(block).path, { BlockItem(block, it) }, settings)
+
+    private fun register(id: Identifier, armorMaterial: ArmorMaterial): RegistryEntry<ArmorMaterial> =
+        Registry.registerReference(Registries.ARMOR_MATERIAL, id, armorMaterial)
 
     val MAGNETITE = register(NetherArchivesBlocks.MAGNETITE)
 
@@ -44,19 +48,16 @@ object NetherArchivesItems {
 
     val BLAZE_DUST = register(NetherArchivesBlocks.BLAZE_DUST)
 
-    val BLAZE_LANTERN = register("blaze_lantern", BlazeLanternItem(ItemSettings {
+    val BLAZE_LANTERN = register("blaze_lantern", ::BlazeLanternItem) {
         maxCount(16)
-    }))
+    }
 
-    val BLAZE_TORCH = register(
-        "blaze_torch",
-        VerticallyAttachableBlockItem(
-            NetherArchivesBlocks.BLAZE_TORCH,
-            NetherArchivesBlocks.WALL_BLAZE_TORCH,
-            ItemSettings(),
-            Direction.DOWN
-        )
-    )
+    val BLAZE_TORCH = register("blaze_torch", { VerticallyAttachableBlockItem(
+        NetherArchivesBlocks.BLAZE_TORCH,
+        NetherArchivesBlocks.WALL_BLAZE_TORCH,
+        it,
+        Direction.DOWN
+    ) })
 
     val BASALT_ARMOR_MATERIAL = register(NetherArchives.id("basalt"), ArmorMaterial(
         ArmorMaterials.CHAIN.value().defense,
@@ -69,14 +70,14 @@ object NetherArchivesItems {
         ArmorMaterials.CHAIN.value().knockbackResistance,
     ))
 
-    val BASALT_SKIS = register("basalt_skis", SkisItem(BASALT_ARMOR_MATERIAL, ItemSettings {
+    val BASALT_SKIS = register("basalt_skis", { SkisItem(BASALT_ARMOR_MATERIAL, it) }) {
         maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15)) // Matches vanilla chainmail, but what is this number??
-    }))
+    }
     @JvmField
-    val BASALT_OAR = register("basalt_oar", OarItem(ItemSettings {
+    val BASALT_OAR = register("basalt_oar", ::OarItem) {
         maxCount(1)
         maxDamage(ToolMaterials.STONE.durability)
-    }))
+    }
     val BASALT_ROD = register("basalt_rod")
 
     val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
@@ -85,11 +86,11 @@ object NetherArchivesItems {
 
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
-    val SPECTREGLASS_KNIFE = register("spectreglass_knife", SoulGlassKnifeItem(ItemSettings {
+    val SPECTREGLASS_KNIFE = register("spectreglass_knife", ::SoulGlassKnifeItem) {
         maxDamage(16)
         attributeModifiers(SoulGlassKnifeItem.attributeModifiers)
         component(DataComponentTypes.TOOL, SoulGlassKnifeItem.toolComponent)
-    }))
+    }
 
     val SPECTREGLASS = register(NetherArchivesBlocks.SPECTREGLASS)
 

@@ -12,128 +12,112 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.DyeColor
+import net.minecraft.util.Identifier
 import net.minecraft.block.AbstractBlock.Settings as BlockSettings
 
 object NetherArchivesBlocks {
-    private fun register(path: String, block: Block): Block =
-        Registry.register(Registries.BLOCK, NetherArchives.id(path), block)
+    private fun register(id: Identifier, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block =
+        Registry.register(Registries.BLOCK, id, block(settings))
 
-    private fun register(path: String, settingsInit: BlockSettings.() -> Unit): Block =
-        register(path, Block(BlockSettings(settingsInit)))
+    private fun register(path: String, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block =
+        register(NetherArchives.id(path), block, settings)
 
-    @JvmField
-    val MAGNETITE = register("magnetite", MagnetiteBlock(
-        BlockSettings {
-            strength(0.8f, 9.0f)
-            sounds(BlockSoundGroup.BASALT)
-        }
-    ))
+    private inline fun register(path: String, noinline block: (BlockSettings) -> Block = ::Block, settingsInit: BlockSettings.() -> Unit): Block =
+        register(path, block, BlockSettings(settingsInit))
 
     @JvmField
-    val SMOLDERING_MAGNETITE = register("smoldering_magnetite", SmolderingMagnetiteBlock(
-        BlockSettings {
-            strength(0.6f, 1.25f)
-            sounds(BlockSoundGroup.BASALT)
-            luminance { 3 }
-            emissiveLighting(Blocks::always)
-            requiresTool()
-        }
-    ))
+    val MAGNETITE = register("magnetite", ::MagnetiteBlock) {
+        strength(0.8f, 9.0f)
+        sounds(BlockSoundGroup.BASALT)
+    }
 
     @JvmField
-    val BLAZE_FIRE = register("blaze_fire", BlazeFireBlock(
-        BlockSettings {
-            replaceable()
-            noCollision()
-            breakInstantly()
-            luminance { 15 }
-            sounds(BlockSoundGroup.WOOL)
-            pistonBehavior(PistonBehavior.DESTROY)
-            nonOpaque()
-        }
-    ))
+    val SMOLDERING_MAGNETITE = register("smoldering_magnetite", ::SmolderingMagnetiteBlock) {
+        strength(0.6f, 1.25f)
+        sounds(BlockSoundGroup.BASALT)
+        luminance { 3 }
+        emissiveLighting(Blocks::always)
+        requiresTool()
+    }
 
     @JvmField
-    val BLAZE_DUST = register("blaze_dust", BlazePowderBlock(
-        BlockSettings {
-            replaceable()
-            noCollision()
-            sounds(BlockSoundGroup.SAND)
-            pistonBehavior(PistonBehavior.DESTROY)
-            nonOpaque()
-        }
-    ))
+    val BLAZE_FIRE = register("blaze_fire", ::BlazeFireBlock) {
+        replaceable()
+        noCollision()
+        breakInstantly()
+        luminance { 15 }
+        sounds(BlockSoundGroup.WOOL)
+        pistonBehavior(PistonBehavior.DESTROY)
+        nonOpaque()
+    }
 
     @JvmField
-    val FERMENTED_ROTTEN_FLESH_BLOCK = register("fermented_rotten_flesh_block", Block(
-        BlockSettings {
-            strength(1.5f, 1f)
-            sounds(BlockSoundGroup.SLIME)
-        }
-    ))
+    val BLAZE_DUST = register("blaze_dust", ::BlazePowderBlock) {
+        replaceable()
+        noCollision()
+        sounds(BlockSoundGroup.SAND)
+        pistonBehavior(PistonBehavior.DESTROY)
+        nonOpaque()
+    }
 
     @JvmField
-    val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", RottenFleshBlock(
-        BlockSettings {
-            strength(0.7f, 0.7f)
-            sounds(BlockSoundGroup.SLIME)
-        }
-    ))
+    val FERMENTED_ROTTEN_FLESH_BLOCK = register("fermented_rotten_flesh_block") {
+        strength(1.5f, 1f)
+        sounds(BlockSoundGroup.SLIME)
+    }
 
     @JvmField
-    val BLAZE_TORCH = register("blaze_torch", BlazeTorchBlock(
-        BlockSettings {
-            noCollision()
-            breakInstantly()
-            luminance { 15 }
-            sounds(BlockSoundGroup.BONE)
-            pistonBehavior(PistonBehavior.DESTROY)
-        }
-    ))
+    val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", ::RottenFleshBlock) {
+        strength(0.7f, 0.7f)
+        sounds(BlockSoundGroup.SLIME)
+    }
 
     @JvmField
-    val WALL_BLAZE_TORCH = register("wall_blaze_torch", WallBlazeTorchBlock(
-        BlockSettings {
-            noCollision()
-            breakInstantly()
-            luminance { 15 }
-            sounds(BlockSoundGroup.BONE)
-            pistonBehavior(PistonBehavior.DESTROY)
-            dropsLike(BLAZE_TORCH)
-        }
-    ))
+    val BLAZE_TORCH = register("blaze_torch", ::BlazeTorchBlock) {
+        noCollision()
+        breakInstantly()
+        luminance { 15 }
+        sounds(BlockSoundGroup.BONE)
+        pistonBehavior(PistonBehavior.DESTROY)
+    }
 
-    val BASALT_GEYSER = register("basalt_geyser", BasaltGeyserBlock(BlockSettings {
+    @JvmField
+    val WALL_BLAZE_TORCH = register("wall_blaze_torch", ::WallBlazeTorchBlock) {
+        noCollision()
+        breakInstantly()
+        luminance { 15 }
+        sounds(BlockSoundGroup.BONE)
+        pistonBehavior(PistonBehavior.DESTROY)
+        dropsLike(BLAZE_TORCH)
+    }
+
+    val BASALT_GEYSER = register("basalt_geyser", ::BasaltGeyserBlock) {
         strength(1.2f, 4.2f)
         luminance { 5 }
         sounds(BlockSoundGroup.BASALT)
         requiresTool()
-    }))
+    }
 
-    val ADJUSTABLE_BASALT_GEYSER = register("adjustable_basalt_geyser", AdjustableBasaltGeyserBlock(BlockSettings {
+    val ADJUSTABLE_BASALT_GEYSER = register("adjustable_basalt_geyser", ::AdjustableBasaltGeyserBlock) {
         strength(1.2f, 4.2f)
         luminance { 5 }
         sounds(BlockSoundGroup.BASALT)
-    }))
+    }
 
-    val SHATTERED_SPECTREGLASS = register("shattered_spectreglass", SoulGlassBlock(BlockSettings.copy(Blocks.GLASS)))
+    val SHATTERED_SPECTREGLASS = register("shattered_spectreglass", ::SoulGlassBlock, BlockSettings.copy(Blocks.GLASS))
 
-    val SPECTREGLASS = register("spectreglass", ShatterableSoulGlassBlock(
-        SHATTERED_SPECTREGLASS, BlockSettings.copy(
-            SHATTERED_SPECTREGLASS
-        ).apply {
+    val SPECTREGLASS = register("spectreglass", { ShatterableSoulGlassBlock(SHATTERED_SPECTREGLASS, it) },
+        BlockSettings.copy(SHATTERED_SPECTREGLASS).apply {
             strength(0.3f, 3f)
-        })
+        }
     )
 
-    val SHATTERED_SPECTREGLASS_PANE = register("shattered_spectreglass_pane", StainedGlassPaneBlock(DyeColor.BLACK, BlockSettings.copy(Blocks.GLASS_PANE)))
+    val SHATTERED_SPECTREGLASS_PANE = register("shattered_spectreglass_pane", { StainedGlassPaneBlock(DyeColor.BLACK, it) }, BlockSettings.copy(Blocks.GLASS_PANE))
 
-    val SPECTREGLASS_PANE = register("spectreglass_pane", ShatterableGlassPaneBlock(
-        SHATTERED_SPECTREGLASS_PANE, BlockSettings.copy(
-            SHATTERED_SPECTREGLASS_PANE
-        ).apply {
+    val SPECTREGLASS_PANE = register("spectreglass_pane", { ShatterableGlassPaneBlock(SHATTERED_SPECTREGLASS_PANE, it) },
+        BlockSettings.copy(SHATTERED_SPECTREGLASS_PANE).apply {
             strength(0.3f, 3f)
-        })
+        }
     )
 
     fun register() {
