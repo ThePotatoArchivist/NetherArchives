@@ -1,8 +1,5 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.BlockStateVariant
-import archives.tater.netherarchives.Model
-import archives.tater.netherarchives.TextureMap
 import archives.tater.netherarchives.block.AdjustableBasaltGeyserBlock
 import archives.tater.netherarchives.block.RottenFleshBlock
 import archives.tater.netherarchives.registry.NetherArchivesBlocks

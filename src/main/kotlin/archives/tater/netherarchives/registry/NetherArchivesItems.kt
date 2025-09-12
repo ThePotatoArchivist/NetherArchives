@@ -1,11 +1,11 @@
 package archives.tater.netherarchives.registry
 
-import archives.tater.netherarchives.ItemSettings
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.item.BlazeLanternItem
 import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SkisItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
+import archives.tater.netherarchives.util.ItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
 import net.minecraft.component.DataComponentTypes

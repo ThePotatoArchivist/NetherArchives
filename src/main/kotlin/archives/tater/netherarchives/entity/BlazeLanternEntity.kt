@@ -2,9 +2,9 @@ package archives.tater.netherarchives.entity
 
 import archives.tater.netherarchives.block.BlazePowderBlock
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.draw
+import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.registry.NetherArchivesItems
-import archives.tater.netherarchives.listCopy
+import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.registry.NetherArchivesEntities
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.FallingBlockEntity

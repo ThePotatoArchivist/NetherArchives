@@ -1,10 +1,10 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import archives.tater.netherarchives.get
-import archives.tater.netherarchives.listCopy
+import archives.tater.netherarchives.util.get
+import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.set
+import archives.tater.netherarchives.util.set
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.particle.ParticleTypes

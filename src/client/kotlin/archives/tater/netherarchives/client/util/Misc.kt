@@ -1,4 +1,4 @@
-package archives.tater.netherarchives.client
+package archives.tater.netherarchives.client.util
 
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
 import net.minecraft.item.Item

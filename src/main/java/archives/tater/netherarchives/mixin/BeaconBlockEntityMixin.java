@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import static archives.tater.netherarchives.UtilsKt.invertArgb;
+import static archives.tater.netherarchives.util.MiscKt.invertArgb;
 
 @Mixin(BeaconBlockEntity.class)
 public class BeaconBlockEntityMixin {

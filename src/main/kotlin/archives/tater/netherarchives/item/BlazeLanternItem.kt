@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.item
 
 import archives.tater.netherarchives.entity.BlazeLanternEntity
-import archives.tater.netherarchives.get
+import archives.tater.netherarchives.util.get
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack

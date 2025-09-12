@@ -4,6 +4,8 @@ import archives.tater.netherarchives.mixin.StriderEntityAccessor
 import archives.tater.netherarchives.modification.modifyLootTables
 import archives.tater.netherarchives.modification.modifyWorldGen
 import archives.tater.netherarchives.registry.*
+import archives.tater.netherarchives.util.get
+import archives.tater.netherarchives.util.isIn
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags

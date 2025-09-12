@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.item
 
-import archives.tater.netherarchives.get
-import archives.tater.netherarchives.isIn
 import archives.tater.netherarchives.registry.NetherArchivesDamageTypes.paddleBurn
 import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.util.get
+import archives.tater.netherarchives.util.isIn
 import net.minecraft.entity.LivingEntity.getSlotForHand
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -35,7 +35,7 @@ class OarItem(settings: Settings) : Item(settings) {
         if (fluidState isIn NetherArchivesTags.BURNS_WHEN_PADDLE)
             user.damage(world.damageSources.paddleBurn, 1f)
         // TODO custom sounds
-        if (fluidState.isIn(FluidTags.LAVA))
+        if (fluidState isIn FluidTags.LAVA)
             user.playSound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA, 1f, 1f)
         else
             user.playSound(SoundEvents.ENTITY_BOAT_PADDLE_WATER, 3f, 1f)

@@ -1,10 +1,10 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.get
-import archives.tater.netherarchives.isIn
 import archives.tater.netherarchives.mixin.FireworkRocketEntityAccessor
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import archives.tater.netherarchives.set
+import archives.tater.netherarchives.util.get
+import archives.tater.netherarchives.util.isIn
+import archives.tater.netherarchives.util.set
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.projectile.FireworkRocketEntity

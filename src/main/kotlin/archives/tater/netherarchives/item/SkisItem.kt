@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.item
 
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import archives.tater.netherarchives.isIn
+import archives.tater.netherarchives.util.isIn
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot

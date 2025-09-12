@@ -1,8 +1,8 @@
 package archives.tater.netherarchives.item
 
-import archives.tater.netherarchives.AttributeModifiersComponent
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.get
+import archives.tater.netherarchives.util.AttributeModifiersComponent
+import archives.tater.netherarchives.util.get
 import net.minecraft.block.BlockState
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.AttributeModifiersComponent

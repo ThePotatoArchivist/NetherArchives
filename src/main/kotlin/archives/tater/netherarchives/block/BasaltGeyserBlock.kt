@@ -1,10 +1,10 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.*
 import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
 import archives.tater.netherarchives.duck.isAirSkiing
 import archives.tater.netherarchives.item.SkisItem
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
+import archives.tater.netherarchives.util.*
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
@@ -109,7 +109,11 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
             if (pushDistance == 0) return
             val facing = state[FACING]
 
-            val distance = iterateLinearBlockPos(pos, facing, pushDistance)
+            val distance = iterateLinearBlockPos(
+                pos,
+                facing,
+                pushDistance
+            )
                 .indexOfFirst { world[it].run { isSideSolidFullSquare(world, it, facing) or isSideSolidFullSquare(world, it, facing.opposite) } }
                 .let { if (it == -1) pushDistance else it }
 
@@ -118,7 +122,7 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
             world.getOtherEntities(null, Box.enclosing(pos, pos.offset(facing, distance))) { it !is StriderEntity && (it !is PlayerEntity || !it.abilities.flying) }.forEach {
                 val closeness = (1 - abs((it.pos - pos.toCenterPos().offset(facing, 0.5)).getComponentAlongAxis(facing.axis)) / pushDistance.toDouble()).coerceAtLeast(0.0)
 
-                it.velocity += Vec3d.ZERO.offset(facing, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
+                it.velocity + Vec3d.ZERO.offset(facing, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
                     it.isAirSkiing = true
                 }

@@ -1,8 +1,8 @@
 package archives.tater.netherarchives.registry
 
-import archives.tater.netherarchives.BlockSettings
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.*
+import archives.tater.netherarchives.util.BlockSettings
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
