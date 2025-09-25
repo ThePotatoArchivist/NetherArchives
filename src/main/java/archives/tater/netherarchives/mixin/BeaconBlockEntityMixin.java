@@ -34,7 +34,7 @@ public class BeaconBlockEntityMixin {
 
     @WrapOperation(
             method = "tick",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/ColorHelper$Argb;averageArgb(II)I")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/ColorHelper;average(II)I")
     ) private static int dontBlendColor(int a, int b, Operation<Integer> original, @Share("inverted") LocalBooleanRef inverted) {
         return inverted.get() ? b : original.call(a, b);
     }

@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.listCopy
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.util.set
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -80,7 +80,7 @@ class RottenFleshBlock(settings: Settings) : Block(settings.ticksRandomly()) {
         if (direction == Direction.DOWN) return
         val blockPos = pos.offset(direction)
         if (state.isOpaque && world[blockPos].isSideSolidFullSquare(world, blockPos, direction.opposite)) return
-        world.addParticle(
+        world.addParticleClient(
             ParticleTypes.SOUL,
             pos.x.toDouble() + if (direction.offsetX == 0) random.nextDouble() else 0.5 + direction.offsetX.toDouble() * 0.6,
             pos.y.toDouble() + if (direction.offsetY == 0) random.nextDouble() else 0.5 + direction.offsetY.toDouble() * 0.6,

@@ -1,13 +1,14 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.registry.NetherArchivesParticles
+import archives.tater.netherarchives.util.listCopy
 import com.mojang.serialization.MapCodec
 import net.minecraft.block.AbstractFireBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityCollisionHandler
 import net.minecraft.entity.ItemEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -20,8 +21,8 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.GameRules
 import net.minecraft.world.World
-import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
+import net.minecraft.world.tick.ScheduledTickView
 
 class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     init {
@@ -43,11 +44,13 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
 
     override fun getStateForNeighborUpdate(
         state: BlockState,
-        direction: Direction,
-        neighborState: BlockState,
-        world: WorldAccess,
+        world: WorldView,
+        tickView: ScheduledTickView,
         pos: BlockPos,
-        neighborPos: BlockPos
+        direction: Direction,
+        neighborPos: BlockPos,
+        neighborState: BlockState,
+        random: Random
     ): BlockState {
         if (canPlaceAt(state, world, pos)) {
             return state
@@ -105,14 +108,20 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
         world.scheduleBlockTick(pos, this, world.random.nextInt(10))
     }
 
-    override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity?) {
+    override fun onEntityCollision(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        entity: Entity,
+        handler: EntityCollisionHandler
+    ) {
         if (entity is ItemEntity) return
-        super.onEntityCollision(state, world, pos, entity)
+        super.onEntityCollision(state, world, pos, entity, handler)
     }
 
     override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
         if (random.nextInt(24) == 0) {
-            world.playSound(
+            world.playSoundClient(
                 pos.x + 0.5,
                 pos.y + 0.5,
                 pos.z + 0.5,
@@ -124,7 +133,7 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
             )
         }
         repeat(random.nextInt(2) + 2) {
-            world.addParticle(
+            world.addParticleClient(
                 NetherArchivesParticles.BLAZE_SPARK,
                 pos.x + random.nextDouble(),
                 pos.y + 0.25 + 0.5 * random.nextDouble(),

@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 25,
   "experience": 0.08,
-  "ingredient": {
-    "item": "netherarchives:iron_slag"
-  },
+  "ingredient": "netherarchives:iron_slag",
   "result": {
     "id": "minecraft:iron_nugget"
   }

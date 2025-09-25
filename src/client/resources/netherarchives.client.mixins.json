@@ -4,12 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "archives.tater.netherarchives.client.NetherArchivesClientMixinPlugin",
   "client": [
+    "BlockStateModelGeneratorAccessor",
     "ClientPlayerEntityMixin",
     "EntityRenderDispatcherMixin",
     "GameRendererMixin",
-    "InGameHudMixin",
-    "ItemRendererMixin",
     "LivingEntityRendererMixin",
+    "LivingEntityRenderStateMixin",
     "WitherArmorFeatureRendererMixin"
   ],
   "injectors": {

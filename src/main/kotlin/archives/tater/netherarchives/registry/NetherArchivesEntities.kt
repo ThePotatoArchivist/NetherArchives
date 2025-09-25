@@ -8,11 +8,15 @@ import net.minecraft.entity.EntityType.EntityFactory
 import net.minecraft.entity.SpawnGroup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.util.Identifier
 
 object NetherArchivesEntities {
-    private fun <T: Entity> register(id: Identifier, type: EntityType.Builder<T>): EntityType<T> =
-        Registry.register(Registries.ENTITY_TYPE, id, type.build())
+    private fun <T: Entity> register(id: Identifier, type: EntityType.Builder<T>): EntityType<T> {
+        val key = RegistryKey.of(RegistryKeys.ENTITY_TYPE, id)
+        return Registry.register(Registries.ENTITY_TYPE, key, type.build(key))
+    }
 
     private fun <T: Entity> register(path: String, type: EntityType.Builder<T>) =
         register(NetherArchives.id(path), type)

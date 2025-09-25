@@ -2,15 +2,16 @@ package archives.tater.netherarchives.entity
 
 import archives.tater.netherarchives.block.BlazePowderBlock
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.util.draw
-import archives.tater.netherarchives.registry.NetherArchivesItems
-import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.registry.NetherArchivesEntities
+import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.util.draw
+import archives.tater.netherarchives.util.listCopy
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.FallingBlockEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.hit.HitResult
@@ -21,7 +22,9 @@ import net.minecraft.world.World
 
 class BlazeLanternEntity : ThrownItemEntity {
     constructor(type: EntityType<BlazeLanternEntity>, world: World) : super(type, world)
-    constructor(world: World, owner: LivingEntity) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, world)
+    constructor(world: World, owner: LivingEntity, stack: ItemStack) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, world, null) {
+        setItem(stack)
+    }
 
     override fun getDefaultItem(): Item = NetherArchivesItems.BLAZE_LANTERN
 

@@ -9,9 +9,11 @@ import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPEC
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_KNIFE
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_PANE
+import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.minecraft.item.Items
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import java.util.concurrent.CompletableFuture
@@ -21,35 +23,41 @@ class ItemTagGenerator(
     registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
 ) : FabricTagProvider.ItemTagProvider(output, registriesFuture) {
     override fun configure(arg: RegistryWrapper.WrapperLookup?) {
-        getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
+        valueLookupBuilder(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR).add(
+            Items.POLISHED_BASALT,
+        )
+        valueLookupBuilder(NetherArchivesTags.SKIS).add(
+            BASALT_SKIS,
+        )
+        valueLookupBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
             DUMMY_SOUL_FIRE,
         )
-        getOrCreateTagBuilder(ItemTags.SOUL_FIRE_BASE_BLOCKS).add(
+        valueLookupBuilder(ItemTags.SOUL_FIRE_BASE_BLOCKS).add(
             FERMENTED_ROTTEN_FLESH_BLOCK,
         )
-        getOrCreateTagBuilder(ConventionalItemTags.GLASS_BLOCKS).add(
+        valueLookupBuilder(ConventionalItemTags.GLASS_BLOCKS).add(
             SPECTREGLASS,
             SHATTERED_SPECTREGLASS,
         )
-        getOrCreateTagBuilder(ConventionalItemTags.GLASS_PANES).add(
+        valueLookupBuilder(ConventionalItemTags.GLASS_PANES).add(
             SPECTREGLASS_PANE,
             SHATTERED_SPECTREGLASS_PANE,
         )
-        getOrCreateTagBuilder(ItemTags.ARMOR_ENCHANTABLE).add(
+        valueLookupBuilder(ItemTags.ARMOR_ENCHANTABLE).add(
             BASALT_SKIS,
         )
-        getOrCreateTagBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
+        valueLookupBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
             SPECTREGLASS_KNIFE,
         )
-        getOrCreateTagBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(
+        valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(
             BASALT_SKIS,
             BASALT_OAR,
             SPECTREGLASS_KNIFE,
         )
-        getOrCreateTagBuilder(ItemTags.BREAKS_DECORATED_POTS).add(
+        valueLookupBuilder(ItemTags.BREAKS_DECORATED_POTS).add(
             SPECTREGLASS_KNIFE,
         )
-        getOrCreateTagBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(
+        valueLookupBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(
             SPECTREGLASS_KNIFE,
         )
     }

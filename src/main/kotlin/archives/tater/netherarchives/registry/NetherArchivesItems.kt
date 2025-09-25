@@ -3,17 +3,17 @@ package archives.tater.netherarchives.registry
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.item.BlazeLanternItem
 import archives.tater.netherarchives.item.OarItem
-import archives.tater.netherarchives.item.SkisItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
 import archives.tater.netherarchives.util.ItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.item.*
-import net.minecraft.recipe.Ingredient
+import net.minecraft.item.equipment.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
@@ -21,8 +21,10 @@ import net.minecraft.item.Item.Settings as ItemSettings
 
 
 object NetherArchivesItems {
-    private fun register(id: Identifier, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item =
-        Registry.register(Registries.ITEM, id, item(settings))
+    private fun register(id: Identifier, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item {
+        val key = RegistryKey.of(RegistryKeys.ITEM, id)
+        return Registry.register(Registries.ITEM, key, item(settings.registryKey(key)))
+    }
 
     private fun register(path: String, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item =
         register(NetherArchives.id(path), item, settings)
@@ -31,10 +33,10 @@ object NetherArchivesItems {
         register(NetherArchives.id(path), item, ItemSettings(settingsInit))
 
     private fun register(block: Block, settings: ItemSettings = ItemSettings()): Item =
-        register(Registries.BLOCK.getId(block).path, { BlockItem(block, it) }, settings)
+        Items.register(block, settings)
 
-    private fun register(id: Identifier, armorMaterial: ArmorMaterial): RegistryEntry<ArmorMaterial> =
-        Registry.registerReference(Registries.ARMOR_MATERIAL, id, armorMaterial)
+    private fun register(block: Block, item: (Block, ItemSettings) -> Item): Item =
+        Items.register(block, item)
 
     val MAGNETITE = register(NetherArchivesBlocks.MAGNETITE)
 
@@ -52,31 +54,35 @@ object NetherArchivesItems {
         maxCount(16)
     }
 
-    val BLAZE_TORCH = register("blaze_torch", { VerticallyAttachableBlockItem(
-        NetherArchivesBlocks.BLAZE_TORCH,
-        NetherArchivesBlocks.WALL_BLAZE_TORCH,
-        it,
-        Direction.DOWN
-    ) })
+    val BLAZE_TORCH = register(NetherArchivesBlocks.BLAZE_TORCH) { block, settings ->
+        VerticallyAttachableBlockItem(
+            block,
+            NetherArchivesBlocks.WALL_BLAZE_TORCH,
+            Direction.DOWN,
+            settings
+        )
+    }
 
-    val BASALT_ARMOR_MATERIAL = register(NetherArchives.id("basalt"), ArmorMaterial(
-        ArmorMaterials.CHAIN.value().defense,
-        ArmorMaterials.CHAIN.value().enchantability,
+    val BASALT_EQUIPMENT: RegistryKey<EquipmentAsset> = RegistryKey.of(EquipmentAssetKeys.REGISTRY_KEY, NetherArchives.id("basalt"))
+    val BASALT_ARMOR_MATERIAL = ArmorMaterial(
+        ArmorMaterials.CHAIN.durability,
+        ArmorMaterials.CHAIN.defense,
+        ArmorMaterials.CHAIN.enchantmentValue,
 //            // TODO add custom sound?
         SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
-        { Ingredient.ofItems(Items.POLISHED_BASALT) },
-        listOf(), // uses custom rendering
-        ArmorMaterials.CHAIN.value().toughness,
-        ArmorMaterials.CHAIN.value().knockbackResistance,
-    ))
+        ArmorMaterials.CHAIN.toughness,
+        ArmorMaterials.CHAIN.knockbackResistance,
+        NetherArchivesTags.BASALT_EQUIPMENT_REPAIR,
+        BASALT_EQUIPMENT
+    )
 
-    val BASALT_SKIS = register("basalt_skis", { SkisItem(BASALT_ARMOR_MATERIAL, it) }) {
-        maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15)) // Matches vanilla chainmail, but what is this number??
+    val BASALT_SKIS = register("basalt_skis", ::Item) {
+        armor(BASALT_ARMOR_MATERIAL, EquipmentType.BOOTS)
     }
     @JvmField
     val BASALT_OAR = register("basalt_oar", ::OarItem) {
         maxCount(1)
-        maxDamage(ToolMaterials.STONE.durability)
+        maxDamage(ToolMaterial.STONE.durability)
     }
     val BASALT_ROD = register("basalt_rod")
 
@@ -90,6 +96,7 @@ object NetherArchivesItems {
         maxDamage(16)
         attributeModifiers(SoulGlassKnifeItem.attributeModifiers)
         component(DataComponentTypes.TOOL, SoulGlassKnifeItem.toolComponent)
+        component(DataComponentTypes.WEAPON, SoulGlassKnifeItem.weaponComponent)
     }
 
     val SPECTREGLASS = register(NetherArchivesBlocks.SPECTREGLASS)

@@ -5,9 +5,9 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer
 import net.minecraft.client.render.entity.feature.FeatureRendererContext
 import net.minecraft.client.render.entity.model.SkeletonEntityModel
-import net.minecraft.entity.mob.AbstractSkeletonEntity
+import net.minecraft.client.render.entity.state.SkeletonEntityRenderState
 
-class WitherSkeletonEyesFeatureRenderer<T : AbstractSkeletonEntity>(featureRendererContext: FeatureRendererContext<T, SkeletonEntityModel<T>>) :
+class WitherSkeletonEyesFeatureRenderer<T : SkeletonEntityRenderState>(featureRendererContext: FeatureRendererContext<T, SkeletonEntityModel<T>>) :
     EyesFeatureRenderer<T, SkeletonEntityModel<T>>(featureRendererContext) {
 
     companion object {

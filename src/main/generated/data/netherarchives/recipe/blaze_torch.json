@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "minecraft:coals"
-    },
-    "B": {
-      "tag": "c:bones"
-    },
-    "X": {
-      "item": "minecraft:blaze_powder"
-    }
+    "#": "#minecraft:coals",
+    "B": "#c:bones",
+    "X": "minecraft:blaze_powder"
   },
   "pattern": [
     "X",

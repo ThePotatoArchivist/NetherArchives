@@ -2,14 +2,16 @@ package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.block.AdjustableBasaltGeyserBlock
 import archives.tater.netherarchives.block.RottenFleshBlock
+import archives.tater.netherarchives.mixin.client.BlockStateModelGeneratorAccessor
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.data.client.*
-import net.minecraft.data.client.VariantSettings.Rotation
+import net.minecraft.client.data.*
+import net.minecraft.client.data.BlockStateModelGenerator.createWeightedVariant
+import net.minecraft.client.render.model.json.ModelVariantOperator
 import net.minecraft.util.Identifier
 
 class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generator) {
@@ -20,55 +22,59 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         blockStateModelGenerator.registerTorch(NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
-        blockStateModelGenerator.registerGlassPane(NetherArchivesBlocks.SPECTREGLASS, NetherArchivesBlocks.SPECTREGLASS_PANE)
-        blockStateModelGenerator.registerGlassPane(NetherArchivesBlocks.SHATTERED_SPECTREGLASS, NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE)
+        blockStateModelGenerator.registerGlassAndPane(NetherArchivesBlocks.SPECTREGLASS, NetherArchivesBlocks.SPECTREGLASS_PANE)
+        blockStateModelGenerator.registerGlassAndPane(NetherArchivesBlocks.SHATTERED_SPECTREGLASS, NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE)
 
-        blockStateModelGenerator.acceptVariants(NetherArchivesBlocks.BASALT_GEYSER,
-            CUBE_BOTTOM_TOP_PARTICLE_MODEL.upload(
+        blockStateModelGenerator.blockStateCollector.accept(
+            VariantsBlockModelDefinitionCreator.of(
                 NetherArchivesBlocks.BASALT_GEYSER,
-                cubeBottomTopParticle(
-                    top = NetherArchivesBlocks.BASALT_GEYSER,
-                    bottom = Blocks.BASALT,
-                    bottomSuffix = "_top",
-                ),
-                blockStateModelGenerator.modelCollector
-            )
-        ) {
-            coordinate(blockStateModelGenerator.createUpDefaultFacingVariantMap())
-        }
-
-        blockStateModelGenerator.acceptVariants(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER) {
-            coordinate(BlockStateVariantMap.create(AdjustableBasaltGeyserBlock.POWERED).register { powered ->
-                val suffix = if (powered) "_on" else ""
-                BlockStateVariant(
-                    model = CUBE_BOTTOM_TOP_PARTICLE_MODEL.upload(
-                        ModelIds.getBlockSubModelId(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, suffix),
+                createWeightedVariant(
+                    CUBE_BOTTOM_TOP_PARTICLE_MODEL.upload(
+                        NetherArchivesBlocks.BASALT_GEYSER,
                         cubeBottomTopParticle(
-                            top = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
-                            bottom = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
-                            suffix = suffix,
-                            topSuffixed = false,
+                            top = NetherArchivesBlocks.BASALT_GEYSER,
+                            bottom = Blocks.BASALT,
+                            bottomSuffix = "_top",
                         ),
                         blockStateModelGenerator.modelCollector
                     )
                 )
-            })
-            coordinate(blockStateModelGenerator.createUpDefaultFacingVariantMap())
-        }
+            ).coordinate(UP_DEFAULT_ROTATION_OPERATIONS)
+        )
 
-        blockStateModelGenerator.acceptVariants(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK) {
-            coordinate(BlockStateVariantMap.create(RottenFleshBlock.AGE).register {
+        blockStateModelGenerator.blockStateCollector.accept(
+            VariantsBlockModelDefinitionCreator.of(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER).with(
+                BlockStateVariantMap.models(AdjustableBasaltGeyserBlock.POWERED).generate { powered ->
+                    val suffix = if (powered) "_on" else ""
+                    createWeightedVariant(
+                        CUBE_BOTTOM_TOP_PARTICLE_MODEL.upload(
+                            ModelIds.getBlockSubModelId(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, suffix),
+                            cubeBottomTopParticle(
+                                top = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
+                                bottom = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
+                                suffix = suffix,
+                                topSuffixed = false,
+                            ),
+                            blockStateModelGenerator.modelCollector
+                        )
+                    )
+                }
+            ).coordinate(UP_DEFAULT_ROTATION_OPERATIONS)
+        )
+
+        blockStateModelGenerator.blockStateCollector.accept(VariantsBlockModelDefinitionCreator.of(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK).with(
+            BlockStateVariantMap.models(RottenFleshBlock.AGE).generate {
                 val suffix = if (it == 0) "" else "_stage$it"
-                BlockStateVariant(
-                    model = Models.CUBE_ALL.upload(
+                createWeightedVariant(
+                    Models.CUBE_ALL.upload(
                         NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
                         suffix,
                         TextureMap.all(TextureMap.getSubId(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, suffix)),
                         blockStateModelGenerator.modelCollector
                     )
                 )
-            })
-        }
+            }
+        ))
     }
 
     override fun generateItemModels(itemModelGenerator: ItemModelGenerator) {
@@ -77,16 +83,26 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         itemModelGenerator.register(NetherArchivesItems.BLAZE_LANTERN, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.BASALT_SKIS, Models.GENERATED)
         itemModelGenerator.register(NetherArchivesItems.SPECTREGLASS_SHARD, Models.GENERATED)
-        itemModelGenerator.register(NetherArchivesItems.BASALT_OAR, Models.GENERATED)
+        itemModelGenerator.registerWithInHandModel(NetherArchivesItems.BASALT_OAR)
         itemModelGenerator.register(NetherArchivesItems.BASALT_ROD, Models.HANDHELD_ROD)
 
-        Models.GENERATED.upload(ModelIds.getItemModelId(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMap().apply {
-            put(TextureKey.LAYER0, ModelIds.getBlockSubModelId(Blocks.SOUL_FIRE, "_0"))
-        }, itemModelGenerator.writer)
+        itemModelGenerator.output.accept(NetherArchivesItems.DUMMY_SOUL_FIRE, ItemModels.basic(
+            Models.GENERATED.upload(ModelIds.getItemModelId(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMap(
+                TextureKey.LAYER0 to ModelIds.getBlockSubModelId(Blocks.SOUL_FIRE, "_0")
+            ), itemModelGenerator.modelCollector)
+        ))
+
     }
 
     companion object {
-        val CUBE_BOTTOM_TOP_PARTICLE_MODEL = Model(
+
+        val NORTH_DEFAULT_ROTATION_OPERATIONS: BlockStateVariantMap<ModelVariantOperator> = BlockStateModelGeneratorAccessor.getNORTH_DEFAULT_ROTATION_OPERATIONS()
+        val UP_DEFAULT_ROTATION_OPERATIONS: BlockStateVariantMap<ModelVariantOperator> = BlockStateModelGeneratorAccessor.getUP_DEFAULT_ROTATION_OPERATIONS()
+        val EAST_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS: BlockStateVariantMap<ModelVariantOperator> = BlockStateModelGeneratorAccessor.getEAST_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS()
+        val SOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS: BlockStateVariantMap<ModelVariantOperator> = BlockStateModelGeneratorAccessor.getSOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS()
+        val NORTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS: BlockStateVariantMap<ModelVariantOperator> = BlockStateModelGeneratorAccessor.getNORTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS()
+
+        val CUBE_BOTTOM_TOP_PARTICLE_MODEL: Model = Model(
             TextureKey.TOP,
             TextureKey.SIDE,
             TextureKey.BOTTOM,
@@ -101,34 +117,19 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             TextureKey.PARTICLE to ModelIds.getBlockSubModelId(top, "_top$suffix"),
         )
 
-        inline fun BlockStateModelGenerator.acceptVariants(block: Block, vararg variants: BlockStateVariant, init: VariantsBlockStateSupplier.() -> Unit = {}) {
-            blockStateCollector.accept(when (variants.size) {
-                0 -> VariantsBlockStateSupplier.create(block)
-                1 -> VariantsBlockStateSupplier.create(block, variants.first())
-                else -> VariantsBlockStateSupplier.create(block, *variants)
-            }.apply(init))
-        }
-
-        inline fun BlockStateModelGenerator.acceptVariants(block: Block, model: Identifier, init: VariantsBlockStateSupplier.() -> Unit = {}) {
-            acceptVariants(block, BlockStateVariant(model = model), init = init)
-        }
-
-        inline fun buildBlockStateVariants(modelIds: List<Identifier>, crossinline processor: BlockStateVariant.() -> Unit = {}): MutableList<BlockStateVariant> =
-            BlockStateModelGenerator.buildBlockStateVariants(modelIds) { it.apply(processor) }
-
         /**
          * Copied from [BlockStateModelGenerator.registerSoulFire]
          */
         fun registerBlazeFire(blockStateModelGenerator: BlockStateModelGenerator) {
-            val floorModels: List<Identifier> = blockStateModelGenerator.getFireFloorModels(NetherArchivesBlocks.BLAZE_FIRE)
-            val sideModels: List<Identifier> = blockStateModelGenerator.getFireSideModels(NetherArchivesBlocks.BLAZE_FIRE)
+            val floorModels = blockStateModelGenerator.getFireFloorModels(NetherArchivesBlocks.BLAZE_FIRE)
+            val sideModels = blockStateModelGenerator.getFireSideModels(NetherArchivesBlocks.BLAZE_FIRE)
             blockStateModelGenerator.blockStateCollector.accept(
-                MultipartBlockStateSupplier.create(NetherArchivesBlocks.BLAZE_FIRE).apply {
-                    with(buildBlockStateVariants(floorModels))
-                    with(buildBlockStateVariants(sideModels))
-                    with(buildBlockStateVariants(sideModels) { put(VariantSettings.Y, Rotation.R90) })
-                    with(buildBlockStateVariants(sideModels) { put(VariantSettings.Y, Rotation.R180) })
-                    with(buildBlockStateVariants(sideModels) { put(VariantSettings.Y, Rotation.R270) })
+                MultipartBlockModelDefinitionCreator.create(NetherArchivesBlocks.BLAZE_FIRE).apply {
+                    with(floorModels)
+                    with(sideModels)
+                    with(sideModels.apply(BlockStateModelGenerator.ROTATE_Y_90))
+                    with(sideModels.apply(BlockStateModelGenerator.ROTATE_Y_180))
+                    with(sideModels.apply(BlockStateModelGenerator.ROTATE_Y_270))
                 }
             )
         }

@@ -3,9 +3,7 @@
   "category": "blocks",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "netherarchives:shattered_spectreglass_pane"
-  },
+  "ingredient": "netherarchives:shattered_spectreglass_pane",
   "result": {
     "id": "netherarchives:spectreglass_pane"
   }

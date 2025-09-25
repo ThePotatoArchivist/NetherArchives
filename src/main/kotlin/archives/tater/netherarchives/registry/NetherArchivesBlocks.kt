@@ -3,6 +3,7 @@ package archives.tater.netherarchives.registry
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.*
 import archives.tater.netherarchives.util.BlockSettings
+import archives.tater.netherarchives.util.copyLootAndTranslation
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -10,14 +11,18 @@ import net.minecraft.block.StainedGlassPaneBlock
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.block.AbstractBlock.Settings as BlockSettings
 
 object NetherArchivesBlocks {
-    private fun register(id: Identifier, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block =
-        Registry.register(Registries.BLOCK, id, block(settings))
+    private fun register(id: Identifier, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block {
+        val key = RegistryKey.of(RegistryKeys.BLOCK, id)
+        return Registry.register(Registries.BLOCK, key, block(settings.registryKey(key)))
+    }
 
     private fun register(path: String, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block =
         register(NetherArchives.id(path), block, settings)
@@ -83,12 +88,12 @@ object NetherArchivesBlocks {
 
     @JvmField
     val WALL_BLAZE_TORCH = register("wall_blaze_torch", ::WallBlazeTorchBlock) {
+        copyLootAndTranslation(BLAZE_TORCH)
         noCollision()
         breakInstantly()
         luminance { 15 }
         sounds(BlockSoundGroup.BONE)
         pistonBehavior(PistonBehavior.DESTROY)
-        dropsLike(BLAZE_TORCH)
     }
 
     val BASALT_GEYSER = register("basalt_geyser", ::BasaltGeyserBlock) {

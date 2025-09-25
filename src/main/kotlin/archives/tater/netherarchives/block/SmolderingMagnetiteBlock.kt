@@ -27,8 +27,8 @@ class SmolderingMagnetiteBlock(settings: Settings) : Block(settings.ticksRandoml
 
     // Copied from Magma Block
     override fun onSteppedOn(world: World, pos: BlockPos?, state: BlockState?, entity: Entity) {
-        if (!entity.bypassesSteppingEffects() && entity is LivingEntity) {
-            entity.damage(world.damageSources.hotFloor(), 1.0f)
+        if (world is ServerWorld && entity is LivingEntity && !entity.bypassesSteppingEffects()) {
+            entity.damage(world, world.damageSources.hotFloor(), 1.0f)
         }
         super.onSteppedOn(world, pos, state, entity)
     }
@@ -50,7 +50,7 @@ class SmolderingMagnetiteBlock(settings: Settings) : Block(settings.ticksRandoml
         val d = if (direction.offsetX == 0) random.nextDouble() else 0.5 + direction.offsetX.toDouble() * 0.6
         val e = if (direction.offsetY == 0) random.nextDouble() else 0.5 + direction.offsetY.toDouble() * 0.6
         val f = if (direction.offsetZ == 0) random.nextDouble() else 0.5 + direction.offsetZ.toDouble() * 0.6
-        world.addParticle(
+        world.addParticleClient(
             ParticleTypes.DRIPPING_LAVA,
             pos.x.toDouble() + d,
             pos.y.toDouble() + e,

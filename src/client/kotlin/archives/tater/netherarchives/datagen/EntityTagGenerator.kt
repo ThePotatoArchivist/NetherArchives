@@ -13,11 +13,14 @@ class EntityTagGenerator(
 ) : FabricTagProvider.EntityTypeTagProvider(output, registriesFuture) {
 
     override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-        getOrCreateTagBuilder(NetherArchivesTags.NON_CHAIN_SHATTER_PROJECTILES).add(
+        valueLookupBuilder(NetherArchivesTags.NON_CHAIN_SHATTER_PROJECTILES).add(
             EntityType.EGG,
             EntityType.SNOWBALL,
             EntityType.SMALL_FIREBALL,
             EntityType.WIND_CHARGE,
+        )
+        valueLookupBuilder(NetherArchivesTags.BLAZE_COLORED_FIRE).add(
+            EntityType.BLAZE,
         )
     }
 }

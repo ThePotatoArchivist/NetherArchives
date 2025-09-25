@@ -6,17 +6,18 @@ import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.data.recipe.RecipeExporter
+import net.minecraft.data.recipe.RecipeGenerator
 import net.minecraft.item.Items
 import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import java.util.concurrent.CompletableFuture
 
-class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>?) :
-    FabricRecipeProvider(output, registriesFuture) {
+class NARecipeGenerator(registries: RegistryWrapper.WrapperLookup, exporter: RecipeExporter) :
+    RecipeGenerator(registries, exporter) {
 
-    override fun generate(exporter: RecipeExporter) {
+    override fun generate() {
         exporter.recipes()
     }
 
@@ -151,10 +152,10 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
 
         smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SPECTREGLASS_SHARD, experience = 0.1f)
 
-        offer2x2CompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
+        offer2x2CompactingRecipe(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
 
-        offerStainedGlassPaneRecipe(this, NetherArchivesItems.SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS)
-        offerStainedGlassPaneRecipe(this, NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SHATTERED_SPECTREGLASS)
+        offerStainedGlassPaneRecipe(NetherArchivesItems.SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS)
+        offerStainedGlassPaneRecipe(NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SHATTERED_SPECTREGLASS)
 
         smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS)
         smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS_PANE)
@@ -171,5 +172,16 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
             }
             itemCriterion(NetherArchivesItems.SPECTREGLASS_SHARD)
         }
+    }
+
+    class Provider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+        FabricRecipeProvider(output, registriesFuture) {
+        override fun getRecipeGenerator(
+            registryLookup: RegistryWrapper.WrapperLookup,
+            exporter: RecipeExporter
+        ): RecipeGenerator = NARecipeGenerator(registryLookup, exporter)
+
+        override fun getName(): String = "Recipes"
+
     }
 }

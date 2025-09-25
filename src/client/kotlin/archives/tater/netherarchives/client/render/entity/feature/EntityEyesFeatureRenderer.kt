@@ -6,13 +6,13 @@ import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer
 import net.minecraft.client.render.entity.feature.FeatureRendererContext
 import net.minecraft.client.render.entity.model.EntityModel
+import net.minecraft.client.render.entity.state.EntityRenderState
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.entity.Entity
 
 /**
  * Thought this was useful but actually wasn't
  */
-abstract class EntityEyesFeatureRenderer<T : Entity, M : EntityModel<T>>(featureRendererContext: FeatureRendererContext<T, M>?) :
+abstract class EntityEyesFeatureRenderer<T : EntityRenderState, M : EntityModel<T>>(featureRendererContext: FeatureRendererContext<T, M>?) :
     EyesFeatureRenderer<T, M>(featureRendererContext) {
     override fun render(
         matrices: MatrixStack,
@@ -20,11 +20,7 @@ abstract class EntityEyesFeatureRenderer<T : Entity, M : EntityModel<T>>(feature
         light: Int,
         entity: T,
         limbAngle: Float,
-        limbDistance: Float,
-        tickDelta: Float,
-        animationProgress: Float,
-        headYaw: Float,
-        headPitch: Float
+        limbDistance: Float
     ) {
         this.contextModel.render(
             matrices,

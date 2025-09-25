@@ -3,6 +3,7 @@ package archives.tater.netherarchives.registry
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
 import archives.tater.netherarchives.block.entity.BlazeTorchBlockEntity
+import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -20,7 +21,7 @@ object NetherArchivesBlockEntities {
         Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             NetherArchives.id(path),
-            BlockEntityType.Builder.create(blockEntity, *blocks).build()
+            FabricBlockEntityTypeBuilder.create(blockEntity, *blocks).build()
         )
 
     val BLAZE_TORCH_ENTITY = register("blaze_torch", ::BlazeTorchBlockEntity, NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)

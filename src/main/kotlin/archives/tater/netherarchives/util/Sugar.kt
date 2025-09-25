@@ -11,6 +11,11 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryEntryLookup
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
@@ -48,3 +53,6 @@ internal inline operator fun Vec3d.component3() = z
 fun AttributeModifiersComponent(init: AttributeModifiersComponent.Builder.() -> Unit): AttributeModifiersComponent =
     AttributeModifiersComponent.builder().apply(init).build()
 
+operator fun <T> RegistryWrapper.WrapperLookup.get(registryRef: RegistryKey<Registry<T>>): RegistryWrapper.Impl<T> =
+    getOrThrow(registryRef)
+operator fun <T> RegistryEntryLookup<T>.get(key: RegistryKey<T>): RegistryEntry.Reference<T> = getOrThrow(key)

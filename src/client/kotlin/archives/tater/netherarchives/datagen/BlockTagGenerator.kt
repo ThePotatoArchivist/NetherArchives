@@ -1,11 +1,11 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.BLAZE_FIRE
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.MAGNETITE
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SMOLDERING_MAGNETITE
@@ -30,60 +30,60 @@ class BlockTagGenerator(output: FabricDataOutput, completableFuture: Completable
     FabricTagProvider.BlockTagProvider(output, completableFuture) {
 
     override fun configure(arg: RegistryWrapper.WrapperLookup) {
-        getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
+        valueLookupBuilder(BlockTags.SHOVEL_MINEABLE).add(
             MAGNETITE,
             SMOLDERING_MAGNETITE
         )
-        getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
+        valueLookupBuilder(BlockTags.HOE_MINEABLE).add(
             NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
             FERMENTED_ROTTEN_FLESH_BLOCK
         )
-        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(
+        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(
             BASALT_GEYSER,
             ADJUSTABLE_BASALT_GEYSER,
         )
-        getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL).add(
+        valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL).add(
             SMOLDERING_MAGNETITE,
         )
-        getOrCreateTagBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
+        valueLookupBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
             FERMENTED_ROTTEN_FLESH_BLOCK,
         )
-        getOrCreateTagBuilder(BlockTags.FIRE).add(
+        valueLookupBuilder(BlockTags.FIRE).add(
             BLAZE_FIRE,
         )
-        getOrCreateTagBuilder(BlockTags.IMPERMEABLE).add(
+        valueLookupBuilder(BlockTags.IMPERMEABLE).add(
             SPECTREGLASS,
             SHATTERED_SPECTREGLASS,
         )
-        getOrCreateTagBuilder(MAGNETIC).add(
+        valueLookupBuilder(MAGNETIC).add(
             Blocks.LODESTONE,
             Blocks.NETHERITE_BLOCK,
         )
-        getOrCreateTagBuilder(BLAZE_FIRE_TARGET)
-        getOrCreateTagBuilder(ROTTEN_FLESH_FERMENTER).add(
+        valueLookupBuilder(BLAZE_FIRE_TARGET)
+        valueLookupBuilder(ROTTEN_FLESH_FERMENTER).add(
             Blocks.SOUL_FIRE,
             Blocks.SOUL_CAMPFIRE
         )
-        getOrCreateTagBuilder(BASALT_GEYSER_REPLACEABLE).add(
+        valueLookupBuilder(BASALT_GEYSER_REPLACEABLE).add(
             Blocks.BASALT
         )
-        getOrCreateTagBuilder(BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
+        valueLookupBuilder(BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
             forceAddTag(BlockTags.BASE_STONE_NETHER)
             add(MAGNETITE)
         }
-        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_BLOCKS).add(
+        valueLookupBuilder(ConventionalBlockTags.GLASS_BLOCKS).add(
             SPECTREGLASS,
             SHATTERED_SPECTREGLASS
         )
-        getOrCreateTagBuilder(ConventionalBlockTags.GLASS_PANES).add(
+        valueLookupBuilder(ConventionalBlockTags.GLASS_PANES).add(
             SPECTREGLASS_PANE,
             SHATTERED_SPECTREGLASS_PANE,
         )
-        getOrCreateTagBuilder(REVEALS_INVISIBLES).add(
+        valueLookupBuilder(REVEALS_INVISIBLES).add(
             SPECTREGLASS,
             SPECTREGLASS_PANE,
         )
-        getOrCreateTagBuilder(INVERTS_BEACON).add(
+        valueLookupBuilder(INVERTS_BEACON).add(
             SPECTREGLASS,
             SHATTERED_SPECTREGLASS,
             SPECTREGLASS_PANE,

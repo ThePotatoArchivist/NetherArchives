@@ -6,13 +6,13 @@ import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.NbtHelper
 import net.minecraft.network.listener.ClientPlayPacketListener
 import net.minecraft.network.packet.Packet
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.RegistryWrapper.WrapperLookup
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.storage.ReadView
+import net.minecraft.storage.WriteView
 import net.minecraft.util.math.BlockPos
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sqrt
@@ -56,15 +56,14 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
         return createNbt(registryLookup)
     }
 
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        // Save the current value of the number to the nbt
+    override fun writeData(view: WriteView) {
+        super.writeData(view)
         if (targetPos !== null)
-            nbt.put(TARGET_KEY, targetPos.let(NbtHelper::fromBlockPos))
+            view.put(TARGET_KEY, BlockPos.CODEC, targetPos)
     }
 
-    // Deserialize the BlockEntity
-    override fun readNbt(nbt: NbtCompound, registryLookup: WrapperLookup) {
-        if (!nbt.contains(TARGET_KEY)) return
-        targetPos = NbtHelper.toBlockPos(nbt, TARGET_KEY).getOrNull()
+    override fun readData(view: ReadView) {
+        super.readData(view)
+        targetPos = view.read(TARGET_KEY, BlockPos.CODEC).getOrNull()
     }
 }

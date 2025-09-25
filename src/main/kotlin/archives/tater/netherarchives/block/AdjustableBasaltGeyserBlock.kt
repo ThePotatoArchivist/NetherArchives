@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
+import net.minecraft.world.block.WireOrientation
 
 class AdjustableBasaltGeyserBlock(settings: Settings) : BasaltGeyserBlock(settings) {
     init {
@@ -32,7 +33,7 @@ class AdjustableBasaltGeyserBlock(settings: Settings) : BasaltGeyserBlock(settin
         world: World,
         pos: BlockPos,
         sourceBlock: Block,
-        sourcePos: BlockPos,
+        wireOrientation: WireOrientation?,
         notify: Boolean
     ) {
         val powered = world.isReceivingRedstonePower(pos)

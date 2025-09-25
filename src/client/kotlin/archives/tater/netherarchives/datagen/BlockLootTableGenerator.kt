@@ -3,6 +3,7 @@ package archives.tater.netherarchives.datagen
 import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.util.get
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
@@ -30,7 +31,7 @@ class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: Comple
     }
 
     override fun generate() {
-        val fortune = registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)
+        val fortune = registries[RegistryKeys.ENCHANTMENT][Enchantments.FORTUNE]
 
         addDrop(NetherArchivesBlocks.MAGNETITE)
 

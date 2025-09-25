@@ -12,12 +12,12 @@ class FluidTagGenerator(
     registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
 ) : FabricTagProvider.FluidTagProvider(output, registriesFuture) {
     override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-        getOrCreateTagBuilder(NetherArchivesTags.SKIS_CAN_WALK_ON).apply {
+        valueLookupBuilder(NetherArchivesTags.SKIS_CAN_WALK_ON).apply {
             forceAddTag(FluidTags.LAVA)
             forceAddTag(FluidTags.WATER)
         }
 
-        getOrCreateTagBuilder(NetherArchivesTags.BURNS_WHEN_PADDLE).apply {
+        valueLookupBuilder(NetherArchivesTags.BURNS_WHEN_PADDLE).apply {
             forceAddTag(FluidTags.LAVA)
         }
     }

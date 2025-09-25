@@ -15,8 +15,8 @@ class StructureTagGenerator(
 ) : FabricTagProvider<Structure>(output, RegistryKeys.STRUCTURE, registriesFuture) {
 
     override fun configure(arg: RegistryWrapper.WrapperLookup?) {
-        getOrCreateTagBuilder(NetherArchivesTags.BLAZE_TORCH_LOCATED).add(
-            StructureKeys.FORTRESS
+        getTagBuilder(NetherArchivesTags.BLAZE_TORCH_LOCATED).add(
+            StructureKeys.FORTRESS.value
         )
     }
 

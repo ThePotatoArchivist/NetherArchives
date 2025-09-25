@@ -65,8 +65,8 @@ dependencies {
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
-	modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
-	modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
+//	modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
+//	modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
 }
 
 processResources {
@@ -95,6 +95,12 @@ java {
 
 	sourceCompatibility = JavaVersion.VERSION_21
 	targetCompatibility = JavaVersion.VERSION_21
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }
 
 jar {

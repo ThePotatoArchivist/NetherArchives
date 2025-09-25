@@ -13,7 +13,7 @@ object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
             addProvider(::EntityTagGenerator)
             addProvider(::StructureTagGenerator)
             addProvider(::BlockLootTableGenerator)
-            addProvider(::RecipeGenerator)
+            addProvider(NARecipeGenerator::Provider)
             addProvider(::EnglishLangGenerator)
         }
     }

@@ -22,16 +22,21 @@ object NetherArchivesTags {
     val INVERTS_BEACON = of(BLOCK, "inverts_beacon")
     val REVEALS_INVISIBLES = of(BLOCK, "reveals_invisibles")
 
+    val BASALT_EQUIPMENT_REPAIR = of(ITEM, "basalt_equipment_repair")
+    val SKIS = of(ITEM, "skis")
+
     @JvmField
     val SKIS_CAN_WALK_ON: TagKey<Fluid> = of(FLUID, "skis_can_walk_on")
     val BURNS_WHEN_PADDLE: TagKey<Fluid> = of(FLUID, "burns_when_paddle")
 
     val NON_CHAIN_SHATTER_PROJECTILES = of(ENTITY_TYPE, "non_chain_shatter_projectile")
+    @JvmField
+    val BLAZE_COLORED_FIRE = of(ENTITY_TYPE, "blaze_colored_fire")
 
     val BLAZE_TORCH_LOCATED: TagKey<Structure> = of(STRUCTURE, "blaze_torch_located")
 
     val <T> TagKey<T>.translationKey: String
         get() {
-            return "tag.${Util.createTranslationKey(this.registry.value.toShortTranslationKey(), this.id)}"
+            return "tag.${Util.createTranslationKey(this.registryRef.value.toShortTranslationKey(), this.id)}"
         }
 }

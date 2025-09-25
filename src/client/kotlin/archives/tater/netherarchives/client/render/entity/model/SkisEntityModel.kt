@@ -4,11 +4,11 @@ import net.minecraft.client.model.*
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.entity.model.BipedEntityModel
 import net.minecraft.client.render.entity.model.EntityModelPartNames
-import net.minecraft.entity.LivingEntity
+import net.minecraft.client.render.entity.state.BipedEntityRenderState
 import net.minecraft.util.Identifier
 import java.util.function.Function
 
-class SkisEntityModel<T : LivingEntity>(root: ModelPart, renderLayerFactory: Function<Identifier, RenderLayer>) :
+class SkisEntityModel<T : BipedEntityRenderState>(root: ModelPart, renderLayerFactory: Function<Identifier, RenderLayer>) :
     BipedEntityModel<T>(root, renderLayerFactory) {
 
     constructor(root: ModelPart) : this(root, RenderLayer::getEntityCutoutNoCull)
@@ -21,7 +21,7 @@ class SkisEntityModel<T : LivingEntity>(root: ModelPart, renderLayerFactory: Fun
 
                 .uv(-16, 0)
                 .cuboid(-1.5F, 11.75F, -16.0F, 3.0F, 0.0F, 32.0F, Dilation.NONE),
-            ModelTransform.pivot(-1.9F, 12.25F, 0.0F));
+            ModelTransform.origin(-1.9F, 12.25F, 0.0F));
 
             addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create()
                 .uv(0, 0)
@@ -30,7 +30,7 @@ class SkisEntityModel<T : LivingEntity>(root: ModelPart, renderLayerFactory: Fun
 
                 .uv(-16, 0)
                 .cuboid(-1.3F, 11.75F, -16.0F, 3.0F, 0.0F, 32.0F, Dilation.NONE),
-            ModelTransform.pivot(1.9F, 12.25F, 0.0F))
+            ModelTransform.origin(1.9F, 12.25F, 0.0F))
 
             addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create(), ModelTransform.NONE)
             addChild(EntityModelPartNames.HAT, ModelPartBuilder.create(), ModelTransform.NONE)

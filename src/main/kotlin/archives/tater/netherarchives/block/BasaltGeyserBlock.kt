@@ -155,7 +155,7 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
                 forwardVelocity,
                 if (velocityDev == 0.0) 0.0 else random.nextTriangular(0.0, velocityDev),
             ))
-            this.addParticle(parameters, alwaysSpawn, px, py, pz, vx, vy, vz)
+            this.addParticleClient(parameters, alwaysSpawn, alwaysSpawn, px, py, pz, vx, vy, vz)
         }
 
         private fun Direction.rotate(vec3d: Vec3d) = when (this) {

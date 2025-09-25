@@ -10,8 +10,7 @@
     "FluidBlockMixin",
     "ItemEntityMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin",
-    "StriderEntityAccessor"
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

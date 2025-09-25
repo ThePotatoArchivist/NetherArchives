@@ -4,12 +4,11 @@ import archives.tater.netherarchives.entity.BlazeLanternEntity
 import archives.tater.netherarchives.util.get
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.stat.Stats
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
-import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
 class BlazeLanternItem(settings: Settings) : Item(settings) {
@@ -24,7 +23,7 @@ class BlazeLanternItem(settings: Settings) : Item(settings) {
 //        })
 //    }
 
-    override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
+    override fun use(world: World, user: PlayerEntity, hand: Hand): ActionResult {
         val itemStack = user[hand]
         world.playSound(
             null as PlayerEntity?,
@@ -37,16 +36,15 @@ class BlazeLanternItem(settings: Settings) : Item(settings) {
             0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
         )
         if (!world.isClient) {
-            val blazeLanternEntity = BlazeLanternEntity(world, user)
-            blazeLanternEntity.setItem(itemStack)
+            val blazeLanternEntity = BlazeLanternEntity(world, user, itemStack)
             blazeLanternEntity.setVelocity(user, user.pitch, user.yaw, 0.2f, 1f, 1.0f)
             world.spawnEntity(blazeLanternEntity)
         }
         user.incrementStat(Stats.USED.getOrCreateStat(this))
         if (!user.abilities.creativeMode) {
             itemStack.decrement(1)
-            user.itemCooldownManager.set(this, 40)
+            user.itemCooldownManager.set(itemStack, 40)
         }
-        return TypedActionResult.success(itemStack, world.isClient())
+        return ActionResult.SUCCESS.withNewHandStack(itemStack)
     }
 }
