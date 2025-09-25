@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/template_torch",
+  "parent": "netherarchives:block/template_extended_torch",
   "textures": {
     "torch": "netherarchives:block/blaze_torch"
   }

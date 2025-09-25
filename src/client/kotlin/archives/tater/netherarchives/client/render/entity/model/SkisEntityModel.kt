@@ -32,8 +32,9 @@ class SkisEntityModel<T : BipedEntityRenderState>(root: ModelPart, renderLayerFa
                 .cuboid(-1.3F, 11.75F, -16.0F, 3.0F, 0.0F, 32.0F, Dilation.NONE),
             ModelTransform.origin(1.9F, 12.25F, 0.0F))
 
-            addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create(), ModelTransform.NONE)
-            addChild(EntityModelPartNames.HAT, ModelPartBuilder.create(), ModelTransform.NONE)
+            addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create(), ModelTransform.NONE).apply {
+                addChild(EntityModelPartNames.HAT, ModelPartBuilder.create(), ModelTransform.NONE)
+            }
             addChild(EntityModelPartNames.BODY, ModelPartBuilder.create(), ModelTransform.NONE)
             addChild(EntityModelPartNames.LEFT_ARM, ModelPartBuilder.create(), ModelTransform.NONE)
             addChild(EntityModelPartNames.RIGHT_ARM, ModelPartBuilder.create(), ModelTransform.NONE)

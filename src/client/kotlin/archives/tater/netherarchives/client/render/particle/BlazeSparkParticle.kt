@@ -17,6 +17,10 @@ class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Doub
     override fun getType(): ParticleTextureSheet = ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT
 
     override fun tick() {
+        lastX = x
+        lastY = y
+        lastZ = z
+
         if (age++ >= maxAge) {
             markDead()
             return

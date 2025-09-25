@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "netherarchives:item/spectreglass_knife"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "netherarchives:item/spectreglass_knife_viewing"
+    },
+    "property": "minecraft:using_item"
+  }
+}

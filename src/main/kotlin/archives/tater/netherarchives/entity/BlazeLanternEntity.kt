@@ -22,9 +22,7 @@ import net.minecraft.world.World
 
 class BlazeLanternEntity : ThrownItemEntity {
     constructor(type: EntityType<BlazeLanternEntity>, world: World) : super(type, world)
-    constructor(world: World, owner: LivingEntity, stack: ItemStack) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, world, null) {
-        setItem(stack)
-    }
+    constructor(world: World, owner: LivingEntity, stack: ItemStack) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, world, stack)
 
     override fun getDefaultItem(): Item = NetherArchivesItems.BLAZE_LANTERN
 
