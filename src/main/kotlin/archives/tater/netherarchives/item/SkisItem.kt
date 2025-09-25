@@ -10,6 +10,8 @@ import net.minecraft.fluid.FluidState
 import net.minecraft.util.shape.VoxelShape
 
 object SkisItem {
+    // Now just static utilities
+
     const val MAX_FLUID_DEPTH = 0.1875 // 3 pixels
     const val MIN_DAMAGE_VELOCITY = 0.1
     const val DAMAGE_FREQUENCY = 80 // 4 seconds
@@ -27,5 +29,5 @@ object SkisItem {
         wearsSkis(entity) &&
         fluidState isIn NetherArchivesTags.SKIS_CAN_WALK_ON
     @JvmStatic
-    fun isSkiing(entity: LivingEntity) = (entity.isOnGround) && canSki(entity, entity.world.getFluidState(entity.blockPos))
+    fun isSkiing(entity: LivingEntity) = entity.isOnGround && canSki(entity, entity.world.getFluidState(entity.blockPos))
 }

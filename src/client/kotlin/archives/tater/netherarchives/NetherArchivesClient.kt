@@ -106,9 +106,11 @@ object NetherArchivesClient : ClientModInitializer {
                 )
         }
 
-        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Factory)
-        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
-        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
+        with (ParticleFactoryRegistry.getInstance()) {
+            register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Factory)
+            register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
+            register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
+        }
 
         ClientTickEvents.START_WORLD_TICK.register { world ->
             val client = MinecraftClient.getInstance()

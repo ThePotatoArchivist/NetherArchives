@@ -2,25 +2,15 @@ package archives.tater.netherarchives.mixin;
 
 import archives.tater.netherarchives.duck.AirSkiier;
 import archives.tater.netherarchives.item.SkisItem;
-
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -28,11 +18,17 @@ import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements AirSkiier {
-    @Shadow @Final public LimbAnimator limbAnimator;
-
     @Shadow public abstract boolean isGliding();
 
     @Shadow public abstract float getMovementSpeed();
@@ -63,34 +59,33 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             method = "travelMidAir",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;getSlipperiness()F")
     )
-    private float skiFriction(float original, @Local BlockPos blockPos, @Share("isSkiing") LocalBooleanRef isSkiing) {
-        isSkiing.set(SkisItem.canSki((LivingEntity) (Object) this, getWorld().getFluidState(blockPos)));
-
-        return isSkiing.get() ? 1.08f : original;
+    private float skiFriction(float original, @Local BlockPos blockPos) {
+        return SkisItem.canSki((LivingEntity) (Object) this, getWorld().getFluidState(blockPos)) ? 1.08f : original;
         // Air drag is 0.91
     }
 
-    // TODO
-//    @WrapOperation(
-//            method = "travel",
-//            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;updateLimbs(Z)V")
-//    )
-//    private void damageSkisAndNoSkiLimbs(LivingEntity instance, boolean flutter, Operation<Void> original, @Share("isSkiing") LocalBooleanRef isSkiing) {
-//        if (!getWorld().isClient && (isSkiing.get() || netherarchives$isAirSkiing) && getVelocity().length() > SkisItem.MIN_DAMAGE_VELOCITY) {
-//            netherarchives$ticksSkiing += 1;
-//            if (netherarchives$ticksSkiing >= SkisItem.DAMAGE_FREQUENCY) {
-//                getEquippedStack(EquipmentSlot.FEET).damage(1, (LivingEntity) (Object) this, EquipmentSlot.FEET);
-//                netherarchives$ticksSkiing = 0;
-//            }
-//        }
-//
-//        if (!isSkiing.get() && !SkisItem.isSkiing(instance) && !netherarchives$isAirSkiing) {
-//            original.call(instance, flutter);
-//            return;
-//        }
-//
-//        limbAnimator.updateLimbs(0, 0.4f);
-//    }
+    @Inject(
+            method = "tickMovement",
+            at = @At("HEAD")
+    )
+    private void damageSkis(CallbackInfo ci) {
+        if (getWorld().isClient) return;
+        if ((SkisItem.isSkiing((LivingEntity) (Object) this) || netherarchives$isAirSkiing) && getMovement().horizontalLengthSquared() > SkisItem.MIN_DAMAGE_VELOCITY * SkisItem.MIN_DAMAGE_VELOCITY) {
+            netherarchives$ticksSkiing++;
+            if (netherarchives$ticksSkiing >= SkisItem.DAMAGE_FREQUENCY) {
+                getEquippedStack(EquipmentSlot.FEET).damage(1, (LivingEntity) (Object) this, EquipmentSlot.FEET);
+                netherarchives$ticksSkiing = 0;
+            }
+        }
+    }
+
+    @ModifyArg(
+            method = "updateLimbs(Z)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;updateLimbs(F)V")
+    )
+    private float noLimbMovement(float posDelta) {
+        return SkisItem.isSkiing((LivingEntity) (Object) this) || netherarchives$isAirSkiing ? 0 : posDelta;
+    }
 
     @ModifyReturnValue(
             method = "getMovementSpeed()F",
@@ -127,12 +122,12 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
         netherarchives$isAirSkiing = airSkiing;
     }
 
-    @ModifyVariable(
-            method = "travelMidAir",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Lnet/minecraft/entity/effect/StatusEffectInstance;")
+    @ModifyExpressionValue(
+            method = "getEffectiveGravity",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z")
     )
-    private double slowFallingWhileAirSkiing(double original) {
-        return netherarchives$isAirSkiing && !isSneaking() ? 0.01 : original;
+    private boolean slowFallingWhileAirSkiing(boolean original) {
+        return original || netherarchives$isAirSkiing && !isSneaking();
     }
 
     @Inject(
