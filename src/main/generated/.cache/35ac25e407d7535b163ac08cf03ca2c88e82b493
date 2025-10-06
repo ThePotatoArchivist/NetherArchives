@@ -1,4 +1,4 @@
-// 1.21.8	-999999999-01-01T00:00:00	Nether Archives/Model Definitions
+// 1.21.9	-999999999-01-01T00:00:00	Nether Archives/Model Definitions
 4c150f40ded374403e0cf8c09df8a154e67c03ef assets/minecraft/items/netherarchives/dummy/soul_fire.json
 7dac05a6e054619af0be7285c4b250e964feaa9e assets/minecraft/models/item/netherarchives/dummy/soul_fire.json
 ba23aeb4868387c0c30bcb2f26324fd88f40580b assets/netherarchives/blockstates/adjustable_basalt_geyser.json
@@ -17,7 +17,7 @@ eca2cb2cc9aaa69adcbbc62f5da5f69ae9e04d16 assets/netherarchives/blockstates/spect
 f29adb57865f8431b82cc11af73d585eeaefa384 assets/netherarchives/blockstates/wall_blaze_torch.json
 65d853dbd77165f80e81e00c09b304075e174c6d assets/netherarchives/items/adjustable_basalt_geyser.json
 e5a8ed8fa28f7d801e9cf7b7c9594510e398b500 assets/netherarchives/items/basalt_geyser.json
-d03772b381cd51d94959f15dc156072c2a6ef5ff assets/netherarchives/items/basalt_oar.json
+ad9828674e7db664c382fae9ced8fad5aa2cba6a assets/netherarchives/items/basalt_oar.json
 64dddf7053739bf64f671d8f628fd37e2c896526 assets/netherarchives/items/basalt_rod.json
 9a07eb3a05838311e4ba276a6d3e2618c33ea6f5 assets/netherarchives/items/basalt_skis.json
 6201e9dba7631a3d089ae90f6da50c459b777c0c assets/netherarchives/items/blaze_dust.json
