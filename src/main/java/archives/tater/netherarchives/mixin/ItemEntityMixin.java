@@ -30,6 +30,6 @@ public abstract class ItemEntityMixin extends Entity {
     )
     private void explodeBeacon(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (!source.isIn(DamageTypeTags.IS_EXPLOSION) || !getStack().isOf(Items.BEACON)) return;
-        getWorld().spawnEntity(new ItemEntity(getWorld(), getX(), getY(), getZ(), Items.NETHER_STAR.getDefaultStack()));
+        getEntityWorld().spawnEntity(new ItemEntity(getEntityWorld(), getX(), getY(), getZ(), Items.NETHER_STAR.getDefaultStack()));
     }
 }

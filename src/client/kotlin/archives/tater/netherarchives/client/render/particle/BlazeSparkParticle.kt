@@ -1,20 +1,23 @@
 package archives.tater.netherarchives.client.render.particle
 
-import net.minecraft.client.particle.*
+import net.minecraft.client.particle.BillboardParticle
+import net.minecraft.client.particle.Particle
+import net.minecraft.client.particle.ParticleFactory
+import net.minecraft.client.particle.SpriteProvider
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.particle.SimpleParticleType
+import net.minecraft.util.math.random.Random
 
 class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Double, scale: Float, private val spriteProvider: SpriteProvider) :
-    SpriteBillboardParticle(clientWorld, x, y, z) {
+    BillboardParticle(clientWorld, x, y, z, spriteProvider.first) {
         init {
             this.scale = scale
-            setSpriteForAge(spriteProvider)
             maxAge = 30 + random.nextInt(10)
         }
 
     private val velocityStep = scale * (0.02 + 0.02 * Math.random())
 
-    override fun getType(): ParticleTextureSheet = ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT
+    override fun getRenderType(): RenderType = RenderType.PARTICLE_ATLAS_TRANSLUCENT
 
     override fun tick() {
         lastX = x
@@ -27,7 +30,7 @@ class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Doub
         }
 
         move(velocityX, velocityY, velocityZ)
-        setSpriteForAge(spriteProvider)
+        updateSprite(spriteProvider)
         if (maxAge - age < 10)
             alpha = (maxAge - age) / 10f
         velocityY += velocityStep
@@ -42,7 +45,8 @@ class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Doub
             z: Double,
             velocityX: Double,
             velocityY: Double,
-            velocityZ: Double
+            velocityZ: Double,
+            random: Random
         ): Particle {
             return BlazeSparkParticle(world, x, y, z, 0.25f, spriteProvider)
         }
@@ -57,7 +61,8 @@ class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Doub
             z: Double,
             velocityX: Double,
             velocityY: Double,
-            velocityZ: Double
+            velocityZ: Double,
+            random: Random
         ): Particle {
             return BlazeSparkParticle(world, x, y, z, 0.125f, spriteProvider)
         }

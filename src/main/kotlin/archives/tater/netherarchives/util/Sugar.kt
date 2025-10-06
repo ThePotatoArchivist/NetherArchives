@@ -5,6 +5,7 @@ package archives.tater.netherarchives.util
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.component.type.AttributeModifiersComponent
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.fluid.Fluid
@@ -56,3 +57,10 @@ fun AttributeModifiersComponent(init: AttributeModifiersComponent.Builder.() -> 
 operator fun <T> RegistryWrapper.WrapperLookup.get(registryRef: RegistryKey<Registry<T>>): RegistryWrapper.Impl<T> =
     getOrThrow(registryRef)
 operator fun <T> RegistryEntryLookup<T>.get(key: RegistryKey<T>): RegistryEntry.Reference<T> = getOrThrow(key)
+
+inline var Entity.pos: Vec3d
+    get() = entityPos
+    set(value) {
+        setPosition(value)
+    }
+inline val Entity.world: World get() = entityWorld

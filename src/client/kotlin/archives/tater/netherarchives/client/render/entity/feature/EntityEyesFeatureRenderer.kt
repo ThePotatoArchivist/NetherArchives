@@ -1,8 +1,9 @@
 package archives.tater.netherarchives.client.render.entity.feature
 
+import net.minecraft.client.render.LightmapTextureManager.MAX_SKY_LIGHT_COORDINATE
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.VertexConsumerProvider
+import net.minecraft.client.render.command.OrderedRenderCommandQueue
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer
 import net.minecraft.client.render.entity.feature.FeatureRendererContext
 import net.minecraft.client.render.entity.model.EntityModel
@@ -14,23 +15,30 @@ import net.minecraft.client.util.math.MatrixStack
  */
 abstract class EntityEyesFeatureRenderer<T : EntityRenderState, M : EntityModel<T>>(featureRendererContext: FeatureRendererContext<T, M>?) :
     EyesFeatureRenderer<T, M>(featureRendererContext) {
+
     override fun render(
         matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
+        queue: OrderedRenderCommandQueue?,
         light: Int,
-        entity: T,
+        state: T,
         limbAngle: Float,
         limbDistance: Float
     ) {
-        this.contextModel.render(
-            matrices,
-            vertexConsumers.getBuffer(getEyesTexture(entity)),
-            0xF00000,
-            OverlayTexture.DEFAULT_UV
-        )
+        queue!!.getBatchingQueue(1).submitModel(
+                contextModel,
+                state,
+                matrices,
+                getEyesTexture(state),
+                MAX_SKY_LIGHT_COORDINATE,
+                OverlayTexture.DEFAULT_UV,
+                -1,
+                null,
+                state.outlineColor,
+                null
+            )
     }
 
-    abstract fun getEyesTexture(entity: T?): RenderLayer
+    abstract fun getEyesTexture(state: T?): RenderLayer
 
     override fun getEyesTexture() = getEyesTexture(null)
 }

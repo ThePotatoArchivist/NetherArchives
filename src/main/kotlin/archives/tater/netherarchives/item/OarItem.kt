@@ -4,7 +4,6 @@ import archives.tater.netherarchives.registry.NetherArchivesDamageTypes.paddleBu
 import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.isIn
-import net.minecraft.entity.LivingEntity.getSlotForHand
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.registry.tag.FluidTags
@@ -40,7 +39,7 @@ class OarItem(settings: Settings) : Item(settings) {
         else
             user.playSound(SoundEvents.ENTITY_BOAT_PADDLE_WATER, 3f, 1f)
         user.itemCooldownManager.set(itemStack, 10)
-        itemStack.damage(1, user, getSlotForHand(hand))
+        itemStack.damage(1, user, hand)
         user.addExhaustion(0.2f)
         return ActionResult.SUCCESS.withNewHandStack(itemStack)
     }

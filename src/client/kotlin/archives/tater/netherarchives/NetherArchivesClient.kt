@@ -10,12 +10,17 @@ import archives.tater.netherarchives.util.isIn
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.*
+import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gl.RenderPipelines
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.render.BlockRenderLayer
+import net.minecraft.client.render.OverlayTexture
+import net.minecraft.client.render.RenderLayer
+import net.minecraft.client.render.entity.EntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.entity.WitherEntityRenderer
 import net.minecraft.client.render.entity.WitherSkeletonEntityRenderer
@@ -67,7 +72,7 @@ object NetherArchivesClient : ClientModInitializer {
             )
         }
 
-        EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
+        EntityRendererFactories.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
             if (NetherArchives.config.skeletonEyes)
@@ -80,14 +85,23 @@ object NetherArchivesClient : ClientModInitializer {
 
         EntityModelLayerRegistry.registerModelLayer(SKIS_MODEL_LAYER, SkisEntityModel.Companion::getTexturedModelData)
 
-        registerArmorRenderer(NetherArchivesItems.BASALT_SKIS) {
-                matrices, vertexConsumers, stack, _, _, light, model ->
+        registerArmorRenderer(NetherArchivesItems.BASALT_SKIS) { matrices, queue, stack, bipedEntityRenderState, slot, light, contextModel ->
             if (!::basaltSkisModel.isInitialized) {
                 basaltSkisModel = SkisEntityModel(MinecraftClient.getInstance().loadedEntityModels.getModelPart(SKIS_MODEL_LAYER))
             }
 
-            model.copyTransforms(basaltSkisModel)
-            ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, basaltSkisModel, BASALT_SKIS_LOCATION)
+            basaltSkisModel.resetTransforms()
+            basaltSkisModel.setAngles(bipedEntityRenderState)
+            queue.getBatchingQueue(1).submitModel(
+                basaltSkisModel,
+                bipedEntityRenderState,
+                matrices,
+                RenderLayer.getArmorCutoutNoCull(BASALT_SKIS_LOCATION),
+                light,
+                OverlayTexture.DEFAULT_UV,
+                bipedEntityRenderState.outlineColor,
+                null
+            )
         }
 
         HudElementRegistry.addFirst(NetherArchives.id("soul_glass_knife")) { context, _ ->

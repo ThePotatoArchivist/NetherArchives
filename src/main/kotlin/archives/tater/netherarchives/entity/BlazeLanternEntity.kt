@@ -6,6 +6,7 @@ import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.util.listCopy
+import archives.tater.netherarchives.util.world
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.FallingBlockEntity
 import net.minecraft.entity.LivingEntity

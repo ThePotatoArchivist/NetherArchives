@@ -10,9 +10,9 @@ import net.minecraft.util.math.MathHelper
 class WitherEyesFeatureRenderer(featureRendererContext: FeatureRendererContext<WitherEntityRenderState, WitherEntityModel>) :
     EntityEyesFeatureRenderer<WitherEntityRenderState, WitherEntityModel>(featureRendererContext) {
 
-    override fun getEyesTexture(entity: WitherEntityRenderState?): RenderLayer {
-        if (entity == null) return SKIN;
-        val i = MathHelper.floor(entity.invulnerableTimer);
+    override fun getEyesTexture(state: WitherEntityRenderState?): RenderLayer {
+        if (state == null) return SKIN;
+        val i = MathHelper.floor(state.invulnerableTimer);
         return if (i > 0 && (i > 80 || i / 5 % 2 != 1)) INVULNERABLE_SKIN else SKIN
     }
 

@@ -8,7 +8,6 @@ import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityCollisionHandler
-import net.minecraft.entity.LivingEntity.getSlotForHand
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.ItemStack
@@ -85,7 +84,7 @@ class BlazePowderBlock(settings: Settings) : Block(settings) {
         if (player is ServerPlayerEntity)
             Criteria.PLACED_BLOCK.trigger(player, pos, stack)
         if (stack.isOf(Items.FLINT_AND_STEEL))
-            stack.damage(1, player, getSlotForHand(hand))
+            stack.damage(1, player, hand)
         else
             stack.decrement(1)
         return ActionResult.SUCCESS.withNewHandStack(stack)

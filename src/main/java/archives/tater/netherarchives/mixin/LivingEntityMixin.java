@@ -2,10 +2,20 @@ package archives.tater.netherarchives.mixin;
 
 import archives.tater.netherarchives.duck.AirSkiier;
 import archives.tater.netherarchives.item.SkisItem;
+
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,14 +28,6 @@ import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements AirSkiier {
@@ -60,7 +62,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;getSlipperiness()F")
     )
     private float skiFriction(float original, @Local BlockPos blockPos) {
-        return SkisItem.canSki((LivingEntity) (Object) this, getWorld().getFluidState(blockPos)) ? 1.08f : original;
+        return SkisItem.canSki((LivingEntity) (Object) this, getEntityWorld().getFluidState(blockPos)) ? 1.08f : original;
         // Air drag is 0.91
     }
 
@@ -69,7 +71,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             at = @At("HEAD")
     )
     private void damageSkis(CallbackInfo ci) {
-        if (getWorld().isClient) return;
+        if (getEntityWorld().isClient()) return;
         if ((SkisItem.isSkiing((LivingEntity) (Object) this) || netherarchives$isAirSkiing) && getMovement().horizontalLengthSquared() > SkisItem.MIN_DAMAGE_VELOCITY * SkisItem.MIN_DAMAGE_VELOCITY) {
             netherarchives$ticksSkiing++;
             if (netherarchives$ticksSkiing >= SkisItem.DAMAGE_FREQUENCY) {
