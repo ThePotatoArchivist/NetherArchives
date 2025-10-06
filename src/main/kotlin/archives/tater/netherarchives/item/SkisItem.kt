@@ -20,7 +20,10 @@ class SkisItem(material: RegistryEntry<ArmorMaterial>, settings: Settings) : Arm
         const val DAMAGE_FREQUENCY = 80 // 4 seconds
 
         @JvmField
-        val FLUID_SKI_COLLISION_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0);
+        val FLUID_SKI_COLLISION_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0)
+
+        @JvmField
+        val FLUID_SKI_HEIGHT_COLLISION_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0) // box entity must be above to not sink
 
         @JvmStatic
         fun wearsSkis(entity: Entity?) = if (entity is LivingEntity) wearsSkis(entity) else false
