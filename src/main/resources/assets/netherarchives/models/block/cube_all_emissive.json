@@ -1,0 +1,18 @@
+{
+  "parent": "netherarchives:block/cube_emissive",
+  "textures": {
+    "particle": "#all",
+    "up": "#all",
+    "down": "#all",
+    "north": "#all",
+    "south": "#all",
+    "west": "#all",
+    "east": "#all",
+    "up_emissive": "#all_emissive",
+    "down_emissive": "#all_emissive",
+    "north_emissive": "#all_emissive",
+    "south_emissive": "#all_emissive",
+    "west_emissive": "#all_emissive",
+    "east_emissive": "#all_emissive"
+  }
+}

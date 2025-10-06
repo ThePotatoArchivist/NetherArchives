@@ -1,0 +1,12 @@
+{
+  "parent": "netherarchives:block/cube_top_bottom_emissive",
+  "textures": {
+    "bottom": "netherarchives:block/adjustable_basalt_geyser_bottom_on",
+    "particle": "netherarchives:block/adjustable_basalt_geyser_top",
+    "side": "netherarchives:block/adjustable_basalt_geyser_side_on",
+    "top": "netherarchives:block/adjustable_basalt_geyser_top",
+    "top_emissive": "netherarchives:block/adjustable_basalt_geyser_top_emissive",
+    "side_emissive": "netherarchives:block/adjustable_basalt_geyser_side_on_emissive",
+    "bottom_emissive": "netherarchives:block/adjustable_basalt_geyser_bottom_on_emissive"
+  }
+}

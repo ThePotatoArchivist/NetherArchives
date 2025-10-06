@@ -1,0 +1,20 @@
+{
+  "parent": "netherarchives:block/cube_emissive",
+  "textures": {
+    "top_emissive": "netherarchives:block/empty",
+    "bottom_emissive": "netherarchives:block/empty",
+    "side_emissive": "netherarchives:block/empty",
+    "up": "#top",
+    "down": "#bottom",
+    "north": "#side",
+    "south": "#side",
+    "west": "#side",
+    "east": "#side",
+    "up_emissive": "#top_emissive",
+    "down_emissive": "#bottom_emissive",
+    "north_emissive": "#side_emissive",
+    "south_emissive": "#side_emissive",
+    "west_emissive": "#side_emissive",
+    "east_emissive": "#side_emissive"
+  }
+}

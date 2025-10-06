@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "down_emissive": "netherarchives:block/empty",
+    "up_emissive": "netherarchives:block/empty",
+    "north_emissive": "netherarchives:block/empty",
+    "south_emissive": "netherarchives:block/empty",
+    "west_emissive": "netherarchives:block/empty",
+    "east_emissive": "netherarchives:block/empty"
+  },
+  "elements": [
+    {
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "down":  { "texture": "#down", "cullface": "down" },
+        "up":    { "texture": "#up", "cullface": "up" },
+        "north": { "texture": "#north", "cullface": "north" },
+        "south": { "texture": "#south", "cullface": "south" },
+        "west":  { "texture": "#west", "cullface": "west" },
+        "east":  { "texture": "#east", "cullface": "east" }
+      }
+    },
+    {
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "light_emission": 15,
+      "faces": {
+        "down":  { "texture": "#down_emissive", "cullface": "down" },
+        "up":    { "texture": "#up_emissive", "cullface": "up" },
+        "north": { "texture": "#north_emissive", "cullface": "north" },
+        "south": { "texture": "#south_emissive", "cullface": "south" },
+        "west":  { "texture": "#west_emissive", "cullface": "west" },
+        "east":  { "texture": "#east_emissive", "cullface": "east" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "parent": "netherarchives:block/cube_top_bottom_emissive",
+  "textures": {
+    "top": "minecraft:block/basalt_top",
+    "bottom": "minecraft:block/basalt_top",
+    "side": "minecraft:block/basalt_side",
+    "particle": "netherarchives:block/basalt_geyser_top",
+    "top_emissive": "netherarchives:block/basalt_geyser_top_emissive",
+    "side_emissive": "netherarchives:block/basalt_geyser_side"
+  }
+}

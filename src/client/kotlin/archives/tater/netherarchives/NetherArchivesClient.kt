@@ -61,7 +61,11 @@ object NetherArchivesClient : ClientModInitializer {
                 BLAZE_FIRE,
                 BLAZE_DUST,
                 BLAZE_TORCH,
-                WALL_BLAZE_TORCH
+                WALL_BLAZE_TORCH,
+                // Emissive overlay
+                BASALT_GEYSER,
+                ADJUSTABLE_BASALT_GEYSER,
+                SMOLDERING_MAGNETITE,
             )
             BlockRenderLayerMap.putBlocks(
                 BlockRenderLayer.TRANSLUCENT,

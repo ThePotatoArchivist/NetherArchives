@@ -41,7 +41,6 @@ object NetherArchivesBlocks {
         strength(0.6f, 1.25f)
         sounds(BlockSoundGroup.BASALT)
         luminance { 3 }
-        emissiveLighting(Blocks::always)
         requiresTool()
     }
 
@@ -98,14 +97,12 @@ object NetherArchivesBlocks {
 
     val BASALT_GEYSER = register("basalt_geyser", ::BasaltGeyserBlock) {
         strength(1.2f, 4.2f)
-        luminance { 5 }
         sounds(BlockSoundGroup.BASALT)
         requiresTool()
     }
 
     val ADJUSTABLE_BASALT_GEYSER = register("adjustable_basalt_geyser", ::AdjustableBasaltGeyserBlock) {
         strength(1.2f, 4.2f)
-        luminance { 5 }
         sounds(BlockSoundGroup.BASALT)
     }
 

@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "netherarchives:block/cube_all_emissive",
   "textures": {
-    "all": "netherarchives:block/smoldering_magnetite"
+    "all": "netherarchives:block/smoldering_magnetite",
+    "all_emissive": "netherarchives:block/smoldering_magnetite_emissive"
   }
 }

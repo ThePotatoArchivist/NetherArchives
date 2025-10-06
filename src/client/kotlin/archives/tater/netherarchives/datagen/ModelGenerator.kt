@@ -14,12 +14,11 @@ import net.minecraft.client.data.*
 import net.minecraft.client.data.BlockStateModelGenerator.createWeightedVariant
 import net.minecraft.client.render.item.property.bool.UsingItemProperty
 import net.minecraft.client.render.model.json.ModelVariantOperator
-import net.minecraft.util.Identifier
 
 class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generator) {
     override fun generateBlockStateModels(blockStateModelGenerator: BlockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.MAGNETITE)
-        blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.SMOLDERING_MAGNETITE)
+        blockStateModelGenerator.registerSingleton(NetherArchivesBlocks.SMOLDERING_MAGNETITE, CUBE_ALL_EMISSIVE_TEXTURED)
         blockStateModelGenerator.registerBlazeFire()
         blockStateModelGenerator.registerSimpleState(NetherArchivesBlocks.BLAZE_DUST)
         blockStateModelGenerator.registerSimpleCubeAll(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
@@ -30,36 +29,14 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.blockStateCollector.accept(
             VariantsBlockModelDefinitionCreator.of(
                 NetherArchivesBlocks.BASALT_GEYSER,
-                createWeightedVariant(
-                    CUBE_BOTTOM_TOP_PARTICLE_MODEL.upload(
-                        NetherArchivesBlocks.BASALT_GEYSER,
-                        cubeBottomTopParticle(
-                            top = NetherArchivesBlocks.BASALT_GEYSER,
-                            bottom = Blocks.BASALT,
-                            bottomSuffix = "_top",
-                        ),
-                        blockStateModelGenerator.modelCollector
-                    )
-                )
+                createWeightedVariant(ModelIds.getBlockModelId(NetherArchivesBlocks.BASALT_GEYSER))
             ).coordinate(UP_DEFAULT_ROTATION_OPERATIONS)
         )
 
         blockStateModelGenerator.blockStateCollector.accept(
             VariantsBlockModelDefinitionCreator.of(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER).with(
                 BlockStateVariantMap.models(AdjustableBasaltGeyserBlock.POWERED).generate { powered ->
-                    val suffix = if (powered) "_on" else ""
-                    createWeightedVariant(
-                        CUBE_BOTTOM_TOP_PARTICLE_MODEL.upload(
-                            ModelIds.getBlockSubModelId(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, suffix),
-                            cubeBottomTopParticle(
-                                top = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
-                                bottom = NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER,
-                                suffix = suffix,
-                                topSuffixed = false,
-                            ),
-                            blockStateModelGenerator.modelCollector
-                        )
-                    )
+                    createWeightedVariant(ModelIds.getBlockSubModelId(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, if (powered) "_on" else ""))
                 }
             ).coordinate(UP_DEFAULT_ROTATION_OPERATIONS)
         )
@@ -108,20 +85,12 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         val SOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS: BlockStateVariantMap<ModelVariantOperator> = BlockStateModelGeneratorAccessor.getSOUTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS()
         val NORTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS: BlockStateVariantMap<ModelVariantOperator> = BlockStateModelGeneratorAccessor.getNORTH_DEFAULT_HORIZONTAL_ROTATION_OPERATIONS()
 
-        val CUBE_BOTTOM_TOP_PARTICLE_MODEL: Model = Model(
-            TextureKey.TOP,
-            TextureKey.SIDE,
-            TextureKey.BOTTOM,
-            TextureKey.PARTICLE,
-            parent = Identifier.ofVanilla("block/cube_bottom_top")
-        )
-
-        fun cubeBottomTopParticle(top: Block, bottom: Block, side: Block = top, suffix: String = "", bottomSuffix: String = "_bottom", topSuffixed: Boolean = true) = TextureMap(
-            TextureKey.TOP to ModelIds.getBlockSubModelId(top, if (topSuffixed) "_top$suffix" else "_top"),
-            TextureKey.SIDE to ModelIds.getBlockSubModelId(side, "_side$suffix"),
-            TextureKey.BOTTOM to ModelIds.getBlockSubModelId(bottom, "$bottomSuffix$suffix"),
-            TextureKey.PARTICLE to ModelIds.getBlockSubModelId(top, "_top$suffix"),
-        )
+        val ALL_EMISSIVE: TextureKey = TextureKey.of("all_emissive")
+        val CUBE_ALL_EMISSIVE = Model(TextureKey.ALL, ALL_EMISSIVE, parent = NetherArchives.id("block/cube_all_emissive"))
+        val CUBE_ALL_EMISSIVE_TEXTURED = texturedModelFactory(CUBE_ALL_EMISSIVE) { TextureMap(
+            TextureKey.ALL to TextureMap.getId(it),
+            ALL_EMISSIVE to TextureMap.getSubId(it, "_emissive")
+        ) }
 
         /**
          * Copied from [BlockStateModelGenerator.registerSoulFire]

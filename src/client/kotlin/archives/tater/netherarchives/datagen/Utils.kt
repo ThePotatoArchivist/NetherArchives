@@ -2,9 +2,11 @@
 
 package archives.tater.netherarchives.datagen
 
+import net.minecraft.block.Block
 import net.minecraft.client.data.Model
 import net.minecraft.client.data.TextureKey
 import net.minecraft.client.data.TextureMap
+import net.minecraft.client.data.TexturedModel
 import net.minecraft.util.Identifier
 import java.util.*
 
@@ -15,3 +17,6 @@ internal fun TextureMap(vararg entries: Pair<TextureKey, Identifier>) = TextureM
     for ((key, id) in entries)
         put(key, id)
 }
+
+internal inline fun texturedModelFactory(model: Model, noinline texturesGetter: (Block) -> TextureMap): TexturedModel.Factory =
+    TexturedModel.makeFactory(texturesGetter, model)
