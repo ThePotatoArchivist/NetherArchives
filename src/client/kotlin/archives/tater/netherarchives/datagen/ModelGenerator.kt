@@ -86,7 +86,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
     }
 
     companion object {
-        val CUBE_BOTTOM_TOP_PARTICLE_MODEL = Model(
+        private val CUBE_BOTTOM_TOP_PARTICLE_MODEL = Model(
             TextureKey.TOP,
             TextureKey.SIDE,
             TextureKey.BOTTOM,
@@ -94,14 +94,14 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             parent = Identifier.ofVanilla("block/cube_bottom_top")
         )
 
-        fun cubeBottomTopParticle(top: Block, bottom: Block, side: Block = top, suffix: String = "", bottomSuffix: String = "_bottom", topSuffixed: Boolean = true) = TextureMap(
+        private fun cubeBottomTopParticle(top: Block, bottom: Block, side: Block = top, suffix: String = "", bottomSuffix: String = "_bottom", topSuffixed: Boolean = true) = TextureMap(
             TextureKey.TOP to ModelIds.getBlockSubModelId(top, if (topSuffixed) "_top$suffix" else "_top"),
             TextureKey.SIDE to ModelIds.getBlockSubModelId(side, "_side$suffix"),
             TextureKey.BOTTOM to ModelIds.getBlockSubModelId(bottom, "$bottomSuffix$suffix"),
             TextureKey.PARTICLE to ModelIds.getBlockSubModelId(top, "_top$suffix"),
         )
 
-        inline fun BlockStateModelGenerator.acceptVariants(block: Block, vararg variants: BlockStateVariant, init: VariantsBlockStateSupplier.() -> Unit = {}) {
+        private inline fun BlockStateModelGenerator.acceptVariants(block: Block, vararg variants: BlockStateVariant, init: VariantsBlockStateSupplier.() -> Unit = {}) {
             blockStateCollector.accept(when (variants.size) {
                 0 -> VariantsBlockStateSupplier.create(block)
                 1 -> VariantsBlockStateSupplier.create(block, variants.first())
@@ -109,17 +109,17 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             }.apply(init))
         }
 
-        inline fun BlockStateModelGenerator.acceptVariants(block: Block, model: Identifier, init: VariantsBlockStateSupplier.() -> Unit = {}) {
+        private inline fun BlockStateModelGenerator.acceptVariants(block: Block, model: Identifier, init: VariantsBlockStateSupplier.() -> Unit = {}) {
             acceptVariants(block, BlockStateVariant(model = model), init = init)
         }
 
-        inline fun buildBlockStateVariants(modelIds: List<Identifier>, crossinline processor: BlockStateVariant.() -> Unit = {}): MutableList<BlockStateVariant> =
+        private inline fun buildBlockStateVariants(modelIds: List<Identifier>, crossinline processor: BlockStateVariant.() -> Unit = {}): MutableList<BlockStateVariant> =
             BlockStateModelGenerator.buildBlockStateVariants(modelIds) { it.apply(processor) }
 
         /**
          * Copied from [BlockStateModelGenerator.registerSoulFire]
          */
-        fun registerBlazeFire(blockStateModelGenerator: BlockStateModelGenerator) {
+        private fun registerBlazeFire(blockStateModelGenerator: BlockStateModelGenerator) {
             val floorModels: List<Identifier> = blockStateModelGenerator.getFireFloorModels(NetherArchivesBlocks.BLAZE_FIRE)
             val sideModels: List<Identifier> = blockStateModelGenerator.getFireSideModels(NetherArchivesBlocks.BLAZE_FIRE)
             blockStateModelGenerator.blockStateCollector.accept(
