@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.mixin.client;
 
 import archives.tater.netherarchives.item.SkisItem;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import com.mojang.blaze3d.vertex.PoseStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,15 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
-    @Shadow @Final MinecraftClient client;
+    @Shadow @Final
+    Minecraft minecraft;
 
     @Inject(
             method = "bobView",
             at = @At(value = "HEAD"),
             cancellable = true
     )
-    private void noBobSkis(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        if (SkisItem.wearsSkis(client.getCameraEntity()))
+    private void noBobSkis(PoseStack matrices, float tickDelta, CallbackInfo ci) {
+        if (SkisItem.wearsSkis(minecraft.getCameraEntity()))
             ci.cancel();
     }
 }

@@ -1,22 +1,22 @@
 package archives.tater.netherarchives.client.render.entity.feature
 
-import net.minecraft.client.render.OverlayTexture
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer
-import net.minecraft.client.render.entity.feature.FeatureRendererContext
-import net.minecraft.client.render.entity.model.EntityModel
-import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.entity.Entity
+import net.minecraft.client.renderer.texture.OverlayTexture
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.entity.layers.EyesLayer
+import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.model.EntityModel
+import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.world.entity.Entity
 
 /**
  * Thought this was useful but actually wasn't
  */
-abstract class EntityEyesFeatureRenderer<T : Entity, M : EntityModel<T>>(featureRendererContext: FeatureRendererContext<T, M>?) :
-    EyesFeatureRenderer<T, M>(featureRendererContext) {
+abstract class EntityEyesFeatureRenderer<T : Entity, M : EntityModel<T>>(featureRendererContext: RenderLayerParent<T, M>?) :
+    EyesLayer<T, M>(featureRendererContext) {
     override fun render(
-        matrices: MatrixStack,
-        vertexConsumers: VertexConsumerProvider,
+        matrices: PoseStack,
+        vertexConsumers: MultiBufferSource,
         light: Int,
         entity: T,
         limbAngle: Float,
@@ -26,16 +26,16 @@ abstract class EntityEyesFeatureRenderer<T : Entity, M : EntityModel<T>>(feature
         headYaw: Float,
         headPitch: Float
     ) {
-        this.contextModel.render(
+        this.parentModel.renderToBuffer(
             matrices,
             vertexConsumers.getBuffer(getEyesTexture(entity)),
             0xF00000,
-            OverlayTexture.DEFAULT_UV
+            OverlayTexture.NO_OVERLAY
         )
     }
 
-    abstract fun getEyesTexture(entity: T?): RenderLayer
+    abstract fun getEyesTexture(entity: T?): RenderType
 
-    override fun getEyesTexture() = getEyesTexture(null)
+    override fun renderType() = getEyesTexture(null)
 }
 

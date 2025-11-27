@@ -3,121 +3,121 @@ package archives.tater.netherarchives.block
 import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.registry.NetherArchivesParticles
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.AbstractFireBlock
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.entity.Entity
-import net.minecraft.entity.ItemEntity
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.IntProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.GameRules
-import net.minecraft.world.World
-import net.minecraft.world.WorldAccess
-import net.minecraft.world.WorldView
+import net.minecraft.world.level.block.BaseFireBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundSource
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.GameRules
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
 
-class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
+class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
     init {
-        defaultState = stateManager.defaultState.with(AGE, 0)
+        registerDefaultState(stateDefinition.any().setValue(AGE, 0))
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AGE)
     }
 
-    override fun isFlammable(state: BlockState?) = true
+    override fun canBurn(state: BlockState?) = true
 
-    override fun canPlaceAt(state: BlockState, world: WorldView, pos: BlockPos): Boolean {
-        val blockPos = pos.down()
-        return world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, Direction.UP)
+    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
+        val blockPos = pos.below()
+        return world.getBlockState(blockPos).isFaceSturdy(world, blockPos, Direction.UP)
     }
 
-    override fun getCodec(): MapCodec<out AbstractFireBlock> = CODEC
+    override fun codec(): MapCodec<out BaseFireBlock> = CODEC
 
-    override fun getStateForNeighborUpdate(
+    override fun updateShape(
         state: BlockState,
         direction: Direction,
         neighborState: BlockState,
-        world: WorldAccess,
+        world: LevelAccessor,
         pos: BlockPos,
         neighborPos: BlockPos
     ): BlockState {
-        if (canPlaceAt(state, world, pos)) {
+        if (canSurvive(state, world, pos)) {
             return state
         }
-        return Blocks.AIR.defaultState
+        return Blocks.AIR.defaultBlockState()
     }
 
-    override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
-        world.scheduleBlockTick(pos, this, getFireTickDelay(world.random))
-        if (!world.gameRules.getBoolean(GameRules.DO_FIRE_TICK)) return
+    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
+        world.scheduleTick(pos, this, getFireTickDelay(world.random))
+        if (!world.gameRules.getBoolean(GameRules.RULE_DOFIRETICK)) return
 
-        val blockBelow = world.getBlockState(pos.down())
-        val infiniburn = blockBelow.isIn(world.dimension.infiniburn())
-        val age = state.get(AGE)
+        val blockBelow = world.getBlockState(pos.below())
+        val infiniburn = blockBelow.`is`(world.dimensionType().infiniburn())
+        val age = state.getValue(AGE)
 
         val newAge = (age + random.nextInt(3) / 2).coerceAtMost(15)
 
         if (age != newAge) {
-            val newState = state.with(AGE, newAge)
-            world.setBlockState(pos, newState, Block.NO_REDRAW)
+            val newState = state.setValue(AGE, newAge)
+            world.setBlock(pos, newState, Block.UPDATE_INVISIBLE)
         }
 
-        if (!infiniburn && (!canPlaceAt(state, world, pos) || age > 12)) {
+        if (!infiniburn && (!canSurvive(state, world, pos) || age > 12)) {
             world.removeBlock(pos, false)
             return
         }
 
-        BlockPos.iterateOutwards(pos, 1, 1, 1)
+        BlockPos.withinManhattan(pos, 1, 1, 1)
             .listCopy()
             .filter { world.getBlockState(it).block is BlazePowderBlock }
             .also {
                 if (it.isEmpty()) return
-                world.setBlockState(it[random.nextInt(it.size)], this.defaultState)
+                world.setBlockAndUpdate(it[random.nextInt(it.size)], this.defaultBlockState())
             }
     }
 
-    override fun onBlockAdded(
+    override fun onPlace(
         state: BlockState,
-        world: World,
+        world: Level,
         pos: BlockPos,
         oldState: BlockState,
         notify: Boolean
     ) {
-        super.onBlockAdded(state, world, pos, oldState, notify)
+        super.onPlace(state, world, pos, oldState, notify)
         if (oldState.block !is BlazeFireBlock) {
             world.playSound(
                 null,
                 pos,
-                SoundEvents.ITEM_FIRECHARGE_USE,
-                SoundCategory.NEUTRAL,
+                SoundEvents.FIRECHARGE_USE,
+                SoundSource.NEUTRAL,
                 1.0f,
                 0.4f + 0.4f * world.random.nextFloat()
             )
         }
-        world.scheduleBlockTick(pos, this, world.random.nextInt(10))
+        world.scheduleTick(pos, this, world.random.nextInt(10))
     }
 
-    override fun onEntityCollision(state: BlockState?, world: World?, pos: BlockPos?, entity: Entity?) {
+    override fun entityInside(state: BlockState?, world: Level?, pos: BlockPos?, entity: Entity?) {
         if (entity is ItemEntity) return
-        super.onEntityCollision(state, world, pos, entity)
+        super.entityInside(state, world, pos, entity)
     }
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
         if (random.nextInt(24) == 0) {
-            world.playSound(
+            world.playLocalSound(
                 pos.x + 0.5,
                 pos.y + 0.5,
                 pos.z + 0.5,
-                SoundEvents.BLOCK_FIRE_AMBIENT,
-                SoundCategory.BLOCKS,
+                SoundEvents.FIRE_AMBIENT,
+                SoundSource.BLOCKS,
                 1.0f + random.nextFloat(),
                 random.nextFloat() * 0.7f + 0.3f,
                 false
@@ -137,10 +137,10 @@ class BlazeFireBlock(settings: Settings) : AbstractFireBlock(settings, 2.0f) {
     }
 
     companion object {
-        val AGE: IntProperty = Properties.AGE_15
+        val AGE: IntegerProperty = BlockStateProperties.AGE_15
 
-        private fun getFireTickDelay(random: Random) = 20 + random.nextInt(20)
+        private fun getFireTickDelay(random: RandomSource) = 20 + random.nextInt(20)
 
-        val CODEC: MapCodec<BlazeFireBlock> = createCodec(::BlazeFireBlock)
+        val CODEC: MapCodec<BlazeFireBlock> = simpleCodec(::BlazeFireBlock)
     }
 }

@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.duck
 
-import net.minecraft.entity.LivingEntity
+import net.minecraft.world.entity.LivingEntity
 
 internal inline var AirSkiier.isAirSkiing
     get() = `netherarchives$isAirSkiing`()

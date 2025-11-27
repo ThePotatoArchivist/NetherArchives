@@ -1,21 +1,21 @@
 package archives.tater.netherarchives.client.render.entity.feature
 
 import archives.tater.netherarchives.NetherArchives
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer
-import net.minecraft.client.render.entity.feature.FeatureRendererContext
-import net.minecraft.client.render.entity.model.SkeletonEntityModel
-import net.minecraft.entity.mob.AbstractSkeletonEntity
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.entity.layers.EyesLayer
+import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.model.SkeletonModel
+import net.minecraft.world.entity.monster.AbstractSkeleton
 
-class WitherSkeletonEyesFeatureRenderer<T : AbstractSkeletonEntity>(featureRendererContext: FeatureRendererContext<T, SkeletonEntityModel<T>>) :
-    EyesFeatureRenderer<T, SkeletonEntityModel<T>>(featureRendererContext) {
+class WitherSkeletonEyesFeatureRenderer<T : AbstractSkeleton>(featureRendererContext: RenderLayerParent<T, SkeletonModel<T>>) :
+    EyesLayer<T, SkeletonModel<T>>(featureRendererContext) {
 
     companion object {
         private val SKIN =
-            RenderLayer.getEyes(NetherArchives.id("textures/entity/skeleton/wither_skeleton_eyes.png"))
+            RenderType.eyes(NetherArchives.id("textures/entity/skeleton/wither_skeleton_eyes.png"))
     }
 
-    override fun getEyesTexture(): RenderLayer {
+    override fun renderType(): RenderType {
         return SKIN
     }
 

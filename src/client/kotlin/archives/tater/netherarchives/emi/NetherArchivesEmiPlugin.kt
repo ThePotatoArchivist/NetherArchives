@@ -9,23 +9,24 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
-import net.minecraft.block.Blocks
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.fluid.Fluids
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.registry.Registries
-import net.minecraft.text.Text
-import net.minecraft.util.Identifier
-import net.minecraft.util.Rarity
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Rarity
 
 object NetherArchivesEmiPlugin : EmiPlugin {
     override fun register(registry: EmiRegistry) {
         registry.apply {
             addWorldRecipe("unique/fermented_rotten_flesh") {
                 leftInput(EmiStack.of(NetherArchivesItems.ROTTEN_FLESH_BLOCK))
-                rightInput(EmiIngredient.of(Registries.BLOCK
-                    .filter { it.defaultState.isIn(NetherArchivesTags.ROTTEN_FLESH_FERMENTER) }
+                rightInput(EmiIngredient.of(
+                    BuiltInRegistries.BLOCK
+                    .filter { it.defaultBlockState().`is`(NetherArchivesTags.ROTTEN_FLESH_FERMENTER) }
                     .map { if (it == Blocks.SOUL_FIRE) NetherArchivesItems.DUMMY_SOUL_FIRE else it }
                     .map(EmiStack::of)), true)
                 output(EmiStack.of(NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK))
@@ -48,8 +49,8 @@ object NetherArchivesEmiPlugin : EmiPlugin {
                     Items.RESPAWN_ANCHOR,
                 ).map {
                     EmiStack.of(ItemStack(it).apply {
-                        this[DataComponentTypes.ITEM_NAME] = Text.translatable("netherarchives.emi.explosion")
-                        this[DataComponentTypes.RARITY] = Rarity.COMMON
+                        this[DataComponents.ITEM_NAME] = Component.translatable("netherarchives.emi.explosion")
+                        this[DataComponents.RARITY] = Rarity.COMMON
                     })
                 }), true)
                 output(EmiStack.of(Items.NETHER_STAR))
@@ -72,8 +73,8 @@ object NetherArchivesEmiPlugin : EmiPlugin {
                         Items.WITHER_SKELETON_SKULL,
                     ).map {
                         EmiStack.of(ItemStack(it).apply {
-                            this[DataComponentTypes.ITEM_NAME] = Text.translatable("netherarchives.emi.projectile")
-                            this[DataComponentTypes.RARITY] = Rarity.COMMON
+                            this[DataComponents.ITEM_NAME] = Component.translatable("netherarchives.emi.projectile")
+                            this[DataComponents.RARITY] = Rarity.COMMON
                         })
                     }), true)
                     output(EmiStack.of(shattered))
@@ -81,7 +82,7 @@ object NetherArchivesEmiPlugin : EmiPlugin {
         }
     }
 
-    private fun EmiRegistry.addWorldRecipe(id: Identifier, init: EmiWorldInteractionRecipe.Builder.() -> Unit) {
+    private fun EmiRegistry.addWorldRecipe(id: ResourceLocation, init: EmiWorldInteractionRecipe.Builder.() -> Unit) {
         addRecipe(EmiWorldInteractionRecipe.builder().id(id).apply(init).build())
     }
 

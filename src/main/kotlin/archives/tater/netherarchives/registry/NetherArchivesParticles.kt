@@ -2,15 +2,15 @@ package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
-import net.minecraft.particle.ParticleType
-import net.minecraft.particle.SimpleParticleType
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.util.Identifier
+import net.minecraft.core.particles.ParticleType
+import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.Registry
+import net.minecraft.resources.ResourceLocation
 
 object NetherArchivesParticles {
-    private fun <T: ParticleType<*>> register(id: Identifier, particleType: T): T =
-        Registry.register(Registries.PARTICLE_TYPE, id, particleType)
+    private fun <T: ParticleType<*>> register(id: ResourceLocation, particleType: T): T =
+        Registry.register(BuiltInRegistries.PARTICLE_TYPE, id, particleType)
 
     private fun <T: ParticleType<*>> register(path: String, particleType: T): T =
         register(NetherArchives.id(path), particleType)

@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.mixin;
 
 import archives.tater.netherarchives.item.SkisItem;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;

@@ -1,41 +1,41 @@
 package archives.tater.netherarchives.client.render.particle
 
 import net.minecraft.client.particle.*
-import net.minecraft.client.world.ClientWorld
-import net.minecraft.particle.SimpleParticleType
+import net.minecraft.client.multiplayer.ClientLevel
+import net.minecraft.core.particles.SimpleParticleType
 
-class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Double, scale: Float, private val spriteProvider: SpriteProvider) :
-    SpriteBillboardParticle(clientWorld, x, y, z) {
+class BlazeSparkParticle(clientWorld: ClientLevel, x: Double, y: Double, z: Double, scale: Float, private val spriteProvider: SpriteSet) :
+    TextureSheetParticle(clientWorld, x, y, z) {
         init {
-            this.scale = scale
-            setSpriteForAge(spriteProvider)
-            maxAge = 30 + random.nextInt(10)
+            this.quadSize = scale
+            setSpriteFromAge(spriteProvider)
+            lifetime = 30 + random.nextInt(10)
         }
 
     private val velocityStep = scale * (0.02 + 0.02 * Math.random())
 
-    override fun getType(): ParticleTextureSheet = ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT
+    override fun getRenderType(): ParticleRenderType = ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT
 
     override fun tick() {
-        prevPosX = x
-        prevPosY = y
-        prevPosZ = z
-        if (age++ >= maxAge) {
-            markDead()
+        xo = x
+        yo = y
+        zo = z
+        if (age++ >= lifetime) {
+            remove()
             return
         }
 
-        move(velocityX, velocityY, velocityZ)
-        setSpriteForAge(spriteProvider)
-        if (maxAge - age < 10)
-            alpha = (maxAge - age) / 10f
-        velocityY += velocityStep
+        move(xd, yd, zd)
+        setSpriteFromAge(spriteProvider)
+        if (lifetime - age < 10)
+            alpha = (lifetime - age) / 10f
+        yd += velocityStep
     }
 
-    class Factory(private val spriteProvider: SpriteProvider) : ParticleFactory<SimpleParticleType> {
+    class Factory(private val spriteProvider: SpriteSet) : ParticleProvider<SimpleParticleType> {
         override fun createParticle(
             parameters: SimpleParticleType,
-            world: ClientWorld,
+            world: ClientLevel,
             x: Double,
             y: Double,
             z: Double,
@@ -47,10 +47,10 @@ class BlazeSparkParticle(clientWorld: ClientWorld, x: Double, y: Double, z: Doub
         }
     }
 
-    class SmallFactory(private val spriteProvider: SpriteProvider) : ParticleFactory<SimpleParticleType> {
+    class SmallFactory(private val spriteProvider: SpriteSet) : ParticleProvider<SimpleParticleType> {
         override fun createParticle(
             parameters: SimpleParticleType,
-            world: ClientWorld,
+            world: ClientLevel,
             x: Double,
             y: Double,
             z: Double,

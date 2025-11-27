@@ -2,32 +2,32 @@
 
 package archives.tater.netherarchives.datagen
 
-import net.minecraft.data.client.BlockStateVariant
-import net.minecraft.data.client.Model
-import net.minecraft.data.client.TextureKey
-import net.minecraft.data.client.TextureMap
-import net.minecraft.data.client.VariantSettings
-import net.minecraft.util.Identifier
+import net.minecraft.data.models.blockstates.Variant
+import net.minecraft.data.models.model.ModelTemplate
+import net.minecraft.data.models.model.TextureSlot
+import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.blockstates.VariantProperties
+import net.minecraft.resources.ResourceLocation
 import java.util.*
 
-internal inline fun Model(vararg requiredTextureKeys: TextureKey, parent: Identifier? = null, variant: String? = null): Model =
-    Model(Optional.ofNullable(parent), Optional.ofNullable(variant), *requiredTextureKeys)
+internal inline fun Model(vararg requiredTextureKeys: TextureSlot, parent: ResourceLocation? = null, variant: String? = null): ModelTemplate =
+    ModelTemplate(Optional.ofNullable(parent), Optional.ofNullable(variant), *requiredTextureKeys)
 
 internal fun BlockStateVariant(
-    model: Identifier? = null,
-    x: VariantSettings.Rotation? = null,
-    y: VariantSettings.Rotation? = null,
+    model: ResourceLocation? = null,
+    x: VariantProperties.Rotation? = null,
+    y: VariantProperties.Rotation? = null,
     uvLock: Boolean? = null,
     weight: Int? = null,
-): BlockStateVariant = BlockStateVariant().apply {
-    model?.let { put(VariantSettings.MODEL, it) }
-    x?.let { put(VariantSettings.X, it) }
-    y?.let { put(VariantSettings.Y, it) }
-    uvLock?.let { put(VariantSettings.UVLOCK, it) }
-    weight?.let { put(VariantSettings.WEIGHT, it) }
+): Variant = Variant().apply {
+    model?.let { with(VariantProperties.MODEL, it) }
+    x?.let { with(VariantProperties.X_ROT, it) }
+    y?.let { with(VariantProperties.Y_ROT, it) }
+    uvLock?.let { with(VariantProperties.UV_LOCK, it) }
+    weight?.let { with(VariantProperties.WEIGHT, it) }
 }
 
-internal fun TextureMap(vararg entries: Pair<TextureKey, Identifier>) = TextureMap().apply {
+internal fun TextureMap(vararg entries: Pair<TextureSlot, ResourceLocation>) = TextureMapping().apply {
     for ((key, id) in entries)
         put(key, id)
 }

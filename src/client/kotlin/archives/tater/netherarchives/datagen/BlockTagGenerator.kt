@@ -1,11 +1,11 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.BLAZE_FIRE
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.MAGNETITE
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE
 import archives.tater.netherarchives.registry.NetherArchivesBlocks.SMOLDERING_MAGNETITE
@@ -21,24 +21,24 @@ import archives.tater.netherarchives.registry.NetherArchivesTags.ROTTEN_FLESH_FE
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
-import net.minecraft.block.Blocks
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.BlockTags
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.Blocks
 import java.util.concurrent.CompletableFuture
 
-class BlockTagGenerator(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+class BlockTagGenerator(output: FabricDataOutput, completableFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, completableFuture) {
 
-    override fun configure(arg: RegistryWrapper.WrapperLookup) {
-        getOrCreateTagBuilder(BlockTags.SHOVEL_MINEABLE).add(
+    override fun addTags(arg: HolderLookup.Provider) {
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(
             MAGNETITE,
             SMOLDERING_MAGNETITE
         )
-        getOrCreateTagBuilder(BlockTags.HOE_MINEABLE).add(
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_HOE).add(
             NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
             FERMENTED_ROTTEN_FLESH_BLOCK
         )
-        getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE).add(
+        getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(
             BASALT_GEYSER,
             ADJUSTABLE_BASALT_GEYSER,
         )

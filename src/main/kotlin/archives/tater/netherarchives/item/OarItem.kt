@@ -4,45 +4,46 @@ import archives.tater.netherarchives.registry.NetherArchivesDamageTypes.paddleBu
 import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.isIn
-import net.minecraft.entity.LivingEntity.getSlotForHand
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.registry.tag.FluidTags
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.Hand
-import net.minecraft.util.TypedActionResult
-import net.minecraft.util.math.MathHelper
-import net.minecraft.util.math.Vec3d
-import net.minecraft.world.World
+import net.minecraft.world.entity.LivingEntity.getSlotForHand
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.tags.FluidTags
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.util.Mth
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.level.Level
 
-class OarItem(settings: Settings) : Item(settings) {
-    override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
+class OarItem(settings: Properties) : Item(settings) {
+    override fun use(world: Level, user: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
         if (!SkisItem.isSkiing(user)) return super.use(world, user, hand)
 
-        val fluidState = world.getFluidState(user.blockPos)
+        val fluidState = world.getFluidState(user.blockPosition())
 
         val itemStack = user[hand]
 
-        val yawRads = user.yaw * MathHelper.RADIANS_PER_DEGREE
-        if (user.isLogicalSideForUpdatingMovement) {
-            user.velocity = user.velocity
-                .rotateY(yawRads)
-                .run { if (z > 0) Vec3d(x, y, z + VELOCITY) else Vec3d(x, y, VELOCITY) }
-                .rotateY(-yawRads)
+        val yawRads = user.yRot * Mth.DEG_TO_RAD
+        if (user.isControlledByLocalInstance) {
+            user.setDeltaMovement(
+                user.deltaMovement
+                .yRot(yawRads)
+                .run { if (z > 0) Vec3(x, y, z + VELOCITY) else Vec3(x, y, VELOCITY) }
+                .yRot(-yawRads))
         }
 
         if (fluidState isIn NetherArchivesTags.BURNS_WHEN_PADDLE)
-            user.damage(world.damageSources.paddleBurn, 1f)
+            user.hurt(world.damageSources().paddleBurn, 1f)
         // TODO custom sounds
         if (fluidState isIn FluidTags.LAVA)
-            user.playSound(SoundEvents.ITEM_BUCKET_EMPTY_LAVA, 1f, 1f)
+            user.playSound(SoundEvents.BUCKET_EMPTY_LAVA, 1f, 1f)
         else
-            user.playSound(SoundEvents.ENTITY_BOAT_PADDLE_WATER, 3f, 1f)
-        user.itemCooldownManager.set(itemStack.item, 10)
-        itemStack.damage(1, user, getSlotForHand(hand))
-        user.addExhaustion(0.2f)
-        return TypedActionResult.success(itemStack)
+            user.playSound(SoundEvents.BOAT_PADDLE_WATER, 3f, 1f)
+        user.cooldowns.addCooldown(itemStack.item, 10)
+        itemStack.hurtAndBreak(1, user, getSlotForHand(hand))
+        user.causeFoodExhaustion(0.2f)
+        return InteractionResultHolder.success(itemStack)
     }
 
     companion object {

@@ -9,12 +9,12 @@ import archives.tater.netherarchives.util.isIn
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.passive.StriderEntity
-import net.minecraft.item.Items
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Identifier
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.monster.Strider
+import net.minecraft.world.item.Items
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -22,7 +22,7 @@ object NetherArchives : ModInitializer {
     const val MOD_ID = "netherarchives"
 
     @JvmStatic
-    fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
+    fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
 
     @JvmField
     val logger: Logger = LoggerFactory.getLogger(MOD_ID)
@@ -43,16 +43,16 @@ object NetherArchives : ModInitializer {
         modifyLootTables()
 
         UseEntityCallback.EVENT.register { player, world, hand, entity, _ ->
-            if (entity !is StriderEntity || !entity.isSaddled || entity.hasPassengers() || !(player[hand] isIn ConventionalItemTags.SHEAR_TOOLS))
-                ActionResult.PASS
-            else if (world.isClient)
-                ActionResult.SUCCESS
+            if (entity !is Strider || !entity.isSaddled || entity.isVehicle || !(player[hand] isIn ConventionalItemTags.SHEAR_TOOLS))
+                InteractionResult.PASS
+            else if (world.isClientSide)
+                InteractionResult.SUCCESS
             else {
-                (entity as StriderEntityAccessor).saddledComponent.isSaddled = false
-                entity.dropItem(Items.SADDLE)
-                world.playSoundFromEntity(null, entity, SoundEvents.ENTITY_SHEEP_SHEAR, player.soundCategory, 1f, 1f) // TODO custom sound
-                player[hand].damage(1, player, LivingEntity.getSlotForHand(hand))
-                ActionResult.SUCCESS
+                (entity as StriderEntityAccessor).steering.setSaddle(false)
+                entity.spawnAtLocation(Items.SADDLE)
+                world.playSound(null, entity, SoundEvents.SHEEP_SHEAR, player.soundSource, 1f, 1f) // TODO custom sound
+                player[hand].hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand))
+                InteractionResult.SUCCESS
             }
         }
     }

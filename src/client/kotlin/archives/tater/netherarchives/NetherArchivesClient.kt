@@ -16,23 +16,23 @@ import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.item.ModelPredicateProviderRegistry
+import net.minecraft.client.Minecraft
+import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.client.particle.FlameParticle
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer
-import net.minecraft.client.render.entity.WitherEntityRenderer
-import net.minecraft.client.render.entity.WitherSkeletonEntityRenderer
-import net.minecraft.client.render.entity.model.EntityModelLayer
-import net.minecraft.client.render.model.json.ModelTransformationMode
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.Box
-import net.minecraft.util.math.MathHelper.clamp
-import net.minecraft.util.math.Vec3d
-import net.minecraft.world.BlockStateRaycastContext
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.entity.ThrownItemRenderer
+import net.minecraft.client.renderer.entity.WitherBossRenderer
+import net.minecraft.client.renderer.entity.WitherSkeletonRenderer
+import net.minecraft.client.model.geom.ModelLayerLocation
+import net.minecraft.world.item.ItemDisplayContext
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.phys.HitResult
+import net.minecraft.world.phys.AABB
+import net.minecraft.util.Mth.clamp
+import net.minecraft.world.phys.Vec3
+import net.minecraft.world.level.ClipBlockStateContext
 import java.util.*
 
 object NetherArchivesClient : ClientModInitializer {
@@ -43,7 +43,7 @@ object NetherArchivesClient : ClientModInitializer {
     @JvmField
     internal var usingSoulKnife = false // TODO rename
 
-    private val SKIS_MODEL_LAYER = EntityModelLayer(NetherArchives.id("skis"), "main")
+    private val SKIS_MODEL_LAYER = ModelLayerLocation(NetherArchives.id("skis"), "main")
 
     private val BASALT_SKIS_LOCATION = NetherArchives.id("textures/models/basalt_skis.png")
     private lateinit var basaltSkisModel: SkisEntityModel<LivingEntity>
@@ -53,10 +53,10 @@ object NetherArchivesClient : ClientModInitializer {
 
     @JvmField
     internal val inHandRenderModes = setOf(
-        ModelTransformationMode.FIRST_PERSON_LEFT_HAND,
-        ModelTransformationMode.FIRST_PERSON_RIGHT_HAND,
-        ModelTransformationMode.THIRD_PERSON_LEFT_HAND,
-        ModelTransformationMode.THIRD_PERSON_RIGHT_HAND,
+        ItemDisplayContext.FIRST_PERSON_LEFT_HAND,
+        ItemDisplayContext.FIRST_PERSON_RIGHT_HAND,
+        ItemDisplayContext.THIRD_PERSON_LEFT_HAND,
+        ItemDisplayContext.THIRD_PERSON_RIGHT_HAND,
     )
 
     @JvmStatic
@@ -68,13 +68,15 @@ object NetherArchivesClient : ClientModInitializer {
     override fun onInitializeClient() {
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
         with (NetherArchivesBlocks) {
-            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
+            BlockRenderLayerMap.INSTANCE.putBlocks(
+                RenderType.cutout(),
                 BLAZE_FIRE,
                 BLAZE_DUST,
                 BLAZE_TORCH,
                 WALL_BLAZE_TORCH
             )
-            BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getTranslucent(),
+            BlockRenderLayerMap.INSTANCE.putBlocks(
+                RenderType.translucent(),
                 SPECTREGLASS,
                 SHATTERED_SPECTREGLASS,
                 SPECTREGLASS_PANE,
@@ -82,13 +84,13 @@ object NetherArchivesClient : ClientModInitializer {
             )
         }
 
-        EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::FlyingItemEntityRenderer)
+        EntityRendererRegistry.register(NetherArchivesEntities.BLAZE_LANTERN, ::ThrownItemRenderer)
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
             if (NetherArchives.config.skeletonEyes)
                 registrationHelper.register(when (entityType) {
-                    EntityType.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonEntityRenderer)
-                    EntityType.WITHER -> WitherEyesFeatureRenderer(entityRenderer as WitherEntityRenderer)
+                    EntityType.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonRenderer)
+                    EntityType.WITHER -> WitherEyesFeatureRenderer(entityRenderer as WitherBossRenderer)
                     else -> return@register
                 })
         }
@@ -98,10 +100,10 @@ object NetherArchivesClient : ClientModInitializer {
         registerArmorRenderer(NetherArchivesItems.BASALT_SKIS) {
             matrices, vertexConsumers, stack, entity, slot, light, model ->
             if (!::basaltSkisModel.isInitialized) {
-                basaltSkisModel = SkisEntityModel(MinecraftClient.getInstance().entityModelLoader.getModelPart(SKIS_MODEL_LAYER))
+                basaltSkisModel = SkisEntityModel(Minecraft.getInstance().entityModels.bakeLayer(SKIS_MODEL_LAYER))
             }
 
-            model.copyBipedStateTo(basaltSkisModel)
+            model.copyPropertiesTo(basaltSkisModel)
             ArmorRenderer.renderPart(matrices, vertexConsumers, light, stack, basaltSkisModel, BASALT_SKIS_LOCATION)
         }
 
@@ -109,33 +111,34 @@ object NetherArchivesClient : ClientModInitializer {
             ctx.addModels(BASALT_OAR_IN_HAND_ID)
         }
 
-        ModelPredicateProviderRegistry.register(NetherArchivesItems.SPECTREGLASS_KNIFE, NetherArchives.id("viewing")) { stack, _, entity, _ ->
-            if (entity is PlayerEntity && entity.isUsingItem && entity.activeItem == stack) 1f else 0f
+        ItemProperties.register(NetherArchivesItems.SPECTREGLASS_KNIFE, NetherArchives.id("viewing")) { stack, _, entity, _ ->
+            if (entity is Player && entity.isUsingItem && entity.useItem == stack) 1f else 0f
         }
 
-        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Factory)
+        ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Provider)
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
         ParticleFactoryRegistry.getInstance().register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
 
         ClientTickEvents.START_WORLD_TICK.register { world ->
-            val client = MinecraftClient.getInstance()
-            val camera = client.gameRenderer.camera
-            usingSoulKnife = !camera.isThirdPerson && client.player == client.cameraEntity && client.player?.activeItem?.isOf(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
+            val client = Minecraft.getInstance()
+            val camera = client.gameRenderer.mainCamera
+            usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && client.player?.useItem?.`is`(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
 
             if (usingSoulKnife) return@register // Can skip checks
 
-            val cameraPos = camera.pos
-            val distance = 64 * clamp(client.options.clampedViewDistance / 8.0, 1.0, 2.5) *
-                    client.options.entityDistanceScaling.value
-            for (entity in world.getEntitiesByClass(
+            val cameraPos = camera.position
+            val distance = 64 * clamp(client.options.effectiveRenderDistance / 8.0, 1.0, 2.5) *
+                    client.options.entityDistanceScaling().get()
+            for (entity in world.getEntitiesOfClass(
                 LivingEntity::class.java,
-                Box.of(cameraPos, distance, distance, distance)
+                AABB.ofSize(cameraPos, distance, distance, distance)
             ) {
                 it.isInvisible || it.isInvisibleTo(client.player)
             }) {
-                spectreglassRevealed[entity] = world.raycast(BlockStateRaycastContext(
+                spectreglassRevealed[entity] = world.isBlockInLine(
+                    ClipBlockStateContext(
                         cameraPos,
-                        Vec3d(entity.x, entity.getBodyY(0.5), entity.z),
+                        Vec3(entity.x, entity.getY(0.5), entity.z),
                     ) { it isIn NetherArchivesTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
             }
         }

@@ -6,21 +6,21 @@ import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.item.Items
-import net.minecraft.recipe.book.RecipeCategory
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.ItemTags
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.world.item.Items
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.ItemTags
 import java.util.concurrent.CompletableFuture
 
-class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>?) :
+class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>?) :
     FabricRecipeProvider(output, registriesFuture) {
 
-    override fun generate(exporter: RecipeExporter) {
+    override fun buildRecipes(exporter: RecipeOutput) {
         exporter.recipes()
     }
 
-    private fun RecipeExporter.recipes() {
+    private fun RecipeOutput.recipes() {
         oreSmelting(RecipeCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_NUGGET, 25, 0.08F)
 
         shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeId = NetherArchives.id("compass_from_magnetite")) {
@@ -151,10 +151,10 @@ class RecipeGenerator(output: FabricDataOutput, registriesFuture: CompletableFut
 
         smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SPECTREGLASS_SHARD, experience = 0.1f)
 
-        offer2x2CompactingRecipe(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
+        twoByTwoPacker(this, RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
 
-        offerStainedGlassPaneRecipe(this, NetherArchivesItems.SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS)
-        offerStainedGlassPaneRecipe(this, NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SHATTERED_SPECTREGLASS)
+        stainedGlassPaneFromStainedGlass(this, NetherArchivesItems.SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS)
+        stainedGlassPaneFromStainedGlass(this, NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SHATTERED_SPECTREGLASS)
 
         smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS)
         smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS_PANE)

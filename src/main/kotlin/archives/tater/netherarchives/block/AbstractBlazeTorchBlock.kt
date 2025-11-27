@@ -2,39 +2,39 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.block.entity.BlazeTorchBlockEntity
-import net.minecraft.block.Block.NOTIFY_LISTENERS
-import net.minecraft.block.BlockEntityProvider
-import net.minecraft.block.BlockState
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.World
+import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
+import net.minecraft.world.level.block.EntityBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.BlockPos
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 
 
-interface AbstractBlazeTorchBlock : BlockEntityProvider {
-    override fun createBlockEntity(pos: BlockPos, state: BlockState) = BlazeTorchBlockEntity(pos, state)
+interface AbstractBlazeTorchBlock : EntityBlock {
+    override fun newBlockEntity(pos: BlockPos, state: BlockState) = BlazeTorchBlockEntity(pos, state)
 
     fun onBlockAdded(
         state: BlockState,
-        world: World,
+        world: Level,
         pos: BlockPos,
     ) {
-        if (world.isClient) return
+        if (world.isClientSide) return
         (world.getBlockEntity(pos) as BlazeTorchBlockEntity).locateTarget() ?: return
-        world.updateListeners(pos, state, state, NOTIFY_LISTENERS)
+        world.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS)
     }
 
     fun randomDisplayTick(
         state: BlockState,
-        world: World,
+        world: Level,
         pos: BlockPos,
-        random: Random,
+        random: RandomSource,
         originX: Double,
         originY: Double,
         originZ: Double
     ) {
         val blockEntity = world.getBlockEntity(pos) as BlazeTorchBlockEntity
 
-        world.addImportantParticle(
+        world.addAlwaysVisibleParticle(
             NetherArchivesParticles.BLAZE_FLAME,
             originX,
             originY,

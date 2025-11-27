@@ -1,12 +1,12 @@
 package archives.tater.netherarchives.mixin;
 
-import net.minecraft.entity.SaddledComponent;
-import net.minecraft.entity.passive.StriderEntity;
+import net.minecraft.world.entity.ItemBasedSteering;
+import net.minecraft.world.entity.monster.Strider;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(StriderEntity.class)
+@Mixin(Strider.class)
 public interface StriderEntityAccessor {
     @Accessor
-    SaddledComponent getSaddledComponent();
+    ItemBasedSteering getSteering();
 }

@@ -4,13 +4,13 @@ import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.core.HolderLookup
 import java.util.concurrent.CompletableFuture
 
-class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricLanguageProvider(output, registriesFuture) {
 
-    override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, translationBuilder: TranslationBuilder) {
+    override fun generateTranslations(registryLookup: HolderLookup.Provider, translationBuilder: TranslationBuilder) {
         translationBuilder.apply {
             add(NetherArchivesBlocks.MAGNETITE, "Magnetite")
             add(NetherArchivesBlocks.SMOLDERING_MAGNETITE, "Smoldering Magnetite")

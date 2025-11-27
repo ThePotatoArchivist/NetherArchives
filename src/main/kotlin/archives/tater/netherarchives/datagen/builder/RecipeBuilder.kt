@@ -1,128 +1,124 @@
 package archives.tater.netherarchives.datagen.builder
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder
-import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import net.minecraft.recipe.*
-import net.minecraft.recipe.AbstractCookingRecipe.RecipeFactory
-import net.minecraft.recipe.book.RecipeCategory
-import net.minecraft.registry.Registries
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.data.recipes.*
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.*
+import net.minecraft.world.item.crafting.AbstractCookingRecipe.Factory
+import net.minecraft.world.level.ItemLike
 
 // Shaped
 
-inline fun RecipeExporter.shaped(
+inline fun RecipeOutput.shaped(
     category: RecipeCategory,
-    outputItem: ItemConvertible,
+    outputItem: ItemLike,
     count: Int = 1,
-    recipeId: Identifier = outputItem.asItem().id,
-    init: ShapedRecipeJsonBuilder.() -> Unit
+    recipeId: ResourceLocation = outputItem.asItem().id,
+    init: ShapedRecipeBuilder.() -> Unit
 ) {
-    ShapedRecipeJsonBuilder.create(category, outputItem, count).apply(init)
-        .offerTo(this, recipeId)
+    ShapedRecipeBuilder.shaped(category, outputItem, count).apply(init)
+        .save(this, recipeId)
 }
 
-fun ShapedRecipeJsonBuilder.patterns(rows: String) {
+fun ShapedRecipeBuilder.patterns(rows: String) {
     rows.trimIndent().split('\n').forEach(::pattern)
 }
 
-fun ShapedRecipeJsonBuilder.itemCriterion(item: ItemConvertible) {
-    criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item))
+fun ShapedRecipeBuilder.itemCriterion(item: ItemLike) {
+    unlockedBy(FabricRecipeProvider.getHasName(item), FabricRecipeProvider.has(item))
 }
 
-fun ShapedRecipeJsonBuilder.crInput(c: Char, item: ItemConvertible) {
-    input(c, item)
+fun ShapedRecipeBuilder.crInput(c: Char, item: ItemLike) {
+    define(c, item)
     itemCriterion(item)
 }
 
-inline fun ShapedRecipeJsonBuilder.inputs(init: ShapedIngredientsBuilder.() -> Unit) {
+inline fun ShapedRecipeBuilder.inputs(init: ShapedIngredientsBuilder.() -> Unit) {
     ShapedIngredientsBuilder(this).init()
 }
 
-class ShapedIngredientsBuilder(private val recipeBuilder: ShapedRecipeJsonBuilder) {
-    infix fun Char.to(item: ItemConvertible) {
-        recipeBuilder.input(this, item)
+class ShapedIngredientsBuilder(private val recipeBuilder: ShapedRecipeBuilder) {
+    infix fun Char.to(item: ItemLike) {
+        recipeBuilder.define(this, item)
     }
 
     infix fun Char.to(ingredient: Ingredient) {
-        recipeBuilder.input(this, ingredient)
+        recipeBuilder.define(this, ingredient)
     }
 
     infix fun Char.to(tagKey: TagKey<Item>) {
-        recipeBuilder.input(this, tagKey)
+        recipeBuilder.define(this, tagKey)
     }
 }
 
 // Shapeless Recipe
 
-inline fun RecipeExporter.shapeless(
+inline fun RecipeOutput.shapeless(
     category: RecipeCategory,
-    outputItem: ItemConvertible,
+    outputItem: ItemLike,
     count: Int = 1,
-    recipeId: Identifier = outputItem.asItem().id,
-    init: ShapelessRecipeJsonBuilder.() -> Unit
+    recipeId: ResourceLocation = outputItem.asItem().id,
+    init: ShapelessRecipeBuilder.() -> Unit
 ) {
-    ShapelessRecipeJsonBuilder.create(category, outputItem, count).apply(init)
-        .offerTo(this, recipeId)
+    ShapelessRecipeBuilder.shapeless(category, outputItem, count).apply(init)
+        .save(this, recipeId)
 }
 
-fun ShapelessRecipeJsonBuilder.itemCriterion(item: ItemConvertible) {
-    criterion(FabricRecipeProvider.hasItem(item), FabricRecipeProvider.conditionsFromItem(item))
+fun ShapelessRecipeBuilder.itemCriterion(item: ItemLike) {
+    unlockedBy(FabricRecipeProvider.getHasName(item), FabricRecipeProvider.has(item))
 }
 
-fun ShapelessRecipeJsonBuilder.crInput(item: ItemConvertible) {
-    input(item)
+fun ShapelessRecipeBuilder.crInput(item: ItemLike) {
+    requires(item)
     itemCriterion(item)
 }
 
-fun ShapelessRecipeJsonBuilder.inputs(init: ShapelessIngredientsBuilder.() -> Unit) {
+fun ShapelessRecipeBuilder.inputs(init: ShapelessIngredientsBuilder.() -> Unit) {
     ShapelessIngredientsBuilder(this).init()
 }
 
-class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeJsonBuilder) {
-    operator fun ItemConvertible.unaryPlus() {
-        recipeBuilder.input(this)
+class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeBuilder) {
+    operator fun ItemLike.unaryPlus() {
+        recipeBuilder.requires(this)
     }
 
-    infix fun Int.of(item: ItemConvertible) {
-        recipeBuilder.input(item, this)
+    infix fun Int.of(item: ItemLike) {
+        recipeBuilder.requires(item, this)
     }
 
     operator fun Ingredient.unaryPlus() {
-        recipeBuilder.input(this)
+        recipeBuilder.requires(this)
     }
 
     infix fun Int.of(ingredient: Ingredient) {
-        recipeBuilder.input(ingredient, this)
+        recipeBuilder.requires(ingredient, this)
     }
 
     operator fun TagKey<Item>.unaryPlus() {
-        recipeBuilder.input(this)
+        recipeBuilder.requires(this)
     }
 }
 
 // Cooking
 
 val Item.id
-    get() = Registries.ITEM.getId(this as Item?)
+    get() = BuiltInRegistries.ITEM.getKey(this as Item?)
 
-fun <T: AbstractCookingRecipe> RecipeExporter.cookingRecipe(
+fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     serializer: RecipeSerializer<T>,
-    recipeFactory: RecipeFactory<T>,
+    recipeFactory: Factory<T>,
     method: String,
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    CookingRecipeJsonBuilder.create(
-        Ingredient.ofItems(inputItem),
+    SimpleCookingRecipeBuilder.generic(
+        Ingredient.of(inputItem),
         category,
         outputItem,
         experience,
@@ -130,51 +126,51 @@ fun <T: AbstractCookingRecipe> RecipeExporter.cookingRecipe(
         serializer,
         recipeFactory,
     )
-        .criterion(FabricRecipeProvider.hasItem(inputItem), FabricRecipeProvider.conditionsFromItem(inputItem))
-        .offerTo(this, Identifier.of(outputItem.id.namespace, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
+        .unlockedBy(FabricRecipeProvider.getHasName(inputItem), FabricRecipeProvider.has(inputItem))
+        .save(this, ResourceLocation.fromNamespaceAndPath(outputItem.id.namespace, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
 }
 
-fun RecipeExporter.smelting(
+fun RecipeOutput.smelting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING, ::SmeltingRecipe, "smelting", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING_RECIPE, ::SmeltingRecipe, "smelting", cookingTime, experience)
 }
 
-fun RecipeExporter.smoking(
+fun RecipeOutput.smoking(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 100,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING, ::SmokingRecipe, "smoking", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING_RECIPE, ::SmokingRecipe, "smoking", cookingTime, experience)
 }
 
-fun RecipeExporter.blasting(
+fun RecipeOutput.blasting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 50,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING, ::BlastingRecipe, "blasting", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING_RECIPE, ::BlastingRecipe, "blasting", cookingTime, experience)
 }
 
-fun RecipeExporter.campfire(
+fun RecipeOutput.campfire(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 600,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
 }
 
-fun RecipeExporter.oreSmelting(
+fun RecipeOutput.oreSmelting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
@@ -185,7 +181,7 @@ fun RecipeExporter.oreSmelting(
     blasting(category, inputItem, outputItem, cookingTime / 2, experience)
 }
 
-fun RecipeExporter.foodCooking(
+fun RecipeOutput.foodCooking(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,

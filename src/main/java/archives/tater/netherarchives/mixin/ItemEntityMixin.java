@@ -1,13 +1,13 @@
 package archives.tater.netherarchives.mixin;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,18 +16,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {
-    @Shadow public abstract ItemStack getStack();
 
-    public ItemEntityMixin(EntityType<?> type, World world) {
+    @Shadow
+    public abstract ItemStack getItem();
+
+    public ItemEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
     }
 
     @Inject(
-            method = "damage",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;onItemEntityDestroyed(Lnet/minecraft/entity/ItemEntity;)V")
+            method = "hurt",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;onDestroyed(Lnet/minecraft/world/entity/item/ItemEntity;)V")
     )
     private void explodeBeacon(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (!source.isIn(DamageTypeTags.IS_EXPLOSION) || !getStack().isOf(Items.BEACON)) return;
-        getWorld().spawnEntity(new ItemEntity(getWorld(), getX(), getY(), getZ(), Items.NETHER_STAR.getDefaultStack()));
+        if (!source.is(DamageTypeTags.IS_EXPLOSION) || !getItem().is(Items.BEACON)) return;
+        level().addFreshEntity(new ItemEntity(level(), getX(), getY(), getZ(), Items.NETHER_STAR.getDefaultInstance()));
     }
 }

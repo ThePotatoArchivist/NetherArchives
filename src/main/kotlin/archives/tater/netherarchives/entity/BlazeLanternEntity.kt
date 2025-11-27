@@ -6,48 +6,49 @@ import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.registry.NetherArchivesEntities
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.FallingBlockEntity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity
-import net.minecraft.item.Item
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Box
-import net.minecraft.util.math.Direction
-import net.minecraft.world.World
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.item.FallingBlockEntity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile
+import net.minecraft.world.item.Item
+import net.minecraft.sounds.SoundSource
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.phys.HitResult
+import net.minecraft.core.BlockPos
+import net.minecraft.world.phys.AABB
+import net.minecraft.core.Direction
+import net.minecraft.world.level.Level
 
-class BlazeLanternEntity : ThrownItemEntity {
-    constructor(type: EntityType<BlazeLanternEntity>, world: World) : super(type, world)
-    constructor(world: World, owner: LivingEntity) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, world)
+class BlazeLanternEntity : ThrowableItemProjectile {
+    constructor(type: EntityType<BlazeLanternEntity>, world: Level) : super(type, world)
+    constructor(world: Level, owner: LivingEntity) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, world)
 
     override fun getDefaultItem(): Item = NetherArchivesItems.BLAZE_LANTERN
 
-    override fun onCollision(hitResult: HitResult) {
-        super.onCollision(hitResult)
-        if (world.isClient) return
-        val pos = hitResult.pos
+    override fun onHit(hitResult: HitResult) {
+        super.onHit(hitResult)
+        if (level().isClientSide) return
+        val pos = hitResult.location
         val blockPos = BlockPos(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
 
-        world.playSound(null, blockPos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 0.5f, 1.0f)
+        level().playSound(null, blockPos, SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 0.5f, 1.0f)
 
-        world.getOtherEntities(this, Box.of(blockPos.toCenterPos(), 1.5, 1.5, 1.5)).forEach {
-            it.setOnFireForTicks(20 * 5)
+        level().getEntities(this, AABB.ofSize(blockPos.center, 1.5, 1.5, 1.5)).forEach {
+            it.igniteForTicks(20 * 5)
         }
 
-        BlockPos.iterateInSquare(blockPos, 1, Direction.NORTH, Direction.EAST).listCopy()
+        BlockPos.spiralAround(blockPos, 1, Direction.NORTH, Direction.EAST).listCopy()
             .filter {
-                val blockState = world.getBlockState(it)
+                val blockState = level().getBlockState(it)
 
                 if (blockState.block is BlazePowderBlock) return@filter true
 
                 // Must be either air or a replaceable, burnable block
-                if (!blockState.isAir && !(blockState.isReplaceable && blockState.isBurnable)) return@filter false
+                if (!blockState.isAir && !(blockState.canBeReplaced() && blockState.ignitedByLava())) return@filter false
 
                 // Must be able to place blaze fire here or let it fall
-                if (!world.getBlockState(it.down()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.defaultState.canPlaceAt(world, it)) return@filter false
+                if (!level().getBlockState(it.below()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState()
+                        .canSurvive(level(), it)) return@filter false
 
                 true
             }
@@ -56,15 +57,15 @@ class BlazeLanternEntity : ThrownItemEntity {
 
                 val returnedList = it.toMutableList().apply {
                     centerFlammable = remove(blockPos)
-                }.draw(world.random, 4)
+                }.draw(level().random, 4)
 
                 if (centerFlammable) returnedList + listOf(blockPos) else returnedList
             }
             .forEach {
-                if (world.getBlockState(it.down()).isAir) {
-                    FallingBlockEntity.spawnFromBlock(world, it, NetherArchivesBlocks.BLAZE_FIRE.defaultState)
+                if (level().getBlockState(it.below()).isAir) {
+                    FallingBlockEntity.fall(level(), it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
                 } else {
-                    world.setBlockState(it, NetherArchivesBlocks.BLAZE_FIRE.defaultState)
+                    level().setBlockAndUpdate(it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
                 }
             }
         discard()

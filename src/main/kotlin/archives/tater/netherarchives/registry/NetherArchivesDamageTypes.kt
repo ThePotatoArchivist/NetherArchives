@@ -1,18 +1,19 @@
 package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
-import net.minecraft.entity.damage.DamageSource
-import net.minecraft.entity.damage.DamageSources
-import net.minecraft.entity.damage.DamageType
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.damagesource.DamageSources
+import net.minecraft.world.damagesource.DamageType
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
 
 object NetherArchivesDamageTypes {
-    val PADDLE_BURN: RegistryKey<DamageType> = RegistryKey.of(RegistryKeys.DAMAGE_TYPE,
+    val PADDLE_BURN: ResourceKey<DamageType> = ResourceKey.create(
+        Registries.DAMAGE_TYPE,
         NetherArchives.id("paddle_burn")
     )
 
-    val DamageSources.paddleBurn: DamageSource get() = create(PADDLE_BURN)
+    val DamageSources.paddleBurn: DamageSource get() = source(PADDLE_BURN)
 
     fun register() {}
 }

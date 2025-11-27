@@ -3,17 +3,17 @@ package archives.tater.netherarchives.block.entity
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.NbtHelper
-import net.minecraft.network.listener.ClientPlayPacketListener
-import net.minecraft.network.packet.Packet
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.RegistryWrapper.WrapperLookup
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.math.BlockPos
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtUtils
+import net.minecraft.network.protocol.game.ClientGamePacketListener
+import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderLookup.Provider
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.BlockPos
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sqrt
 
@@ -28,8 +28,8 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
         private set(value) {
             field = value
             if (value === null) return
-            val xDiff = value.x - pos.x
-            val zDiff = value.z - pos.z
+            val xDiff = value.x - worldPosition.x
+            val zDiff = value.z - worldPosition.z
             val length = sqrt((xDiff * xDiff + zDiff * zDiff).toDouble())
             xVelocityCoef = xDiff / length
             zVelocityCoef = zDiff / length
@@ -39,32 +39,32 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
     var zVelocityCoef: Double? = null
 
     fun locateTarget(): BlockPos? {
-        val pos = (world as ServerWorld).run {
-            locateStructure(NetherArchivesTags.BLAZE_TORCH_LOCATED, pos, 50, false)
+        val pos = (level as ServerLevel).run {
+            findNearestMapStructure(NetherArchivesTags.BLAZE_TORCH_LOCATED, worldPosition, 50, false)
         } ?: return null
         targetPos = pos
         NetherArchives.logger.info("Located at ${pos.x}, ${pos.y}, ${pos.z}")
-        markDirty()
+        setChanged()
         return pos
     }
 
-    override fun toUpdatePacket(): Packet<ClientPlayPacketListener>? {
-        return BlockEntityUpdateS2CPacket.create(this)
+    override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {
+        return ClientboundBlockEntityDataPacket.create(this)
     }
 
-    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {
-        return createNbt(registryLookup)
+    override fun getUpdateTag(registryLookup: HolderLookup.Provider): CompoundTag {
+        return saveWithoutMetadata(registryLookup)
     }
 
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+    override fun saveAdditional(nbt: CompoundTag, registryLookup: HolderLookup.Provider) {
         // Save the current value of the number to the nbt
         if (targetPos !== null)
-            nbt.put(TARGET_KEY, targetPos.let(NbtHelper::fromBlockPos))
+            nbt.put(TARGET_KEY, targetPos.let(NbtUtils::writeBlockPos))
     }
 
     // Deserialize the BlockEntity
-    override fun readNbt(nbt: NbtCompound, registryLookup: WrapperLookup) {
+    override fun loadAdditional(nbt: CompoundTag, registryLookup: Provider) {
         if (!nbt.contains(TARGET_KEY)) return
-        targetPos = NbtHelper.toBlockPos(nbt, TARGET_KEY).getOrNull()
+        targetPos = NbtUtils.readBlockPos(nbt, TARGET_KEY).getOrNull()
     }
 }
