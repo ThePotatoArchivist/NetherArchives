@@ -46,7 +46,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.acceptVariants(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER) {
             with(PropertyDispatch.property(AdjustableBasaltGeyserBlock.POWERED).generate { powered ->
                 val suffix = if (powered) "_on" else ""
-                BlockStateVariant(
+                Variant(
                     model = CUBE_BOTTOM_TOP_PARTICLE_MODEL.create(
                         ModelLocationUtils.getModelLocation(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, suffix),
                         cubeBottomTopParticle(
@@ -65,7 +65,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         blockStateModelGenerator.acceptVariants(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK) {
             with(PropertyDispatch.property(RottenFleshBlock.AGE).generate {
                 val suffix = if (it == 0) "" else "_stage$it"
-                BlockStateVariant(
+                Variant(
                     model = ModelTemplates.CUBE_ALL.createWithSuffix(
                         NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
                         suffix,
@@ -86,13 +86,14 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         itemModelGenerator.generateFlatItem(NetherArchivesItems.BASALT_OAR, ModelTemplates.FLAT_ITEM)
         itemModelGenerator.generateFlatItem(NetherArchivesItems.BASALT_ROD, ModelTemplates.FLAT_HANDHELD_ROD_ITEM)
 
-        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMap().apply {
+        ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(NetherArchivesItems.DUMMY_SOUL_FIRE), archives.tater.netherarchives.datagen.TextureMapping()
+            .apply {
             put(TextureSlot.LAYER0, ModelLocationUtils.getModelLocation(Blocks.SOUL_FIRE, "_0"))
         }, itemModelGenerator.output)
     }
 
     companion object {
-        private val CUBE_BOTTOM_TOP_PARTICLE_MODEL = Model(
+        private val CUBE_BOTTOM_TOP_PARTICLE_MODEL = ModelTemplate(
             TextureSlot.TOP,
             TextureSlot.SIDE,
             TextureSlot.BOTTOM,
@@ -100,7 +101,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             parent = ResourceLocation.withDefaultNamespace("block/cube_bottom_top")
         )
 
-        private fun cubeBottomTopParticle(top: Block, bottom: Block, side: Block = top, suffix: String = "", bottomSuffix: String = "_bottom", topSuffixed: Boolean = true) = TextureMap(
+        private fun cubeBottomTopParticle(top: Block, bottom: Block, side: Block = top, suffix: String = "", bottomSuffix: String = "_bottom", topSuffixed: Boolean = true) = TextureMapping(
             TextureSlot.TOP to ModelLocationUtils.getModelLocation(top, if (topSuffixed) "_top$suffix" else "_top"),
             TextureSlot.SIDE to ModelLocationUtils.getModelLocation(side, "_side$suffix"),
             TextureSlot.BOTTOM to ModelLocationUtils.getModelLocation(bottom, "$bottomSuffix$suffix"),
@@ -116,7 +117,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         }
 
         private inline fun BlockModelGenerators.acceptVariants(block: Block, model: ResourceLocation, init: MultiVariantGenerator.() -> Unit = {}) {
-            acceptVariants(block, BlockStateVariant(model = model), init = init)
+            acceptVariants(block, Variant(model = model), init = init)
         }
 
         private inline fun buildBlockStateVariants(modelIds: List<ResourceLocation>, crossinline processor: Variant.() -> Unit = {}): MutableList<Variant> =

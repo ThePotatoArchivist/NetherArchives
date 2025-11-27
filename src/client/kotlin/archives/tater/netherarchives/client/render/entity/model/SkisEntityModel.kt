@@ -27,7 +27,7 @@ class SkisEntityModel<T : LivingEntity>(root: ModelPart, renderLayerFactory: Fun
 
                 .texOffs(-16, 0)
                 .addBox(-1.5F, 11.75F, -16.0F, 3.0F, 0.0F, 32.0F, CubeDeformation.NONE),
-            PartPose.offset(-1.9F, 12.25F, 0.0F));
+            PartPose.offset(-1.9F, 12.25F, 0.0F))
 
             addOrReplaceChild(
                 PartNames.LEFT_LEG, CubeListBuilder.create()

@@ -1,20 +1,20 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.LivingEntity
-import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.tags.FluidTags
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.FluidTags
 import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 
 class SmolderingMagnetiteBlock(settings: Properties) : Block(settings.randomTicks()) {
-    override fun isRandomlyTicking(state: BlockState?) = true
+    override fun isRandomlyTicking(state: BlockState) = true
 
     override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         if (Direction.entries.none {
@@ -26,7 +26,7 @@ class SmolderingMagnetiteBlock(settings: Properties) : Block(settings.randomTick
     }
 
     // Copied from Magma Block
-    override fun stepOn(world: Level, pos: BlockPos?, state: BlockState?, entity: Entity) {
+    override fun stepOn(world: Level, pos: BlockPos, state: BlockState, entity: Entity) {
         if (!entity.isSteppingCarefully && entity is LivingEntity) {
             entity.hurt(world.damageSources().hotFloor(), 1.0f)
         }

@@ -20,7 +20,7 @@ class ItemTagGenerator(
     output: FabricDataOutput,
     registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagProvider.ItemTagProvider(output, registriesFuture) {
-    override fun addTags(arg: HolderLookup.Provider?) {
+    override fun addTags(arg: HolderLookup.Provider) {
         getOrCreateTagBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
             DUMMY_SOUL_FIRE,
         )

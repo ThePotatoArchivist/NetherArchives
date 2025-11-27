@@ -3,17 +3,17 @@ package archives.tater.netherarchives.block.entity
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtUtils
-import net.minecraft.network.protocol.game.ClientGamePacketListener
-import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
+import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderLookup.Provider
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtUtils
+import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientGamePacketListener
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockState
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sqrt
 
@@ -59,7 +59,7 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
     override fun saveAdditional(nbt: CompoundTag, registryLookup: HolderLookup.Provider) {
         // Save the current value of the number to the nbt
         if (targetPos !== null)
-            nbt.put(TARGET_KEY, targetPos.let(NbtUtils::writeBlockPos))
+            nbt.put(TARGET_KEY, targetPos!!.let(NbtUtils::writeBlockPos))
     }
 
     // Deserialize the BlockEntity

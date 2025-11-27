@@ -3,17 +3,17 @@
 package archives.tater.netherarchives.datagen
 
 import net.minecraft.data.models.blockstates.Variant
-import net.minecraft.data.models.model.ModelTemplate
-import net.minecraft.data.models.model.TextureSlot
-import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.blockstates.VariantProperties
+import net.minecraft.data.models.model.ModelTemplate
+import net.minecraft.data.models.model.TextureMapping
+import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.resources.ResourceLocation
 import java.util.*
 
-internal inline fun Model(vararg requiredTextureKeys: TextureSlot, parent: ResourceLocation? = null, variant: String? = null): ModelTemplate =
+internal inline fun ModelTemplate(vararg requiredTextureKeys: TextureSlot, parent: ResourceLocation? = null, variant: String? = null): ModelTemplate =
     ModelTemplate(Optional.ofNullable(parent), Optional.ofNullable(variant), *requiredTextureKeys)
 
-internal fun BlockStateVariant(
+internal fun Variant(
     model: ResourceLocation? = null,
     x: VariantProperties.Rotation? = null,
     y: VariantProperties.Rotation? = null,
@@ -27,7 +27,7 @@ internal fun BlockStateVariant(
     weight?.let { with(VariantProperties.WEIGHT, it) }
 }
 
-internal fun TextureMap(vararg entries: Pair<TextureSlot, ResourceLocation>) = TextureMapping().apply {
+internal fun TextureMapping(vararg entries: Pair<TextureSlot, ResourceLocation>) = TextureMapping().apply {
     for ((key, id) in entries)
         put(key, id)
 }

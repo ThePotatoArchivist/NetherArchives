@@ -2,22 +2,22 @@
 
 package archives.tater.netherarchives.util
 
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.item.component.ItemAttributeModifiers
-import net.minecraft.world.entity.EntityType
-import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.FluidState
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
+import net.minecraft.core.BlockPos
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
-import net.minecraft.core.BlockPos
-import net.minecraft.world.phys.Vec3
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.ItemAttributeModifiers
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockSettings
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.FluidState
+import net.minecraft.world.phys.Vec3
 import net.minecraft.world.item.Item.Properties as ItemSettings
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockSettings
 
 internal inline fun BlockSettings(init: BlockSettings.() -> Unit = {}): BlockSettings =
     BlockSettings.of().apply(init)
@@ -45,6 +45,6 @@ internal inline operator fun Vec3.component1() = x
 internal inline operator fun Vec3.component2() = y
 internal inline operator fun Vec3.component3() = z
 
-fun AttributeModifiersComponent(init: ItemAttributeModifiers.Builder.() -> Unit): ItemAttributeModifiers =
+fun ItemAttributeModifiers(init: ItemAttributeModifiers.Builder.() -> Unit): ItemAttributeModifiers =
     ItemAttributeModifiers.builder().apply(init).build()
 

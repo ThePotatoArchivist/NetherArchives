@@ -105,7 +105,7 @@ class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeBuil
 // Cooking
 
 val Item.id
-    get() = BuiltInRegistries.ITEM.getKey(this as Item?)
+    get() = BuiltInRegistries.ITEM.getKey(this)
 
 fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
     category: RecipeCategory,

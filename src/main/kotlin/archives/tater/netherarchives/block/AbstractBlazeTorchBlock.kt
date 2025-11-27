@@ -1,19 +1,19 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.block.entity.BlazeTorchBlockEntity
-import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
-import net.minecraft.world.level.block.EntityBlock
-import net.minecraft.world.level.block.state.BlockState
+import archives.tater.netherarchives.registry.NetherArchivesParticles
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block.UPDATE_CLIENTS
+import net.minecraft.world.level.block.EntityBlock
+import net.minecraft.world.level.block.state.BlockState
 
 
 interface AbstractBlazeTorchBlock : EntityBlock {
     override fun newBlockEntity(pos: BlockPos, state: BlockState) = BlazeTorchBlockEntity(pos, state)
 
-    fun onBlockAdded(
+    fun onPlace(
         state: BlockState,
         world: Level,
         pos: BlockPos,
@@ -23,7 +23,7 @@ interface AbstractBlazeTorchBlock : EntityBlock {
         world.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS)
     }
 
-    fun randomDisplayTick(
+    fun animateTick(
         state: BlockState,
         world: Level,
         pos: BlockPos,

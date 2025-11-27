@@ -6,26 +6,26 @@ import archives.tater.netherarchives.item.SkisItem
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.util.*
 import com.mojang.serialization.MapCodec
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.EntityBlock
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.DirectionalBlock
-import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.world.level.block.entity.BlockEntityTicker
-import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleOptions
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.monster.Strider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
-import net.minecraft.core.particles.ParticleOptions
-import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.core.BlockPos
-import net.minecraft.world.phys.AABB
-import net.minecraft.core.Direction
-import net.minecraft.world.phys.Vec3
-import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.DirectionalBlock
+import net.minecraft.world.level.block.EntityBlock
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.Vec3
 import kotlin.math.abs
 
 open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings), EntityBlock {
@@ -44,7 +44,7 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
         val facing = state.getValue(FACING)
         val coveringPos = pos.relative(facing)
-        if (world[coveringPos].isFaceSturdy(world, coveringPos, facing.opposite)) return;
+        if (world[coveringPos].isFaceSturdy(world, coveringPos, facing.opposite)) return
         repeat(4) {
             world.addFaceParticle(
                 ParticleTypes.LARGE_SMOKE,

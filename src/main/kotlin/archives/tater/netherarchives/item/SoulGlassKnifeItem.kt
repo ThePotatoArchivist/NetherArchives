@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.item
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.util.AttributeModifiersComponent
+import archives.tater.netherarchives.util.ItemAttributeModifiers
 import archives.tater.netherarchives.util.get
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
@@ -28,9 +28,9 @@ class SoulGlassKnifeItem(settings: Properties) : Item(settings) {
         return InteractionResultHolder.consume(user[hand])
     }
 
-    override fun getUseDuration(stack: ItemStack?, user: LivingEntity?): Int = MAX_USE_TIME
+    override fun getUseDuration(stack: ItemStack, user: LivingEntity): Int = MAX_USE_TIME
 
-    override fun getUseAnimation(stack: ItemStack?): UseAnim = UseAnim.SPYGLASS
+    override fun getUseAnimation(stack: ItemStack): UseAnim = UseAnim.SPYGLASS
 
     override fun finishUsingItem(stack: ItemStack, world: Level, user: LivingEntity): ItemStack {
         if (world.isClientSide) return stack
@@ -47,10 +47,10 @@ class SoulGlassKnifeItem(settings: Properties) : Item(settings) {
         cooldowns.addCooldown(this@SoulGlassKnifeItem, usedTicks.coerceAtLeast(20) * 400 / MAX_USE_TIME) // Max 20 seconds
     }
 
-    override fun canAttackBlock(state: BlockState?, world: Level?, pos: BlockPos?, miner: Player): Boolean =
+    override fun canAttackBlock(state: BlockState, world: Level, pos: BlockPos, miner: Player): Boolean =
         !miner.isCreative
 
-    override fun hurtEnemy(stack: ItemStack?, target: LivingEntity?, attacker: LivingEntity?): Boolean = true
+    override fun hurtEnemy(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean = true
 
     override fun postHurtEnemy(stack: ItemStack, target: LivingEntity, attacker: LivingEntity) {
         stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND)
@@ -62,7 +62,7 @@ class SoulGlassKnifeItem(settings: Properties) : Item(settings) {
         private val BASE_ENTITY_INTERACTION_MODIFIER_ID = NetherArchives.id("base_entity_interaction_range")
 
         val attributeModifiers: ItemAttributeModifiers
-            get() = AttributeModifiersComponent {
+            get() = ItemAttributeModifiers {
                 add(
                     Attributes.ATTACK_DAMAGE,
                     AttributeModifier(BASE_ATTACK_DAMAGE_ID, 4.0, Operation.ADD_VALUE),

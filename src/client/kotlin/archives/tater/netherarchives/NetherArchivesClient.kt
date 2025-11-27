@@ -1,10 +1,10 @@
 package archives.tater.netherarchives
 
-import archives.tater.netherarchives.client.util.registerArmorRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.feature.WitherSkeletonEyesFeatureRenderer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
+import archives.tater.netherarchives.client.util.registerArmorRenderer
 import archives.tater.netherarchives.registry.*
 import archives.tater.netherarchives.util.isIn
 import net.fabricmc.api.ClientModInitializer
@@ -17,22 +17,22 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.item.ItemProperties
+import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.client.renderer.entity.WitherBossRenderer
 import net.minecraft.client.renderer.entity.WitherSkeletonRenderer
-import net.minecraft.client.model.geom.ModelLayerLocation
-import net.minecraft.world.item.ItemDisplayContext
+import net.minecraft.client.renderer.item.ItemProperties
+import net.minecraft.util.Mth.clamp
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.phys.HitResult
-import net.minecraft.world.phys.AABB
-import net.minecraft.util.Mth.clamp
-import net.minecraft.world.phys.Vec3
+import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.ClipBlockStateContext
+import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.HitResult
+import net.minecraft.world.phys.Vec3
 import java.util.*
 
 object NetherArchivesClient : ClientModInitializer {
@@ -98,7 +98,7 @@ object NetherArchivesClient : ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(SKIS_MODEL_LAYER, SkisEntityModel.Companion::getTexturedModelData)
 
         registerArmorRenderer(NetherArchivesItems.BASALT_SKIS) {
-            matrices, vertexConsumers, stack, entity, slot, light, model ->
+            matrices, vertexConsumers, stack, _, _, light, model ->
             if (!::basaltSkisModel.isInitialized) {
                 basaltSkisModel = SkisEntityModel(Minecraft.getInstance().entityModels.bakeLayer(SKIS_MODEL_LAYER))
             }
@@ -133,7 +133,7 @@ object NetherArchivesClient : ClientModInitializer {
                 LivingEntity::class.java,
                 AABB.ofSize(cameraPos, distance, distance, distance)
             ) {
-                it.isInvisible || it.isInvisibleTo(client.player)
+                it.isInvisible || it.isInvisibleTo(client.player!!)
             }) {
                 spectreglassRevealed[entity] = world.isBlockInLine(
                     ClipBlockStateContext(

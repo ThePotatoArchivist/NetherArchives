@@ -4,17 +4,17 @@ import archives.tater.netherarchives.registry.NetherArchivesDamageTypes.paddleBu
 import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.isIn
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.tags.FluidTags
+import net.minecraft.util.Mth
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity.getSlotForHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.tags.FluidTags
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
-import net.minecraft.util.Mth
-import net.minecraft.world.phys.Vec3
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.Vec3
 
 class OarItem(settings: Properties) : Item(settings) {
     override fun use(world: Level, user: Player, hand: InteractionHand): InteractionResultHolder<ItemStack> {
@@ -26,11 +26,10 @@ class OarItem(settings: Properties) : Item(settings) {
 
         val yawRads = user.yRot * Mth.DEG_TO_RAD
         if (user.isControlledByLocalInstance) {
-            user.setDeltaMovement(
-                user.deltaMovement
+            user.deltaMovement = user.deltaMovement
                 .yRot(yawRads)
                 .run { if (z > 0) Vec3(x, y, z + VELOCITY) else Vec3(x, y, VELOCITY) }
-                .yRot(-yawRads))
+                .yRot(-yawRads)
         }
 
         if (fluidState isIn NetherArchivesTags.BURNS_WHEN_PADDLE)

@@ -28,7 +28,7 @@ interface Shatterable {
 
     val shatterSound: SoundEvent
 
-    fun onExploded(
+    fun onExplosionHit(
         state: BlockState,
         world: Level,
         pos: BlockPos,
@@ -57,7 +57,7 @@ interface Shatterable {
         shatterChain(world, pos, state, 0.5f)
     }
 
-    fun scheduledTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource?) {
+    fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         shatterChain(world, pos, world[pos], 0.1f)
     }
 

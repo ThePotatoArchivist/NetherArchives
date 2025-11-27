@@ -1,27 +1,27 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.registry.NetherArchivesParticles
+import archives.tater.netherarchives.util.listCopy
 import com.mojang.serialization.MapCodec
-import net.minecraft.world.level.block.BaseFireBlock
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundSource
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.IntegerProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.BaseFireBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 
 class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
     init {
@@ -32,7 +32,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
         builder.add(AGE)
     }
 
-    override fun canBurn(state: BlockState?) = true
+    override fun canBurn(state: BlockState) = true
 
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
         val blockPos = pos.below()
@@ -67,7 +67,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
 
         if (age != newAge) {
             val newState = state.setValue(AGE, newAge)
-            world.setBlock(pos, newState, Block.UPDATE_INVISIBLE)
+            world.setBlock(pos, newState, UPDATE_INVISIBLE)
         }
 
         if (!infiniburn && (!canSurvive(state, world, pos) || age > 12)) {
@@ -105,7 +105,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
         world.scheduleTick(pos, this, world.random.nextInt(10))
     }
 
-    override fun entityInside(state: BlockState?, world: Level?, pos: BlockPos?, entity: Entity?) {
+    override fun entityInside(state: BlockState, world: Level, pos: BlockPos, entity: Entity) {
         if (entity is ItemEntity) return
         super.entityInside(state, world, pos, entity)
     }

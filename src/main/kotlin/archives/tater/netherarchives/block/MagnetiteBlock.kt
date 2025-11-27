@@ -1,22 +1,22 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesTags
 import com.mojang.serialization.MapCodec
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.FallingBlock
-import net.minecraft.world.item.context.BlockPlaceContext
-import net.minecraft.tags.FluidTags
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.IntegerProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.FluidTags
 import net.minecraft.util.RandomSource
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.FallingBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 
 class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()) {
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
@@ -27,9 +27,9 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
         builder.add(DISTANCE)
     }
 
-    override fun isRandomlyTicking(state: BlockState?) = true
+    override fun isRandomlyTicking(state: BlockState) = true
 
-    override fun randomTick(state: BlockState?, world: ServerLevel, pos: BlockPos, random: RandomSource?) {
+    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         if (Direction.entries.any {
                 world.getFluidState(pos.relative(it)).`is`(FluidTags.LAVA)
             }) {
@@ -37,7 +37,7 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
         }
     }
 
-    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource?) {
+    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         world.setBlockAndUpdate(pos, updateDistanceFromLodestone(state, world, pos))
         if (state.getValue(DISTANCE) == 7) {
             super.tick(state, world, pos, random)

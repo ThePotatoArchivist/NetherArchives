@@ -2,30 +2,30 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity.getSlotForHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.Projectile
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.server.level.ServerPlayer
-import net.minecraft.sounds.SoundSource
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
-import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
-import net.minecraft.world.phys.shapes.VoxelShape
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.gameevent.GameEvent
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.VoxelShape
 
 class BlazePowderBlock(settings: Properties) : Block(settings) {
     companion object {
@@ -33,24 +33,24 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
     }
 
     override fun getShape(
-        state: BlockState?,
-        world: BlockGetter?,
-        pos: BlockPos?,
-        context: CollisionContext?
+        state: BlockState,
+        world: BlockGetter,
+        pos: BlockPos,
+        context: CollisionContext
     ): VoxelShape = SHAPE
 
-    override fun canSurvive(state: BlockState?, world: LevelReader, pos: BlockPos): Boolean {
+    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
         val blockPos = pos.below()
         return world.getBlockState(blockPos).isFaceSturdy(world, blockPos, Direction.UP)
     }
 
     override fun updateShape(
         state: BlockState,
-        direction: Direction?,
-        neighborState: BlockState?,
-        world: LevelAccessor?,
-        pos: BlockPos?,
-        neighborPos: BlockPos?
+        direction: Direction,
+        neighborState: BlockState,
+        world: LevelAccessor,
+        pos: BlockPos,
+        neighborPos: BlockPos
     ): BlockState? {
         if (!state.canSurvive(world, pos)) {
             return Blocks.AIR.defaultBlockState()
@@ -58,7 +58,7 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
         return super.updateShape(state, direction, neighborState, world, pos, neighborPos)
     }
 
-    override fun propagatesSkylightDown(state: BlockState, world: BlockGetter?, pos: BlockPos?): Boolean {
+    override fun propagatesSkylightDown(state: BlockState, world: BlockGetter, pos: BlockPos): Boolean {
         return state.fluidState.isEmpty
     }
 
