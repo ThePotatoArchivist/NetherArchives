@@ -113,10 +113,11 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
         world: Level,
         pos: BlockPos,
         entity: Entity,
-        handler: InsideBlockEffectApplier
+        handler: InsideBlockEffectApplier,
+        intersects: Boolean
     ) {
         if (entity is ItemEntity) return
-        super.entityInside(state, world, pos, entity, handler)
+        super.entityInside(state, world, pos, entity, handler, intersects)
     }
 
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {

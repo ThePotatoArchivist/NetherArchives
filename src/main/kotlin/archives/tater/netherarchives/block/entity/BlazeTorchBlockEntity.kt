@@ -3,17 +3,17 @@ package archives.tater.netherarchives.block.entity
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.network.protocol.game.ClientGamePacketListener
-import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
+import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientGamePacketListener
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.minecraft.core.BlockPos
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sqrt
 
@@ -59,7 +59,7 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
     override fun saveAdditional(view: ValueOutput) {
         super.saveAdditional(view)
         if (targetPos !== null)
-            view.store(TARGET_KEY, BlockPos.CODEC, targetPos)
+            view.store(TARGET_KEY, BlockPos.CODEC, targetPos!!)
     }
 
     override fun loadAdditional(view: ValueInput) {

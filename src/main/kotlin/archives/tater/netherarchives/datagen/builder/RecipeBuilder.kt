@@ -1,27 +1,15 @@
 package archives.tater.netherarchives.datagen.builder
 
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
-import net.minecraft.world.item.crafting.AbstractCookingRecipe.Factory
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.recipes.RecipeBuilder
-import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.data.recipes.RecipeProvider
-import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.data.recipes.ShapelessRecipeBuilder
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder
-import net.minecraft.tags.TagKey
+import net.minecraft.data.recipes.*
+import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.AbstractCookingRecipe
-import net.minecraft.world.item.crafting.BlastingRecipe
-import net.minecraft.world.item.crafting.CampfireCookingRecipe
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.SmeltingRecipe
-import net.minecraft.world.item.crafting.SmokingRecipe
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.*
+import net.minecraft.world.item.crafting.AbstractCookingRecipe.Factory
+import net.minecraft.world.level.ItemLike
 
 // Shaped
 
@@ -116,7 +104,7 @@ class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeBuil
 // Cooking
 
 val Item.id
-    get() = BuiltInRegistries.ITEM.getKey(this as Item?)
+    get() = BuiltInRegistries.ITEM.getKey(this)
 
 context(recipeGenerator: RecipeProvider)
 fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
