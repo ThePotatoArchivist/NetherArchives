@@ -122,7 +122,7 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
             world.getEntities(null, AABB.encapsulatingFullBlocks(pos, pos.relative(facing, distance))) { it !is Strider && (it !is Player || !it.abilities.flying) }.forEach {
                 val closeness = (1 - abs((it.position() - pos.center.relative(facing, 0.5)).get(facing.axis)) / pushDistance.toDouble()).coerceAtLeast(0.0)
 
-                it.deltaMovement + Vec3.ZERO.relative(facing, (if (it.isShiftKeyDown) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
+                it.deltaMovement += Vec3.ZERO.relative(facing, (if (it.isShiftKeyDown) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
                     it.isAirSkiing = true
                 }
