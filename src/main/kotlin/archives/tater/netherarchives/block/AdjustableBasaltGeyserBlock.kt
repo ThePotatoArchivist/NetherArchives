@@ -1,18 +1,19 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.set
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.item.context.BlockPlaceContext
-import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.util.RandomSource
+import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
 
 class AdjustableBasaltGeyserBlock(settings: Properties) : BasaltGeyserBlock(settings) {
     init {
@@ -44,8 +45,9 @@ class AdjustableBasaltGeyserBlock(settings: Properties) : BasaltGeyserBlock(sett
         15 - world.getBestNeighborSignal(pos)
 
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        val blockEntity = world.getBlockEntity(pos) as? BasaltGeyserBlockEntity ?: return
         val facing = world[pos].getValue(FACING)
-        val distance = getPushDistance(world, pos, state)
+        val distance = blockEntity.pushDistance
         if (distance <= 0) return
         repeat(2) {
             world.addFaceParticle(
