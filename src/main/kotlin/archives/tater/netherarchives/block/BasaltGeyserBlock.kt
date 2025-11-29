@@ -81,7 +81,7 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
         )
     }
 
-    protected open fun getPushDistance(world: Level, pos: BlockPos, state: BlockState) = BOOST_RANGE
+    open fun getPushDistance(world: Level, pos: BlockPos, state: BlockState) = BOOST_RANGE
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         return BasaltGeyserBlockEntity(pos, state)
@@ -105,17 +105,11 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
 
         override fun tick(world: Level, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
             val geyserBlock = world[pos].block as? BasaltGeyserBlock ?: return
-            val pushDistance = geyserBlock.getPushDistance(world, pos, state)
-            if (pushDistance == 0) return
-            val facing = state.getValue(FACING)
 
-            val distance = iterateLinearBlockPos(
-                pos,
-                facing,
-                pushDistance
-            )
-                .indexOfFirst { world[it].run { isFaceSturdy(world, it, facing) or isFaceSturdy(world, it, facing.opposite) } }
-                .let { if (it == -1) pushDistance else it }
+            val facing = state.getValue(FACING)
+            blockEntity.updateDistance(world, pos, state)
+            val pushDistance = blockEntity.pushDistance
+            val distance = blockEntity.distance
 
             if (distance == 0) return
 
