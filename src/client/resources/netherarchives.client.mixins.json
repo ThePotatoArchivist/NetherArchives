@@ -10,6 +10,7 @@
     "InGameHudMixin",
     "ItemRendererMixin",
     "LivingEntityRendererMixin",
+    "RemotePlayerMixin",
     "WitherArmorFeatureRendererMixin"
   ],
   "injectors": {
