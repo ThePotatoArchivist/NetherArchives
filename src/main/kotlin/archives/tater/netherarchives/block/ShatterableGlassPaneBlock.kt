@@ -1,46 +1,47 @@
 package archives.tater.netherarchives.block
 
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.PaneBlock
-import net.minecraft.block.Stainable
-import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundEvent
-import net.minecraft.util.DyeColor
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.World
-import net.minecraft.world.explosion.Explosion
+import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.projectile.Projectile
+import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Explosion
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.BeaconBeamBlock
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.IronBarsBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 import java.util.function.BiConsumer
 
-class ShatterableGlassPaneBlock(override val shattersTo: Block, settings: Settings) : PaneBlock(settings), Stainable, Shatterable {
+class ShatterableGlassPaneBlock(override val shattersTo: Block, settings: Properties) : IronBarsBlock(settings),
+    BeaconBeamBlock, Shatterable {
     override val shatterSound: SoundEvent
-        get() = soundGroup.breakSound
+        get() = soundType.breakSound
 
-    override fun onExploded(
+    override fun onExplosionHit(
         state: BlockState,
-        world: World,
+        world: ServerLevel,
         pos: BlockPos,
         explosion: Explosion,
         stackMerger: BiConsumer<ItemStack, BlockPos>
     ) {
-        super<Shatterable>.onExploded(state, world, pos, explosion, stackMerger)
+        super<Shatterable>.onExplosionHit(state, world, pos, explosion, stackMerger)
     }
 
     override fun onProjectileHit(
-        world: World,
+        world: Level,
         state: BlockState,
         hit: BlockHitResult,
-        projectile: ProjectileEntity
+        projectile: Projectile
     ) {
         super<Shatterable>.onProjectileHit(world, state, hit, projectile)
     }
 
-    override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random?) {
-        super<Shatterable>.scheduledTick(state, world, pos, random)
+    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
+        super<Shatterable>.tick(state, world, pos, random)
     }
 
     override fun getColor(): DyeColor = DyeColor.BLACK

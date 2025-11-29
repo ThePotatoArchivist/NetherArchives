@@ -6,45 +6,45 @@ import archives.tater.netherarchives.item.SkisItem
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.util.*
 import com.mojang.serialization.MapCodec
-import net.minecraft.block.Block
-import net.minecraft.block.BlockEntityProvider
-import net.minecraft.block.BlockState
-import net.minecraft.block.FacingBlock
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.block.entity.BlockEntityTicker
-import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.passive.StriderEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemPlacementContext
-import net.minecraft.particle.ParticleEffect
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.state.StateManager
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Box
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.Vec3d
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.World
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.EntityBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.DirectionalBlock
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.monster.Strider
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.core.particles.ParticleOptions
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.core.BlockPos
+import net.minecraft.world.phys.AABB
+import net.minecraft.core.Direction
+import net.minecraft.world.phys.Vec3
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 import kotlin.math.abs
 
-open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockEntityProvider {
+open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings), EntityBlock {
     init {
-        defaultState = stateManager.defaultState.with(FACING, Direction.UP)
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.UP))
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(FACING)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState = defaultState.with(FACING, ctx.side)
+    override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState = defaultBlockState().setValue(FACING, ctx.clickedFace)
 
-    override fun getCodec(): MapCodec<out FacingBlock> = CODEC
+    override fun codec(): MapCodec<out DirectionalBlock> = CODEC
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
-        val facing = state[FACING]
-        val coveringPos = pos.offset(facing)
-        if (world[coveringPos].isSideSolidFullSquare(world, coveringPos, facing.opposite)) return;
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        val facing = state.getValue(FACING)
+        val coveringPos = pos.relative(facing)
+        if (world[coveringPos].isFaceSturdy(world, coveringPos, facing.opposite)) return
         repeat(4) {
             world.addFaceParticle(
                 ParticleTypes.LARGE_SMOKE,
@@ -70,7 +70,7 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
         )
     }
 
-    protected open fun addImportantParticles(world: World, pos: BlockPos, facing: Direction) {
+    protected open fun addImportantParticles(world: Level, pos: BlockPos, facing: Direction) {
         world.addFaceParticle(
             ParticleTypes.CAMPFIRE_COSY_SMOKE,
             facing,
@@ -81,14 +81,14 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
         )
     }
 
-    protected open fun getPushDistance(world: World, pos: BlockPos, state: BlockState) = BOOST_RANGE
+    protected open fun getPushDistance(world: Level, pos: BlockPos, state: BlockState) = BOOST_RANGE
 
-    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         return BasaltGeyserBlockEntity(pos, state)
     }
 
     override fun <T : BlockEntity> getTicker(
-        world: World?,
+        world: Level?,
         state: BlockState?,
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
@@ -97,47 +97,47 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
     }
 
     companion object : BlockEntityTicker<BasaltGeyserBlockEntity> {
-        val CODEC: MapCodec<BasaltGeyserBlock> = createCodec(::BasaltGeyserBlock)
+        val CODEC: MapCodec<BasaltGeyserBlock> = simpleCodec(::BasaltGeyserBlock)
 
         private const val BOOST_RANGE = 8
         private const val MAX_BOOST_VELOCITY = 0.5
         private const val SNEAKING_MAX_BOOST_VELOCITY = 0.12
 
-        override fun tick(world: World, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
+        override fun tick(world: Level, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
             val geyserBlock = world[pos].block as? BasaltGeyserBlock ?: return
             val pushDistance = geyserBlock.getPushDistance(world, pos, state)
             if (pushDistance == 0) return
-            val facing = state[FACING]
+            val facing = state.getValue(FACING)
 
             val distance = iterateLinearBlockPos(
                 pos,
                 facing,
                 pushDistance
             )
-                .indexOfFirst { world[it].run { isSideSolidFullSquare(world, it, facing) or isSideSolidFullSquare(world, it, facing.opposite) } }
+                .indexOfFirst { world[it].run { isFaceSturdy(world, it, facing) or isFaceSturdy(world, it, facing.opposite) } }
                 .let { if (it == -1) pushDistance else it }
 
             if (distance == 0) return
 
-            world.getOtherEntities(null, Box.enclosing(pos, pos.offset(facing, distance))) { it !is StriderEntity && (it !is PlayerEntity || !it.abilities.flying) }.forEach {
-                val closeness = (1 - abs((it.pos - pos.toCenterPos().offset(facing, 0.5)).getComponentAlongAxis(facing.axis)) / pushDistance.toDouble()).coerceAtLeast(0.0)
+            world.getEntities(null, AABB.encapsulatingFullBlocks(pos, pos.relative(facing, distance))) { it !is Strider && (it !is Player || !it.abilities.flying) }.forEach {
+                val closeness = (1 - abs((it.pos - pos.center.relative(facing, 0.5)).get(facing.axis)) / pushDistance.toDouble()).coerceAtLeast(0.0)
 
-                it.velocity += Vec3d.ZERO.offset(facing, (if (it.isSneaking) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
+                it.deltaMovement += Vec3.ZERO.relative(facing, (if (it.isShiftKeyDown) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
                     it.isAirSkiing = true
                 }
                 // Cancel fall damage
                 if (facing == Direction.UP)
-                    it.onLanding()
+                    it.resetFallDistance()
             }
-            if (world.isClient && world.random.nextFloat() < 0.04) {
+            if (world.isClientSide && world.random.nextFloat() < 0.04) {
                 geyserBlock.addImportantParticles(world, pos, facing)
             }
         }
 
         @JvmStatic
-        protected fun World.addFaceParticle(
-            parameters: ParticleEffect,
+        protected fun Level.addFaceParticle(
+            parameters: ParticleOptions,
             face: Direction,
             pos: BlockPos,
             forwardVelocity: Double,
@@ -145,29 +145,31 @@ open class BasaltGeyserBlock(settings: Settings) : FacingBlock(settings), BlockE
             velocityDev: Double = 0.0,
             alwaysSpawn: Boolean = false
         ) {
-            val (px, py, pz) = pos.toCenterPos() + face.rotate(Vec3d(
-                if (posSpread == 0.0) 0.0 else random.nextTriangular(0.0, posSpread),
+            val (px, py, pz) = pos.center + face.rotate(
+                Vec3(
+                if (posSpread == 0.0) 0.0 else random.triangle(0.0, posSpread),
                 0.5,
-                if (posSpread == 0.0) 0.0 else random.nextTriangular(0.0, posSpread),
+                if (posSpread == 0.0) 0.0 else random.triangle(0.0, posSpread),
             ))
-            val (vx, vy, vz) = face.rotate(Vec3d(
-                if (velocityDev == 0.0) 0.0 else random.nextTriangular(0.0, velocityDev),
+            val (vx, vy, vz) = face.rotate(
+                Vec3(
+                if (velocityDev == 0.0) 0.0 else random.triangle(0.0, velocityDev),
                 forwardVelocity,
-                if (velocityDev == 0.0) 0.0 else random.nextTriangular(0.0, velocityDev),
+                if (velocityDev == 0.0) 0.0 else random.triangle(0.0, velocityDev),
             ))
-            this.addParticleClient(parameters, alwaysSpawn, alwaysSpawn, px, py, pz, vx, vy, vz)
+            this.addParticle(parameters, alwaysSpawn, alwaysSpawn, px, py, pz, vx, vy, vz)
         }
 
-        private fun Direction.rotate(vec3d: Vec3d) = when (this) {
+        private fun Direction.rotate(vec3d: Vec3) = when (this) {
             Direction.UP -> vec3d
             else -> {
                 val (x, y, z) = vec3d
                 when (this) {
-                    Direction.DOWN -> Vec3d(x, -y, -z)
-                    Direction.NORTH -> Vec3d(x, z, -y)
-                    Direction.SOUTH -> Vec3d(-z, -x, y)
-                    Direction.EAST -> Vec3d(y, z, x)
-                    Direction.WEST -> Vec3d(-y, z, -x)
+                    Direction.DOWN -> Vec3(x, -y, -z)
+                    Direction.NORTH -> Vec3(x, z, -y)
+                    Direction.SOUTH -> Vec3(-z, -x, y)
+                    Direction.EAST -> Vec3(y, z, x)
+                    Direction.WEST -> Vec3(-y, z, -x)
                     else -> throw AssertionError()
                 }
             }

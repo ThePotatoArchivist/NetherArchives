@@ -3,17 +3,17 @@ package archives.tater.netherarchives.block.entity
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.network.listener.ClientPlayPacketListener
-import net.minecraft.network.packet.Packet
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.storage.ReadView
-import net.minecraft.storage.WriteView
-import net.minecraft.util.math.BlockPos
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.protocol.game.ClientGamePacketListener
+import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
+import net.minecraft.core.HolderLookup
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
+import net.minecraft.core.BlockPos
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sqrt
 
@@ -28,8 +28,8 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
         private set(value) {
             field = value
             if (value === null) return
-            val xDiff = value.x - pos.x
-            val zDiff = value.z - pos.z
+            val xDiff = value.x - worldPosition.x
+            val zDiff = value.z - worldPosition.z
             val length = sqrt((xDiff * xDiff + zDiff * zDiff).toDouble())
             xVelocityCoef = xDiff / length
             zVelocityCoef = zDiff / length
@@ -39,31 +39,31 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
     var zVelocityCoef: Double? = null
 
     fun locateTarget(): BlockPos? {
-        val pos = (world as ServerWorld).run {
-            locateStructure(NetherArchivesTags.BLAZE_TORCH_LOCATED, pos, 50, false)
+        val pos = (level as ServerLevel).run {
+            findNearestMapStructure(NetherArchivesTags.BLAZE_TORCH_LOCATED, worldPosition, 50, false)
         } ?: return null
         targetPos = pos
         NetherArchives.logger.info("Located at ${pos.x}, ${pos.y}, ${pos.z}")
-        markDirty()
+        setChanged()
         return pos
     }
 
-    override fun toUpdatePacket(): Packet<ClientPlayPacketListener>? {
-        return BlockEntityUpdateS2CPacket.create(this)
+    override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {
+        return ClientboundBlockEntityDataPacket.create(this)
     }
 
-    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {
-        return createNbt(registryLookup)
+    override fun getUpdateTag(registryLookup: HolderLookup.Provider): CompoundTag {
+        return saveWithoutMetadata(registryLookup)
     }
 
-    override fun writeData(view: WriteView) {
-        super.writeData(view)
+    override fun saveAdditional(view: ValueOutput) {
+        super.saveAdditional(view)
         if (targetPos !== null)
-            view.put(TARGET_KEY, BlockPos.CODEC, targetPos)
+            view.store(TARGET_KEY, BlockPos.CODEC, targetPos)
     }
 
-    override fun readData(view: ReadView) {
-        super.readData(view)
+    override fun loadAdditional(view: ValueInput) {
+        super.loadAdditional(view)
         targetPos = view.read(TARGET_KEY, BlockPos.CODEC).getOrNull()
     }
 }

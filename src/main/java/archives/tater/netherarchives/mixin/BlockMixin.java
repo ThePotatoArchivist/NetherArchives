@@ -7,26 +7,26 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 @Mixin(Block.class)
 public class BlockMixin {
     // I think this is bettern than adding an override in FluidBlock?
     @Inject(
-            method = "onLandedUpon",
+            method = "fallOn",
             at = @At("HEAD"),
             cancellable = true)
-    private void preventFallOnSkis(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {
+    private void preventFallOnSkis(Level world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {
         //noinspection ConstantValue
-        if (!((Object) this instanceof FluidBlock)) return;
+        if (!((Object) this instanceof LiquidBlock)) return;
         if (!(entity instanceof LivingEntity livingEntity) || !SkisItem.canSki(livingEntity, state.getFluidState())) return;
-        entity.handleFallDamage(fallDistance, 0.0F, world.getDamageSources().fall());
+        entity.causeFallDamage(fallDistance, 0.0F, world.damageSources().fall());
         ci.cancel();
     }
 }

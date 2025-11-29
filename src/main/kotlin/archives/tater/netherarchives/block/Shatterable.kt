@@ -5,22 +5,22 @@ import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.set
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.entity.projectile.FireworkRocketEntity
-import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.particle.BlockStateParticleEffect
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvent
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.World
-import net.minecraft.world.explosion.Explosion
-import net.minecraft.world.explosion.Explosion.DestructionType
+import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.BlockParticleOption
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundSource
+import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.projectile.FireworkRocketEntity
+import net.minecraft.world.entity.projectile.Projectile
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Explosion
+import net.minecraft.world.level.Explosion.BlockInteraction
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.BlockHitResult
 import java.util.function.BiConsumer
 
 interface Shatterable {
@@ -28,28 +28,28 @@ interface Shatterable {
 
     val shatterSound: SoundEvent
 
-    fun onExploded(
+    fun onExplosionHit(
         state: BlockState,
-        world: World,
+        world: ServerLevel,
         pos: BlockPos,
         explosion: Explosion,
         stackMerger: BiConsumer<ItemStack, BlockPos>
     ) {
-        if (explosion.destructionType == DestructionType.TRIGGER_BLOCK) return
+        if (explosion.blockInteraction == BlockInteraction.TRIGGER_BLOCK) return
         shatter(world, pos, state)
     }
 
     fun onProjectileHit(
-        world: World,
+        world: Level,
         state: BlockState,
         hit: BlockHitResult,
-        projectile: ProjectileEntity
+        projectile: Projectile
     ) {
         val pos = hit.blockPos
-        if (world !is ServerWorld || !projectile.canModifyAt(world, pos) || !projectile.canBreakBlocks(world)) return
+        if (world !is ServerLevel || !projectile.mayInteract(world, pos) || !projectile.mayBreak(world)) return
 
         if (projectile.type isIn NetherArchivesTags.NON_CHAIN_SHATTER_PROJECTILES ||
-            (projectile is FireworkRocketEntity && !(projectile as FireworkRocketEntityAccessor).invokeHasExplosionEffects())) {
+            (projectile is FireworkRocketEntity && !(projectile as FireworkRocketEntityAccessor).invokeHasExplosion())) {
 
             shatter(world, pos, state)
             return
@@ -57,24 +57,24 @@ interface Shatterable {
         shatterChain(world, pos, state, 0.5f)
     }
 
-    fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random?) {
+    fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         shatterChain(world, pos, world[pos], 0.1f)
     }
 
-    fun shatterChain(world: World, pos: BlockPos, state: BlockState, chance: Float) {
+    fun shatterChain(world: Level, pos: BlockPos, state: BlockState, chance: Float) {
         shatter(world, pos, state)
-        for (otherPos in BlockPos.iterateOutwards(pos, 1, 1, 1)) {
+        for (otherPos in BlockPos.withinManhattan(pos, 1, 1, 1)) {
             val block = world[otherPos].block
             if (block is Shatterable && world.random.nextFloat() < chance)
-                world.scheduleBlockTick(otherPos, block, world.random.nextBetween(3, 8))
+                world.scheduleTick(otherPos, block, world.random.nextIntBetweenInclusive(3, 8))
         }
     }
 
-    fun shatter(world: World, pos: BlockPos, state: BlockState) {
-        world[pos] = shattersTo.getStateWithProperties(state)
-        world.playSound(null, pos, shatterSound, SoundCategory.BLOCKS, 1f, 1f)
-        (world as? ServerWorld)?.spawnParticles(
-            BlockStateParticleEffect(ParticleTypes.BLOCK, state),
+    fun shatter(world: Level, pos: BlockPos, state: BlockState) {
+        world[pos] = shattersTo.withPropertiesOf(state)
+        world.playSound(null, pos, shatterSound, SoundSource.BLOCKS, 1f, 1f)
+        (world as? ServerLevel)?.sendParticles(
+            BlockParticleOption(ParticleTypes.BLOCK, state),
             pos.x + 0.5,
             pos.y + 0.5,
             pos.z + 0.5,

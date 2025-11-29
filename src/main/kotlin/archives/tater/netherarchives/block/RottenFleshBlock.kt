@@ -5,58 +5,60 @@ import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.util.set
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.state.StateManager
-import net.minecraft.state.property.BooleanProperty
-import net.minecraft.state.property.IntProperty
-import net.minecraft.state.property.Properties
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.World
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 
-class RottenFleshBlock(settings: Settings) : Block(settings.ticksRandomly()) {
+class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
     init {
-        defaultState = stateManager.defaultState
-            .with(AGE, 0)
-            .with(FERMENTING, false)
+        registerDefaultState(
+            stateDefinition.any()
+                .setValue(AGE, 0)
+                .setValue(FERMENTING, false)
+        )
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(AGE, FERMENTING)
     }
 
-    override fun hasRandomTicks(state: BlockState) = true
+    override fun isRandomlyTicking(state: BlockState) = true
 
-    private fun findCampfireDistance(world: World, pos: BlockPos): Int {
+    private fun findCampfireDistance(world: Level, pos: BlockPos): Int {
         // [Iterable.find] stops iterating when it finds the block so the object should still be on the same value
-        val campfire = BlockPos.iterate(pos, pos.down(15)).find {
-            world.getBlockState(it).isIn(NetherArchivesTags.ROTTEN_FLESH_FERMENTER)
+        val campfire = BlockPos.betweenClosed(pos, pos.below(15)).find {
+            world.getBlockState(it).`is`(NetherArchivesTags.ROTTEN_FLESH_FERMENTER)
         }
         if (campfire == null) return Integer.MAX_VALUE
 
-        val states = BlockPos.iterate(pos, campfire).listCopy().run {
+        val states = BlockPos.betweenClosed(pos, campfire).listCopy().run {
             subList(1, size - 1) // Ignore top and bottom block
         }.map(world::getBlockState)
 
         if (!states.all {
-            !it.isOpaque || it.isOf(this) || it.isOf(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
+            !it.canOcclude() || it.`is`(this) || it.`is`(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         }) return Integer.MAX_VALUE
 
-        val distance = states.count { it.isOf(this) }
+        val distance = states.count { it.`is`(this) }
 
         return distance
     }
 
-    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
+    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         val distance = findCampfireDistance(world, pos)
 
         val fermenting = distance <= 3
 
-        val updatedState = if (fermenting == state[FERMENTING]) state else state.with(FERMENTING, fermenting)
+        val updatedState = if (fermenting == state.getValue(FERMENTING)) state else state.setValue(FERMENTING, fermenting)
 
         val finalState = when {
             /*
@@ -66,25 +68,25 @@ class RottenFleshBlock(settings: Settings) : Block(settings.ticksRandomly()) {
             3 blocks between - 15% chance
              */
             !fermenting || random.nextFloat() > 0.3 - 0.05 * distance -> updatedState
-            state[AGE] >= 3 -> NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK.defaultState
-            else -> updatedState.with(AGE, state[AGE] + 1)
+            state.getValue(AGE) >= 3 -> NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK.defaultBlockState()
+            else -> updatedState.setValue(AGE, state.getValue(AGE) + 1)
         }
 
         if (finalState != state)
             world[pos] = finalState
     }
 
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
-        if (!state[FERMENTING] || random.nextFloat() > 0.25f) return
-        val direction = Direction.random(random)
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        if (!state.getValue(FERMENTING) || random.nextFloat() > 0.25f) return
+        val direction = Direction.getRandom(random)
         if (direction == Direction.DOWN) return
-        val blockPos = pos.offset(direction)
-        if (state.isOpaque && world[blockPos].isSideSolidFullSquare(world, blockPos, direction.opposite)) return
-        world.addParticleClient(
+        val blockPos = pos.relative(direction)
+        if (state.canOcclude() && world[blockPos].isFaceSturdy(world, blockPos, direction.opposite)) return
+        world.addParticle(
             ParticleTypes.SOUL,
-            pos.x.toDouble() + if (direction.offsetX == 0) random.nextDouble() else 0.5 + direction.offsetX.toDouble() * 0.6,
-            pos.y.toDouble() + if (direction.offsetY == 0) random.nextDouble() else 0.5 + direction.offsetY.toDouble() * 0.6,
-            pos.z.toDouble() + if (direction.offsetZ == 0) random.nextDouble() else 0.5 + direction.offsetZ.toDouble() * 0.6,
+            pos.x.toDouble() + if (direction.stepX == 0) random.nextDouble() else 0.5 + direction.stepX.toDouble() * 0.6,
+            pos.y.toDouble() + if (direction.stepY == 0) random.nextDouble() else 0.5 + direction.stepY.toDouble() * 0.6,
+            pos.z.toDouble() + if (direction.stepZ == 0) random.nextDouble() else 0.5 + direction.stepZ.toDouble() * 0.6,
             0.0,
             0.0,
             0.0
@@ -92,7 +94,7 @@ class RottenFleshBlock(settings: Settings) : Block(settings.ticksRandomly()) {
     }
 
     companion object {
-        val AGE: IntProperty = Properties.AGE_3
-        val FERMENTING: BooleanProperty = BooleanProperty.of("fermenting")
+        val AGE: IntegerProperty = BlockStateProperties.AGE_3
+        val FERMENTING: BooleanProperty = BooleanProperty.create("fermenting")
     }
 }

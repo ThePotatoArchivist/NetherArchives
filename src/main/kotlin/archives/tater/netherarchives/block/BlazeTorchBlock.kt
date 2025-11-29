@@ -1,15 +1,15 @@
 package archives.tater.netherarchives.block
 
-import net.minecraft.block.BlockState
-import net.minecraft.block.TorchBlock
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.TorchBlock
+import net.minecraft.world.level.block.state.BlockState
 
-class BlazeTorchBlock(settings: Settings) : TorchBlock(ParticleTypes.FLAME, settings), AbstractBlazeTorchBlock {
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
-        super<AbstractBlazeTorchBlock>.randomDisplayTick(
+class BlazeTorchBlock(settings: Properties) : TorchBlock(ParticleTypes.FLAME, settings), AbstractBlazeTorchBlock {
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+        super<AbstractBlazeTorchBlock>.animateTick(
             state,
             world,
             pos,
@@ -20,7 +20,7 @@ class BlazeTorchBlock(settings: Settings) : TorchBlock(ParticleTypes.FLAME, sett
         )
     }
 
-    override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, notify: Boolean) {
-        super<AbstractBlazeTorchBlock>.onBlockAdded(state, world, pos)
+    override fun onPlace(state: BlockState, world: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
+        super<AbstractBlazeTorchBlock>.onPlace(state, world, pos)
     }
 }

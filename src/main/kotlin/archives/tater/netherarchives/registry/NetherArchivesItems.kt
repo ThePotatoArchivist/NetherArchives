@@ -6,24 +6,24 @@ import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
 import archives.tater.netherarchives.util.ItemSettings
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.block.Block
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.item.*
-import net.minecraft.item.equipment.*
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.Identifier
-import net.minecraft.util.math.Direction
-import net.minecraft.item.Item.Settings as ItemSettings
+import net.minecraft.core.Direction
+import net.minecraft.core.Registry
+import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.*
+import net.minecraft.world.item.equipment.*
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.item.Item.Properties as ItemSettings
 
 
 object NetherArchivesItems {
-    private fun register(id: Identifier, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item {
-        val key = RegistryKey.of(RegistryKeys.ITEM, id)
-        return Registry.register(Registries.ITEM, key, item(settings.registryKey(key)))
+    private fun register(id: ResourceLocation, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item {
+        val key = ResourceKey.create(Registries.ITEM, id)
+        return Registry.register(BuiltInRegistries.ITEM, key, item(settings.setId(key)))
     }
 
     private fun register(path: String, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item =
@@ -33,10 +33,10 @@ object NetherArchivesItems {
         register(NetherArchives.id(path), item, ItemSettings(settingsInit))
 
     private fun register(block: Block, settings: ItemSettings = ItemSettings()): Item =
-        Items.register(block, settings)
+        Items.registerBlock(block, settings)
 
     private fun register(block: Block, item: (Block, ItemSettings) -> Item): Item =
-        Items.register(block, item)
+        Items.registerBlock(block, item)
 
     val MAGNETITE = register(NetherArchivesBlocks.MAGNETITE)
 
@@ -51,11 +51,11 @@ object NetherArchivesItems {
     val BLAZE_DUST = register(NetherArchivesBlocks.BLAZE_DUST)
 
     val BLAZE_LANTERN = register("blaze_lantern", ::BlazeLanternItem) {
-        maxCount(16)
+        stacksTo(16)
     }
 
     val BLAZE_TORCH = register(NetherArchivesBlocks.BLAZE_TORCH) { block, settings ->
-        VerticallyAttachableBlockItem(
+        StandingAndWallBlockItem(
             block,
             NetherArchivesBlocks.WALL_BLAZE_TORCH,
             Direction.DOWN,
@@ -63,26 +63,26 @@ object NetherArchivesItems {
         )
     }
 
-    val BASALT_EQUIPMENT: RegistryKey<EquipmentAsset> = RegistryKey.of(EquipmentAssetKeys.REGISTRY_KEY, NetherArchives.id("basalt"))
+    val BASALT_EQUIPMENT: ResourceKey<EquipmentAsset> = ResourceKey.create(EquipmentAssets.ROOT_ID, NetherArchives.id("basalt"))
     val BASALT_ARMOR_MATERIAL = ArmorMaterial(
-        ArmorMaterials.CHAIN.durability,
-        ArmorMaterials.CHAIN.defense,
-        ArmorMaterials.CHAIN.enchantmentValue,
+        ArmorMaterials.CHAINMAIL.durability,
+        ArmorMaterials.CHAINMAIL.defense,
+        ArmorMaterials.CHAINMAIL.enchantmentValue,
 //            // TODO add custom sound?
-        SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
-        ArmorMaterials.CHAIN.toughness,
-        ArmorMaterials.CHAIN.knockbackResistance,
+        SoundEvents.ARMOR_EQUIP_GENERIC,
+        ArmorMaterials.CHAINMAIL.toughness,
+        ArmorMaterials.CHAINMAIL.knockbackResistance,
         NetherArchivesTags.BASALT_EQUIPMENT_REPAIR,
         BASALT_EQUIPMENT
     )
 
     val BASALT_SKIS = register("basalt_skis", ::Item) {
-        armor(BASALT_ARMOR_MATERIAL, EquipmentType.BOOTS)
+        humanoidArmor(BASALT_ARMOR_MATERIAL, ArmorType.BOOTS)
     }
     @JvmField
     val BASALT_OAR = register("basalt_oar", ::OarItem) {
-        maxCount(1)
-        maxDamage(ToolMaterial.STONE.durability)
+        stacksTo(1)
+        durability(ToolMaterial.STONE.durability)
     }
     val BASALT_ROD = register("basalt_rod")
 
@@ -93,10 +93,10 @@ object NetherArchivesItems {
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
     val SPECTREGLASS_KNIFE = register("spectreglass_knife", ::SoulGlassKnifeItem) {
-        maxDamage(16)
-        attributeModifiers(SoulGlassKnifeItem.attributeModifiers)
-        component(DataComponentTypes.TOOL, SoulGlassKnifeItem.toolComponent)
-        component(DataComponentTypes.WEAPON, SoulGlassKnifeItem.weaponComponent)
+        durability(16)
+        attributes(SoulGlassKnifeItem.attributeModifiers)
+        component(DataComponents.TOOL, SoulGlassKnifeItem.toolComponent)
+        component(DataComponents.WEAPON, SoulGlassKnifeItem.weaponComponent)
     }
 
     val SPECTREGLASS = register(NetherArchivesBlocks.SPECTREGLASS)
@@ -108,21 +108,21 @@ object NetherArchivesItems {
     val SHATTERED_SPECTREGLASS_PANE = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE)
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
-    val DUMMY_SOUL_FIRE = register(Identifier.ofVanilla("netherarchives/dummy/soul_fire"))
+    val DUMMY_SOUL_FIRE = register(ResourceLocation.withDefaultNamespace("netherarchives/dummy/soul_fire"))
 
     private val itemGroups = mapOf(
-        ItemGroups.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
-        ItemGroups.NATURAL to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
-        ItemGroups.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
-        ItemGroups.TOOLS to setOf(BASALT_SKIS, BASALT_OAR),
-        ItemGroups.FUNCTIONAL to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE),
-        ItemGroups.REDSTONE to setOf(ADJUSTABLE_BASALT_GEYSER)
+        CreativeModeTabs.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
+        CreativeModeTabs.NATURAL_BLOCKS to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
+        CreativeModeTabs.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
+        CreativeModeTabs.TOOLS_AND_UTILITIES to setOf(BASALT_SKIS, BASALT_OAR),
+        CreativeModeTabs.FUNCTIONAL_BLOCKS to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE),
+        CreativeModeTabs.REDSTONE_BLOCKS to setOf(ADJUSTABLE_BASALT_GEYSER)
     )
 
     fun register() {
         itemGroups.forEach { (group, items) ->
             ItemGroupEvents.modifyEntriesEvent(group).register {
-                items.forEach(it::add)
+                items.forEach(it::accept)
             }
         }
     }

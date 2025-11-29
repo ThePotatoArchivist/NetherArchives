@@ -1,56 +1,56 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.entity.Entity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.tag.FluidTags
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.random.Random
-import net.minecraft.world.World
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.tags.FluidTags
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.Level
 
-class SmolderingMagnetiteBlock(settings: Settings) : Block(settings.ticksRandomly()) {
-    override fun hasRandomTicks(state: BlockState?) = true
+class SmolderingMagnetiteBlock(settings: Properties) : Block(settings.randomTicks()) {
+    override fun isRandomlyTicking(state: BlockState?) = true
 
-    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
+    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         if (Direction.entries.none {
-                world.getFluidState(pos.offset(it)).isIn(FluidTags.LAVA)
+                world.getFluidState(pos.relative(it)).`is`(FluidTags.LAVA)
             }) {
-            world.setBlockState(pos, NetherArchivesBlocks.MAGNETITE.defaultState)
+            world.setBlockAndUpdate(pos, NetherArchivesBlocks.MAGNETITE.defaultBlockState())
         }
 
     }
 
     // Copied from Magma Block
-    override fun onSteppedOn(world: World, pos: BlockPos?, state: BlockState?, entity: Entity) {
-        if (world is ServerWorld && entity is LivingEntity && !entity.bypassesSteppingEffects()) {
-            entity.damage(world, world.damageSources.hotFloor(), 1.0f)
+    override fun stepOn(world: Level, pos: BlockPos?, state: BlockState?, entity: Entity) {
+        if (world is ServerLevel && entity is LivingEntity && !entity.isSteppingCarefully) {
+            entity.hurtServer(world, world.damageSources().hotFloor(), 1.0f)
         }
-        super.onSteppedOn(world, pos, state, entity)
+        super.stepOn(world, pos, state, entity)
     }
 
     // Copied from Crying Obsidian
-    override fun randomDisplayTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
+    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
         if (random.nextInt(4) != 0) {
             return
         }
-        val direction = Direction.random(random)
+        val direction = Direction.getRandom(random)
         if (direction == Direction.UP) {
             return
         }
-        val blockPos = pos.offset(direction)
+        val blockPos = pos.relative(direction)
         val blockState = world.getBlockState(blockPos)
-        if (state.isOpaque && blockState.isSideSolidFullSquare(world, blockPos, direction.opposite)) {
+        if (state.canOcclude() && blockState.isFaceSturdy(world, blockPos, direction.opposite)) {
             return
         }
-        val d = if (direction.offsetX == 0) random.nextDouble() else 0.5 + direction.offsetX.toDouble() * 0.6
-        val e = if (direction.offsetY == 0) random.nextDouble() else 0.5 + direction.offsetY.toDouble() * 0.6
-        val f = if (direction.offsetZ == 0) random.nextDouble() else 0.5 + direction.offsetZ.toDouble() * 0.6
-        world.addParticleClient(
+        val d = if (direction.stepX == 0) random.nextDouble() else 0.5 + direction.stepX.toDouble() * 0.6
+        val e = if (direction.stepY == 0) random.nextDouble() else 0.5 + direction.stepY.toDouble() * 0.6
+        val f = if (direction.stepZ == 0) random.nextDouble() else 0.5 + direction.stepZ.toDouble() * 0.6
+        world.addParticle(
             ParticleTypes.DRIPPING_LAVA,
             pos.x.toDouble() + d,
             pos.y.toDouble() + e,

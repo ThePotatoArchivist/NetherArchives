@@ -21,24 +21,24 @@ import archives.tater.netherarchives.registry.NetherArchivesTags.ROTTEN_FLESH_FE
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
-import net.minecraft.block.Blocks
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.BlockTags
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.BlockTags
 import java.util.concurrent.CompletableFuture
 
-class BlockTagGenerator(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+class BlockTagGenerator(output: FabricDataOutput, completableFuture: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider.BlockTagProvider(output, completableFuture) {
 
-    override fun configure(arg: RegistryWrapper.WrapperLookup) {
-        valueLookupBuilder(BlockTags.SHOVEL_MINEABLE).add(
+    override fun addTags(arg: HolderLookup.Provider) {
+        valueLookupBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(
             MAGNETITE,
             SMOLDERING_MAGNETITE
         )
-        valueLookupBuilder(BlockTags.HOE_MINEABLE).add(
+        valueLookupBuilder(BlockTags.MINEABLE_WITH_HOE).add(
             NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
             FERMENTED_ROTTEN_FLESH_BLOCK
         )
-        valueLookupBuilder(BlockTags.PICKAXE_MINEABLE).add(
+        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(
             BASALT_GEYSER,
             ADJUSTABLE_BASALT_GEYSER,
         )

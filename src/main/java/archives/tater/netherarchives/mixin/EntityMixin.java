@@ -3,10 +3,10 @@ package archives.tater.netherarchives.mixin;
 import archives.tater.netherarchives.item.SkisItem;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,10 +28,10 @@ public abstract class EntityMixin {
     @SuppressWarnings("ConstantValue")
     @ModifyExpressionValue(
             method = {
-                    "setOnFireFromLava",
-                    "igniteByLava"
+                    "lavaHurt",
+                    "lavaIgnite"
             },
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isFireImmune()Z")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;fireImmune()Z")
     )
     private boolean preventSetOnFire(boolean original) {
         return original || SkisItem.wearsSkis((Entity) (Object) this) && fluidHeight.getDouble(FluidTags.LAVA) < SkisItem.MAX_FLUID_DEPTH;

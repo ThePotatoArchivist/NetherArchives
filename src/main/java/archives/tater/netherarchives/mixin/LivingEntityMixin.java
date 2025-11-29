@@ -7,6 +7,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,26 +17,26 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements AirSkiier {
-    @Shadow public abstract boolean isGliding();
+    @Shadow public abstract boolean isFallFlying();
 
-    @Shadow public abstract float getMovementSpeed();
+    @Shadow public abstract float getSpeed();
 
-    @Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
+    @Shadow public abstract ItemStack getItemBySlot(EquipmentSlot slot);
 
     @Unique
     private boolean netherarchives$isAirSkiing = false;
@@ -43,12 +44,12 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
     @Unique
     private int netherarchives$ticksSkiing = 0;
 
-    public LivingEntityMixin(EntityType<?> type, World world) {
+    public LivingEntityMixin(EntityType<?> type, Level world) {
         super(type, world);
     }
 
     @Inject(
-            method = "canWalkOnFluid",
+            method = "canStandOnFluid",
             at = @At("HEAD"),
             cancellable = true)
     private void checkBasaltSkis(FluidState state, CallbackInfoReturnable<Boolean> cir) {
@@ -58,39 +59,39 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
 
     @SuppressWarnings("DataFlowIssue")
     @ModifyExpressionValue(
-            method = "travelMidAir",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;getSlipperiness()F")
+            method = "travelInAir",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;getFriction()F")
     )
     private float skiFriction(float original, @Local BlockPos blockPos) {
-        return SkisItem.canSki((LivingEntity) (Object) this, getEntityWorld().getFluidState(blockPos)) ? 1.08f : original;
+        return SkisItem.canSki((LivingEntity) (Object) this, level().getFluidState(blockPos)) ? 1.08f : original;
         // Air drag is 0.91
     }
 
     @Inject(
-            method = "tickMovement",
+            method = "aiStep",
             at = @At("HEAD")
     )
     private void damageSkis(CallbackInfo ci) {
-        if (getEntityWorld().isClient()) return;
-        if ((SkisItem.isSkiing((LivingEntity) (Object) this) || netherarchives$isAirSkiing) && getMovement().horizontalLengthSquared() > SkisItem.MIN_DAMAGE_VELOCITY * SkisItem.MIN_DAMAGE_VELOCITY) {
+        if (level().isClientSide()) return;
+        if ((SkisItem.isSkiing((LivingEntity) (Object) this) || netherarchives$isAirSkiing) && getKnownMovement().horizontalDistanceSqr() > SkisItem.MIN_DAMAGE_VELOCITY * SkisItem.MIN_DAMAGE_VELOCITY) {
             netherarchives$ticksSkiing++;
             if (netherarchives$ticksSkiing >= SkisItem.DAMAGE_FREQUENCY) {
-                getEquippedStack(EquipmentSlot.FEET).damage(1, (LivingEntity) (Object) this, EquipmentSlot.FEET);
+                getItemBySlot(EquipmentSlot.FEET).hurtAndBreak(1, (LivingEntity) (Object) this, EquipmentSlot.FEET);
                 netherarchives$ticksSkiing = 0;
             }
         }
     }
 
     @ModifyArg(
-            method = "updateLimbs(Z)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;updateLimbs(F)V")
+            method = "calculateEntityAnimation(Z)V",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;updateWalkAnimation(F)V")
     )
     private float noLimbMovement(float posDelta) {
         return SkisItem.isSkiing((LivingEntity) (Object) this) || netherarchives$isAirSkiing ? 0 : posDelta;
     }
 
     @ModifyReturnValue(
-            method = "getMovementSpeed()F",
+            method = "getSpeed()F",
             at = @At("RETURN")
     )
     private float preventMovementOnSkis(float original) {
@@ -99,15 +100,15 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
     }
 
     @ModifyExpressionValue(
-            method = "getMovementSpeed(F)F",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getOffGroundSpeed()F")
+            method = "getFrictionInfluencedSpeed(F)F",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFlyingSpeed()F")
     )
     private float increasedAirSkiMovement(float original) {
-        return netherarchives$isAirSkiing ? 0.35f * getMovementSpeed() : original;
+        return netherarchives$isAirSkiing ? 0.35f * getSpeed() : original;
     }
 
     @Inject(
-            method = "jump",
+            method = "jumpFromGround",
             at = @At("HEAD"),
             cancellable = true)
     private void preventJumpOnSkis(CallbackInfo ci) {
@@ -126,25 +127,25 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
 
     @ModifyExpressionValue(
             method = "getEffectiveGravity",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hasEffect(Lnet/minecraft/core/Holder;)Z")
     )
     private boolean slowFallingWhileAirSkiing(boolean original) {
-        return original || netherarchives$isAirSkiing && !isSneaking();
+        return original || netherarchives$isAirSkiing && !isShiftKeyDown();
     }
 
     @Inject(
-            method = "travelMidAir",
+            method = "travelInAir",
             at = @At("TAIL")
     )
-    private void stopAirSkiing(Vec3d movementInput, CallbackInfo ci) {
+    private void stopAirSkiing(Vec3 movementInput, CallbackInfo ci) {
         //noinspection ConstantValue
-        if (this.isTouchingWater() || this.isInLava() || this.isGliding() || ((Object) this instanceof PlayerEntity playerEntity && playerEntity.getAbilities().flying))
+        if (this.isInWater() || this.isInLava() || this.isFallFlying() || ((Object) this instanceof Player playerEntity && playerEntity.getAbilities().flying))
             netherarchives$isAirSkiing = false;
     }
 
     @ModifyExpressionValue(
-            method = "fall",
-            at = @At(value = "FIELD", target = "Lnet/minecraft/entity/LivingEntity;fallDistance:D", ordinal = 1)
+            method = "checkFallDamage",
+            at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/LivingEntity;fallDistance:D", ordinal = 1, opcode = Opcodes.GETFIELD)
     )
     private double noFallDamageWhileAirSkiing(double original) {
         if (!netherarchives$isAirSkiing) return original;
@@ -152,13 +153,13 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
     }
 
     @WrapWithCondition(
-            method = "fall",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;fall(DZLnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V")
+            method = "checkFallDamage",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;checkFallDamage(DZLnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V")
     )
     private boolean noFallDamageWhileAirSkiing(Entity instance, double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
         if (!onGround || !netherarchives$isAirSkiing) return true;
         netherarchives$isAirSkiing = false;
-        onLanding();
+        resetFallDistance();
         return false;
     }
 }

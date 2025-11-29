@@ -9,22 +9,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
     @Shadow @Final
-    private MinecraftClient client;
+    private Minecraft minecraft;
 
     @Inject(
             method = "bobView",
             at = @At(value = "HEAD"),
             cancellable = true
     )
-    private void noBobSkis(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        if (SkisItem.wearsSkis(client.getCameraEntity()))
+    private void noBobSkis(PoseStack matrices, float tickDelta, CallbackInfo ci) {
+        if (SkisItem.wearsSkis(minecraft.getCameraEntity()))
             ci.cancel();
     }
 }

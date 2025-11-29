@@ -7,14 +7,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
-@Mixin(ClientPlayerEntity.class)
-public abstract class ClientPlayerEntityMixin extends PlayerEntity {
+@Mixin(LocalPlayer.class)
+public abstract class ClientPlayerEntityMixin extends Player {
 
-    public ClientPlayerEntityMixin(World world, GameProfile profile) {
+    public ClientPlayerEntityMixin(Level world, GameProfile profile) {
         super(world, profile);
     }
 
@@ -24,6 +24,6 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
     )
     private boolean preventSprintingWithSkies(boolean original) {
         //noinspection ConstantValue
-        return original && (!SkisItem.wearsSkis((ClientPlayerEntity) (Object) this) || getAbilities().flying);
+        return original && (!SkisItem.wearsSkis((LocalPlayer) (Object) this) || getAbilities().flying);
     }
 }

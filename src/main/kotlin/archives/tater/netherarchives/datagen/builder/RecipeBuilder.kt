@@ -1,125 +1,136 @@
 package archives.tater.netherarchives.datagen.builder
 
-import net.minecraft.data.recipe.*
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import net.minecraft.recipe.*
-import net.minecraft.recipe.AbstractCookingRecipe.RecipeFactory
-import net.minecraft.recipe.book.RecipeCategory
-import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
+import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
+import net.minecraft.world.item.crafting.AbstractCookingRecipe.Factory
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.RecipeProvider
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder
+import net.minecraft.tags.TagKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.AbstractCookingRecipe
+import net.minecraft.world.item.crafting.BlastingRecipe
+import net.minecraft.world.item.crafting.CampfireCookingRecipe
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.SmeltingRecipe
+import net.minecraft.world.item.crafting.SmokingRecipe
 
 // Shaped
 
-fun CraftingRecipeJsonBuilder.offerTo(exporter: RecipeExporter, recipeId: Identifier) {
-    offerTo(exporter, RegistryKey.of(RegistryKeys.RECIPE, recipeId))
+fun RecipeBuilder.offerTo(exporter: RecipeOutput, recipeId: ResourceLocation) {
+    save(exporter, ResourceKey.create(Registries.RECIPE, recipeId))
 }
 
-context(exporter: RecipeExporter)
-inline fun RecipeGenerator.shaped(
+context(exporter: RecipeOutput)
+inline fun RecipeProvider.shaped(
     category: RecipeCategory,
-    outputItem: ItemConvertible,
+    outputItem: ItemLike,
     count: Int = 1,
-    recipeId: Identifier = outputItem.asItem().id,
-    init: ShapedRecipeJsonBuilder.() -> Unit
+    recipeId: ResourceLocation = outputItem.asItem().id,
+    init: ShapedRecipeBuilder.() -> Unit
 ) {
-    createShaped(category, outputItem, count).apply(init)
+    shaped(category, outputItem, count).apply(init)
         .offerTo(exporter, recipeId)
 }
 
-fun ShapedRecipeJsonBuilder.patterns(rows: String) {
+fun ShapedRecipeBuilder.patterns(rows: String) {
     rows.trimIndent().split('\n').forEach(::pattern)
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun ShapedRecipeJsonBuilder.itemCriterion(item: ItemConvertible) {
-    criterion(RecipeGenerator.hasItem(item), recipeGenerator.conditionsFromItem(item))
+context(recipeGenerator: RecipeProvider)
+fun ShapedRecipeBuilder.itemCriterion(item: ItemLike) {
+    unlockedBy(RecipeProvider.getHasName(item), recipeGenerator.has(item))
 }
 
-inline fun ShapedRecipeJsonBuilder.inputs(init: ShapedIngredientsBuilder.() -> Unit) {
+inline fun ShapedRecipeBuilder.inputs(init: ShapedIngredientsBuilder.() -> Unit) {
     ShapedIngredientsBuilder(this).init()
 }
 
-class ShapedIngredientsBuilder(private val recipeBuilder: ShapedRecipeJsonBuilder) {
-    infix fun Char.to(item: ItemConvertible) {
-        recipeBuilder.input(this, item)
+class ShapedIngredientsBuilder(private val recipeBuilder: ShapedRecipeBuilder) {
+    infix fun Char.to(item: ItemLike) {
+        recipeBuilder.define(this, item)
     }
 
     infix fun Char.to(ingredient: Ingredient) {
-        recipeBuilder.input(this, ingredient)
+        recipeBuilder.define(this, ingredient)
     }
 
     infix fun Char.to(tagKey: TagKey<Item>) {
-        recipeBuilder.input(this, tagKey)
+        recipeBuilder.define(this, tagKey)
     }
 }
 
 // Shapeless Recipe
 
-context(exporter: RecipeExporter)
-inline fun RecipeGenerator.shapeless(
+context(exporter: RecipeOutput)
+inline fun RecipeProvider.shapeless(
     category: RecipeCategory,
-    outputItem: ItemConvertible,
+    outputItem: ItemLike,
     count: Int = 1,
-    recipeId: Identifier = outputItem.asItem().id,
-    init: ShapelessRecipeJsonBuilder.() -> Unit
+    recipeId: ResourceLocation = outputItem.asItem().id,
+    init: ShapelessRecipeBuilder.() -> Unit
 ) {
-    createShapeless(category, outputItem, count).apply(init)
+    shapeless(category, outputItem, count).apply(init)
         .offerTo(exporter, recipeId)
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun ShapelessRecipeJsonBuilder.itemCriterion(item: ItemConvertible) {
-    criterion(RecipeGenerator.hasItem(item), recipeGenerator.conditionsFromItem(item))
+context(recipeGenerator: RecipeProvider)
+fun ShapelessRecipeBuilder.itemCriterion(item: ItemLike) {
+    unlockedBy(RecipeProvider.getHasName(item), recipeGenerator.has(item))
 }
 
-fun ShapelessRecipeJsonBuilder.inputs(init: ShapelessIngredientsBuilder.() -> Unit) {
+fun ShapelessRecipeBuilder.inputs(init: ShapelessIngredientsBuilder.() -> Unit) {
     ShapelessIngredientsBuilder(this).init()
 }
 
-class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeJsonBuilder) {
-    operator fun ItemConvertible.unaryPlus() {
-        recipeBuilder.input(this)
+class ShapelessIngredientsBuilder(private val recipeBuilder: ShapelessRecipeBuilder) {
+    operator fun ItemLike.unaryPlus() {
+        recipeBuilder.requires(this)
     }
 
-    infix fun Int.of(item: ItemConvertible) {
-        recipeBuilder.input(item, this)
+    infix fun Int.of(item: ItemLike) {
+        recipeBuilder.requires(item, this)
     }
 
     operator fun Ingredient.unaryPlus() {
-        recipeBuilder.input(this)
+        recipeBuilder.requires(this)
     }
 
     infix fun Int.of(ingredient: Ingredient) {
-        recipeBuilder.input(ingredient, this)
+        recipeBuilder.requires(ingredient, this)
     }
 
     operator fun TagKey<Item>.unaryPlus() {
-        recipeBuilder.input(this)
+        recipeBuilder.requires(this)
     }
 }
 
 // Cooking
 
 val Item.id
-    get() = Registries.ITEM.getId(this as Item?)
+    get() = BuiltInRegistries.ITEM.getKey(this as Item?)
 
-context(recipeGenerator: RecipeGenerator)
-fun <T: AbstractCookingRecipe> RecipeExporter.cookingRecipe(
+context(recipeGenerator: RecipeProvider)
+fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     serializer: RecipeSerializer<T>,
-    recipeFactory: RecipeFactory<T>,
+    recipeFactory: Factory<T>,
     method: String,
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    CookingRecipeJsonBuilder.create(
-        Ingredient.ofItems(inputItem),
+    SimpleCookingRecipeBuilder.generic(
+        Ingredient.of(inputItem),
         category,
         outputItem,
         experience,
@@ -127,56 +138,56 @@ fun <T: AbstractCookingRecipe> RecipeExporter.cookingRecipe(
         serializer,
         recipeFactory,
     )
-        .criterion(RecipeGenerator.hasItem(inputItem), recipeGenerator.conditionsFromItem(inputItem))
-        .offerTo(this, Identifier.of(outputItem.id.namespace, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
+        .unlockedBy(RecipeProvider.getHasName(inputItem), recipeGenerator.has(inputItem))
+        .offerTo(this, ResourceLocation.fromNamespaceAndPath(outputItem.id.namespace, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun RecipeExporter.smelting(
+context(recipeGenerator: RecipeProvider)
+fun RecipeOutput.smelting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING, ::SmeltingRecipe, "smelting", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING_RECIPE, ::SmeltingRecipe, "smelting", cookingTime, experience)
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun RecipeExporter.smoking(
+context(recipeGenerator: RecipeProvider)
+fun RecipeOutput.smoking(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 100,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING, ::SmokingRecipe, "smoking", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING_RECIPE, ::SmokingRecipe, "smoking", cookingTime, experience)
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun RecipeExporter.blasting(
+context(recipeGenerator: RecipeProvider)
+fun RecipeOutput.blasting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 50,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING, ::BlastingRecipe, "blasting", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING_RECIPE, ::BlastingRecipe, "blasting", cookingTime, experience)
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun RecipeExporter.campfire(
+context(recipeGenerator: RecipeProvider)
+fun RecipeOutput.campfire(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 600,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
+    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun RecipeExporter.oreSmelting(
+context(recipeGenerator: RecipeProvider)
+fun RecipeOutput.oreSmelting(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,
@@ -187,8 +198,8 @@ fun RecipeExporter.oreSmelting(
     blasting(category, inputItem, outputItem, cookingTime / 2, experience)
 }
 
-context(recipeGenerator: RecipeGenerator)
-fun RecipeExporter.foodCooking(
+context(recipeGenerator: RecipeProvider)
+fun RecipeOutput.foodCooking(
     category: RecipeCategory,
     inputItem: Item,
     outputItem: Item,

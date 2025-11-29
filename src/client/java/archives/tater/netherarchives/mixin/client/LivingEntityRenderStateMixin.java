@@ -5,7 +5,7 @@ import archives.tater.netherarchives.client.duck.SoulGlassRevealed;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 @Mixin(LivingEntityRenderState.class)
 public class LivingEntityRenderStateMixin implements SoulGlassRevealed {

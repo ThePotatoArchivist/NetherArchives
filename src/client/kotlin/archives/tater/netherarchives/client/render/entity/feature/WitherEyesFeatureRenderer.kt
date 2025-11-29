@@ -1,26 +1,26 @@
 package archives.tater.netherarchives.client.render.entity.feature
 
 import archives.tater.netherarchives.NetherArchives
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.entity.feature.FeatureRendererContext
-import net.minecraft.client.render.entity.model.WitherEntityModel
-import net.minecraft.client.render.entity.state.WitherEntityRenderState
-import net.minecraft.util.math.MathHelper
+import net.minecraft.client.model.WitherBossModel
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.renderer.entity.state.WitherRenderState
+import net.minecraft.util.Mth
 
-class WitherEyesFeatureRenderer(featureRendererContext: FeatureRendererContext<WitherEntityRenderState, WitherEntityModel>) :
-    EntityEyesFeatureRenderer<WitherEntityRenderState, WitherEntityModel>(featureRendererContext) {
+class WitherEyesFeatureRenderer(featureRendererContext: RenderLayerParent<WitherRenderState, WitherBossModel>) :
+    EntityEyesFeatureRenderer<WitherRenderState, WitherBossModel>(featureRendererContext) {
 
-    override fun getEyesTexture(state: WitherEntityRenderState?): RenderLayer {
-        if (state == null) return SKIN;
-        val i = MathHelper.floor(state.invulnerableTimer);
+    override fun getEyesTexture(state: WitherRenderState?): RenderType {
+        if (state == null) return SKIN
+        val i = Mth.floor(state.invulnerableTicks)
         return if (i > 0 && (i > 80 || i / 5 % 2 != 1)) INVULNERABLE_SKIN else SKIN
     }
 
     companion object {
         private val SKIN =
-            RenderLayer.getEyes(NetherArchives.id("textures/entity/wither/wither_eyes.png"))
+            RenderType.eyes(NetherArchives.id("textures/entity/wither/wither_eyes.png"))
 
         private val INVULNERABLE_SKIN =
-            RenderLayer.getEyes(NetherArchives.id("textures/entity/wither/wither_invulnerable_eyes.png"))
+            RenderType.eyes(NetherArchives.id("textures/entity/wither/wither_invulnerable_eyes.png"))
     }
 }

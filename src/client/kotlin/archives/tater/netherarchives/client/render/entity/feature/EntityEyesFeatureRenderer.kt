@@ -1,36 +1,36 @@
 package archives.tater.netherarchives.client.render.entity.feature
 
-import net.minecraft.client.render.LightmapTextureManager.MAX_SKY_LIGHT_COORDINATE
-import net.minecraft.client.render.OverlayTexture
-import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.command.OrderedRenderCommandQueue
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer
-import net.minecraft.client.render.entity.feature.FeatureRendererContext
-import net.minecraft.client.render.entity.model.EntityModel
-import net.minecraft.client.render.entity.state.EntityRenderState
-import net.minecraft.client.util.math.MatrixStack
+import com.mojang.blaze3d.vertex.PoseStack
+import net.minecraft.client.model.EntityModel
+import net.minecraft.client.renderer.LightTexture.FULL_SKY
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.SubmitNodeCollector
+import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.renderer.entity.layers.EyesLayer
+import net.minecraft.client.renderer.entity.state.EntityRenderState
+import net.minecraft.client.renderer.texture.OverlayTexture
 
 /**
  * Thought this was useful but actually wasn't
  */
-abstract class EntityEyesFeatureRenderer<T : EntityRenderState, M : EntityModel<T>>(featureRendererContext: FeatureRendererContext<T, M>?) :
-    EyesFeatureRenderer<T, M>(featureRendererContext) {
+abstract class EntityEyesFeatureRenderer<T : EntityRenderState, M : EntityModel<T>>(featureRendererContext: RenderLayerParent<T, M>?) :
+    EyesLayer<T, M>(featureRendererContext) {
 
-    override fun render(
-        matrices: MatrixStack,
-        queue: OrderedRenderCommandQueue?,
+    override fun submit(
+        matrices: PoseStack,
+        queue: SubmitNodeCollector,
         light: Int,
         state: T,
         limbAngle: Float,
         limbDistance: Float
     ) {
-        queue!!.getBatchingQueue(1).submitModel(
-                contextModel,
+        queue.order(1).submitModel(
+            parentModel,
                 state,
                 matrices,
                 getEyesTexture(state),
-                MAX_SKY_LIGHT_COORDINATE,
-                OverlayTexture.DEFAULT_UV,
+            FULL_SKY,
+                OverlayTexture.NO_OVERLAY,
                 -1,
                 null,
                 state.outlineColor,
@@ -38,8 +38,8 @@ abstract class EntityEyesFeatureRenderer<T : EntityRenderState, M : EntityModel<
             )
     }
 
-    abstract fun getEyesTexture(state: T?): RenderLayer
+    abstract fun getEyesTexture(state: T?): RenderType
 
-    override fun getEyesTexture() = getEyesTexture(null)
+    override fun renderType() = getEyesTexture(null)
 }
 

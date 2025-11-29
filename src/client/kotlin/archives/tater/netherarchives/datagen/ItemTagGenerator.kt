@@ -13,16 +13,16 @@ import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.item.Items
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.ItemTags
+import net.minecraft.core.HolderLookup
+import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 import java.util.concurrent.CompletableFuture
 
 class ItemTagGenerator(
     output: FabricDataOutput,
-    registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
+    registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagProvider.ItemTagProvider(output, registriesFuture) {
-    override fun configure(arg: RegistryWrapper.WrapperLookup?) {
+    override fun addTags(arg: HolderLookup.Provider) {
         valueLookupBuilder(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR).add(
             Items.POLISHED_BASALT,
         )

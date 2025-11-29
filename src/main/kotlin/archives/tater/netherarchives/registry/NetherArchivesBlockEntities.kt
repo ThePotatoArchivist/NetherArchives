@@ -4,13 +4,13 @@ import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
 import archives.tater.netherarchives.block.entity.BlazeTorchBlockEntity
 import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.util.math.BlockPos
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.Registry
+import net.minecraft.core.BlockPos
 
 object NetherArchivesBlockEntities {
     private fun <T: BlockEntity> register(
@@ -19,7 +19,7 @@ object NetherArchivesBlockEntities {
         vararg blocks: Block
     ): BlockEntityType<T> =
         Registry.register(
-            Registries.BLOCK_ENTITY_TYPE,
+            BuiltInRegistries.BLOCK_ENTITY_TYPE,
             NetherArchives.id(path),
             FabricBlockEntityTypeBuilder.create(blockEntity, *blocks).build()
         )
