@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo
 class NetherArchivesClientMixinPlugin : IMixinConfigPlugin {
     companion object {
         const val WITHER_ARMOR_MIXIN = "archives.tater.netherarchives.mixin.client.WitherArmorFeatureRendererMixin"
+        const val WITHER_SKULL_MIXIN = "archives.tater.netherarchives.mixin.client.WitherSkullRendererMixin"
         const val BLAZE_MIXIN = "archives.tater.netherarchives.mixin.client.EntityRenderDispatcherMixin"
     }
 
@@ -17,7 +18,7 @@ class NetherArchivesClientMixinPlugin : IMixinConfigPlugin {
 
     override fun shouldApplyMixin(targetClassName: String, mixinClassName: String): Boolean {
         return when(mixinClassName) {
-            WITHER_ARMOR_MIXIN -> NetherArchivesClient.config.skeletonEyes
+            WITHER_ARMOR_MIXIN, WITHER_SKULL_MIXIN -> NetherArchivesClient.config.skeletonEyes
             BLAZE_MIXIN -> NetherArchivesClient.config.blazeEntityFire
             else -> true
         }

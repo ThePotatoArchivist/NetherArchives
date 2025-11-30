@@ -10,7 +10,8 @@
     "GameRendererMixin",
     "LivingEntityRendererMixin",
     "LivingEntityRenderStateMixin",
-    "WitherArmorFeatureRendererMixin"
+    "WitherArmorFeatureRendererMixin",
+    "WitherSkullRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
