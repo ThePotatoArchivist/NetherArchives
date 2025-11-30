@@ -105,7 +105,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
             TextureSlot.TOP to ModelLocationUtils.getModelLocation(top, if (topSuffixed) "_top$suffix" else "_top"),
             TextureSlot.SIDE to ModelLocationUtils.getModelLocation(side, "_side$suffix"),
             TextureSlot.BOTTOM to ModelLocationUtils.getModelLocation(bottom, "$bottomSuffix$suffix"),
-            TextureSlot.PARTICLE to ModelLocationUtils.getModelLocation(top, "_top$suffix"),
+            TextureSlot.PARTICLE to ModelLocationUtils.getModelLocation(top, if (topSuffixed) "_top$suffix" else "_top"),
         )
 
         private inline fun BlockModelGenerators.acceptVariants(block: Block, vararg variants: Variant, init: MultiVariantGenerator.() -> Unit = {}) {
