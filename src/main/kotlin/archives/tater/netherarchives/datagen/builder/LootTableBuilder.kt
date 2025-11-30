@@ -1,23 +1,24 @@
 package archives.tater.netherarchives.datagen.builder
 
+import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.core.Holder
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
-import net.minecraft.world.level.storage.loot.predicates.ConditionUserBuilder
-import net.minecraft.world.level.storage.loot.predicates.MatchTool
-import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry
+import net.minecraft.world.level.storage.loot.entries.EmptyLootItem
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
+import net.minecraft.world.level.storage.loot.predicates.ConditionUserBuilder
+import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
+import net.minecraft.world.level.storage.loot.predicates.MatchTool
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
-import net.minecraft.advancements.critereon.ItemPredicate
-import net.minecraft.core.Holder
 
 fun lootTable(init: LootTable.Builder.() -> Unit): LootTable.Builder {
     return LootTable.lootTable().apply(init)
@@ -33,6 +34,10 @@ fun LootTable.Builder.pool(rolls: Int = 1, init: LootPool.Builder.() -> Unit) {
 
 fun LootPool.Builder.item(drop: ItemLike, init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
     with(LootItem.lootTableItem(drop).apply(init).build())
+}
+
+fun LootPool.Builder.empty(init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
+    with(EmptyLootItem.emptyItem().apply(init).build())
 }
 
 fun LootPool.Builder.alternatives(init: AlternativesEntry.Builder.() -> Unit) {

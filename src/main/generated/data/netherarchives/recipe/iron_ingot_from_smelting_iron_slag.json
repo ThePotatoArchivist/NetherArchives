@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smelting",
   "category": "misc",
-  "cookingtime": 25,
-  "experience": 0.08,
+  "cookingtime": 200,
+  "experience": 0.5,
   "ingredient": {
     "item": "netherarchives:iron_slag"
   },
   "result": {
-    "id": "minecraft:iron_nugget"
+    "id": "minecraft:iron_ingot"
   }
 }
