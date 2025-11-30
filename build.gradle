@@ -36,6 +36,7 @@ repositories {
 		name = "TerraformersMC"
 		url = "https://maven.terraformersmc.com/"
 	}
+    maven { url 'https://repo.sleeping.town/' }
 }
 
 loom {
@@ -74,6 +75,8 @@ dependencies {
 
 	modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
 	modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
+
+    implementation include("folk.sisby:kaleido-config:${project.kaleido_version}")
 }
 
 processResources {
