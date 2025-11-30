@@ -46,7 +46,7 @@ interface Shatterable {
         projectile: Projectile
     ) {
         val pos = hit.blockPos
-        if (world.isClientSide || !projectile.mayInteract(world, pos) || !projectile.mayBreak(world)) return
+        if (world.isClientSide || !projectile.mayInteract(world, pos) || !projectile.mayBreak(world) || projectile.type isIn NetherArchivesTags.NON_SHATTER_PROJECTILES) return
 
         if (projectile.type isIn NetherArchivesTags.NON_CHAIN_SHATTER_PROJECTILES ||
             (projectile is FireworkRocketEntity && !(projectile as FireworkRocketEntityAccessor).invokeHasExplosion())) {

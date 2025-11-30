@@ -19,5 +19,9 @@ class EntityTagGenerator(
             EntityType.SMALL_FIREBALL,
             EntityType.WIND_CHARGE,
         )
+        getOrCreateTagBuilder(NetherArchivesTags.NON_SHATTER_PROJECTILES).add(
+            EntityType.FIREBALL,
+            EntityType.WITHER_SKULL,
+        )
     }
 }

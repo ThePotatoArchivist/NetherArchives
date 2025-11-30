@@ -1,13 +1,13 @@
 package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
-import net.minecraft.world.level.material.Fluid
-import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceKey
-import net.minecraft.core.registries.Registries.*
-import net.minecraft.tags.TagKey
 import net.minecraft.Util
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.Registries.*
+import net.minecraft.resources.ResourceKey
+import net.minecraft.tags.TagKey
 import net.minecraft.world.level.levelgen.structure.Structure
+import net.minecraft.world.level.material.Fluid
 
 object NetherArchivesTags {
     private fun <T> of(registry: ResourceKey<Registry<T>>, path: String): TagKey<T> =
@@ -26,6 +26,7 @@ object NetherArchivesTags {
     val SKIS_CAN_WALK_ON: TagKey<Fluid> = of(FLUID, "skis_can_walk_on")
     val BURNS_WHEN_PADDLE: TagKey<Fluid> = of(FLUID, "burns_when_paddle")
 
+    val NON_SHATTER_PROJECTILES = of(ENTITY_TYPE, "non_shatter_projectile")
     val NON_CHAIN_SHATTER_PROJECTILES = of(ENTITY_TYPE, "non_chain_shatter_projectile")
 
     val BLAZE_TORCH_LOCATED: TagKey<Structure> = of(STRUCTURE, "blaze_torch_located")

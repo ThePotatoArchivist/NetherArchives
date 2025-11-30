@@ -4,15 +4,15 @@ import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.*
 import archives.tater.netherarchives.util.BlockSettings
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.StainedGlassPaneBlock
 import net.minecraft.world.level.material.PushReaction
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.Registry
-import net.minecraft.world.level.block.SoundType
-import net.minecraft.world.item.DyeColor
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockSettings
 
 object NetherArchivesBlocks {
@@ -108,7 +108,7 @@ object NetherArchivesBlocks {
 
     val SPECTREGLASS = register("spectreglass", { ShatterableSoulGlassBlock(SHATTERED_SPECTREGLASS, it) },
         BlockSettings.ofFullCopy(SHATTERED_SPECTREGLASS).apply {
-            strength(0.3f, 3f)
+            strength(0.3f, 1f)
         }
     )
 
@@ -117,7 +117,7 @@ object NetherArchivesBlocks {
 
     val SPECTREGLASS_PANE = register("spectreglass_pane", { ShatterableGlassPaneBlock(SHATTERED_SPECTREGLASS_PANE, it) },
         BlockSettings.ofFullCopy(SHATTERED_SPECTREGLASS_PANE).apply {
-            strength(0.3f, 3f)
+            strength(0.3f, 1f)
         }
     )
 
