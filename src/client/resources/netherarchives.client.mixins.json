@@ -11,7 +11,8 @@
     "ItemRendererMixin",
     "LivingEntityRendererMixin",
     "RemotePlayerMixin",
-    "WitherArmorFeatureRendererMixin"
+    "WitherArmorFeatureRendererMixin",
+    "WitherSkullRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
