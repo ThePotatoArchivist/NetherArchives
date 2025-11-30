@@ -4,6 +4,7 @@ import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_OAR
 import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_SKIS
 import archives.tater.netherarchives.registry.NetherArchivesItems.DUMMY_SOUL_FIRE
 import archives.tater.netherarchives.registry.NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK
+import archives.tater.netherarchives.registry.NetherArchivesItems.IRON_SLAG
 import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS
@@ -59,6 +60,9 @@ class ItemTagGenerator(
         )
         valueLookupBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(
             SPECTREGLASS_KNIFE,
+        )
+        valueLookupBuilder(ConventionalItemTags.IRON_RAW_MATERIALS).add(
+            IRON_SLAG,
         )
     }
 }

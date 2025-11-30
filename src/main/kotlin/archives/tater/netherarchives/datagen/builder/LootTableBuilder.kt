@@ -7,6 +7,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry
+import net.minecraft.world.level.storage.loot.entries.EmptyLootItem
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
@@ -33,6 +34,10 @@ fun LootTable.Builder.pool(rolls: Int = 1, init: LootPool.Builder.() -> Unit) {
 
 fun LootPool.Builder.item(drop: ItemLike, init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
     with(LootItem.lootTableItem(drop).apply(init).build())
+}
+
+fun LootPool.Builder.empty(init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
+    with(EmptyLootItem.emptyItem().apply(init).build())
 }
 
 fun LootPool.Builder.alternatives(init: AlternativesEntry.Builder.() -> Unit) {

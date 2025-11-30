@@ -1,7 +1,8 @@
-// 1.21.9	-999999999-01-01T00:00:00	Nether Archives/Tags for minecraft:item
+// 1.21.10	-999999999-01-01T00:00:00	Nether Archives/Tags for minecraft:item
 d0ce52695227d2e3fb0f68864a69bcdd1d3531d6 data/c/tags/item/glass_blocks.json
 52df0e64c523825cd95373826a62fb759a4ba731 data/c/tags/item/glass_panes.json
 56d7cdc50a58daab2c8c09bd9f103e8fae080f8d data/c/tags/item/hidden_from_recipe_viewers.json
+8bee4b06e4da303a33404fd93cf8a3b4970d8e8a data/c/tags/item/raw_materials/iron.json
 cda67c0d82a8d0b44d79c4e00574387b972330f0 data/c/tags/item/tools/melee_weapon.json
 cda67c0d82a8d0b44d79c4e00574387b972330f0 data/minecraft/tags/item/breaks_decorated_pots.json
 642f2082e56a433b1fe57ad24c29804f34f9f4cf data/minecraft/tags/item/enchantable/armor.json

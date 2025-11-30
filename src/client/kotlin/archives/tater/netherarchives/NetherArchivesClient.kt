@@ -7,6 +7,7 @@ import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
 import archives.tater.netherarchives.registry.*
 import archives.tater.netherarchives.util.isIn
+import folk.sisby.kaleido.api.WrappedConfig
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
@@ -33,9 +34,17 @@ import net.minecraft.world.level.ClipBlockStateContext
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
+import java.nio.file.Paths
 import java.util.*
 
 object NetherArchivesClient : ClientModInitializer {
+
+    val config: NetherArchivesClientConfig = WrappedConfig.createToml(
+        Paths.get("config"),
+        "nether_archives",
+        "client",
+        NetherArchivesClientConfig::class.java
+    )
 
     @JvmField
     internal val spectreglassRevealed = WeakHashMap<LivingEntity, Boolean>()
@@ -80,7 +89,7 @@ object NetherArchivesClient : ClientModInitializer {
         EntityRenderers.register(NetherArchivesEntities.BLAZE_LANTERN, ::ThrownItemRenderer)
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
-            if (NetherArchives.config.skeletonEyes)
+            if (config.skeletonEyes)
                 registrationHelper.register(when (entityType) {
                     EntityType.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonRenderer)
                     EntityType.WITHER -> WitherEyesFeatureRenderer(entityRenderer as WitherBossRenderer)

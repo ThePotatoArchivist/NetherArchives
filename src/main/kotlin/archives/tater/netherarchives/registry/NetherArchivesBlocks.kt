@@ -110,7 +110,7 @@ object NetherArchivesBlocks {
 
     val SPECTREGLASS = register("spectreglass", { ShatterableSoulGlassBlock(SHATTERED_SPECTREGLASS, it) },
         BlockSettings.ofFullCopy(SHATTERED_SPECTREGLASS).apply {
-            strength(0.3f, 3f)
+            strength(0.3f, 1f)
         }
     )
 
@@ -119,7 +119,7 @@ object NetherArchivesBlocks {
 
     val SPECTREGLASS_PANE = register("spectreglass_pane", { ShatterableGlassPaneBlock(SHATTERED_SPECTREGLASS_PANE, it) },
         BlockSettings.ofFullCopy(SHATTERED_SPECTREGLASS_PANE).apply {
-            strength(0.3f, 3f)
+            strength(0.3f, 1f)
         }
     )
 

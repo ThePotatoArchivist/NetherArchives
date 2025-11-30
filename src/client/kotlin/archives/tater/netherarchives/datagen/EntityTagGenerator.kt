@@ -19,6 +19,10 @@ class EntityTagGenerator(
             EntityType.SMALL_FIREBALL,
             EntityType.WIND_CHARGE,
         )
+        valueLookupBuilder(NetherArchivesTags.NON_SHATTER_PROJECTILES).add(
+            EntityType.FIREBALL,
+            EntityType.WITHER_SKULL,
+        )
         valueLookupBuilder(NetherArchivesTags.BLAZE_COLORED_FIRE).add(
             EntityType.BLAZE,
         )

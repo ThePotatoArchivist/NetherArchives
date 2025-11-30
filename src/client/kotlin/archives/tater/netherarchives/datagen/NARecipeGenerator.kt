@@ -22,7 +22,7 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
     }
 
     private fun RecipeOutput.recipes() {
-        oreSmelting(RecipeCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_NUGGET, 25, 0.08F)
+        oreSmelting(RecipeCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_INGOT, experience = 0.5F)
 
         shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeId = NetherArchives.id("compass_from_magnetite")) {
             patterns(
