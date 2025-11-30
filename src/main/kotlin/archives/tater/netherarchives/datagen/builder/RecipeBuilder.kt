@@ -4,7 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.*
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.*
@@ -13,7 +13,7 @@ import net.minecraft.world.level.ItemLike
 
 // Shaped
 
-fun RecipeBuilder.offerTo(exporter: RecipeOutput, recipeId: ResourceLocation) {
+fun RecipeBuilder.offerTo(exporter: RecipeOutput, recipeId: Identifier) {
     save(exporter, ResourceKey.create(Registries.RECIPE, recipeId))
 }
 
@@ -22,7 +22,7 @@ inline fun RecipeProvider.shaped(
     category: RecipeCategory,
     outputItem: ItemLike,
     count: Int = 1,
-    recipeId: ResourceLocation = outputItem.asItem().id,
+    recipeId: Identifier = outputItem.asItem().id,
     init: ShapedRecipeBuilder.() -> Unit
 ) {
     shaped(category, outputItem, count).apply(init)
@@ -63,7 +63,7 @@ inline fun RecipeProvider.shapeless(
     category: RecipeCategory,
     outputItem: ItemLike,
     count: Int = 1,
-    recipeId: ResourceLocation = outputItem.asItem().id,
+    recipeId: Identifier = outputItem.asItem().id,
     init: ShapelessRecipeBuilder.() -> Unit
 ) {
     shapeless(category, outputItem, count).apply(init)
@@ -127,7 +127,7 @@ fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
         recipeFactory,
     )
         .unlockedBy(RecipeProvider.getHasName(inputItem), recipeGenerator.has(inputItem))
-        .offerTo(this, ResourceLocation.fromNamespaceAndPath(outputItem.id.namespace, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
+        .offerTo(this, Identifier.fromNamespaceAndPath(outputItem.id.namespace, "${outputItem.id.path}_from_${method}_${inputItem.id.path}"))
 }
 
 context(recipeGenerator: RecipeProvider)

@@ -16,7 +16,7 @@ class StructureTagGenerator(
 
     override fun addTags(arg: HolderLookup.Provider) {
         getOrCreateRawBuilder(NetherArchivesTags.BLAZE_TORCH_LOCATED).addElement(
-            BuiltinStructures.FORTRESS.location()
+            BuiltinStructures.FORTRESS.identifier()
         )
     }
 

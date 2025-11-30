@@ -12,7 +12,6 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.InsideBlockEffectApplier
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.level.GameRules
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.ScheduledTickAccess
@@ -60,7 +59,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
 
     override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
         world.scheduleTick(pos, this, getFireTickDelay(world.random))
-        if (!world.gameRules.getBoolean(GameRules.RULE_DOFIRETICK)) return
+        if (!world.canSpreadFireAround(pos)) return
 
         val blockBelow = world.getBlockState(pos.below())
         val infiniburn = blockBelow.`is`(world.dimensionType().infiniburn())

@@ -7,7 +7,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.WallTorchBlock
 import net.minecraft.world.level.block.state.BlockState
 
-class WallBlazeTorchBlock(settings: Properties?) : WallTorchBlock(ParticleTypes.FLAME, settings),
+class WallBlazeTorchBlock(settings: Properties) : WallTorchBlock(ParticleTypes.FLAME, settings),
     AbstractBlazeTorchBlock {
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
         val direction = state.getValue(FACING).opposite

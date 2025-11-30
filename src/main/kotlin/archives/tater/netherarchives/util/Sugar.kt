@@ -52,7 +52,7 @@ internal inline operator fun Vec3.component3() = z
 fun ItemAttributeModifiers(init: ItemAttributeModifiers.Builder.() -> Unit): ItemAttributeModifiers =
     ItemAttributeModifiers.builder().apply(init).build()
 
-operator fun <T> HolderGetter<T>.get(key: ResourceKey<T>): Holder.Reference<T> = getOrThrow(key)
+operator fun <T: Any> HolderGetter<T>.get(key: ResourceKey<T>): Holder.Reference<T> = getOrThrow(key)
 
 inline var Entity.pos: Vec3
     get() = position()

@@ -1,10 +1,11 @@
 package archives.tater.netherarchives.client.render.entity.feature
 
 import archives.tater.netherarchives.NetherArchives
-import net.minecraft.client.model.WitherBossModel
-import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.model.monster.wither.WitherBossModel
 import net.minecraft.client.renderer.entity.RenderLayerParent
 import net.minecraft.client.renderer.entity.state.WitherRenderState
+import net.minecraft.client.renderer.rendertype.RenderType
+import net.minecraft.client.renderer.rendertype.RenderTypes
 import net.minecraft.util.Mth
 
 class WitherEyesFeatureRenderer(featureRendererContext: RenderLayerParent<WitherRenderState, WitherBossModel>) :
@@ -18,9 +19,9 @@ class WitherEyesFeatureRenderer(featureRendererContext: RenderLayerParent<Wither
 
     companion object {
         private val SKIN =
-            RenderType.eyes(NetherArchives.id("textures/entity/wither/wither_eyes.png"))
+            RenderTypes.eyes(NetherArchives.id("textures/entity/wither/wither_eyes.png"))
 
         private val INVULNERABLE_SKIN =
-            RenderType.eyes(NetherArchives.id("textures/entity/wither/wither_invulnerable_eyes.png"))
+            RenderTypes.eyes(NetherArchives.id("textures/entity/wither/wither_invulnerable_eyes.png"))
     }
 }

@@ -6,10 +6,10 @@ import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 
 object NetherArchivesParticles {
-    private fun <T: ParticleType<*>> register(id: ResourceLocation, particleType: T): T =
+    private fun <T: ParticleType<*>> register(id: Identifier, particleType: T): T =
         Registry.register(BuiltInRegistries.PARTICLE_TYPE, id, particleType)
 
     private fun <T: ParticleType<*>> register(path: String, particleType: T): T =

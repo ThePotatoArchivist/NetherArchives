@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.datagen.builder
 
-import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.Holder
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike

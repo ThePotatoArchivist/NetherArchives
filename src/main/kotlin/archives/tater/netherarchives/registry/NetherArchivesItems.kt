@@ -12,7 +12,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.*
 import net.minecraft.world.item.equipment.*
@@ -21,7 +21,7 @@ import net.minecraft.world.item.Item.Properties as ItemSettings
 
 
 object NetherArchivesItems {
-    private fun register(id: ResourceLocation, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item {
+    private fun register(id: Identifier, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item {
         val key = ResourceKey.create(Registries.ITEM, id)
         return Registry.register(BuiltInRegistries.ITEM, key, item(settings.setId(key)))
     }
@@ -108,7 +108,7 @@ object NetherArchivesItems {
     val SHATTERED_SPECTREGLASS_PANE = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE)
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
-    val DUMMY_SOUL_FIRE = register(ResourceLocation.withDefaultNamespace("netherarchives/dummy/soul_fire"))
+    val DUMMY_SOUL_FIRE = register(Identifier.withDefaultNamespace("netherarchives/dummy/soul_fire"))
 
     private val itemGroups = mapOf(
         CreativeModeTabs.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),

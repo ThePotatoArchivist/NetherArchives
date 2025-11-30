@@ -7,10 +7,10 @@ import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.util.world
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup.world
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.FallingBlockEntity
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.sounds.SoundSource
@@ -19,6 +19,7 @@ import net.minecraft.world.phys.HitResult
 import net.minecraft.core.BlockPos
 import net.minecraft.world.phys.AABB
 import net.minecraft.core.Direction
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile
 import net.minecraft.world.level.Level
 
 class BlazeLanternEntity : ThrowableItemProjectile {

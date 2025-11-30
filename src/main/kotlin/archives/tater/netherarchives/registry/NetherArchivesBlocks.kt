@@ -15,11 +15,11 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.item.DyeColor
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockSettings
 
 object NetherArchivesBlocks {
-    private fun register(id: ResourceLocation, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block {
+    private fun register(id: Identifier, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block {
         val key = ResourceKey.create(Registries.BLOCK, id)
         return Registry.register(BuiltInRegistries.BLOCK, key, block(settings.setId(key)))
     }

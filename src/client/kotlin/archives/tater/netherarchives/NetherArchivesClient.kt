@@ -19,13 +19,13 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.renderer.RenderPipelines
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer
 import net.minecraft.client.renderer.entity.EntityRenderers
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.client.renderer.entity.WitherBossRenderer
 import net.minecraft.client.renderer.entity.WitherSkeletonRenderer
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState
+import net.minecraft.client.renderer.rendertype.RenderTypes
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.util.Mth.clamp
 import net.minecraft.world.entity.EntityType
@@ -110,7 +110,7 @@ object NetherArchivesClient : ClientModInitializer {
                 basaltSkisModel,
                 bipedEntityRenderState,
                 matrices,
-                RenderType.armorCutoutNoCull(BASALT_SKIS_LOCATION),
+                RenderTypes.armorCutoutNoCull(BASALT_SKIS_LOCATION),
                 light,
                 OverlayTexture.NO_OVERLAY,
                 bipedEntityRenderState.outlineColor,
@@ -147,7 +147,7 @@ object NetherArchivesClient : ClientModInitializer {
 
             if (usingSoulKnife) return@register // Can skip checks
 
-            val cameraPos = camera.position
+            val cameraPos = camera.position()
             val distance = 64 * clamp(client.options.effectiveRenderDistance / 8.0, 1.0, 2.5) *
                     client.options.entityDistanceScaling().get()
             for (entity in world.getEntitiesOfClass(

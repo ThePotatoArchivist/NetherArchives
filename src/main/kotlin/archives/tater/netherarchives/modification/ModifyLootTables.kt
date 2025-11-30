@@ -5,13 +5,13 @@ import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 
-private val BARTERING = BuiltInLootTables.PIGLIN_BARTERING.location()
+private val BARTERING = BuiltInLootTables.PIGLIN_BARTERING.identifier()
 
 internal fun modifyLootTables() {
     LootTableEvents.MODIFY.register { key, tableBuilder, source, _ ->
         if (!(source.isBuiltin)) return@register
 
-        when (key.location()) {
+        when (key.identifier()) {
             BARTERING -> tableBuilder.modifyPools {
                 it.item(NetherArchivesItems.BLAZE_TORCH) {
                     setWeight(20)

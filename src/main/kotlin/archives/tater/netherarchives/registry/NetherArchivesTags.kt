@@ -1,16 +1,16 @@
 package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
-import net.minecraft.Util
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries.*
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
+import net.minecraft.util.Util
 import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.material.Fluid
 
 object NetherArchivesTags {
-    private fun <T> of(registry: ResourceKey<Registry<T>>, path: String): TagKey<T> =
+    private fun <T: Any> of(registry: ResourceKey<Registry<T>>, path: String): TagKey<T> =
         TagKey.create(registry, NetherArchives.id(path))
 
     val MAGNETIC = of(BLOCK, "magnetic")
@@ -36,8 +36,8 @@ object NetherArchivesTags {
 
     val BLAZE_TORCH_LOCATED: TagKey<Structure> = of(STRUCTURE, "blaze_torch_located")
 
-    val <T> TagKey<T>.translationKey: String
+    val <T: Any> TagKey<T>.translationKey: String
         get() {
-            return "tag.${Util.makeDescriptionId(this.registry.location().toShortLanguageKey(), this.location)}"
+            return "tag.${Util.makeDescriptionId(this.registry.identifier().toShortLanguageKey(), this.location)}"
         }
 }

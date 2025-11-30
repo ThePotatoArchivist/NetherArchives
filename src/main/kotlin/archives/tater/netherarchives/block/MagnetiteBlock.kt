@@ -26,7 +26,7 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
         return updateDistanceFromLodestone(defaultBlockState(), ctx.level, ctx.clickedPos)
     }
 
-    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
         builder.add(DISTANCE)
     }
 

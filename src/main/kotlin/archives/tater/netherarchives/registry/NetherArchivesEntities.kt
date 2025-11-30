@@ -2,18 +2,18 @@ package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.entity.BlazeLanternEntity
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.EntityType.EntityFactory
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceKey
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
 
 object NetherArchivesEntities {
-    private fun <T: Entity> register(id: ResourceLocation, type: EntityType.Builder<T>): EntityType<T> {
+    private fun <T: Entity> register(id: Identifier, type: EntityType.Builder<T>): EntityType<T> {
         val key = ResourceKey.create(Registries.ENTITY_TYPE, id)
         return Registry.register(BuiltInRegistries.ENTITY_TYPE, key, type.build(key))
     }
