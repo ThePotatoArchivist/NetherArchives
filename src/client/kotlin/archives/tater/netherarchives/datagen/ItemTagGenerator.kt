@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_OAR
 import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_SKIS
 import archives.tater.netherarchives.registry.NetherArchivesItems.DUMMY_SOUL_FIRE
@@ -10,6 +11,7 @@ import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPEC
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_KNIFE
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_PANE
+import io.github.mortuusars.exposure.Exposure
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -56,5 +58,9 @@ class ItemTagGenerator(
         getOrCreateTagBuilder(ConventionalItemTags.IRON_RAW_MATERIALS).add(
             IRON_SLAG,
         )
+        if (NetherArchives.EXPOSURE_INSTALLED)
+        getOrCreateTagBuilder(Exposure.Tags.Items.FILTERS).add(
+                SPECTREGLASS_PANE
+            )
     }
 }

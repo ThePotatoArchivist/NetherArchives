@@ -7,7 +7,10 @@ import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
 import archives.tater.netherarchives.registry.*
 import archives.tater.netherarchives.util.isIn
+import archives.tater.netherarchives.util.isOf
 import folk.sisby.kaleido.api.WrappedConfig
+import io.github.mortuusars.exposure.client.camera.CameraClient
+import io.github.mortuusars.exposure.world.item.camera.Attachment
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -131,7 +134,10 @@ object NetherArchivesClient : ClientModInitializer {
         ClientTickEvents.START_WORLD_TICK.register { world ->
             val client = Minecraft.getInstance()
             val camera = client.gameRenderer.mainCamera
-            usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && client.player?.useItem?.`is`(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
+            usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && (
+                    client.player?.useItem?.isOf(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
+                    || NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf NetherArchivesItems.SPECTREGLASS_PANE } == true
+            )
 
             if (usingSoulKnife) return@register // Can skip checks
 

@@ -1,6 +1,7 @@
-// 1.21.1	2025-11-29T21:35:04.863577291	Nether Archives/Tags for minecraft:item
+// 1.21.1	2025-11-30T00:13:40.540637842	Nether Archives/Tags for minecraft:item
 642f2082e56a433b1fe57ad24c29804f34f9f4cf data/minecraft/tags/item/enchantable/armor.json
 8bee4b06e4da303a33404fd93cf8a3b4970d8e8a data/c/tags/item/raw_materials/iron.json
+98c67366cb52576d5f1315ab8bcf209bbaaffd0e data/exposure/tags/item/filters.json
 52df0e64c523825cd95373826a62fb759a4ba731 data/c/tags/item/glass_panes.json
 cda67c0d82a8d0b44d79c4e00574387b972330f0 data/c/tags/item/tools/melee_weapon.json
 d0ce52695227d2e3fb0f68864a69bcdd1d3531d6 data/c/tags/item/glass_blocks.json

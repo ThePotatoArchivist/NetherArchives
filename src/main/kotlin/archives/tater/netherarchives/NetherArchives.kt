@@ -9,6 +9,7 @@ import archives.tater.netherarchives.util.isIn
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.InteractionResult
@@ -26,6 +27,8 @@ object NetherArchives : ModInitializer {
 
     @JvmField
     val logger: Logger = LoggerFactory.getLogger(MOD_ID)
+
+    val EXPOSURE_INSTALLED = FabricLoader.getInstance().isModLoaded("exposure")
 
     override fun onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
