@@ -34,6 +34,7 @@ internal inline infix fun FluidState.isIn(tag: TagKey<Fluid>): Boolean = this.`i
 internal inline infix fun EntityType<*>.isIn(tag: TagKey<EntityType<*>>): Boolean = this.`is`(tag)
 inline infix fun BlockState.isIn(tag: TagKey<Block>): Boolean = this.`is`(tag)
 
+inline infix fun ItemStack.isOf(item: Item) = this.`is`(item)
 inline infix fun BlockState.isOf(block: Block): Boolean = this.`is`(block)
 
 internal inline operator fun LivingEntity.get(hand: InteractionHand): ItemStack = getItemInHand(hand)

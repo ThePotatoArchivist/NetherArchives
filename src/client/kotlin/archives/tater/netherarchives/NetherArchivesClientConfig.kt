@@ -2,6 +2,7 @@ package archives.tater.netherarchives
 
 import folk.sisby.kaleido.api.WrappedConfig
 import folk.sisby.kaleido.lib.quiltconfig.api.annotations.Comment
+import java.nio.file.Paths
 
 class NetherArchivesClientConfig : WrappedConfig() {
     @Comment("Whether wither skeletons and withers should have soul-colored emissive eyes. Requires restart.")
@@ -10,4 +11,14 @@ class NetherArchivesClientConfig : WrappedConfig() {
     @Comment("Whether blazes should render with blaze fire. Requires restart.")
     var blazeEntityFire: Boolean = true
         private set
+
+    companion object {
+        val config: NetherArchivesClientConfig = createToml(
+            Paths.get("config"),
+            "nether_archives",
+            "client",
+            NetherArchivesClientConfig::class.java
+        )
+
+    }
 }
