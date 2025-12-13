@@ -37,6 +37,23 @@ repositories {
 		url = "https://maven.terraformersmc.com/"
 	}
     maven { url 'https://repo.sleeping.town/' }
+    maven {
+        name = "Mortuusars Github Maven"
+        url = "https://raw.githubusercontent.com/mortuusars/resources/main/maven/"
+    }
+    maven {
+        url = "https://cursemaven.com"
+    }
+    // Forge Config Api Port
+    maven {
+        name = "Fuzs Mod Resources"
+        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+    }
+    // JEI
+    maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
 }
 
 loom {
@@ -78,6 +95,8 @@ dependencies {
 //	modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
 
     implementation include("folk.sisby:kaleido-config:${project.kaleido_version}")
+
+    modCompileOnly("io.github.mortuusars.exposure:exposure-1.21.1-fabric:${project.exposure_version}")
 }
 
 processResources {

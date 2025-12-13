@@ -7,7 +7,7 @@ import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
 import archives.tater.netherarchives.registry.*
 import archives.tater.netherarchives.util.isIn
-import folk.sisby.kaleido.api.WrappedConfig
+import archives.tater.netherarchives.util.isOf
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
@@ -34,17 +34,11 @@ import net.minecraft.world.level.ClipBlockStateContext
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
-import java.nio.file.Paths
+import io.github.mortuusars.exposure.client.camera.CameraClient
+import io.github.mortuusars.exposure.world.item.camera.Attachment
 import java.util.*
 
 object NetherArchivesClient : ClientModInitializer {
-
-    val config: NetherArchivesClientConfig = WrappedConfig.createToml(
-        Paths.get("config"),
-        "nether_archives",
-        "client",
-        NetherArchivesClientConfig::class.java
-    )
 
     @JvmField
     internal val spectreglassRevealed = WeakHashMap<LivingEntity, Boolean>()
@@ -89,7 +83,7 @@ object NetherArchivesClient : ClientModInitializer {
         EntityRenderers.register(NetherArchivesEntities.BLAZE_LANTERN, ::ThrownItemRenderer)
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
-            if (config.skeletonEyes)
+            if (NetherArchivesClientConfig.config.skeletonEyes)
                 registrationHelper.register(when (entityType) {
                     EntityType.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonRenderer)
                     EntityType.WITHER -> WitherEyesFeatureRenderer(entityRenderer as WitherBossRenderer)
@@ -143,7 +137,10 @@ object NetherArchivesClient : ClientModInitializer {
         ClientTickEvents.START_WORLD_TICK.register { world ->
             val client = Minecraft.getInstance()
             val camera = client.gameRenderer.mainCamera
-            usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && client.player?.useItem?.`is`(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
+            usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && (
+                    client.player?.useItem?.isOf(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
+                    || NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf NetherArchivesItems.SPECTREGLASS_PANE } == true
+            )
 
             if (usingSoulKnife) return@register // Can skip checks
 

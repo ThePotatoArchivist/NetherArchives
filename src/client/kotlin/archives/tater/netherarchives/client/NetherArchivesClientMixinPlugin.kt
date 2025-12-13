@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.client
 
-import archives.tater.netherarchives.NetherArchivesClient
-import org.objectweb.asm.tree.ClassNode
+import archives.tater.netherarchives.NetherArchivesClientConfig
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo
+import org.objectweb.asm.tree.ClassNode
 
 class NetherArchivesClientMixinPlugin : IMixinConfigPlugin {
     companion object {
@@ -18,8 +18,8 @@ class NetherArchivesClientMixinPlugin : IMixinConfigPlugin {
 
     override fun shouldApplyMixin(targetClassName: String, mixinClassName: String): Boolean {
         return when(mixinClassName) {
-            WITHER_ARMOR_MIXIN, WITHER_SKULL_MIXIN -> NetherArchivesClient.config.skeletonEyes
-            BLAZE_MIXIN -> NetherArchivesClient.config.blazeEntityFire
+            WITHER_ARMOR_MIXIN, WITHER_SKULL_MIXIN -> NetherArchivesClientConfig.config.skeletonEyes
+            BLAZE_MIXIN -> NetherArchivesClientConfig.config.blazeEntityFire
             else -> true
         }
     }

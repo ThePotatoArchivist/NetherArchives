@@ -3,8 +3,8 @@ package archives.tater.netherarchives
 import archives.tater.netherarchives.modification.modifyLootTables
 import archives.tater.netherarchives.modification.modifyWorldGen
 import archives.tater.netherarchives.registry.*
-import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.api.ModInitializer
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resources.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -17,6 +17,8 @@ object NetherArchives : ModInitializer {
 
     @JvmField
     val logger: Logger = LoggerFactory.getLogger(MOD_ID)
+
+    val EXPOSURE_INSTALLED = FabricLoader.getInstance().isModLoaded("exposure")
 
     override fun onInitialize() {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
