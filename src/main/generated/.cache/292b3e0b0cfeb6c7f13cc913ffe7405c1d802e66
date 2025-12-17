@@ -1,4 +1,4 @@
-// 1.21.10	-999999999-01-01T00:00:00	Nether Archives/Tags for minecraft:entity_type
+// 1.21.11	-999999999-01-01T00:00:00	Nether Archives/Tags for minecraft:entity_type
 76c0522664726c09461ad4565b6fba80b4f816b2 data/netherarchives/tags/entity_type/blaze_colored_fire.json
 84eb00d58866380d37b421b7b108a7241623a04f data/netherarchives/tags/entity_type/non_chain_shatter_projectile.json
 99b7a38c7abd823ad9a9fb57f1d80c3080a9fcb6 data/netherarchives/tags/entity_type/non_shatter_projectile.json

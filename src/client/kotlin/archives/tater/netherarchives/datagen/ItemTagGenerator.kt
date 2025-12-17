@@ -12,13 +12,13 @@ import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_KNIFE
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_PANE
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import io.github.mortuusars.exposure.Exposure
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import io.github.mortuusars.exposure.Exposure
 import java.util.concurrent.CompletableFuture
 
 class ItemTagGenerator(
@@ -67,7 +67,7 @@ class ItemTagGenerator(
             IRON_SLAG,
         )
         if (NetherArchives.EXPOSURE_INSTALLED)
-            getOrCreateTagBuilder(Exposure.Tags.Items.FILTERS).add(
+            valueLookupBuilder(Exposure.Tags.Items.FILTERS).add(
                 SPECTREGLASS_PANE
             )
     }

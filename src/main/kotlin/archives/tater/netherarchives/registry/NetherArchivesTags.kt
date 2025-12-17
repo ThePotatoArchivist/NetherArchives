@@ -6,7 +6,6 @@ import net.minecraft.core.registries.Registries.*
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Util
-import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.material.Fluid
 
 object NetherArchivesTags {
@@ -34,7 +33,10 @@ object NetherArchivesTags {
     @JvmField
     val BLAZE_COLORED_FIRE = of(ENTITY_TYPE, "blaze_colored_fire")
 
-    val BLAZE_TORCH_LOCATED: TagKey<Structure> = of(STRUCTURE, "blaze_torch_located")
+    val BLAZE_TORCH_LOCATED = of(STRUCTURE, "blaze_torch_located")
+
+    @JvmField
+    val NO_EFFECTS = of(DAMAGE_TYPE, "no_effects")
 
     val <T: Any> TagKey<T>.translationKey: String
         get() {

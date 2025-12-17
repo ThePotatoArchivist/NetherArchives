@@ -30,6 +30,7 @@ object NetherArchives : ModInitializer {
         NetherArchivesEntities.register()
         NetherArchivesDamageTypes.register()
         NetherArchivesParticles.register()
+        initNetworking()
         modifyWorldGen()
         modifyLootTables()
     }

@@ -10,7 +10,10 @@
     "FluidBlockMixin",
     "ItemEntityMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "damage.LivingEntityMixin",
+    "damage.PlayerMixin",
+    "damage.ServerPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,7 @@
+// 1.21.11	-999999999-01-01T00:00:00	Nether Archives/Tags for minecraft:damage_type
+7c51427b6a9e79a6535dfb8713f1b971ab7639a5 data/minecraft/tags/damage_type/bypasses_armor.json
+7c51427b6a9e79a6535dfb8713f1b971ab7639a5 data/minecraft/tags/damage_type/bypasses_enchantments.json
+7c51427b6a9e79a6535dfb8713f1b971ab7639a5 data/minecraft/tags/damage_type/is_fire.json
+8ff61ada4f24616c22767d6ec88568b321b63a9a data/minecraft/tags/damage_type/no_impact.json
+8ff61ada4f24616c22767d6ec88568b321b63a9a data/minecraft/tags/damage_type/no_knockback.json
+cd007431ce060f73a9df05d9977f345ad7ba77c6 data/netherarchives/tags/damage_type/no_effects.json

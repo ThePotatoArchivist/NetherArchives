@@ -5,11 +5,14 @@ import archives.tater.netherarchives.client.render.entity.feature.WitherSkeleton
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
+import archives.tater.netherarchives.mixin.client.LocalPlayerAccessor
+import archives.tater.netherarchives.network.NoDamageEffectsPayload
 import archives.tater.netherarchives.registry.*
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.isOf
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
@@ -132,6 +135,10 @@ object NetherArchivesClient : ClientModInitializer {
             register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Provider)
             register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
             register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
+        }
+
+        ClientPlayNetworking.registerGlobalReceiver(NoDamageEffectsPayload.type) { _, context ->
+            (context.player() as LocalPlayerAccessor).setFlashOnSetHealth(false)
         }
 
         ClientTickEvents.START_WORLD_TICK.register { world ->
