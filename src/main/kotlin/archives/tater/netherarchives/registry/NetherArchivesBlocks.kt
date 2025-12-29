@@ -63,13 +63,13 @@ object NetherArchivesBlocks {
     @JvmField
     val FERMENTED_ROTTEN_FLESH_BLOCK = register("fermented_rotten_flesh_block") {
         strength(1.5f, 1f)
-        sound(SoundType.SLIME_BLOCK)
+        sound(SoundType.CORAL_BLOCK)
     }
 
     @JvmField
     val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", ::RottenFleshBlock) {
         strength(0.7f, 0.7f)
-        sound(SoundType.SLIME_BLOCK)
+        sound(SoundType.CORAL_BLOCK)
     }
 
     @JvmField
