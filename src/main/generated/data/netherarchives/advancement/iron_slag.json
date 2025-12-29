@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "iron_slag": {
+      "conditions": {
+        "item": {
+          "items": "netherarchives:iron_slag"
+        }
+      },
+      "trigger": "minecraft:thrown_item_picked_up_by_player"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.netherarchives.iron_slag.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "netherarchives:iron_slag"
+    },
+    "title": {
+      "translate": "advancement.netherarchives.iron_slag.title"
+    }
+  },
+  "requirements": [
+    [
+      "iron_slag"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

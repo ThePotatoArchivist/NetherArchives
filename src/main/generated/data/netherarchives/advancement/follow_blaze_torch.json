@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:nether/distract_piglin",
+  "criteria": {
+    "place_blaze_torch": {
+      "conditions": {
+        "location": [
+          {
+            "block": "netherarchives:blaze_torch",
+            "condition": "minecraft:block_state_property"
+          },
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "structures": "#netherarchives:blaze_torch_located"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.netherarchives.follow_blaze_torch.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "netherarchives:blaze_torch"
+    },
+    "title": {
+      "translate": "advancement.netherarchives.follow_blaze_torch.title"
+    }
+  },
+  "requirements": [
+    [
+      "place_blaze_torch"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
