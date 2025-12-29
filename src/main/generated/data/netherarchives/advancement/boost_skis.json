@@ -1,0 +1,26 @@
+{
+  "parent": "netherarchives:paddle_skis",
+  "criteria": {
+    "boost_skis": {
+      "trigger": "netherarchives:airski"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.netherarchives.boost_skis.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "netherarchives:basalt_geyser"
+    },
+    "title": {
+      "translate": "advancement.netherarchives.boost_skis.title"
+    }
+  },
+  "requirements": [
+    [
+      "boost_skis"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

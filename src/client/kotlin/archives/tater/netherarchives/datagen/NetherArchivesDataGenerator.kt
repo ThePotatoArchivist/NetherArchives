@@ -14,6 +14,7 @@ object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
             addProvider(::StructureTagGenerator)
             addProvider(::BlockLootTableGenerator)
             addProvider(NARecipeGenerator::Provider)
+            addProvider(::AdvancementGenerator)
             addProvider(::EnglishLangGenerator)
         }
     }

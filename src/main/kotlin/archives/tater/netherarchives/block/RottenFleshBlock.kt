@@ -2,21 +2,25 @@ package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.listCopy
 import archives.tater.netherarchives.util.set
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.IntegerProperty
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.phys.AABB
+
 
 class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
     init {
@@ -60,20 +64,22 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
 
         val updatedState = if (fermenting == state.getValue(FERMENTING)) state else state.setValue(FERMENTING, fermenting)
 
-        val finalState = when {
+        world[pos] = when {
             /*
             0 blocks between - 30% chance
             1 block  between - 25% chance
             2 blocks between - 20% chance
             3 blocks between - 15% chance
              */
-            !fermenting || random.nextFloat() > 0.3 - 0.05 * distance -> updatedState
+            !fermenting || random.nextFloat() > 0.3 - 0.05 * distance -> return
             state.getValue(AGE) >= 3 -> NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK.defaultBlockState()
             else -> updatedState.setValue(AGE, state.getValue(AGE) + 1)
         }
 
-        if (finalState != state)
-            world[pos] = finalState
+        for (player in world.getEntitiesOfClass(
+            ServerPlayer::class.java,
+            AABB.ofSize(pos.center, 17.0, 17.0, 17.0)
+        )) NetherArchivesTriggers.FERMENT.trigger(player, pos)
     }
 
     override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {

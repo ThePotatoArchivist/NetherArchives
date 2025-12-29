@@ -4,12 +4,14 @@ import archives.tater.netherarchives.block.entity.BasaltGeyserBlockEntity
 import archives.tater.netherarchives.duck.isAirSkiing
 import archives.tater.netherarchives.item.SkisItem
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
+import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import archives.tater.netherarchives.util.*
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleOptions
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.monster.Strider
@@ -119,6 +121,8 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
                 it.deltaMovement += Vec3.ZERO.relative(facing, (if (it.isShiftKeyDown) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
                 if (it is LivingEntity && SkisItem.wearsSkis(it)) {
                     it.isAirSkiing = true
+                    if (it is ServerPlayer)
+                        NetherArchivesTriggers.AIRSKI.trigger(it, pos)
                 }
                 // Cancel fall damage
                 if (facing == Direction.UP)

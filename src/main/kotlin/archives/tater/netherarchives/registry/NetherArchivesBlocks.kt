@@ -5,17 +5,17 @@ import archives.tater.netherarchives.block.*
 import archives.tater.netherarchives.util.BlockSettings
 import archives.tater.netherarchives.util.copyLootAndTranslation
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.StainedGlassPaneBlock
 import net.minecraft.world.level.material.PushReaction
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceKey
-import net.minecraft.core.registries.Registries
-import net.minecraft.world.level.block.SoundType
-import net.minecraft.world.item.DyeColor
-import net.minecraft.resources.Identifier
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockSettings
 
 object NetherArchivesBlocks {
@@ -67,13 +67,13 @@ object NetherArchivesBlocks {
     @JvmField
     val FERMENTED_ROTTEN_FLESH_BLOCK = register("fermented_rotten_flesh_block") {
         strength(1.5f, 1f)
-        sound(SoundType.SLIME_BLOCK)
+        sound(SoundType.CORAL_BLOCK)
     }
 
     @JvmField
     val ROTTEN_FLESH_BLOCK = register("rotten_flesh_block", ::RottenFleshBlock) {
         strength(0.7f, 0.7f)
-        sound(SoundType.SLIME_BLOCK)
+        sound(SoundType.CORAL_BLOCK)
     }
 
     @JvmField

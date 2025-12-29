@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:nether/obtain_blaze_rod",
+  "criteria": {
+    "light_blaze_fire": {
+      "conditions": {
+        "location": [
+          {
+            "block": "netherarchives:blaze_fire",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:any_block_use"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.netherarchives.light_blaze_dust.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "netherarchives:blaze_dust"
+    },
+    "title": {
+      "translate": "advancement.netherarchives.light_blaze_dust.title"
+    }
+  },
+  "requirements": [
+    [
+      "light_blaze_fire"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

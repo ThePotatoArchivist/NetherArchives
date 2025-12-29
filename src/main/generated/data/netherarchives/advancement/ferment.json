@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "ferment": {
+      "conditions": {
+        "location": [
+          {
+            "block": "netherarchives:fermented_rotten_flesh_block",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "netherarchives:ferment_rotten_flesh"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.netherarchives.ferment.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "netherarchives:rotten_flesh_block"
+    },
+    "title": {
+      "translate": "advancement.netherarchives.ferment.title"
+    }
+  },
+  "requirements": [
+    [
+      "ferment"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
