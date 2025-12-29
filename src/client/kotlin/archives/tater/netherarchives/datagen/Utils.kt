@@ -2,6 +2,7 @@
 
 package archives.tater.netherarchives.datagen
 
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.advancements.*
 import net.minecraft.advancements.critereon.*
 import net.minecraft.data.models.blockstates.Variant
@@ -109,3 +110,8 @@ fun EntityPredicate(init: EntityPredicate.Builder.() -> Unit): EntityPredicate =
 fun locationPredicate(init: LocationPredicate.Builder.() -> Unit): LocationPredicate.Builder = LocationPredicate.Builder.location().apply(init)
 
 fun fluidPredicate(init: FluidPredicate.Builder.() -> Unit): FluidPredicate.Builder = FluidPredicate.Builder.fluid().apply(init)
+
+fun FabricLanguageProvider.TranslationBuilder.addAdvancement(id: ResourceLocation, title: String, description: String) {
+    add(id.toLanguageKey("advancement", "title"), title)
+    add(id.toLanguageKey("advancement", "description"), description)
+}

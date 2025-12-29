@@ -31,7 +31,7 @@ class AdvancementGenerator(output: FabricDataOutput, registryLookup: Completable
         val intoFire = createRef(ResourceLocation.withDefaultNamespace("nether/obtain_blaze_rod"))
         val ohShiny = createRef(ResourceLocation.withDefaultNamespace("nether/distract_piglin"))
 
-        val ironSlag = consumer.advancement(IRON_SLAG, NetherArchivesItems.IRON_SLAG) {
+        val ironSlag = consumer.advancement(IRON_SLAG, NetherArchivesItems.SMOLDERING_MAGNETITE) {
             parent(nether)
             addCriterion("iron_slag", playerPickedUpItemTrigger(ItemPredicate {
                 of(NetherArchivesItems.IRON_SLAG)

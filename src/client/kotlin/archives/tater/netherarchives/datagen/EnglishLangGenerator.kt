@@ -11,7 +11,7 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
     FabricLanguageProvider(output, registriesFuture) {
 
     override fun generateTranslations(registryLookup: HolderLookup.Provider, translationBuilder: TranslationBuilder) {
-        translationBuilder.apply {
+        with(translationBuilder) {
             add(NetherArchivesBlocks.MAGNETITE, "Magnetite")
             add(NetherArchivesBlocks.SMOLDERING_MAGNETITE, "Smoldering Magnetite")
             add(NetherArchivesBlocks.BLAZE_DUST, "Blaze Dust")
@@ -36,6 +36,12 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
             add("netherarchives.emi.explosion", "Any Explosion")
             add("netherarchives.emi.projectile", "Impact Projectiles")
+            addAdvancement(AdvancementGenerator.IRON_SLAG, "Budget Forge", "Melt magnetite into iron by placing it near lava")
+            addAdvancement(AdvancementGenerator.LIGHT_BLAZE_DUST, "Firewall\u2122", "Light blaze dust to create blaze fire")
+            addAdvancement(AdvancementGenerator.FOLLOW_BLAZE_TORCH, "Traitorous Torch", "Follow a blaze torch to a nether fortress")
+            addAdvancement(AdvancementGenerator.PADDLE_SKIS, "Hazardous Propulsion", "Propel yourself while skiing on lava")
+            addAdvancement(AdvancementGenerator.BOOST_SKIS, "Airskiing", "Get a boost from a basalt geyser")
+            addAdvancement(AdvancementGenerator.FERMENT, "All-Organic Vegan Leather", "Ferment rotten flesh into leather over soul fire")
         }
     }
 }
