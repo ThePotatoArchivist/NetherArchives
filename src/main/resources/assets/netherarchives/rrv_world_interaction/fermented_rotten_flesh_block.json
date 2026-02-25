@@ -1,0 +1,7 @@
+{
+  "type": "rrv:world_interaction",
+  "left": "netherarchives:rotten_flesh_block",
+  "right": "#netherarchives:rotten_flesh_fermenter",
+  "result": "netherarchives:fermented_rotten_flesh_block"
+}
+

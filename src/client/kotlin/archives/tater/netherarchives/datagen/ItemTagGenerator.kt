@@ -32,6 +32,10 @@ class ItemTagGenerator(
         valueLookupBuilder(NetherArchivesTags.SKIS).add(
             BASALT_SKIS,
         )
+        valueLookupBuilder(NetherArchivesTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
+            Items.SOUL_CAMPFIRE,
+            DUMMY_SOUL_FIRE
+        )
         valueLookupBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
             DUMMY_SOUL_FIRE,
         )

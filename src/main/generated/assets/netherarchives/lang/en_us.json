@@ -36,5 +36,8 @@
   "item.netherarchives.spectreglass_shard": "Spectreglass Shard",
   "itemGroup.netherarchives.nether_archives": "Nether Archives",
   "netherarchives.emi.explosion": "Any Explosion",
-  "netherarchives.emi.projectile": "Impact Projectiles"
+  "netherarchives.emi.projectile": "Impact Projectiles",
+  "tag.item.netherarchives.basalt_equipment_repair": "Repairs Basalt Equipment",
+  "tag.item.netherarchives.rotten_flesh_fermenter": "Rotten Flesh Fermenter",
+  "tag.item.netherarchives.skis": "Skis"
 }

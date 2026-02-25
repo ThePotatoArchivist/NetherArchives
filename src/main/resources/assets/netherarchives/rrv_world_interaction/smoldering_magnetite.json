@@ -1,0 +1,7 @@
+{
+  "type": "rrv:world_interaction",
+  "left": "netherarchives:magnetite",
+  "right": "minecraft:lava",
+  "result": "netherarchives:smoldering_magnetite"
+}
+

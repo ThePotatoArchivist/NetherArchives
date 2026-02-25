@@ -24,6 +24,7 @@ object NetherArchivesTags {
 
     val BASALT_EQUIPMENT_REPAIR = of(ITEM, "basalt_equipment_repair")
     val SKIS = of(ITEM, "skis")
+    val ROTTEN_FLESH_FERMENTER_ITEM = of(ITEM, "rotten_flesh_fermenter")
 
     @JvmField
     val SKIS_CAN_WALK_ON: TagKey<Fluid> = of(FLUID, "skis_can_walk_on")
