@@ -1,4 +1,4 @@
-// 1.21.1	2025-12-29T00:04:13.027217222	Nether Archives/Model Definitions
+// 1.21.1	2026-02-25T01:50:48.557391892	Nether Archives/Model Definitions
 df703380a9aa01bf9c376f53354d832bb5a06883 assets/netherarchives/models/item/blaze_dust.json
 e5e4fc4c794bec4a022779c08a093ee881f3bdcc assets/netherarchives/models/block/smoldering_magnetite.json
 bb825982361d7a7ce168068dc31151fa9854604d assets/netherarchives/models/item/shattered_spectreglass_pane.json
@@ -47,8 +47,8 @@ aff79648d80c990f0e24e1c29bc3c43fd3227bf8 assets/netherarchives/models/block/rott
 2ad640a2f4371d23e704e438cb7828f22defd874 assets/netherarchives/models/block/shattered_spectreglass_pane_side_alt.json
 abc2364a3e815a81e90265e7a94a3e0e0856497f assets/netherarchives/models/item/basalt_geyser.json
 73396b9398a8b165c31e65abd2a75b48c7cf8e68 assets/netherarchives/models/item/shattered_spectreglass.json
-bbe39b18429df011cc2ba15fefb3cf5503190314 assets/netherarchives/models/block/rotten_flesh_block_stage2.json
 da52fc359a600a224b45a557844f5a42b3961d2b assets/netherarchives/models/item/basalt_skis.json
+bbe39b18429df011cc2ba15fefb3cf5503190314 assets/netherarchives/models/block/rotten_flesh_block_stage2.json
 b32c400fb4d664bd675849c1f224cd13ed94e222 assets/netherarchives/models/block/shattered_spectreglass.json
 7d971b469bf93ce405a6a854feb17ed567eb2967 assets/netherarchives/models/block/spectreglass_pane_post.json
 edfd337176a587895612c62c450d694777d02096 assets/netherarchives/models/item/magnetite.json

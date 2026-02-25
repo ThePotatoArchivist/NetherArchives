@@ -15,6 +15,7 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add(NetherArchivesBlocks.MAGNETITE, "Magnetite")
             add(NetherArchivesBlocks.SMOLDERING_MAGNETITE, "Smoldering Magnetite")
             add(NetherArchivesBlocks.BLAZE_DUST, "Blaze Dust")
+            add(NetherArchivesBlocks.BLAZE_FIRE, "Blaze Fire")
             add(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, "Rotten Flesh Block")
             add(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, "Fermented Rotten Flesh Block")
             add(NetherArchivesBlocks.BLAZE_TORCH, "Blaze Torch")
