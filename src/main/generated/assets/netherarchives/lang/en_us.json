@@ -34,6 +34,7 @@
   "item.netherarchives.iron_slag": "Iron Slag",
   "item.netherarchives.spectreglass_knife": "Spectreglass Knife",
   "item.netherarchives.spectreglass_shard": "Spectreglass Shard",
+  "itemGroup.netherarchives.nether_archives": "Nether Archives",
   "netherarchives.emi.explosion": "Any Explosion",
   "netherarchives.emi.projectile": "Impact Projectiles"
 }

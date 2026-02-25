@@ -37,6 +37,7 @@ class EnglishLangGenerator(output: FabricDataOutput, registriesFuture: Completab
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
             add("netherarchives.emi.explosion", "Any Explosion")
             add("netherarchives.emi.projectile", "Impact Projectiles")
+            add(NetherArchivesItems.CREATIVE_TAB_TRANSLATION, "Nether Archives")
             addAdvancement(AdvancementGenerator.IRON_SLAG, "Budget Forge", "Melt magnetite into iron by placing it near lava")
             addAdvancement(AdvancementGenerator.LIGHT_BLAZE_DUST, "Firewall\u2122", "Light blaze dust to create blaze fire")
             addAdvancement(AdvancementGenerator.FOLLOW_BLAZE_TORCH, "Traitorous Torch", "Follow a blaze torch to a nether fortress")
