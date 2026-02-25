@@ -14,6 +14,7 @@
   "block.netherarchives.adjustable_basalt_geyser": "Adjustable Basalt Geyser",
   "block.netherarchives.basalt_geyser": "Basalt Geyser",
   "block.netherarchives.blaze_dust": "Blaze Dust",
+  "block.netherarchives.blaze_fire": "Blaze Fire",
   "block.netherarchives.blaze_torch": "Blaze Torch",
   "block.netherarchives.fermented_rotten_flesh_block": "Fermented Rotten Flesh Block",
   "block.netherarchives.magnetite": "Magnetite",
@@ -33,6 +34,7 @@
   "item.netherarchives.iron_slag": "Iron Slag",
   "item.netherarchives.spectreglass_knife": "Spectreglass Knife",
   "item.netherarchives.spectreglass_shard": "Spectreglass Shard",
+  "itemGroup.netherarchives.nether_archives": "Nether Archives",
   "netherarchives.emi.explosion": "Any Explosion",
   "netherarchives.emi.projectile": "Impact Projectiles"
 }

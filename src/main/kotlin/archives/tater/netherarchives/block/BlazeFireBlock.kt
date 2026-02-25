@@ -1,6 +1,7 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.registry.NetherArchivesParticles
+import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.listCopy
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
@@ -18,6 +19,7 @@ import net.minecraft.world.level.ScheduledTickAccess
 import net.minecraft.world.level.block.BaseFireBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.MultifaceBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -36,7 +38,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
 
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
         val blockPos = pos.below()
-        return world.getBlockState(blockPos).isFaceSturdy(world, blockPos, Direction.UP)
+        return MultifaceBlock.canAttachTo(world, Direction.UP, blockPos, world.getBlockState(blockPos))
     }
 
     override fun codec(): MapCodec<out BaseFireBlock> = CODEC
@@ -62,7 +64,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
         if (!world.canSpreadFireAround(pos)) return
 
         val blockBelow = world.getBlockState(pos.below())
-        val infiniburn = blockBelow.`is`(world.dimensionType().infiniburn())
+        val infiniburn = blockBelow isIn world.dimensionType().infiniburn()
         val age = state.getValue(AGE)
 
         val newAge = (age + random.nextInt(3) / 2).coerceAtMost(15)

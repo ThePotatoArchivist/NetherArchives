@@ -5,14 +5,16 @@ import archives.tater.netherarchives.item.BlazeLanternItem
 import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
 import archives.tater.netherarchives.util.ItemSettings
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.core.Direction
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.*
 import net.minecraft.world.item.equipment.*
@@ -109,6 +111,40 @@ object NetherArchivesItems {
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
     val DUMMY_SOUL_FIRE = register(Identifier.withDefaultNamespace("netherarchives/dummy/soul_fire"))
+
+    const val CREATIVE_TAB_TRANSLATION = "itemGroup.netherarchives.nether_archives"
+
+    val CREATIVE_TAB: CreativeModeTab = Registry.register(
+        BuiltInRegistries.CREATIVE_MODE_TAB,
+        NetherArchives.id("nether_archives"),
+        FabricItemGroup.builder().apply {
+            title(Component.translatable(CREATIVE_TAB_TRANSLATION))
+            icon { BLAZE_LANTERN.defaultInstance }
+            displayItems { _, output ->
+                with (output) {
+                    accept(ROTTEN_FLESH_BLOCK)
+                    accept(FERMENTED_ROTTEN_FLESH_BLOCK)
+                    accept(MAGNETITE)
+                    accept(SMOLDERING_MAGNETITE)
+                    accept(IRON_SLAG)
+                    accept(BLAZE_DUST)
+                    accept(BLAZE_LANTERN)
+                    accept(BLAZE_TORCH)
+                    accept(BASALT_ROD)
+                    accept(BASALT_SKIS)
+                    accept(BASALT_OAR)
+                    accept(BASALT_GEYSER)
+                    accept(ADJUSTABLE_BASALT_GEYSER)
+                    accept(SPECTREGLASS_SHARD)
+                    accept(SPECTREGLASS_KNIFE)
+                    accept(SPECTREGLASS)
+                    accept(SHATTERED_SPECTREGLASS)
+                    accept(SPECTREGLASS_PANE)
+                    accept(SHATTERED_SPECTREGLASS_PANE)
+                }
+            }
+        }.build()
+    )
 
     private val itemGroups = mapOf(
         CreativeModeTabs.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
