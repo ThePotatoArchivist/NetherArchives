@@ -38,7 +38,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
 
     override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
         val blockPos = pos.below()
-        return MultifaceBlock.canAttachTo(world, Direction.UP, blockPos, world.getBlockState(blockPos))
+        return MultifaceBlock.canAttachTo(world, Direction.DOWN, blockPos, world.getBlockState(blockPos))
     }
 
     override fun codec(): MapCodec<out BaseFireBlock> = CODEC
