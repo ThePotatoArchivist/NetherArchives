@@ -1,6 +1,5 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_OAR
 import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_SKIS
 import archives.tater.netherarchives.registry.NetherArchivesItems.DUMMY_SOUL_FIRE
@@ -12,19 +11,18 @@ import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_KNIFE
 import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_PANE
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import io.github.mortuusars.exposure.Exposure
 import java.util.concurrent.CompletableFuture
 
 class ItemTagGenerator(
-    output: FabricDataOutput,
+    output: FabricPackOutput,
     registriesFuture: CompletableFuture<HolderLookup.Provider>
-) : FabricTagProvider.ItemTagProvider(output, registriesFuture) {
+) : FabricTagsProvider.ItemTagsProvider(output, registriesFuture) {
     override fun addTags(arg: HolderLookup.Provider) {
         valueLookupBuilder(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR).add(
             Items.POLISHED_BASALT,
@@ -70,9 +68,9 @@ class ItemTagGenerator(
         valueLookupBuilder(ConventionalItemTags.IRON_RAW_MATERIALS).add(
             IRON_SLAG,
         )
-        if (NetherArchives.EXPOSURE_INSTALLED)
-            valueLookupBuilder(Exposure.Tags.Items.FILTERS).add(
-                SPECTREGLASS_PANE
-            )
+//        if (NetherArchives.EXPOSURE_INSTALLED)
+//            valueLookupBuilder(Exposure.Tags.Items.FILTERS).add(
+//                SPECTREGLASS_PANE
+//            )
     }
 }

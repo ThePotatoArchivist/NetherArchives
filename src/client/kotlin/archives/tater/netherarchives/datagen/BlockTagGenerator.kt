@@ -18,16 +18,16 @@ import archives.tater.netherarchives.registry.NetherArchivesTags.INVERTS_BEACON
 import archives.tater.netherarchives.registry.NetherArchivesTags.MAGNETIC
 import archives.tater.netherarchives.registry.NetherArchivesTags.REVEALS_INVISIBLES
 import archives.tater.netherarchives.registry.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.Blocks
 import java.util.concurrent.CompletableFuture
 
-class BlockTagGenerator(output: FabricDataOutput, completableFuture: CompletableFuture<HolderLookup.Provider>) :
-    FabricTagProvider.BlockTagProvider(output, completableFuture) {
+class BlockTagGenerator(output: FabricPackOutput, completableFuture: CompletableFuture<HolderLookup.Provider>) :
+    FabricTagsProvider.BlockTagsProvider(output, completableFuture) {
 
     override fun addTags(arg: HolderLookup.Provider) {
         valueLookupBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(

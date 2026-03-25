@@ -3,9 +3,8 @@ package archives.tater.netherarchives.datagen
 import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
-import net.minecraft.world.item.Item
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Items
@@ -14,8 +13,8 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootTable
 import java.util.concurrent.CompletableFuture
 
-class BlockLootTableGenerator(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
-    FabricBlockLootTableProvider(output, registriesFuture) {
+class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
+    FabricBlockLootSubProvider(output, registriesFuture) {
 
     private fun add(block: Block, lootTableInit: LootTable.Builder.() -> Unit) {
         add(block, lootTable(lootTableInit))

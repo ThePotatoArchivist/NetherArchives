@@ -168,7 +168,6 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
                     Direction.SOUTH -> Vec3(-z, -x, y)
                     Direction.EAST -> Vec3(y, z, x)
                     Direction.WEST -> Vec3(-y, z, -x)
-                    else -> throw AssertionError()
                 }
             }
         }

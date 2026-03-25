@@ -2,38 +2,30 @@ package archives.tater.netherarchives.mixin;
 
 import archives.tater.netherarchives.item.SkisItem;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.sugar.Local;
-import org.objectweb.asm.Opcodes;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 
-import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 @Mixin(LiquidBlock.class)
 public class FluidBlockMixin {
-    @ModifyExpressionValue(
+    @ModifyReturnValue(
             method = "getCollisionShape",
-            at = @At(value = "FIELD", target = "Lnet/minecraft/world/level/block/LiquidBlock;SHAPE_STABLE:Lnet/minecraft/world/phys/shapes/VoxelShape;", ordinal = 1, opcode = Opcodes.GETSTATIC)
+            at = @At("RETURN")
     )
-    private VoxelShape useSkiShape(VoxelShape original, @Local(argsOnly = true) CollisionContext context) {
-        if (context instanceof EntityCollisionContext entityShapeContext && SkisItem.wearsSkis(entityShapeContext.getEntity()))
+    private VoxelShape useSkiShape(VoxelShape original, BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (context instanceof EntityCollisionContext entityShapeContext
+                && SkisItem.wearsSkis(entityShapeContext.getEntity())
+                && context.isAbove(SkisItem.FLUID_SKI_HEIGHT_COLLISION_SHAPE, pos, true)
+                && context.canStandOnFluid(level.getFluidState(pos.above()), state.getFluidState()))
             return SkisItem.FLUID_SKI_COLLISION_SHAPE;
         return original;
-    }
-
-    @ModifyArg(
-            method = "getCollisionShape",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/shapes/CollisionContext;isAbove(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/core/BlockPos;Z)Z"),
-            index = 0
-    )
-    private VoxelShape useReducedHeight(VoxelShape shape, @Local(argsOnly = true) CollisionContext context) {
-        if (context instanceof EntityCollisionContext entityShapeContext && SkisItem.wearsSkis(entityShapeContext.getEntity()))
-            return SkisItem.FLUID_SKI_HEIGHT_COLLISION_SHAPE;
-        return shape;
     }
 }

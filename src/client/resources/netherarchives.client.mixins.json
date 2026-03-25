@@ -9,7 +9,6 @@
     "EntityRenderDispatcherMixin",
     "GameRendererMixin",
     "LivingEntityRendererMixin",
-    "LivingEntityRenderStateMixin",
     "WitherArmorFeatureRendererMixin",
     "WitherSkullRendererMixin"
   ],

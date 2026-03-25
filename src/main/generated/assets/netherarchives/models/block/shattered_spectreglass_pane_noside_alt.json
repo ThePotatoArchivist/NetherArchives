@@ -1,6 +1,9 @@
 {
   "parent": "minecraft:block/template_glass_pane_noside_alt",
   "textures": {
-    "pane": "netherarchives:block/shattered_spectreglass"
+    "pane": {
+      "force_translucent": true,
+      "sprite": "netherarchives:block/shattered_spectreglass"
+    }
   }
 }

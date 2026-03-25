@@ -9,10 +9,11 @@ import net.minecraft.client.data.models.model.ModelTemplate
 import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot
 import net.minecraft.client.data.models.model.TexturedModel
+import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.core.ClientAsset
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import java.util.*
@@ -21,9 +22,9 @@ import java.util.function.Consumer
 internal inline fun ModelTemplate(vararg requiredTextureKeys: TextureSlot, parent: Identifier? = null, variant: String? = null): ModelTemplate =
     ModelTemplate(Optional.ofNullable(parent), Optional.ofNullable(variant), *requiredTextureKeys)
 
-internal fun TextureMapping(vararg entries: Pair<TextureSlot, Identifier>) = TextureMapping().apply {
-    for ((key, id) in entries)
-        put(key, id)
+internal fun TextureMapping(vararg entries: Pair<TextureSlot, Material>) = TextureMapping().apply {
+    for ((key, material) in entries)
+        put(key, material)
 }
 
 internal inline fun texturedModelFactory(model: ModelTemplate, noinline texturesGetter: (Block) -> TextureMapping): TexturedModel.Provider =
@@ -31,7 +32,7 @@ internal inline fun texturedModelFactory(model: ModelTemplate, noinline textures
 
 fun DisplayInfo(
     id: Identifier,
-    icon: ItemStack,
+    icon: ItemStackTemplate,
     type: AdvancementType = AdvancementType.TASK,
     showToast: Boolean = true,
     announceChat: Boolean = true,
@@ -56,11 +57,11 @@ fun DisplayInfo(
     announceChat: Boolean = true,
     hidden: Boolean = false,
     background: ClientAsset.ResourceTexture? = null,
-) = DisplayInfo(id, icon.asItem().defaultInstance, type, showToast, announceChat, hidden, background)
+) = DisplayInfo(id, ItemStackTemplate(icon.asItem()), type, showToast, announceChat, hidden, background)
 
 fun Consumer<AdvancementHolder>.advancement(
     id: Identifier,
-    icon: ItemStack,
+    icon: ItemStackTemplate,
     type: AdvancementType = AdvancementType.TASK,
     showToast: Boolean = true,
     announceChat: Boolean = true,
@@ -81,7 +82,7 @@ fun Consumer<AdvancementHolder>.advancement(
     hidden: Boolean = false,
     background: ClientAsset.ResourceTexture? = null,
     init: Advancement.Builder.() -> Unit
-): AdvancementHolder = advancement(id, icon.asItem().defaultInstance, type, showToast, announceChat, hidden, background, init)
+): AdvancementHolder = advancement(id, ItemStackTemplate(icon.asItem()), type, showToast, announceChat, hidden, background, init)
 
 fun playerPickedUpItemTrigger(
     item: ItemPredicate? = null,

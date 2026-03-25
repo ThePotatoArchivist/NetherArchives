@@ -1,16 +1,16 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.FluidTags
 import java.util.concurrent.CompletableFuture
 
 class FluidTagGenerator(
-    output: FabricDataOutput,
+    output: FabricPackOutput,
     registriesFuture: CompletableFuture<HolderLookup.Provider>
-) : FabricTagProvider.FluidTagProvider(output, registriesFuture) {
+) : FabricTagsProvider.FluidTagsProvider(output, registriesFuture) {
     override fun addTags(wrapperLookup: HolderLookup.Provider) {
         valueLookupBuilder(NetherArchivesTags.SKIS_CAN_WALK_ON).apply {
             forceAddTag(FluidTags.LAVA)

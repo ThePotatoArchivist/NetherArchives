@@ -5,7 +5,7 @@ import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.registry.NetherArchivesTriggers
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -21,7 +21,7 @@ import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
-class AdvancementGenerator(output: FabricDataOutput, registryLookup: CompletableFuture<HolderLookup.Provider>) :
+class AdvancementGenerator(output: FabricPackOutput, registryLookup: CompletableFuture<HolderLookup.Provider>) :
     FabricAdvancementProvider(output, registryLookup) {
 
     override fun generateAdvancement(

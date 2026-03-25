@@ -1,16 +1,16 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.NetherArchivesTags
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
-import net.minecraft.world.entity.EntityType
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.minecraft.core.HolderLookup
+import net.minecraft.world.entity.EntityType
 import java.util.concurrent.CompletableFuture
 
 class EntityTagGenerator(
-    output: FabricDataOutput,
+    output: FabricPackOutput,
     registriesFuture: CompletableFuture<HolderLookup.Provider>
-) : FabricTagProvider.EntityTypeTagProvider(output, registriesFuture) {
+) : FabricTagsProvider.EntityTypeTagsProvider(output, registriesFuture) {
 
     override fun addTags(wrapperLookup: HolderLookup.Provider) {
         valueLookupBuilder(NetherArchivesTags.NON_CHAIN_SHATTER_PROJECTILES).add(

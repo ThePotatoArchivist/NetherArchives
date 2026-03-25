@@ -2,7 +2,7 @@ package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.*
-import archives.tater.netherarchives.util.BlockSettings
+import archives.tater.netherarchives.util.BlockProperties
 import archives.tater.netherarchives.util.copyLootAndTranslation
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry
 import net.minecraft.core.Registry
@@ -19,16 +19,16 @@ import net.minecraft.world.level.material.PushReaction
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockSettings
 
 object NetherArchivesBlocks {
-    private fun register(id: Identifier, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block {
+    private fun register(id: Identifier, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockProperties()): Block {
         val key = ResourceKey.create(Registries.BLOCK, id)
         return Registry.register(BuiltInRegistries.BLOCK, key, block(settings.setId(key)))
     }
 
-    private fun register(path: String, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockSettings()): Block =
+    private fun register(path: String, block: (BlockSettings) -> Block = ::Block, settings: BlockSettings = BlockProperties()): Block =
         register(NetherArchives.id(path), block, settings)
 
     private inline fun register(path: String, noinline block: (BlockSettings) -> Block = ::Block, settingsInit: BlockSettings.() -> Unit): Block =
-        register(path, block, BlockSettings(settingsInit))
+        register(path, block, BlockProperties(settingsInit))
 
     @JvmField
     val MAGNETITE = register("magnetite", ::MagnetiteBlock) {

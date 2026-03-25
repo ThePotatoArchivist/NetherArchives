@@ -5,21 +5,23 @@ import archives.tater.netherarchives.client.render.entity.feature.WitherSkeleton
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
-import archives.tater.netherarchives.registry.*
+import archives.tater.netherarchives.registry.NetherArchivesEntities
+import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesParticles
+import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.isOf
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback
+import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.renderer.RenderPipelines
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer
 import net.minecraft.client.renderer.entity.EntityRenderers
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.client.renderer.entity.WitherBossRenderer
@@ -34,14 +36,15 @@ import net.minecraft.world.level.ClipBlockStateContext
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
-import io.github.mortuusars.exposure.client.camera.CameraClient
-import io.github.mortuusars.exposure.world.item.camera.Attachment
 import java.util.*
 
 object NetherArchivesClient : ClientModInitializer {
 
     @JvmField
     internal val spectreglassRevealed = WeakHashMap<LivingEntity, Boolean>()
+
+    @JvmField
+    internal val SOUL_GLASS_REVEALED = RenderStateDataKey.create<Boolean> { "Soul Glass Revealed" }
 
     @JvmField
     internal var usingSoulKnife = false // TODO rename
@@ -59,30 +62,9 @@ object NetherArchivesClient : ClientModInitializer {
 
     override fun onInitializeClient() {
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
-        with (NetherArchivesBlocks) {
-            BlockRenderLayerMap.putBlocks(
-                ChunkSectionLayer.CUTOUT,
-                BLAZE_FIRE,
-                BLAZE_DUST,
-                BLAZE_TORCH,
-                WALL_BLAZE_TORCH,
-                // Emissive overlay
-                BASALT_GEYSER,
-                ADJUSTABLE_BASALT_GEYSER,
-                SMOLDERING_MAGNETITE,
-            )
-            BlockRenderLayerMap.putBlocks(
-                ChunkSectionLayer.TRANSLUCENT,
-                SPECTREGLASS,
-                SHATTERED_SPECTREGLASS,
-                SPECTREGLASS_PANE,
-                SHATTERED_SPECTREGLASS_PANE,
-            )
-        }
-
         EntityRenderers.register(NetherArchivesEntities.BLAZE_LANTERN, ::ThrownItemRenderer)
 
-        LivingEntityFeatureRendererRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
+        LivingEntityRenderLayerRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
             if (NetherArchivesClientConfig.config.skeletonEyes)
                 registrationHelper.register(when (entityType) {
                     EntityType.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonRenderer)
@@ -91,9 +73,9 @@ object NetherArchivesClient : ClientModInitializer {
                 })
         }
 
-        EntityModelLayerRegistry.registerModelLayer(SKIS_MODEL_LAYER, SkisEntityModel.Companion::getTexturedModelData)
+        ModelLayerRegistry.registerModelLayer(SKIS_MODEL_LAYER, SkisEntityModel.Companion::getTexturedModelData)
 
-        registerArmorRenderer(NetherArchivesItems.BASALT_SKIS) { matrices, queue, stack, bipedEntityRenderState, slot, light, contextModel ->
+        registerArmorRenderer(NetherArchivesItems.BASALT_SKIS) { matrices, queue, _, bipedEntityRenderState, _, light, _ ->
             if (!::basaltSkisModel.isInitialized) {
                 basaltSkisModel = SkisEntityModel(Minecraft.getInstance().entityModels.bakeLayer(SKIS_MODEL_LAYER))
             }
@@ -128,18 +110,18 @@ object NetherArchivesClient : ClientModInitializer {
                 )
         }
 
-        with (ParticleFactoryRegistry.getInstance()) {
+        with (ParticleProviderRegistry.getInstance()) {
             register(NetherArchivesParticles.BLAZE_FLAME, FlameParticle::Provider)
             register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
             register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
         }
 
-        ClientTickEvents.START_WORLD_TICK.register { world ->
+        ClientTickEvents.START_LEVEL_TICK.register { world ->
             val client = Minecraft.getInstance()
             val camera = client.gameRenderer.mainCamera
             usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && (
                     client.player?.useItem?.isOf(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
-                    || NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf NetherArchivesItems.SPECTREGLASS_PANE } == true
+                    /*|| NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf NetherArchivesItems.SPECTREGLASS_PANE } == true*/
             )
 
             if (usingSoulKnife) return@register // Can skip checks

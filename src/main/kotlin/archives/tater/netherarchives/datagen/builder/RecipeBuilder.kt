@@ -3,8 +3,8 @@ package archives.tater.netherarchives.datagen.builder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.*
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.*
@@ -108,10 +108,10 @@ val Item.id
 
 context(recipeGenerator: RecipeProvider)
 fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
-    category: RecipeCategory,
+    recipeCategory: RecipeCategory,
+    cookingCategory: CookingBookCategory,
     inputItem: Item,
     outputItem: Item,
-    serializer: RecipeSerializer<T>,
     recipeFactory: Factory<T>,
     method: String,
     cookingTime: Int = 200,
@@ -119,11 +119,11 @@ fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
 ) {
     SimpleCookingRecipeBuilder.generic(
         Ingredient.of(inputItem),
-        category,
+        recipeCategory,
+        cookingCategory,
         outputItem,
         experience,
         cookingTime,
-        serializer,
         recipeFactory,
     )
         .unlockedBy(RecipeProvider.getHasName(inputItem), recipeGenerator.has(inputItem))
@@ -133,12 +133,13 @@ fun <T: AbstractCookingRecipe> RecipeOutput.cookingRecipe(
 context(recipeGenerator: RecipeProvider)
 fun RecipeOutput.smelting(
     category: RecipeCategory,
+    cookingCategory: CookingBookCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMELTING_RECIPE, ::SmeltingRecipe, "smelting", cookingTime, experience)
+    cookingRecipe(category, cookingCategory, inputItem, outputItem, ::SmeltingRecipe, "smelting", cookingTime, experience)
 }
 
 context(recipeGenerator: RecipeProvider)
@@ -149,18 +150,19 @@ fun RecipeOutput.smoking(
     cookingTime: Int = 100,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.SMOKING_RECIPE, ::SmokingRecipe, "smoking", cookingTime, experience)
+    cookingRecipe(category, CookingBookCategory.FOOD, inputItem, outputItem, ::SmokingRecipe, "smoking", cookingTime, experience)
 }
 
 context(recipeGenerator: RecipeProvider)
 fun RecipeOutput.blasting(
-    category: RecipeCategory,
+    recipeCategory: RecipeCategory,
+    cookingCategory: CookingBookCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 50,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.BLASTING_RECIPE, ::BlastingRecipe, "blasting", cookingTime, experience)
+    cookingRecipe(recipeCategory, cookingCategory, inputItem, outputItem, ::BlastingRecipe, "blasting", cookingTime, experience)
 }
 
 context(recipeGenerator: RecipeProvider)
@@ -171,19 +173,20 @@ fun RecipeOutput.campfire(
     cookingTime: Int = 600,
     experience: Float = 0F
 ) {
-    cookingRecipe(category, inputItem, outputItem, RecipeSerializer.CAMPFIRE_COOKING_RECIPE, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
+    cookingRecipe(category, CookingBookCategory.FOOD, inputItem, outputItem, ::CampfireCookingRecipe, "campfire", cookingTime, experience)
 }
 
 context(recipeGenerator: RecipeProvider)
 fun RecipeOutput.oreSmelting(
     category: RecipeCategory,
+    cookingCategory: CookingBookCategory,
     inputItem: Item,
     outputItem: Item,
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    smelting(category, inputItem, outputItem, cookingTime, experience)
-    blasting(category, inputItem, outputItem, cookingTime / 2, experience)
+    smelting(category, cookingCategory, inputItem, outputItem, cookingTime, experience,)
+    blasting(category, cookingCategory, inputItem, outputItem, cookingTime / 2, experience)
 }
 
 context(recipeGenerator: RecipeProvider)
@@ -194,7 +197,7 @@ fun RecipeOutput.foodCooking(
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    smelting(category, inputItem, outputItem, cookingTime, experience)
+    smelting(category, CookingBookCategory.FOOD, inputItem, outputItem, cookingTime, experience,)
     smoking(category, inputItem, outputItem, cookingTime / 2, experience)
     campfire(category, inputItem, outputItem, cookingTime * 3, experience)
 }

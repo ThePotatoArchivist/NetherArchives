@@ -6,21 +6,19 @@ import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.util.listCopy
-import archives.tater.netherarchives.util.world
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup.world
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.entity.item.FallingBlockEntity
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.item.FallingBlockEntity
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.sounds.SoundSource
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.phys.HitResult
-import net.minecraft.core.BlockPos
-import net.minecraft.world.phys.AABB
-import net.minecraft.core.Direction
-import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.HitResult
 
 class BlazeLanternEntity : ThrowableItemProjectile {
     constructor(type: EntityType<BlazeLanternEntity>, world: Level) : super(type, world)
@@ -30,19 +28,19 @@ class BlazeLanternEntity : ThrowableItemProjectile {
 
     override fun onHit(hitResult: HitResult) {
         super.onHit(hitResult)
-        if (world.isClientSide) return
+        if (level().isClientSide) return
         val pos = hitResult.location
         val blockPos = BlockPos(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
 
-        world.playSound(null, blockPos, SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 0.5f, 1.0f)
+        level().playSound(null, blockPos, SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 0.5f, 1.0f)
 
-        world.getEntities(this, AABB.ofSize(blockPos.center, 1.5, 1.5, 1.5)).forEach {
+        level().getEntities(this, AABB.ofSize(blockPos.center, 1.5, 1.5, 1.5)).forEach {
             it.igniteForTicks(20 * 5)
         }
 
         BlockPos.spiralAround(blockPos, 1, Direction.NORTH, Direction.EAST).listCopy()
             .filter {
-                val blockState = world.getBlockState(it)
+                val blockState = level().getBlockState(it)
 
                 if (blockState.block is BlazePowderBlock) return@filter true
 
@@ -50,8 +48,8 @@ class BlazeLanternEntity : ThrowableItemProjectile {
                 if (!blockState.isAir && !(blockState.canBeReplaced() && blockState.ignitedByLava())) return@filter false
 
                 // Must be able to place blaze fire here or let it fall
-                if (!world.getBlockState(it.below()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState()
-                        .canSurvive(world, it)) return@filter false
+                if (!level().getBlockState(it.below()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState()
+                        .canSurvive(level(), it)) return@filter false
 
                 true
             }
@@ -60,15 +58,15 @@ class BlazeLanternEntity : ThrowableItemProjectile {
 
                 val returnedList = it.toMutableList().apply {
                     centerFlammable = remove(blockPos)
-                }.draw(world.random, 4)
+                }.draw(level().random, 4)
 
                 if (centerFlammable) returnedList + listOf(blockPos) else returnedList
             }
             .forEach {
-                if (world.getBlockState(it.below()).isAir) {
-                    FallingBlockEntity.fall(world, it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
+                if (level().getBlockState(it.below()).isAir) {
+                    FallingBlockEntity.fall(level(), it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
                 } else {
-                    world.setBlockAndUpdate(it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
+                    level().setBlockAndUpdate(it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
                 }
             }
         discard()

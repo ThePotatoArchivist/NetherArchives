@@ -1,6 +1,9 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "netherarchives:block/shattered_spectreglass"
+    "all": {
+      "force_translucent": true,
+      "sprite": "netherarchives:block/shattered_spectreglass"
+    }
   }
 }

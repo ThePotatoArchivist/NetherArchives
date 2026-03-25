@@ -1,28 +1,32 @@
 package archives.tater.netherarchives.mixin;
 
 import archives.tater.netherarchives.item.SkisItem;
+
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.TagKey;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityFluidInteraction;
+
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    @Shadow
-    protected Object2DoubleMap<TagKey<Fluid>> fluidHeight;
 
-    @ModifyExpressionValue(
+    @Shadow
+    @Final
+    private EntityFluidInteraction fluidInteraction;
+
+    @SuppressWarnings("ConstantValue")
+    @ModifyReturnValue(
             method = "isInLava",
-            at = @At(value = "CONSTANT", args = "doubleValue=0.0")
+            at = @At("RETURN")
     )
-    private double handleSkis(double constant) {
-        //noinspection ConstantValue
-        return constant < SkisItem.MAX_FLUID_DEPTH && SkisItem.wearsSkis((Entity) (Object) this) ? SkisItem.MAX_FLUID_DEPTH : constant;
+    private boolean handleSkis(boolean original) {
+        return original && (!SkisItem.wearsSkis((Entity) (Object) this) || !(fluidInteraction.getFluidHeight(FluidTags.LAVA) < SkisItem.MAX_FLUID_DEPTH));
     }
 
     @SuppressWarnings("ConstantValue")
@@ -34,6 +38,6 @@ public abstract class EntityMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;fireImmune()Z")
     )
     private boolean preventSetOnFire(boolean original) {
-        return original || SkisItem.wearsSkis((Entity) (Object) this) && fluidHeight.getDouble(FluidTags.LAVA) < SkisItem.MAX_FLUID_DEPTH;
+        return original || SkisItem.wearsSkis((Entity) (Object) this) && fluidInteraction.getFluidHeight(FluidTags.LAVA) < SkisItem.MAX_FLUID_DEPTH;
     }
 }

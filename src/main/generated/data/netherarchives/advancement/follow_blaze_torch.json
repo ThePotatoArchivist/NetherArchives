@@ -24,7 +24,6 @@
       "translate": "advancement.netherarchives.follow_blaze_torch.description"
     },
     "icon": {
-      "count": 1,
       "id": "netherarchives:blaze_torch"
     },
     "title": {

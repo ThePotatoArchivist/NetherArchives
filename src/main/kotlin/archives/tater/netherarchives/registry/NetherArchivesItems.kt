@@ -4,9 +4,9 @@ import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.item.BlazeLanternItem
 import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
-import archives.tater.netherarchives.util.ItemSettings
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
+import archives.tater.netherarchives.util.ItemProperties
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab
 import net.minecraft.core.Direction
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
@@ -19,26 +19,33 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.*
 import net.minecraft.world.item.equipment.*
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.item.Item.Properties as ItemSettings
+import net.minecraft.world.item.Item.Properties as ItemProperties
 
 
 object NetherArchivesItems {
-    private fun register(id: Identifier, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item {
+    private fun register(id: Identifier, item: (ItemProperties) -> Item = ::Item, settings: ItemProperties = ItemProperties()): Item {
         val key = ResourceKey.create(Registries.ITEM, id)
         return Registry.register(BuiltInRegistries.ITEM, key, item(settings.setId(key)))
     }
 
-    private fun register(path: String, item: (ItemSettings) -> Item = ::Item, settings: ItemSettings = ItemSettings()): Item =
+    private fun register(path: String, item: (ItemProperties) -> Item = ::Item, settings: ItemProperties = ItemProperties()): Item =
         register(NetherArchives.id(path), item, settings)
 
-    private fun register(path: String, item: (ItemSettings) -> Item = ::Item, settingsInit: ItemSettings.() -> Unit): Item =
-        register(NetherArchives.id(path), item, ItemSettings(settingsInit))
+    private fun register(path: String, item: (ItemProperties) -> Item = ::Item, settingsInit: ItemProperties.() -> Unit): Item =
+        register(NetherArchives.id(path), item, ItemProperties(settingsInit))
 
-    private fun register(block: Block, settings: ItemSettings = ItemSettings()): Item =
-        Items.registerBlock(block, settings)
+    private fun register(block: Block, item: (Block, ItemProperties) -> Item = ::BlockItem, properties: ItemProperties = ItemProperties()): Item =
+        register(
+            BuiltInRegistries.BLOCK.getKey(block),
+            { item(block, it) },
+            properties.useBlockDescriptionPrefix().requiredFeatures(block.requiredFeatures())
+        )
 
-    private fun register(block: Block, item: (Block, ItemSettings) -> Item): Item =
-        Items.registerBlock(block, item)
+    private fun register(block: Block, item: (Block, ItemProperties) -> Item) =
+        register(block, item, ItemProperties())
+
+    private fun register(block: Block, properties: ItemProperties = ItemProperties()): Item =
+        register(block, ::BlockItem, properties)
 
     val MAGNETITE = register(NetherArchivesBlocks.MAGNETITE)
 
@@ -117,7 +124,7 @@ object NetherArchivesItems {
     val CREATIVE_TAB: CreativeModeTab = Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,
         NetherArchives.id("nether_archives"),
-        FabricItemGroup.builder().apply {
+        FabricCreativeModeTab.builder().apply {
             title(Component.translatable(CREATIVE_TAB_TRANSLATION))
             icon { BLAZE_LANTERN.defaultInstance }
             displayItems { _, output ->
@@ -157,7 +164,7 @@ object NetherArchivesItems {
 
     fun register() {
         itemGroups.forEach { (group, items) ->
-            ItemGroupEvents.modifyEntriesEvent(group).register {
+            CreativeModeTabEvents.modifyOutputEvent(group).register {
                 items.forEach(it::accept)
             }
         }

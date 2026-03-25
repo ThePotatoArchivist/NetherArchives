@@ -33,15 +33,15 @@ fun LootTable.Builder.pool(rolls: Int = 1, init: LootPool.Builder.() -> Unit) {
 }
 
 fun LootPool.Builder.item(drop: ItemLike, init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
-    with(LootItem.lootTableItem(drop).apply(init).build())
+    add(LootItem.lootTableItem(drop).apply(init).build())
 }
 
 fun LootPool.Builder.empty(init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
-    with(EmptyLootItem.emptyItem().apply(init).build())
+    add(EmptyLootItem.emptyItem().apply(init).build())
 }
 
 fun LootPool.Builder.alternatives(init: AlternativesEntry.Builder.() -> Unit) {
-    with(AlternativesEntry.alternatives().apply(init).build())
+    add(AlternativesEntry.alternatives().apply(init).build())
 }
 
 fun LootPool.Builder.conditions(init: Conditions.() -> Unit) {

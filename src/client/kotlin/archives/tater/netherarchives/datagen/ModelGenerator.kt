@@ -7,7 +7,7 @@ import archives.tater.netherarchives.mixin.client.BlockStateModelGeneratorAccess
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.BlockModelGenerators.plainVariant
 import net.minecraft.client.data.models.ItemModelGenerators
@@ -15,12 +15,12 @@ import net.minecraft.client.data.models.blockstates.MultiPartGenerator
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator
 import net.minecraft.client.data.models.blockstates.PropertyDispatch
 import net.minecraft.client.data.models.model.*
-import net.minecraft.client.renderer.block.model.VariantMutator
+import net.minecraft.client.renderer.block.dispatch.VariantMutator
 import net.minecraft.client.renderer.item.properties.conditional.IsUsingItem
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 
-class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generator) {
+class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generator) {
     override fun generateBlockStateModels(blockStateModelGenerator: BlockModelGenerators) {
         blockStateModelGenerator.createTrivialCube(NetherArchivesBlocks.MAGNETITE)
         blockStateModelGenerator.createTrivialBlock(NetherArchivesBlocks.SMOLDERING_MAGNETITE, CUBE_ALL_EMISSIVE_TEXTURED)
@@ -79,7 +79,7 @@ class ModelGenerator(generator: FabricDataOutput) : FabricModelProvider(generato
         itemModelGenerator.itemModelOutput.accept(NetherArchivesItems.DUMMY_SOUL_FIRE, ItemModelUtils.plainModel(
             ModelTemplates.FLAT_ITEM.create(
                 ModelLocationUtils.getModelLocation(NetherArchivesItems.DUMMY_SOUL_FIRE), TextureMapping(
-                TextureSlot.LAYER0 to ModelLocationUtils.getModelLocation(Blocks.SOUL_FIRE, "_0")
+                TextureSlot.LAYER0 to TextureMapping.getBlockTexture(Blocks.SOUL_FIRE, "_0")
             ), itemModelGenerator.modelOutput
             )
         ))

@@ -9,15 +9,8 @@ import net.minecraft.client.model.geom.builders.CubeDeformation
 import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState
-import net.minecraft.client.renderer.rendertype.RenderType
-import net.minecraft.client.renderer.rendertype.RenderTypes
-import net.minecraft.resources.Identifier
-import java.util.function.Function
 
-class SkisEntityModel<T : HumanoidRenderState>(root: ModelPart, renderLayerFactory: Function<Identifier, RenderType>) :
-    HumanoidModel<T>(root, renderLayerFactory) {
-
-    constructor(root: ModelPart) : this(root, RenderTypes::entityCutoutNoCull)
+class SkisEntityModel<T : HumanoidRenderState>(root: ModelPart) : HumanoidModel<T>(root) {
 
     companion object {
         fun getTexturedModelData(): LayerDefinition = LayerDefinition.create(MeshDefinition { root.apply {

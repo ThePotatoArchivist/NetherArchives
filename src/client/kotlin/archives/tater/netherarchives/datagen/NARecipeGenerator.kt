@@ -3,15 +3,16 @@ package archives.tater.netherarchives.datagen
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.registry.NetherArchivesItems
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
-import net.minecraft.world.item.Items
-import net.minecraft.data.recipes.RecipeCategory
-import net.minecraft.core.HolderLookup
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CookingBookCategory
 import java.util.concurrent.CompletableFuture
 
 class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutput) :
@@ -22,7 +23,7 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
     }
 
     private fun RecipeOutput.recipes() {
-        oreSmelting(RecipeCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_INGOT, experience = 0.5F)
+        oreSmelting(RecipeCategory.MISC, CookingBookCategory.MISC, NetherArchivesItems.IRON_SLAG, Items.IRON_INGOT, experience = 0.5F)
 
         shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeId = NetherArchives.id("compass_from_magnetite")) {
             patterns(
@@ -150,15 +151,31 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
             itemCriterion(NetherArchivesItems.BASALT_GEYSER)
         }
 
-        smelting(RecipeCategory.DECORATIONS, Items.SOUL_SAND, NetherArchivesItems.SPECTREGLASS_SHARD, experience = 0.1f)
+        smelting(
+            RecipeCategory.DECORATIONS,
+            CookingBookCategory.MISC,
+            Items.SOUL_SAND,
+            NetherArchivesItems.SPECTREGLASS_SHARD,
+            experience = 0.1f,
+        )
 
         twoByTwoPacker(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS_SHARD)
 
         stainedGlassPaneFromStainedGlass(NetherArchivesItems.SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS)
         stainedGlassPaneFromStainedGlass(NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SHATTERED_SPECTREGLASS)
 
-        smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS, NetherArchivesItems.SPECTREGLASS)
-        smelting(RecipeCategory.DECORATIONS, NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS_PANE)
+        smelting(
+            RecipeCategory.DECORATIONS,
+            CookingBookCategory.BLOCKS,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS,
+            NetherArchivesItems.SPECTREGLASS,
+        )
+        smelting(
+            RecipeCategory.DECORATIONS,
+            CookingBookCategory.BLOCKS,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE,
+            NetherArchivesItems.SPECTREGLASS_PANE,
+        )
 
         shaped(RecipeCategory.COMBAT, NetherArchivesItems.SPECTREGLASS_KNIFE) {
             patterns("""
@@ -174,7 +191,7 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
     }
 
-    class Provider(output: FabricDataOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
+    class Provider(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
         FabricRecipeProvider(output, registriesFuture) {
         override fun createRecipeProvider(
             registryLookup: HolderLookup.Provider,

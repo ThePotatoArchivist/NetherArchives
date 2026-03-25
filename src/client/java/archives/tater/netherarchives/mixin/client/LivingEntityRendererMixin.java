@@ -1,7 +1,6 @@
 package archives.tater.netherarchives.mixin.client;
 
 import archives.tater.netherarchives.NetherArchivesClient;
-import archives.tater.netherarchives.client.duck.SoulGlassRevealed;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -33,14 +32,14 @@ public class LivingEntityRendererMixin {
             at = @At("TAIL")
     )
     private void checkSoulGlass(LivingEntity livingEntity, LivingEntityRenderState livingEntityRenderState, float f, CallbackInfo ci) {
-        ((SoulGlassRevealed) livingEntityRenderState).netherarchives$setRevealed(NetherArchivesClient.isRevealed(livingEntity));
+        livingEntityRenderState.setData(NetherArchivesClient.SOUL_GLASS_REVEALED, NetherArchivesClient.isRevealed(livingEntity));
     }
 
     @ModifyExpressionValue(
-            method = "submit(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/CameraRenderState;)V",
+            method = "submit(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
             at = @At(value = "CONSTANT", args = "intValue=654311423")
     )
     private int soulColor(int original, @Local(argsOnly = true) LivingEntityRenderState renderState) {
-        return ((SoulGlassRevealed) renderState).netherarchives$isRevealed() ? 0x999FFFFF : original;
+        return renderState.getDataOrDefault(NetherArchivesClient.SOUL_GLASS_REVEALED, false) ? 0x999FFFFF : original;
     }
 }
