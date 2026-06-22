@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
-import net.minecraft.advancements.CriterionTrigger
-import net.minecraft.advancements.criterion.ConsumeItemTrigger
-import net.minecraft.advancements.criterion.DefaultBlockInteractionTrigger
+import net.minecraft.advancements.triggers.ConsumeItemTrigger
+import net.minecraft.advancements.triggers.CriterionTrigger
+import net.minecraft.advancements.triggers.DefaultBlockInteractionTrigger
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 

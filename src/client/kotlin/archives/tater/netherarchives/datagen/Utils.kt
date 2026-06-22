@@ -3,8 +3,17 @@
 package archives.tater.netherarchives.datagen
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
-import net.minecraft.advancements.*
-import net.minecraft.advancements.criterion.*
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.DisplayInfo
+import net.minecraft.advancements.predicates.ContextAwarePredicate
+import net.minecraft.advancements.predicates.FluidPredicate
+import net.minecraft.advancements.predicates.ItemPredicate
+import net.minecraft.advancements.predicates.LocationPredicate
+import net.minecraft.advancements.predicates.entity.EntityPredicate
+import net.minecraft.advancements.triggers.Criterion
+import net.minecraft.advancements.triggers.PickedUpItemTrigger
 import net.minecraft.client.data.models.model.ModelTemplate
 import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot

@@ -12,12 +12,12 @@ class FluidTagGenerator(
     registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagsProvider.FluidTagsProvider(output, registriesFuture) {
     override fun addTags(wrapperLookup: HolderLookup.Provider) {
-        valueLookupBuilder(ModTags.SKIS_CAN_WALK_ON).apply {
+        builder(ModTags.SKIS_CAN_WALK_ON).apply {
             forceAddTag(FluidTags.LAVA)
             forceAddTag(FluidTags.WATER)
         }
 
-        valueLookupBuilder(ModTags.BURNS_WHEN_PADDLE).apply {
+        builder(ModTags.BURNS_WHEN_PADDLE).apply {
             forceAddTag(FluidTags.LAVA)
         }
     }

@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "stepping_on": {
+              "minecraft:stepping_on": {
                 "fluid": {
                   "fluids": "minecraft:lava"
                 }

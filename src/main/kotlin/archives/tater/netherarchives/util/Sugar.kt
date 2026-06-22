@@ -2,10 +2,7 @@
 
 package archives.tater.netherarchives.util
 
-import net.minecraft.core.BlockPos
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.TypedInstance
+import net.minecraft.core.*
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
@@ -27,6 +24,7 @@ internal inline fun ItemProperties(init: ItemProperties.() -> Unit = {}): ItemPr
 
 internal infix fun <T: Any> TypedInstance<T>.isOf(type: T) = this.`is`(type)
 internal infix fun <T: Any> TypedInstance<T>.isIn(tag: TagKey<T>) = this.`is`(tag)
+internal infix fun <T: Any> TypedInstance<T>.isIn(set: HolderSet<T>) = this.`is`(set)
 
 internal inline operator fun LivingEntity.get(hand: InteractionHand): ItemStack = getItemInHand(hand)
 internal inline operator fun Level.get(pos: BlockPos): BlockState = getBlockState(pos)
@@ -51,3 +49,5 @@ internal inline var Entity.pos: Vec3
     set(value) {
         setPos(value)
     }
+
+internal val Vec3i.center get() = Vec3.atCenterOf(this)

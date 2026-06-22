@@ -5,10 +5,10 @@ import archives.tater.netherarchives.client.render.entity.feature.WitherSkeleton
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
-import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.registry.ModItems
-import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.registry.NetherArchivesEntities
+import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.isOf
 import net.fabricmc.api.ClientModInitializer
@@ -30,7 +30,7 @@ import net.minecraft.client.renderer.entity.state.HumanoidRenderState
 import net.minecraft.client.renderer.rendertype.RenderTypes
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.util.Mth.clamp
-import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.level.ClipBlockStateContext
 import net.minecraft.world.phys.AABB
@@ -67,8 +67,8 @@ object NetherArchivesClient : ClientModInitializer {
         LivingEntityRenderLayerRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
             if (NetherArchivesClientConfig.config.skeletonEyes)
                 registrationHelper.register(when (entityType) {
-                    EntityType.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonRenderer)
-                    EntityType.WITHER -> WitherEyesFeatureRenderer(entityRenderer as WitherBossRenderer)
+                    EntityTypes.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonRenderer)
+                    EntityTypes.WITHER -> WitherEyesFeatureRenderer(entityRenderer as WitherBossRenderer)
                     else -> return@register
                 })
         }
@@ -118,7 +118,7 @@ object NetherArchivesClient : ClientModInitializer {
 
         ClientTickEvents.START_LEVEL_TICK.register { world ->
             val client = Minecraft.getInstance()
-            val camera = client.gameRenderer.mainCamera
+            val camera = client.gameRenderer.mainCamera()
             usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && (
                     client.player?.useItem?.isOf(ModItems.SPECTREGLASS_KNIFE) == true
                     /*|| NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf ModItems.SPECTREGLASS_PANE } == true*/

@@ -9,8 +9,9 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.advancements.criterion.*
+import net.minecraft.advancements.predicates.ContextAwarePredicate
+import net.minecraft.advancements.predicates.entity.EntityPredicate
+import net.minecraft.advancements.triggers.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier

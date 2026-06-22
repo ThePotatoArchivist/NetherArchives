@@ -3,18 +3,25 @@ package archives.tater.netherarchives.mixin.client;
 import archives.tater.netherarchives.NetherArchives;
 import archives.tater.netherarchives.registry.NetherArchivesTags;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.objectweb.asm.Opcodes;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.feature.FeatureFrameContext;
 import net.minecraft.client.renderer.feature.FlameFeatureRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.core.registries.BuiltInRegistries;
+
+import java.util.List;
 
 @Mixin(FlameFeatureRenderer.class)
 public class EntityRenderDispatcherMixin {
@@ -26,19 +33,20 @@ public class EntityRenderDispatcherMixin {
     @SuppressWarnings("deprecation")
     private static final SpriteId BLAZE_FIRE_1 = new SpriteId(TextureAtlas.LOCATION_BLOCKS, NetherArchives.id("block/blaze_fire_1"));
 
-    @ModifyExpressionValue(
-            method = "renderFlame",
-            at = @At(value = "FIELD", target = "Lnet/minecraft/client/resources/model/ModelBakery;FIRE_0:Lnet/minecraft/client/resources/model/sprite/SpriteId;", opcode = Opcodes.GETSTATIC)
+    @Inject(
+            method = "buildGroup",
+            at = @At("HEAD")
     )
-    private SpriteId setBlazeFireSprite0(SpriteId original, @Local(argsOnly = true, name = "state") EntityRenderState state) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_0 : original;
+    private void getBlazeFireSprites(FeatureFrameContext context, List<FlameFeatureRenderer.Submit> submits, CallbackInfo ci, @Share("blazeFire1") LocalRef<TextureAtlasSprite> blazeFire1, @Share("blazeFire2") LocalRef<TextureAtlasSprite> blazeFire2) {
+        blazeFire1.set(context.atlasManager().get(BLAZE_FIRE_0));
+        blazeFire2.set(context.atlasManager().get(BLAZE_FIRE_1));
     }
 
-    @ModifyExpressionValue(
-            method = "renderFlame",
-            at = @At(value = "FIELD", target = "Lnet/minecraft/client/resources/model/ModelBakery;FIRE_1:Lnet/minecraft/client/resources/model/sprite/SpriteId;", opcode = Opcodes.GETSTATIC)
+    @WrapOperation(
+            method = "buildGroup",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FlameFeatureRenderer;prepare(Lnet/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V")
     )
-    private SpriteId setBlazeFireSprite1(SpriteId original, @Local(argsOnly = true, name = "state") EntityRenderState state) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_1 : original;
+    private SpriteId setBlazeFireSprite1(SpriteId original, @Local(argsOnly = true) EntityRenderState renderState) {
+        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(renderState.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_1 : original;
     }
 }
