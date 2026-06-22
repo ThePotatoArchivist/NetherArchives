@@ -6,9 +6,9 @@ import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
 import archives.tater.netherarchives.registry.NetherArchivesEntities
-import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.ModItems
 import archives.tater.netherarchives.registry.NetherArchivesParticles
-import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.ModTags
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.isOf
 import net.fabricmc.api.ClientModInitializer
@@ -75,7 +75,7 @@ object NetherArchivesClient : ClientModInitializer {
 
         ModelLayerRegistry.registerModelLayer(SKIS_MODEL_LAYER, SkisEntityModel.Companion::getTexturedModelData)
 
-        registerArmorRenderer(NetherArchivesItems.BASALT_SKIS) { matrices, queue, _, bipedEntityRenderState, _, light, _ ->
+        registerArmorRenderer(ModItems.BASALT_SKIS) { matrices, queue, _, bipedEntityRenderState, _, light, _ ->
             if (!::basaltSkisModel.isInitialized) {
                 basaltSkisModel = SkisEntityModel(Minecraft.getInstance().entityModels.bakeLayer(SKIS_MODEL_LAYER))
             }
@@ -120,8 +120,8 @@ object NetherArchivesClient : ClientModInitializer {
             val client = Minecraft.getInstance()
             val camera = client.gameRenderer.mainCamera
             usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && (
-                    client.player?.useItem?.isOf(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
-                    /*|| NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf NetherArchivesItems.SPECTREGLASS_PANE } == true*/
+                    client.player?.useItem?.isOf(ModItems.SPECTREGLASS_KNIFE) == true
+                    /*|| NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf ModItems.SPECTREGLASS_PANE } == true*/
             )
 
             if (usingSoulKnife) return@register // Can skip checks
@@ -139,7 +139,7 @@ object NetherArchivesClient : ClientModInitializer {
                     ClipBlockStateContext(
                         cameraPos,
                         Vec3(entity.x, entity.getY(0.5), entity.z),
-                    ) { it isIn NetherArchivesTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
+                    ) { it isIn ModTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
             }
         }
     }

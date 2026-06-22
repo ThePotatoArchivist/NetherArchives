@@ -1,23 +1,7 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.BASALT_GEYSER
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.BLAZE_FIRE
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.MAGNETITE
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.SMOLDERING_MAGNETITE
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.SPECTREGLASS
-import archives.tater.netherarchives.registry.NetherArchivesBlocks.SPECTREGLASS_PANE
-import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE
-import archives.tater.netherarchives.registry.NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED
-import archives.tater.netherarchives.registry.NetherArchivesTags.BLAZE_FIRE_TARGET
-import archives.tater.netherarchives.registry.NetherArchivesTags.INVERTS_BEACON
-import archives.tater.netherarchives.registry.NetherArchivesTags.MAGNETIC
-import archives.tater.netherarchives.registry.NetherArchivesTags.REVEALS_INVISIBLES
-import archives.tater.netherarchives.registry.NetherArchivesTags.ROTTEN_FLESH_FERMENTER
+import archives.tater.netherarchives.registry.ModBlocks
+import archives.tater.netherarchives.registry.ModTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
@@ -31,63 +15,62 @@ class BlockTagGenerator(output: FabricPackOutput, completableFuture: Completable
 
     override fun addTags(arg: HolderLookup.Provider) {
         valueLookupBuilder(BlockTags.MINEABLE_WITH_SHOVEL).add(
-            MAGNETITE,
-            SMOLDERING_MAGNETITE
+            ModBlocks.MAGNETITE,
+            ModBlocks.SMOLDERING_MAGNETITE
         )
         valueLookupBuilder(BlockTags.MINEABLE_WITH_HOE).add(
-            NetherArchivesBlocks.ROTTEN_FLESH_BLOCK,
-            FERMENTED_ROTTEN_FLESH_BLOCK
+            ModBlocks.ROTTEN_FLESH_BLOCK,
+            ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
         )
         valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(
-            BASALT_GEYSER,
-            ADJUSTABLE_BASALT_GEYSER,
+            ModBlocks.BASALT_GEYSER,
+            ModBlocks.ADJUSTABLE_BASALT_GEYSER,
         )
         valueLookupBuilder(BlockTags.NEEDS_STONE_TOOL).add(
-            SMOLDERING_MAGNETITE,
+            ModBlocks.SMOLDERING_MAGNETITE,
         )
         valueLookupBuilder(BlockTags.SOUL_FIRE_BASE_BLOCKS).add(
-            FERMENTED_ROTTEN_FLESH_BLOCK,
+            ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK,
         )
         valueLookupBuilder(BlockTags.FIRE).add(
-            BLAZE_FIRE,
+            ModBlocks.BLAZE_FIRE,
         )
         valueLookupBuilder(BlockTags.IMPERMEABLE).add(
-            SPECTREGLASS,
-            SHATTERED_SPECTREGLASS,
+            ModBlocks.SPECTREGLASS,
+            ModBlocks.SHATTERED_SPECTREGLASS,
         )
-        valueLookupBuilder(MAGNETIC).add(
+        valueLookupBuilder(ModTags.MAGNETIC).add(
             Blocks.LODESTONE,
             Blocks.NETHERITE_BLOCK,
         )
-        valueLookupBuilder(BLAZE_FIRE_TARGET)
-        valueLookupBuilder(ROTTEN_FLESH_FERMENTER).add(
+        valueLookupBuilder(ModTags.ROTTEN_FLESH_FERMENTER).add(
             Blocks.SOUL_FIRE,
             Blocks.SOUL_CAMPFIRE
         )
-        valueLookupBuilder(BASALT_GEYSER_REPLACEABLE).add(
+        valueLookupBuilder(ModTags.BASALT_GEYSER_REPLACEABLE).add(
             Blocks.BASALT
         )
-        valueLookupBuilder(BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
+        valueLookupBuilder(ModTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
             forceAddTag(BlockTags.BASE_STONE_NETHER)
-            add(MAGNETITE)
+            add(ModBlocks.MAGNETITE)
         }
         valueLookupBuilder(ConventionalBlockTags.GLASS_BLOCKS).add(
-            SPECTREGLASS,
-            SHATTERED_SPECTREGLASS
+            ModBlocks.SPECTREGLASS,
+            ModBlocks.SHATTERED_SPECTREGLASS
         )
         valueLookupBuilder(ConventionalBlockTags.GLASS_PANES).add(
-            SPECTREGLASS_PANE,
-            SHATTERED_SPECTREGLASS_PANE,
+            ModBlocks.SPECTREGLASS_PANE,
+            ModBlocks.SHATTERED_SPECTREGLASS_PANE,
         )
-        valueLookupBuilder(REVEALS_INVISIBLES).add(
-            SPECTREGLASS,
-            SPECTREGLASS_PANE,
+        valueLookupBuilder(ModTags.REVEALS_INVISIBLES).add(
+            ModBlocks.SPECTREGLASS,
+            ModBlocks.SPECTREGLASS_PANE,
         )
-        valueLookupBuilder(INVERTS_BEACON).add(
-            SPECTREGLASS,
-            SHATTERED_SPECTREGLASS,
-            SPECTREGLASS_PANE,
-            SHATTERED_SPECTREGLASS_PANE,
+        valueLookupBuilder(ModTags.INVERTS_BEACON).add(
+            ModBlocks.SPECTREGLASS,
+            ModBlocks.SHATTERED_SPECTREGLASS,
+            ModBlocks.SPECTREGLASS_PANE,
+            ModBlocks.SHATTERED_SPECTREGLASS_PANE,
         )
     }
 }

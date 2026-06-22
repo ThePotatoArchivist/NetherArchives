@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level
 class BlazeLanternItem(settings: Properties) : Item(settings) {
     // TODO this crashes
 //    init {
-//        DispenserBlock.registerBehavior(NetherArchivesItems.BLAZE_LANTERN, object: ProjectileDispenserBehavior() {
+//        DispenserBlock.registerBehavior(ModItems.BLAZE_LANTERN, object: ProjectileDispenserBehavior() {
 //            override fun createProjectile(world: World, position: Position, stack: ItemStack): ProjectileEntity {
 //                return (Util.make(
 //                    BlazeLanternEntity(world, position.x, position.y, position.z)

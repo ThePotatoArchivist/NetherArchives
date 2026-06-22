@@ -128,3 +128,5 @@ object NetherArchivesBlocks {
     }
 
 }
+
+internal typealias ModBlocks = NetherArchivesBlocks

@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.modification
 
 import archives.tater.netherarchives.datagen.builder.item
-import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.ModItems
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 
@@ -13,7 +13,7 @@ internal fun modifyLootTables() {
 
         when (key.identifier()) {
             BARTERING -> tableBuilder.modifyPools {
-                it.item(NetherArchivesItems.BLAZE_TORCH) {
+                it.item(ModItems.BLAZE_TORCH) {
                     setWeight(20)
                 }
             }

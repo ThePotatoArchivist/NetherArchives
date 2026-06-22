@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.ModTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.minecraft.core.HolderLookup
@@ -15,7 +15,7 @@ class StructureTagGenerator(
 ) : FabricTagsProvider<Structure>(output, Registries.STRUCTURE, registriesFuture) {
 
     override fun addTags(arg: HolderLookup.Provider) {
-        getOrCreateRawBuilder(NetherArchivesTags.BLAZE_TORCH_LOCATED).addElement(
+        getOrCreateRawBuilder(ModTags.BLAZE_TORCH_LOCATED).addElement(
             BuiltinStructures.FORTRESS.identifier()
         )
     }

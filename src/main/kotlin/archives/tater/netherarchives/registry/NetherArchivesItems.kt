@@ -47,26 +47,26 @@ object NetherArchivesItems {
     private fun register(block: Block, properties: ItemProperties = ItemProperties()): Item =
         register(block, ::BlockItem, properties)
 
-    val MAGNETITE = register(NetherArchivesBlocks.MAGNETITE)
+    val MAGNETITE = register(ModBlocks.MAGNETITE)
 
-    val SMOLDERING_MAGNETITE = register(NetherArchivesBlocks.SMOLDERING_MAGNETITE)
+    val SMOLDERING_MAGNETITE = register(ModBlocks.SMOLDERING_MAGNETITE)
 
-    val ROTTEN_FLESH_BLOCK = register(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK)
+    val ROTTEN_FLESH_BLOCK = register(ModBlocks.ROTTEN_FLESH_BLOCK)
 
-    val FERMENTED_ROTTEN_FLESH_BLOCK = register(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
+    val FERMENTED_ROTTEN_FLESH_BLOCK = register(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
 
     val IRON_SLAG = register("iron_slag")
 
-    val BLAZE_DUST = register(NetherArchivesBlocks.BLAZE_DUST)
+    val BLAZE_DUST = register(ModBlocks.BLAZE_DUST)
 
     val BLAZE_LANTERN = register("blaze_lantern", ::BlazeLanternItem) {
         stacksTo(16)
     }
 
-    val BLAZE_TORCH = register(NetherArchivesBlocks.BLAZE_TORCH) { block, settings ->
+    val BLAZE_TORCH = register(ModBlocks.BLAZE_TORCH) { block, settings ->
         StandingAndWallBlockItem(
             block,
-            NetherArchivesBlocks.WALL_BLAZE_TORCH,
+            ModBlocks.WALL_BLAZE_TORCH,
             Direction.DOWN,
             settings
         )
@@ -81,7 +81,7 @@ object NetherArchivesItems {
         SoundEvents.ARMOR_EQUIP_GENERIC,
         ArmorMaterials.CHAINMAIL.toughness,
         ArmorMaterials.CHAINMAIL.knockbackResistance,
-        NetherArchivesTags.BASALT_EQUIPMENT_REPAIR,
+        ModTags.BASALT_EQUIPMENT_REPAIR,
         BASALT_EQUIPMENT
     )
 
@@ -95,9 +95,9 @@ object NetherArchivesItems {
     }
     val BASALT_ROD = register("basalt_rod")
 
-    val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
+    val BASALT_GEYSER = register(ModBlocks.BASALT_GEYSER)
 
-    val ADJUSTABLE_BASALT_GEYSER = register(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER)
+    val ADJUSTABLE_BASALT_GEYSER = register(ModBlocks.ADJUSTABLE_BASALT_GEYSER)
 
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
@@ -108,13 +108,13 @@ object NetherArchivesItems {
         component(DataComponents.WEAPON, SoulGlassKnifeItem.weaponComponent)
     }
 
-    val SPECTREGLASS = register(NetherArchivesBlocks.SPECTREGLASS)
+    val SPECTREGLASS = register(ModBlocks.SPECTREGLASS)
 
-    val SHATTERED_SPECTREGLASS = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
+    val SHATTERED_SPECTREGLASS = register(ModBlocks.SHATTERED_SPECTREGLASS)
 
-    val SPECTREGLASS_PANE = register(NetherArchivesBlocks.SPECTREGLASS_PANE)
+    val SPECTREGLASS_PANE = register(ModBlocks.SPECTREGLASS_PANE)
 
-    val SHATTERED_SPECTREGLASS_PANE = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE)
+    val SHATTERED_SPECTREGLASS_PANE = register(ModBlocks.SHATTERED_SPECTREGLASS_PANE)
 
     // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
     val DUMMY_SOUL_FIRE = register(Identifier.withDefaultNamespace("netherarchives/dummy/soul_fire"))
@@ -170,3 +170,5 @@ object NetherArchivesItems {
         }
     }
 }
+
+internal typealias ModItems = NetherArchivesItems

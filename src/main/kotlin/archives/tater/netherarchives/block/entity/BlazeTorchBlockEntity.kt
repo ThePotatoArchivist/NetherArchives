@@ -2,7 +2,7 @@ package archives.tater.netherarchives.block.entity
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
-import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.ModTags
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -40,7 +40,7 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
 
     fun locateTarget(): BlockPos? {
         val pos = (level as ServerLevel).run {
-            findNearestMapStructure(NetherArchivesTags.BLAZE_TORCH_LOCATED, worldPosition, 50, false)
+            findNearestMapStructure(ModTags.BLAZE_TORCH_LOCATED, worldPosition, 50, false)
         } ?: return null
         targetPos = pos
         NetherArchives.logger.info("Located at ${pos.x}, ${pos.y}, ${pos.z}")

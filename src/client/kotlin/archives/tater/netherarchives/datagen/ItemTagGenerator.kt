@@ -1,16 +1,7 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_OAR
-import archives.tater.netherarchives.registry.NetherArchivesItems.BASALT_SKIS
-import archives.tater.netherarchives.registry.NetherArchivesItems.DUMMY_SOUL_FIRE
-import archives.tater.netherarchives.registry.NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK
-import archives.tater.netherarchives.registry.NetherArchivesItems.IRON_SLAG
-import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPECTREGLASS
-import archives.tater.netherarchives.registry.NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE
-import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS
-import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_KNIFE
-import archives.tater.netherarchives.registry.NetherArchivesItems.SPECTREGLASS_PANE
-import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.ModTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -24,53 +15,53 @@ class ItemTagGenerator(
     registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagsProvider.ItemTagsProvider(output, registriesFuture) {
     override fun addTags(arg: HolderLookup.Provider) {
-        valueLookupBuilder(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR).add(
+        valueLookupBuilder(ModTags.BASALT_EQUIPMENT_REPAIR).add(
             Items.POLISHED_BASALT,
         )
-        valueLookupBuilder(NetherArchivesTags.SKIS).add(
-            BASALT_SKIS,
+        valueLookupBuilder(ModTags.SKIS).add(
+            ModItems.BASALT_SKIS,
         )
-        valueLookupBuilder(NetherArchivesTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
+        valueLookupBuilder(ModTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
             Items.SOUL_CAMPFIRE,
-            DUMMY_SOUL_FIRE
+            ModItems.DUMMY_SOUL_FIRE
         )
         valueLookupBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
-            DUMMY_SOUL_FIRE,
+            ModItems.DUMMY_SOUL_FIRE,
         )
         valueLookupBuilder(ItemTags.SOUL_FIRE_BASE_BLOCKS).add(
-            FERMENTED_ROTTEN_FLESH_BLOCK,
+            ModItems.FERMENTED_ROTTEN_FLESH_BLOCK,
         )
         valueLookupBuilder(ConventionalItemTags.GLASS_BLOCKS).add(
-            SPECTREGLASS,
-            SHATTERED_SPECTREGLASS,
+            ModItems.SPECTREGLASS,
+            ModItems.SHATTERED_SPECTREGLASS,
         )
         valueLookupBuilder(ConventionalItemTags.GLASS_PANES).add(
-            SPECTREGLASS_PANE,
-            SHATTERED_SPECTREGLASS_PANE,
+            ModItems.SPECTREGLASS_PANE,
+            ModItems.SHATTERED_SPECTREGLASS_PANE,
         )
         valueLookupBuilder(ItemTags.ARMOR_ENCHANTABLE).add(
-            BASALT_SKIS,
+            ModItems.BASALT_SKIS,
         )
         valueLookupBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
-            SPECTREGLASS_KNIFE,
+            ModItems.SPECTREGLASS_KNIFE,
         )
         valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(
-            BASALT_SKIS,
-            BASALT_OAR,
-            SPECTREGLASS_KNIFE,
+            ModItems.BASALT_SKIS,
+            ModItems.BASALT_OAR,
+            ModItems.SPECTREGLASS_KNIFE,
         )
         valueLookupBuilder(ItemTags.BREAKS_DECORATED_POTS).add(
-            SPECTREGLASS_KNIFE,
+            ModItems.SPECTREGLASS_KNIFE,
         )
         valueLookupBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(
-            SPECTREGLASS_KNIFE,
+            ModItems.SPECTREGLASS_KNIFE,
         )
         valueLookupBuilder(ConventionalItemTags.IRON_RAW_MATERIALS).add(
-            IRON_SLAG,
+            ModItems.IRON_SLAG,
         )
 //        if (NetherArchives.EXPOSURE_INSTALLED)
 //            valueLookupBuilder(Exposure.Tags.Items.FILTERS).add(
-//                SPECTREGLASS_PANE
+//                ModItems.SPECTREGLASS_PANE
 //            )
     }
 }

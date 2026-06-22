@@ -1,8 +1,8 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.datagen.builder.*
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.ModBlocks
+import archives.tater.netherarchives.registry.ModItems
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider
 import net.minecraft.core.HolderLookup
@@ -23,11 +23,11 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
     override fun generate() {
         val fortune = registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)
 
-        dropSelf(NetherArchivesBlocks.MAGNETITE)
+        dropSelf(ModBlocks.MAGNETITE)
 
-        add(NetherArchivesBlocks.SMOLDERING_MAGNETITE) {
+        add(ModBlocks.SMOLDERING_MAGNETITE) {
             pool {
-                item(NetherArchivesItems.IRON_SLAG) {
+                item(ModItems.IRON_SLAG) {
                     oreDrops(fortune)
                 }
                 conditions { survivesExplosion() }
@@ -44,12 +44,12 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
             }
         }
 
-        dropSelf(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK)
+        dropSelf(ModBlocks.ROTTEN_FLESH_BLOCK)
 
-        add(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK) {
+        add(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK) {
             pool {
                 alternatives {
-                    item(NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK) {
+                    item(ModItems.FERMENTED_ROTTEN_FLESH_BLOCK) {
                         `when`(hasSilkTouch())
                     }
                     item(Items.LEATHER) {
@@ -61,14 +61,14 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
             }
         }
 
-        dropSelf(NetherArchivesBlocks.BLAZE_DUST)
+        dropSelf(ModBlocks.BLAZE_DUST)
 
-        dropSelf(NetherArchivesBlocks.BLAZE_TORCH)
+        dropSelf(ModBlocks.BLAZE_TORCH)
 
-        add(NetherArchivesBlocks.BASALT_GEYSER) {
+        add(ModBlocks.BASALT_GEYSER) {
             pool {
                 alternatives {
-                    item(NetherArchivesItems.BASALT_GEYSER) {
+                    item(ModItems.BASALT_GEYSER) {
                         `when`(hasSilkTouch())
                     }
                     item(Items.BASALT)
@@ -79,10 +79,10 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
             }
         }
 
-        dropSelf(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER)
+        dropSelf(ModBlocks.ADJUSTABLE_BASALT_GEYSER)
 
-        add(NetherArchivesBlocks.SPECTREGLASS, createSingleItemTableWithSilkTouch(NetherArchivesBlocks.SPECTREGLASS, NetherArchivesBlocks.SHATTERED_SPECTREGLASS))
+        add(ModBlocks.SPECTREGLASS, createSingleItemTableWithSilkTouch(ModBlocks.SPECTREGLASS, ModBlocks.SHATTERED_SPECTREGLASS))
 
-        dropSelf(NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
+        dropSelf(ModBlocks.SHATTERED_SPECTREGLASS)
     }
 }

@@ -4,18 +4,18 @@ package archives.tater.netherarchives.emi
 //    override fun register(registry: EmiRegistry) {
 //        registry.apply {
 //            addWorldRecipe("unique/fermented_rotten_flesh") {
-//                leftInput(EmiStack.of(NetherArchivesItems.ROTTEN_FLESH_BLOCK))
+//                leftInput(EmiStack.of(ModItems.ROTTEN_FLESH_BLOCK))
 //                rightInput(EmiIngredient.of(Registries.BLOCK
-//                    .filter { it.defaultState.isIn(NetherArchivesTags.ROTTEN_FLESH_FERMENTER) }
-//                    .map { if (it == Blocks.SOUL_FIRE) NetherArchivesItems.DUMMY_SOUL_FIRE else it }
+//                    .filter { it.defaultState.isIn(ModTags.ROTTEN_FLESH_FERMENTER) }
+//                    .map { if (it == Blocks.SOUL_FIRE) ModItems.DUMMY_SOUL_FIRE else it }
 //                    .map(EmiStack::of)), true)
-//                output(EmiStack.of(NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK))
+//                output(EmiStack.of(ModItems.FERMENTED_ROTTEN_FLESH_BLOCK))
 //            }
 //
 //            addWorldRecipe("fluid_interaction/smoldering_magnetite") {
-//                leftInput(EmiStack.of(NetherArchivesItems.MAGNETITE))
+//                leftInput(EmiStack.of(ModItems.MAGNETITE))
 //                rightInput(EmiStack.of(Fluids.LAVA), true)
-//                output(EmiStack.of(NetherArchivesItems.SMOLDERING_MAGNETITE))
+//                output(EmiStack.of(ModItems.SMOLDERING_MAGNETITE))
 //            }
 //
 //            addWorldRecipe("unique/nether_star") {
@@ -37,8 +37,8 @@ package archives.tater.netherarchives.emi
 //            }
 //
 //            for ((normal, shattered) in listOf(
-//                NetherArchivesItems.SPECTREGLASS to NetherArchivesItems.SHATTERED_SPECTREGLASS,
-//                NetherArchivesItems.SPECTREGLASS_PANE to NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE,
+//                ModItems.SPECTREGLASS to ModItems.SHATTERED_SPECTREGLASS,
+//                ModItems.SPECTREGLASS_PANE to ModItems.SHATTERED_SPECTREGLASS_PANE,
 //            ))
 //                addWorldRecipe("unique/${shattered.id.path}") {
 //                    leftInput(EmiStack.of(normal))

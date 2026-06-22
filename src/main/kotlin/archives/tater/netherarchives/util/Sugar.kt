@@ -25,8 +25,8 @@ internal inline fun BlockProperties(init: BlockProperties.() -> Unit = {}): Bloc
 internal inline fun ItemProperties(init: ItemProperties.() -> Unit = {}): ItemProperties =
     ItemProperties().apply(init)
 
-infix fun <T: Any> TypedInstance<T>.isOf(type: T) = this.`is`(type)
-infix fun <T: Any> TypedInstance<T>.isIn(tag: TagKey<T>) = this.`is`(tag)
+internal infix fun <T: Any> TypedInstance<T>.isOf(type: T) = this.`is`(type)
+internal infix fun <T: Any> TypedInstance<T>.isIn(tag: TagKey<T>) = this.`is`(tag)
 
 internal inline operator fun LivingEntity.get(hand: InteractionHand): ItemStack = getItemInHand(hand)
 internal inline operator fun Level.get(pos: BlockPos): BlockState = getBlockState(pos)
@@ -41,12 +41,12 @@ internal inline operator fun Vec3.component1() = x
 internal inline operator fun Vec3.component2() = y
 internal inline operator fun Vec3.component3() = z
 
-fun ItemAttributeModifiers(init: ItemAttributeModifiers.Builder.() -> Unit): ItemAttributeModifiers =
+internal fun ItemAttributeModifiers(init: ItemAttributeModifiers.Builder.() -> Unit): ItemAttributeModifiers =
     ItemAttributeModifiers.builder().apply(init).build()
 
-operator fun <T: Any> HolderGetter<T>.get(key: ResourceKey<T>): Holder.Reference<T> = getOrThrow(key)
+internal operator fun <T: Any> HolderGetter<T>.get(key: ResourceKey<T>): Holder.Reference<T> = getOrThrow(key)
 
-inline var Entity.pos: Vec3
+internal inline var Entity.pos: Vec3
     get() = position()
     set(value) {
         setPos(value)

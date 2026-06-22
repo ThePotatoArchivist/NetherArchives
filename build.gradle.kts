@@ -1,15 +1,13 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-	id 'net.fabricmc.fabric-loom' version "${loom_version}"
-	id 'maven-publish'
-    id "org.jetbrains.kotlin.jvm" version "2.3.10"
+	id("net.fabricmc.fabric-loom")
+	`maven-publish`
+    id("org.jetbrains.kotlin.jvm") version "2.4.0"
 }
 
-version = project.mod_version
-group = project.maven_group
-
-base {
-	archivesName = project.archives_base_name
-}
+version = providers.gradleProperty("mod_version").get()
+group = providers.gradleProperty("maven_group").get()
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -21,44 +19,27 @@ repositories {
 		forRepository {
 			maven {
 				name = "Modrinth"
-				url = "https://api.modrinth.com/maven"
+				url = uri("https://api.modrinth.com/maven")
 			}
 		}
 		filter {
-			includeGroup "maven.modrinth"
+			includeGroup("maven.modrinth")
 		}
 	}
 	maven {
 		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/"
+		url = uri("https://maven.terraformersmc.com/")
 	}
-    maven { url 'https://repo.sleeping.town/' }
-    maven {
-        name = "Mortuusars Github Maven"
-        url = "https://raw.githubusercontent.com/mortuusars/resources/main/maven/"
-    }
-    maven {
-        url = "https://cursemaven.com"
-    }
-    // Forge Config Api Port
-    maven {
-        name = "Fuzs Mod Resources"
-        url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
-    }
-    // JEI
-    maven {
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-    }
+    maven { url = uri("https://repo.sleeping.town/") }
 }
 
 loom {
     splitEnvironmentSourceSets()
 
 	mods {
-		"netherarchives" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
+		register("netherarchives") {
+			sourceSet(sourceSets.main.get())
+			sourceSet(sourceSets.getByName("client"))
 		}
 	}
 }
@@ -71,12 +52,12 @@ fabricApi {
 
 dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
+	implementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-	implementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+	implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
@@ -85,26 +66,35 @@ dependencies {
 //	modCompileOnly "dev.emi:emi-fabric:${project.emi_version}:api"
 //	modLocalRuntime "dev.emi:emi-fabric:${project.emi_version}"
 
-    implementation include("folk.sisby:kaleido-config:${project.kaleido_version}")
+    implementation(include("folk.sisby:kaleido-config:${providers.gradleProperty("kaleido_version").get()}")!!)
 
 //    compileOnly "io.github.mortuusars.exposure:exposure-1.21.1-fabric:${project.exposure_version}"
 }
 
-processResources {
-	inputs.property "version", project.version
+tasks.processResources {
+	val version = version
+	inputs.property("version", version)
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version
+		expand("version" to version)
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 25
+tasks.withType<JavaCompile>().configureEach {
+	options.release = 25
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-	kotlinOptions {
-		jvmTarget = 25
+kotlin {
+	compilerOptions {
+		jvmTarget = JvmTarget.JVM_25
+	}
+
+	target.compilations {
+		val main by getting
+
+		named("client") {
+			associateWith(main)
+		}
 	}
 }
 
@@ -118,23 +108,20 @@ java {
 	targetCompatibility = JavaVersion.VERSION_25
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-Xcontext-parameters")
-    }
-}
+tasks.jar {
+	val projectName = project.name
+	inputs.property("projectName", projectName)
 
-jar {
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_$projectName" }
 	}
 }
 
 // configure the maven publication
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
-			from components.java
+		register<MavenPublication>("mavenJava") {
+			from(components["java"])
 		}
 	}
 

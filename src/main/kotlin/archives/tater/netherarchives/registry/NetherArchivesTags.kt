@@ -5,7 +5,6 @@ import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries.*
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
-import net.minecraft.util.Util
 import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.material.Fluid
 
@@ -14,7 +13,6 @@ object NetherArchivesTags {
         TagKey.create(registry, NetherArchives.id(path))
 
     val MAGNETIC = of(BLOCK, "magnetic")
-    val BLAZE_FIRE_TARGET = of(BLOCK, "blaze_fire_target")
     val ROTTEN_FLESH_FERMENTER = of(BLOCK, "rotten_flesh_fermenter")
     val BASALT_GEYSER_REPLACEABLE = of(BLOCK, "basalt_geyser_replaceable")
     val BASALT_GEYSER_REPLACEABLE_SUBMERGED = of(BLOCK, "basalt_geyser_replaceable_submerged")
@@ -36,9 +34,6 @@ object NetherArchivesTags {
     val BLAZE_COLORED_FIRE = of(ENTITY_TYPE, "blaze_colored_fire")
 
     val BLAZE_TORCH_LOCATED: TagKey<Structure> = of(STRUCTURE, "blaze_torch_located")
-
-    val <T: Any> TagKey<T>.translationKey: String
-        get() {
-            return "tag.${Util.makeDescriptionId(this.registry.identifier().toShortLanguageKey(), this.location)}"
-        }
 }
+
+internal typealias ModTags = NetherArchivesTags

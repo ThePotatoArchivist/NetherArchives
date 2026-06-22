@@ -1,8 +1,8 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesItems
-import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.ModBlocks
+import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.ModTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
@@ -13,35 +13,35 @@ class EnglishLangGenerator(output: FabricPackOutput, registriesFuture: Completab
 
     override fun generateTranslations(registryLookup: HolderLookup.Provider, translationBuilder: TranslationBuilder) {
         with(translationBuilder) {
-            add(NetherArchivesBlocks.MAGNETITE, "Magnetite")
-            add(NetherArchivesBlocks.SMOLDERING_MAGNETITE, "Smoldering Magnetite")
-            add(NetherArchivesBlocks.BLAZE_DUST, "Blaze Dust")
-            add(NetherArchivesBlocks.BLAZE_FIRE, "Blaze Fire")
-            add(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK, "Rotten Flesh Block")
-            add(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, "Fermented Rotten Flesh Block")
-            add(NetherArchivesBlocks.BLAZE_TORCH, "Blaze Torch")
-            add(NetherArchivesBlocks.BASALT_GEYSER, "Basalt Geyser")
-            add(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER, "Adjustable Basalt Geyser")
-            add(NetherArchivesBlocks.SPECTREGLASS, "Spectreglass")
-            add(NetherArchivesBlocks.SHATTERED_SPECTREGLASS, "Shattered Spectreglass")
-            add(NetherArchivesBlocks.SPECTREGLASS_PANE, "Spectreglass Pane")
-            add(NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE, "Shattered Spectreglass Pane")
-            add(NetherArchivesItems.BLAZE_LANTERN, "Volatile Blaze Lantern")
-            add(NetherArchivesItems.IRON_SLAG, "Iron Slag")
-            add(NetherArchivesItems.DUMMY_SOUL_FIRE, "Soul Fire")
-            add(NetherArchivesItems.BASALT_SKIS, "Basalt Skis")
-            add(NetherArchivesItems.BASALT_OAR, "Basalt Oar")
-            add(NetherArchivesItems.BASALT_ROD, "Basalt Rod")
-            add(NetherArchivesItems.SPECTREGLASS_SHARD, "Spectreglass Shard")
-            add(NetherArchivesItems.SPECTREGLASS_KNIFE, "Spectreglass Knife")
-            add(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR, "Repairs Basalt Equipment")
-            add(NetherArchivesTags.SKIS, "Skis")
-            add(NetherArchivesTags.ROTTEN_FLESH_FERMENTER_ITEM, "Rotten Flesh Fermenter")
+            add(ModBlocks.MAGNETITE, "Magnetite")
+            add(ModBlocks.SMOLDERING_MAGNETITE, "Smoldering Magnetite")
+            add(ModBlocks.BLAZE_DUST, "Blaze Dust")
+            add(ModBlocks.BLAZE_FIRE, "Blaze Fire")
+            add(ModBlocks.ROTTEN_FLESH_BLOCK, "Rotten Flesh Block")
+            add(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK, "Fermented Rotten Flesh Block")
+            add(ModBlocks.BLAZE_TORCH, "Blaze Torch")
+            add(ModBlocks.BASALT_GEYSER, "Basalt Geyser")
+            add(ModBlocks.ADJUSTABLE_BASALT_GEYSER, "Adjustable Basalt Geyser")
+            add(ModBlocks.SPECTREGLASS, "Spectreglass")
+            add(ModBlocks.SHATTERED_SPECTREGLASS, "Shattered Spectreglass")
+            add(ModBlocks.SPECTREGLASS_PANE, "Spectreglass Pane")
+            add(ModBlocks.SHATTERED_SPECTREGLASS_PANE, "Shattered Spectreglass Pane")
+            add(ModItems.BLAZE_LANTERN, "Volatile Blaze Lantern")
+            add(ModItems.IRON_SLAG, "Iron Slag")
+            add(ModItems.DUMMY_SOUL_FIRE, "Soul Fire")
+            add(ModItems.BASALT_SKIS, "Basalt Skis")
+            add(ModItems.BASALT_OAR, "Basalt Oar")
+            add(ModItems.BASALT_ROD, "Basalt Rod")
+            add(ModItems.SPECTREGLASS_SHARD, "Spectreglass Shard")
+            add(ModItems.SPECTREGLASS_KNIFE, "Spectreglass Knife")
+            add(ModTags.BASALT_EQUIPMENT_REPAIR, "Repairs Basalt Equipment")
+            add(ModTags.SKIS, "Skis")
+            add(ModTags.ROTTEN_FLESH_FERMENTER_ITEM, "Rotten Flesh Fermenter")
             add("death.attack.netherarchives.paddleBurn", "%s wiped out into lava")
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
             add("netherarchives.emi.explosion", "Any Explosion")
             add("netherarchives.emi.projectile", "Impact Projectiles")
-            add(NetherArchivesItems.CREATIVE_TAB_TRANSLATION, "Nether Archives")
+            add(ModItems.CREATIVE_TAB_TRANSLATION, "Nether Archives")
             addAdvancement(AdvancementGenerator.IRON_SLAG, "Budget Forge", "Melt magnetite into iron by placing it near lava")
             addAdvancement(AdvancementGenerator.LIGHT_BLAZE_DUST, "Firewall\u2122", "Light blaze dust to create blaze fire")
             addAdvancement(AdvancementGenerator.FOLLOW_BLAZE_TORCH, "Traitorous Torch", "Follow a blaze torch to a nether fortress")

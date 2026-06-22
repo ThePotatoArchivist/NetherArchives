@@ -24,9 +24,9 @@ object NetherArchivesBlockEntities {
             FabricBlockEntityTypeBuilder.create(blockEntity, *blocks).build()
         )
 
-    val BLAZE_TORCH_ENTITY = register("blaze_torch", ::BlazeTorchBlockEntity, NetherArchivesBlocks.BLAZE_TORCH, NetherArchivesBlocks.WALL_BLAZE_TORCH)
+    val BLAZE_TORCH_ENTITY = register("blaze_torch", ::BlazeTorchBlockEntity, ModBlocks.BLAZE_TORCH, ModBlocks.WALL_BLAZE_TORCH)
 
-    val BASALT_GEYSER_ENTITY = register("basalt_geyser", ::BasaltGeyserBlockEntity, NetherArchivesBlocks.BASALT_GEYSER, NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER)
+    val BASALT_GEYSER_ENTITY = register("basalt_geyser", ::BasaltGeyserBlockEntity, ModBlocks.BASALT_GEYSER, ModBlocks.ADJUSTABLE_BASALT_GEYSER)
 
     fun register() {}
 }

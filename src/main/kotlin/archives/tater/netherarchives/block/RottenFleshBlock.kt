@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.ModBlocks
+import archives.tater.netherarchives.registry.ModTags
 import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.listCopy
@@ -40,7 +40,7 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
     private fun findCampfireDistance(world: Level, pos: BlockPos): Int {
         // [Iterable.find] stops iterating when it finds the block so the object should still be on the same value
         val campfire = BlockPos.betweenClosed(pos, pos.below(15)).find {
-            world.getBlockState(it).`is`(NetherArchivesTags.ROTTEN_FLESH_FERMENTER)
+            world.getBlockState(it).`is`(ModTags.ROTTEN_FLESH_FERMENTER)
         }
         if (campfire == null) return Integer.MAX_VALUE
 
@@ -49,7 +49,7 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
         }.map(world::getBlockState)
 
         if (!states.all {
-            !it.canOcclude() || it.`is`(this) || it.`is`(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
+            !it.canOcclude() || it.`is`(this) || it.`is`(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
         }) return Integer.MAX_VALUE
 
         val distance = states.count { it.`is`(this) }
@@ -72,7 +72,7 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
             3 blocks between - 15% chance
              */
             !fermenting || random.nextFloat() > 0.3 - 0.05 * distance -> return
-            state.getValue(AGE) >= 3 -> NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK.defaultBlockState()
+            state.getValue(AGE) >= 3 -> ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK.defaultBlockState()
             else -> updatedState.setValue(AGE, state.getValue(AGE) + 1)
         }
 

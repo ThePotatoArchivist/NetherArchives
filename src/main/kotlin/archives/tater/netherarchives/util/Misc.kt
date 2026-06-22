@@ -1,10 +1,10 @@
 package archives.tater.netherarchives.util
 
-import com.google.common.collect.AbstractIterator
-import net.minecraft.world.level.block.Block
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
+import net.minecraft.world.level.block.Block
+import com.google.common.collect.AbstractIterator
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockSettings
 
 // iterateInSquare uses the same blockPos object and mutates it, so we need this to use proper collection operations
@@ -16,7 +16,7 @@ internal fun <T> Iterable<T>.draw(random: RandomSource, count: Int = 1): List<T>
         .map { pool.removeAt(random.nextInt(pool.size)) }
 }
 
-fun iterateLinearBlockPos(origin: BlockPos, direction: Direction, distance: Int) = Iterable {
+internal fun iterateLinearBlockPos(origin: BlockPos, direction: Direction, distance: Int) = Iterable {
     object : AbstractIterator<BlockPos>() {
         private val pos = BlockPos.MutableBlockPos(origin.x, origin.y, origin.z)
         private var index = 0
