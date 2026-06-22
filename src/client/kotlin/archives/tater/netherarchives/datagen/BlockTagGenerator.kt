@@ -74,5 +74,11 @@ class BlockTagGenerator(output: FabricPackOutput, completableFuture: Completable
             ModBlockItemIds.SPECTREGLASS_PANE,
             ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE,
         )
+        builder(BlockTags.CAUSES_PERIODIC_GEYSER_ERUPTIONS).add(
+            ModBlockItemIds.SMOLDERING_MAGNETITE
+        )
+        builder(BlockTags.CAUSES_CONTINUOUS_GEYSER_ERUPTIONS).add(
+            ModBlockItemIds.BASALT_GEYSER
+        )
     }
 }
