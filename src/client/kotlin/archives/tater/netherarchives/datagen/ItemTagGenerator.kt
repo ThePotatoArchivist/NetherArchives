@@ -60,6 +60,22 @@ class ItemTagGenerator(
         builder(ConventionalItemTags.IRON_RAW_MATERIALS).add(
             ModItemIds.IRON_SLAG,
         )
+        builder(ItemTags.SULFUR_CUBE_ARCHETYPE_HOT).add(
+            ModBlockItemIds.SMOLDERING_MAGNETITE
+        )
+        builder(ItemTags.SULFUR_CUBE_ARCHETYPE_REGULAR).add(
+            ModBlockItemIds.MAGNETITE
+        )
+        builder(ItemTags.SULFUR_CUBE_ARCHETYPE_FAST_FLAT).add(
+            ModBlockItemIds.ROTTEN_FLESH_BLOCK
+        )
+        builder(ItemTags.SULFUR_CUBE_ARCHETYPE_HIGH_RESISTANCE).add(
+            ModBlockItemIds.FERMENTED_ROTTEN_FLESH_BLOCK
+        )
+        builder(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_BOUNCY).add(
+            ModBlockItemIds.BASALT_GEYSER,
+            ModBlockItemIds.ADJUSTABLE_BASALT_GEYSER,
+        )
 //        if (NetherArchives.EXPOSURE_INSTALLED)
 //            builder(Exposure.Tags.Items.FILTERS).add(
 //                ModItemIds.SPECTREGLASS_PANE
