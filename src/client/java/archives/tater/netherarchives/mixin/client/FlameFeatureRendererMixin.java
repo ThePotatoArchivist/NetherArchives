@@ -24,7 +24,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import java.util.List;
 
 @Mixin(FlameFeatureRenderer.class)
-public class EntityRenderDispatcherMixin {
+public class FlameFeatureRendererMixin {
 
     @Unique
     @SuppressWarnings("deprecation")
@@ -46,7 +46,8 @@ public class EntityRenderDispatcherMixin {
             method = "buildGroup",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/feature/FlameFeatureRenderer;prepare(Lnet/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V")
     )
-    private SpriteId setBlazeFireSprite1(SpriteId original, @Local(argsOnly = true) EntityRenderState renderState) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(renderState.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_1 : original;
+    private void useBlazeFireSprites(FlameFeatureRenderer instance, FlameFeatureRenderer.Submit submit, VertexConsumer buffer, TextureAtlasSprite fire1, TextureAtlasSprite fire2, Operation<Void> original, @Share("blazeFire1") LocalRef<TextureAtlasSprite> blazeFire1, @Share("blazeFire2") LocalRef<TextureAtlasSprite> blazeFire2) {
+        var isBlazeFire = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(submit.entityRenderState().entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE);
+        original.call(instance, submit, buffer, isBlazeFire ? blazeFire1.get() : fire1, isBlazeFire ? blazeFire2.get() : fire2);
     }
 }
