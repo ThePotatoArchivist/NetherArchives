@@ -32,12 +32,6 @@
         "value": "archives.tater.netherarchives.datagen.NetherArchivesDataGenerator",
         "adapter": "kotlin"
       }
-    ],
-    "emi": [
-      {
-        "value": "archives.tater.netherarchives.emi.NetherArchivesEmiPlugin",
-        "adapter": "kotlin"
-      }
     ]
   },
   "mixins": [

@@ -26,13 +26,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         oreSmelting(RecipeCategory.MISC, CookingBookCategory.MISC, ModItems.IRON_SLAG, Items.IRON_INGOT, experience = 0.5F)
 
         shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeId = NetherArchives.id("compass_from_magnetite")) {
-            patterns(
-                """
-                 # 
-                #X#
-                 # 
-            """
-            )
+            pattern(" # ")
+            pattern("#X#")
+            pattern(" # ")
             inputs {
                 '#' to ConventionalItemTags.IRON_INGOTS
                 'X' to ModItems.MAGNETITE
@@ -55,13 +51,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
 
         shaped(RecipeCategory.COMBAT, ModItems.BLAZE_LANTERN) {
-            patterns(
-                """
-                ###
-                #X#
-                ###
-            """
-            )
+            pattern("###")
+            pattern("#X#")
+            pattern("###")
             inputs {
                 '#' to ConventionalItemTags.NETHER_BRICKS
                 'X' to Items.BLAZE_POWDER
@@ -70,13 +62,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
 
         shaped(RecipeCategory.DECORATIONS, ModItems.BLAZE_TORCH, 2) {
-            patterns(
-                """
-                X
-                #
-                B
-            """
-            )
+            pattern("X")
+            pattern("#")
+            pattern("B")
             inputs {
                 'X' to Items.BLAZE_POWDER
                 '#' to ItemTags.COALS
@@ -86,11 +74,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
 
         shaped(RecipeCategory.MISC, ModItems.BASALT_ROD, 2) {
-            patterns("""
-                  #
-                 # 
-                #  
-            """.trimIndent())
+            pattern("  #")
+            pattern(" # ")
+            pattern("#  ")
             inputs {
                 '#' to Items.POLISHED_BASALT
             }
@@ -98,11 +84,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
 
         shaped(RecipeCategory.TOOLS, ModItems.BASALT_SKIS) {
-            patterns("""
-                # #
-                # #
-                % %
-            """.trimIndent())
+            pattern("# #")
+            pattern("# #")
+            pattern("% %")
             inputs {
                 '#' to Items.POLISHED_BASALT
                 '%' to ModItems.BASALT_ROD
@@ -111,11 +95,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
 
         shaped(RecipeCategory.TOOLS, ModItems.BASALT_OAR) {
-            patterns("""
-                %
-                %
-                #
-            """)
+            pattern("%")
+            pattern("%")
+            pattern("#")
             inputs {
                 '#' to Items.POLISHED_BASALT
                 '%' to ModItems.BASALT_ROD
@@ -124,11 +106,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
 
         shaped(RecipeCategory.MISC, Items.LODESTONE, recipeId = NetherArchives.id("lodestone_from_magnetite")) {
-            patterns("""
-                ###
-                #%#
-                ###
-            """)
+            pattern("###")
+            pattern("#%#")
+            pattern("###")
             inputs {
                 '#' to Items.CHISELED_STONE_BRICKS
                 '%' to ModItems.MAGNETITE
@@ -137,11 +117,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         }
 
         shaped(RecipeCategory.REDSTONE, ModItems.ADJUSTABLE_BASALT_GEYSER) {
-            patterns("""
-                 & 
-                #$#
-                 % 
-            """)
+            pattern(" & ")
+            pattern("#$#")
+            pattern(" % ")
             inputs {
                 '&' to Items.IRON_TRAPDOOR
                 '#' to ConventionalItemTags.IRON_INGOTS
@@ -178,11 +156,9 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
         )
 
         shaped(RecipeCategory.COMBAT, ModItems.SPECTREGLASS_KNIFE) {
-            patterns("""
-                #
-                #
-                %
-            """)
+            pattern("#")
+            pattern("#")
+            pattern("%")
             inputs {
                 '#' to ModItems.SPECTREGLASS_SHARD
                 '%' to ConventionalItemTags.BONES

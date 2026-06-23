@@ -16,25 +16,25 @@ import net.minecraft.world.level.block.state.BlockState
 class SmolderingMagnetiteBlock(settings: Properties) : Block(settings.randomTicks()) {
     override fun isRandomlyTicking(state: BlockState) = true
 
-    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
+    override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
         if (Direction.entries.none {
-                world.getFluidState(pos.relative(it)).`is`(FluidTags.LAVA)
+                level.getFluidState(pos.relative(it)).`is`(FluidTags.LAVA)
             }) {
-            world.setBlockAndUpdate(pos, ModBlocks.MAGNETITE.defaultBlockState())
+            level.setBlockAndUpdate(pos, ModBlocks.MAGNETITE.defaultBlockState())
         }
 
     }
 
     // Copied from Magma Block
-    override fun stepOn(world: Level, pos: BlockPos, state: BlockState, entity: Entity) {
-        if (world is ServerLevel && entity is LivingEntity && !entity.isSteppingCarefully) {
-            entity.hurtServer(world, world.damageSources().hotFloor(), 1.0f)
+    override fun stepOn(level: Level, pos: BlockPos, state: BlockState, entity: Entity) {
+        if (level is ServerLevel && entity is LivingEntity && !entity.isSteppingCarefully) {
+            entity.hurtServer(level, level.damageSources().hotFloor(), 1.0f)
         }
-        super.stepOn(world, pos, state, entity)
+        super.stepOn(level, pos, state, entity)
     }
 
     // Copied from Crying Obsidian
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         if (random.nextInt(4) != 0) {
             return
         }
@@ -43,14 +43,14 @@ class SmolderingMagnetiteBlock(settings: Properties) : Block(settings.randomTick
             return
         }
         val blockPos = pos.relative(direction)
-        val blockState = world.getBlockState(blockPos)
-        if (state.canOcclude() && blockState.isFaceSturdy(world, blockPos, direction.opposite)) {
+        val blockState = level.getBlockState(blockPos)
+        if (state.canOcclude() && blockState.isFaceSturdy(level, blockPos, direction.opposite)) {
             return
         }
         val d = if (direction.stepX == 0) random.nextDouble() else 0.5 + direction.stepX.toDouble() * 0.6
         val e = if (direction.stepY == 0) random.nextDouble() else 0.5 + direction.stepY.toDouble() * 0.6
         val f = if (direction.stepZ == 0) random.nextDouble() else 0.5 + direction.stepZ.toDouble() * 0.6
-        world.addParticle(
+        level.addParticle(
             ParticleTypes.DRIPPING_LAVA,
             pos.x.toDouble() + d,
             pos.y.toDouble() + e,

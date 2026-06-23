@@ -15,26 +15,26 @@ interface AbstractBlazeTorchBlock : EntityBlock {
 
     fun onPlace(
         state: BlockState,
-        world: Level,
+        level: Level,
         pos: BlockPos,
     ) {
-        if (world.isClientSide) return
-        (world.getBlockEntity(pos) as BlazeTorchBlockEntity).locateTarget() ?: return
-        world.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS)
+        if (level.isClientSide) return
+        (level.getBlockEntity(pos) as BlazeTorchBlockEntity).locateTarget() ?: return
+        level.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS)
     }
 
     fun animateTick(
         state: BlockState,
-        world: Level,
+        level: Level,
         pos: BlockPos,
         random: RandomSource,
         originX: Double,
         originY: Double,
         originZ: Double
     ) {
-        val blockEntity = world.getBlockEntity(pos) as BlazeTorchBlockEntity
+        val blockEntity = level.getBlockEntity(pos) as BlazeTorchBlockEntity
 
-        world.addAlwaysVisibleParticle(
+        level.addAlwaysVisibleParticle(
             NetherArchivesParticles.BLAZE_FLAME,
             originX,
             originY,
@@ -44,7 +44,7 @@ interface AbstractBlazeTorchBlock : EntityBlock {
             0.1 * (blockEntity.zVelocityCoef ?: 0.0)
         )
 
-        world.addParticle(
+        level.addParticle(
             NetherArchivesParticles.SMALL_BLAZE_SPARK,
             originX + 0.4 * random.nextDouble() - 0.2,
             originY + 0.4 * random.nextDouble() - 0.2,

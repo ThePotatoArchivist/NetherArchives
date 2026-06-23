@@ -1,8 +1,8 @@
 package archives.tater.netherarchives.block.entity
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -48,7 +48,7 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
         return pos
     }
 
-    override fun getUpdatePacket(): Packet<ClientGamePacketListener>? {
+    override fun getUpdatePacket(): Packet<ClientGamePacketListener> {
         return ClientboundBlockEntityDataPacket.create(this)
     }
 
@@ -56,14 +56,14 @@ class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
         return saveWithoutMetadata(registryLookup)
     }
 
-    override fun saveAdditional(view: ValueOutput) {
-        super.saveAdditional(view)
+    override fun saveAdditional(output: ValueOutput) {
+        super.saveAdditional(output)
         if (targetPos !== null)
-            view.store(TARGET_KEY, BlockPos.CODEC, targetPos!!)
+            output.store(TARGET_KEY, BlockPos.CODEC, targetPos!!)
     }
 
-    override fun loadAdditional(view: ValueInput) {
-        super.loadAdditional(view)
-        targetPos = view.read(TARGET_KEY, BlockPos.CODEC).getOrNull()
+    override fun loadAdditional(input: ValueInput) {
+        super.loadAdditional(input)
+        targetPos = input.read(TARGET_KEY, BlockPos.CODEC).getOrNull()
     }
 }

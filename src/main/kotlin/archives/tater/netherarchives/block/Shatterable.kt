@@ -30,50 +30,50 @@ interface Shatterable {
 
     fun onExplosionHit(
         state: BlockState,
-        world: ServerLevel,
+        level: ServerLevel,
         pos: BlockPos,
         explosion: Explosion,
-        stackMerger: BiConsumer<ItemStack, BlockPos>
+        onHit: BiConsumer<ItemStack, BlockPos>
     ) {
         if (explosion.blockInteraction == BlockInteraction.TRIGGER_BLOCK) return
-        shatter(world, pos, state)
+        shatter(level, pos, state)
     }
 
     fun onProjectileHit(
-        world: Level,
+        level: Level,
         state: BlockState,
         hit: BlockHitResult,
         projectile: Projectile
     ) {
         val pos = hit.blockPos
-        if (world !is ServerLevel || !projectile.mayInteract(world, pos) || !projectile.mayBreak(world) || projectile isIn ModTags.NON_SHATTER_PROJECTILES) return
+        if (level !is ServerLevel || !projectile.mayInteract(level, pos) || !projectile.mayBreak(level) || projectile isIn ModTags.NON_SHATTER_PROJECTILES) return
 
         if (projectile isIn ModTags.NON_CHAIN_SHATTER_PROJECTILES ||
             (projectile is FireworkRocketEntity && !(projectile as FireworkRocketEntityAccessor).invokeHasExplosion())) {
 
-            shatter(world, pos, state)
+            shatter(level, pos, state)
             return
         }
-        shatterChain(world, pos, state, 0.5f)
+        shatterChain(level, pos, state, 0.5f)
     }
 
-    fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        shatterChain(world, pos, world[pos], 0.1f)
+    fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        shatterChain(level, pos, level[pos], 0.1f)
     }
 
-    fun shatterChain(world: Level, pos: BlockPos, state: BlockState, chance: Float) {
-        shatter(world, pos, state)
+    fun shatterChain(level: Level, pos: BlockPos, state: BlockState, chance: Float) {
+        shatter(level, pos, state)
         for (otherPos in BlockPos.withinManhattan(pos, 1, 1, 1)) {
-            val block = world[otherPos].block
-            if (block is Shatterable && world.random.nextFloat() < chance)
-                world.scheduleTick(otherPos, block, world.random.nextIntBetweenInclusive(3, 8))
+            val block = level[otherPos].block
+            if (block is Shatterable && level.random.nextFloat() < chance)
+                level.scheduleTick(otherPos, block, level.random.nextIntBetweenInclusive(3, 8))
         }
     }
 
-    fun shatter(world: Level, pos: BlockPos, state: BlockState) {
-        world[pos] = shattersTo.withPropertiesOf(state)
-        world.playSound(null, pos, shatterSound, SoundSource.BLOCKS, 1f, 1f)
-        (world as? ServerLevel)?.sendParticles(
+    fun shatter(level: Level, pos: BlockPos, state: BlockState) {
+        level[pos] = shattersTo.withPropertiesOf(state)
+        level.playSound(null, pos, shatterSound, SoundSource.BLOCKS, 1f, 1f)
+        (level as? ServerLevel)?.sendParticles(
             BlockParticleOption(ParticleTypes.BLOCK, state),
             pos.x + 0.5,
             pos.y + 0.5,

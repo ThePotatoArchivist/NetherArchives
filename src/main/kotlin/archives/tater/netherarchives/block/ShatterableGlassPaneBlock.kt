@@ -23,25 +23,25 @@ class ShatterableGlassPaneBlock(override val shattersTo: Block, settings: Proper
 
     override fun onExplosionHit(
         state: BlockState,
-        world: ServerLevel,
+        level: ServerLevel,
         pos: BlockPos,
         explosion: Explosion,
-        stackMerger: BiConsumer<ItemStack, BlockPos>
+        onHit: BiConsumer<ItemStack, BlockPos>
     ) {
-        super<Shatterable>.onExplosionHit(state, world, pos, explosion, stackMerger)
+        super<Shatterable>.onExplosionHit(state, level, pos, explosion, onHit)
     }
 
     override fun onProjectileHit(
-        world: Level,
+        level: Level,
         state: BlockState,
         hit: BlockHitResult,
         projectile: Projectile
     ) {
-        super<Shatterable>.onProjectileHit(world, state, hit, projectile)
+        super<Shatterable>.onProjectileHit(level, state, hit, projectile)
     }
 
-    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        super<Shatterable>.tick(state, world, pos, random)
+    override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        super<Shatterable>.tick(state, level, pos, random)
     }
 
     override fun getColor(): DyeColor = DyeColor.BLACK

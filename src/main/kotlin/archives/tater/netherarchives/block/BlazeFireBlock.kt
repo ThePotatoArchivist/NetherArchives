@@ -36,94 +36,94 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
 
     override fun canBurn(state: BlockState) = true
 
-    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
+    override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
         val blockPos = pos.below()
-        return MultifaceBlock.canAttachTo(world, Direction.DOWN, blockPos, world.getBlockState(blockPos))
+        return MultifaceBlock.canAttachTo(level, Direction.DOWN, blockPos, level.getBlockState(blockPos))
     }
 
     override fun codec(): MapCodec<out BaseFireBlock> = CODEC
 
     override fun updateShape(
         state: BlockState,
-        world: LevelReader,
-        tickView: ScheduledTickAccess,
+        level: LevelReader,
+        ticks: ScheduledTickAccess,
         pos: BlockPos,
-        direction: Direction,
+        directionToNeighbour: Direction,
         neighborPos: BlockPos,
         neighborState: BlockState,
         random: RandomSource
     ): BlockState {
-        if (canSurvive(state, world, pos)) {
+        if (canSurvive(state, level, pos)) {
             return state
         }
         return Blocks.AIR.defaultBlockState()
     }
 
-    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        world.scheduleTick(pos, this, getFireTickDelay(world.random))
-        if (!world.canSpreadFireAround(pos)) return
+    override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        level.scheduleTick(pos, this, getFireTickDelay(level.random))
+        if (!level.canSpreadFireAround(pos)) return
 
-        val blockBelow = world.getBlockState(pos.below())
-        val infiniburn = blockBelow isIn world.dimensionType().infiniburn()
+        val blockBelow = level.getBlockState(pos.below())
+        val infiniburn = blockBelow isIn level.dimensionType().infiniburn()
         val age = state.getValue(AGE)
 
         val newAge = (age + random.nextInt(3) / 2).coerceAtMost(15)
 
         if (age != newAge) {
             val newState = state.setValue(AGE, newAge)
-            world.setBlock(pos, newState, UPDATE_INVISIBLE)
+            level.setBlock(pos, newState, UPDATE_INVISIBLE)
         }
 
-        if (!infiniburn && (!canSurvive(state, world, pos) || age > 12)) {
-            world.removeBlock(pos, false)
+        if (!infiniburn && (!canSurvive(state, level, pos) || age > 12)) {
+            level.removeBlock(pos, false)
             return
         }
 
         BlockPos.withinManhattan(pos, 1, 1, 1)
             .listCopy()
-            .filter { world.getBlockState(it).block is BlazePowderBlock }
+            .filter { level.getBlockState(it).block is BlazePowderBlock }
             .also {
                 if (it.isEmpty()) return
-                world.setBlockAndUpdate(it[random.nextInt(it.size)], this.defaultBlockState())
+                level.setBlockAndUpdate(it[random.nextInt(it.size)], this.defaultBlockState())
             }
     }
 
     override fun onPlace(
         state: BlockState,
-        world: Level,
+        level: Level,
         pos: BlockPos,
         oldState: BlockState,
         notify: Boolean
     ) {
-        super.onPlace(state, world, pos, oldState, notify)
+        super.onPlace(state, level, pos, oldState, notify)
         if (oldState.block !is BlazeFireBlock) {
-            world.playSound(
+            level.playSound(
                 null,
                 pos,
                 SoundEvents.FIRECHARGE_USE,
                 SoundSource.NEUTRAL,
                 1.0f,
-                0.4f + 0.4f * world.random.nextFloat()
+                0.4f + 0.4f * level.random.nextFloat()
             )
         }
-        world.scheduleTick(pos, this, world.random.nextInt(10))
+        level.scheduleTick(pos, this, level.random.nextInt(10))
     }
 
     override fun entityInside(
         state: BlockState,
-        world: Level,
+        level: Level,
         pos: BlockPos,
         entity: Entity,
-        handler: InsideBlockEffectApplier,
-        intersects: Boolean
+        affectsApplier: InsideBlockEffectApplier,
+        isPrecise: Boolean
     ) {
         if (entity is ItemEntity) return
-        super.entityInside(state, world, pos, entity, handler, intersects)
+        super.entityInside(state, level, pos, entity, affectsApplier, isPrecise)
     }
 
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         if (random.nextInt(24) == 0) {
-            world.playLocalSound(
+            level.playLocalSound(
                 pos.x + 0.5,
                 pos.y + 0.5,
                 pos.z + 0.5,
@@ -135,7 +135,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
             )
         }
         repeat(random.nextInt(2) + 2) {
-            world.addParticle(
+            level.addParticle(
                 NetherArchivesParticles.BLAZE_SPARK,
                 pos.x + random.nextDouble(),
                 pos.y + 0.25 + 0.5 * random.nextDouble(),

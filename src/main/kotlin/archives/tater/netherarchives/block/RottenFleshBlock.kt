@@ -37,16 +37,16 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
 
     override fun isRandomlyTicking(state: BlockState) = true
 
-    private fun findCampfireDistance(world: Level, pos: BlockPos): Int {
+    private fun findCampfireDistance(level: Level, pos: BlockPos): Int {
         // [Iterable.find] stops iterating when it finds the block so the object should still be on the same value
         val campfire = BlockPos.betweenClosed(pos, pos.below(15)).find {
-            world.getBlockState(it).`is`(ModTags.ROTTEN_FLESH_FERMENTER)
+            level.getBlockState(it).`is`(ModTags.ROTTEN_FLESH_FERMENTER)
         }
         if (campfire == null) return Integer.MAX_VALUE
 
         val states = BlockPos.betweenClosed(pos, campfire).listCopy().run {
             subList(1, size - 1) // Ignore top and bottom block
-        }.map(world::getBlockState)
+        }.map(level::getBlockState)
 
         if (!states.all {
             !it.canOcclude() || it.`is`(this) || it.`is`(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
@@ -57,14 +57,14 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
         return distance
     }
 
-    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        val distance = findCampfireDistance(world, pos)
+    override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        val distance = findCampfireDistance(level, pos)
 
         val fermenting = distance <= 3
 
         val updatedState = if (fermenting == state.getValue(FERMENTING)) state else state.setValue(FERMENTING, fermenting)
 
-        world[pos] = when {
+        level[pos] = when {
             /*
             0 blocks between - 30% chance
             1 block  between - 25% chance
@@ -76,19 +76,19 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
             else -> updatedState.setValue(AGE, state.getValue(AGE) + 1)
         }
 
-        for (player in world.getEntitiesOfClass(
+        for (player in level.getEntitiesOfClass(
             ServerPlayer::class.java,
             AABB.ofSize(pos.center, 17.0, 17.0, 17.0)
         )) NetherArchivesTriggers.FERMENT.trigger(player, pos)
     }
 
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         if (!state.getValue(FERMENTING) || random.nextFloat() > 0.25f) return
         val direction = Direction.getRandom(random)
         if (direction == Direction.DOWN) return
         val blockPos = pos.relative(direction)
-        if (state.canOcclude() && world[blockPos].isFaceSturdy(world, blockPos, direction.opposite)) return
-        world.addParticle(
+        if (state.canOcclude() && level[blockPos].isFaceSturdy(level, blockPos, direction.opposite)) return
+        level.addParticle(
             ParticleTypes.SOUL,
             pos.x.toDouble() + if (direction.stepX == 0) random.nextDouble() else 0.5 + direction.stepX.toDouble() * 0.6,
             pos.y.toDouble() + if (direction.stepY == 0) random.nextDouble() else 0.5 + direction.stepY.toDouble() * 0.6,

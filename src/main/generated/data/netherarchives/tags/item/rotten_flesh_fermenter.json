@@ -1,6 +1,6 @@
 {
   "values": [
     "minecraft:soul_campfire",
-    "minecraft:netherarchives/dummy/soul_fire"
+    "netherarchives:dummy_soul_fire"
   ]
 }

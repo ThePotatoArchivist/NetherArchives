@@ -2,8 +2,8 @@ package archives.tater.netherarchives.entity
 
 import archives.tater.netherarchives.block.BlazePowderBlock
 import archives.tater.netherarchives.registry.ModBlocks
-import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.util.listCopy
 import net.minecraft.core.BlockPos
@@ -21,8 +21,8 @@ import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.HitResult
 
 class BlazeLanternEntity : ThrowableItemProjectile {
-    constructor(type: EntityType<BlazeLanternEntity>, world: Level) : super(type, world)
-    constructor(world: Level, owner: LivingEntity, stack: ItemStack) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, world, stack)
+    constructor(type: EntityType<BlazeLanternEntity>, level: Level) : super(type, level)
+    constructor(level: Level, owner: LivingEntity, stack: ItemStack) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, level, stack)
 
     override fun getDefaultItem(): Item = ModItems.BLAZE_LANTERN
 

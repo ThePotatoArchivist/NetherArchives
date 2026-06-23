@@ -2,6 +2,7 @@ package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.item.BlazeLanternItem
+import archives.tater.netherarchives.item.FakeVanillaItem
 import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
 import archives.tater.netherarchives.util.ItemProperties
@@ -17,6 +18,7 @@ import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.*
+import net.minecraft.world.item.CreativeModeTabs.*
 import net.minecraft.world.item.equipment.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.item.Item.Properties as ItemProperties
@@ -47,22 +49,30 @@ object NetherArchivesItems {
     private fun register(block: Block, properties: ItemProperties = ItemProperties()): Item =
         register(block, ::BlockItem, properties)
 
+    @JvmField
     val MAGNETITE = register(ModBlocks.MAGNETITE)
 
+    @JvmField
     val SMOLDERING_MAGNETITE = register(ModBlocks.SMOLDERING_MAGNETITE)
 
+    @JvmField
     val ROTTEN_FLESH_BLOCK = register(ModBlocks.ROTTEN_FLESH_BLOCK)
 
+    @JvmField
     val FERMENTED_ROTTEN_FLESH_BLOCK = register(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
 
+    @JvmField
     val IRON_SLAG = register("iron_slag")
 
+    @JvmField
     val BLAZE_DUST = register(ModBlocks.BLAZE_DUST)
 
+    @JvmField
     val BLAZE_LANTERN = register("blaze_lantern", ::BlazeLanternItem) {
         stacksTo(16)
     }
 
+    @JvmField
     val BLAZE_TORCH = register(ModBlocks.BLAZE_TORCH) { block, settings ->
         StandingAndWallBlockItem(
             block,
@@ -85,22 +95,30 @@ object NetherArchivesItems {
         BASALT_EQUIPMENT
     )
 
+    @JvmField
     val BASALT_SKIS = register("basalt_skis", ::Item) {
         humanoidArmor(BASALT_ARMOR_MATERIAL, ArmorType.BOOTS)
     }
+
     @JvmField
     val BASALT_OAR = register("basalt_oar", ::OarItem) {
         stacksTo(1)
         durability(ToolMaterial.STONE.durability)
     }
+
+    @JvmField
     val BASALT_ROD = register("basalt_rod")
 
+    @JvmField
     val BASALT_GEYSER = register(ModBlocks.BASALT_GEYSER)
 
+    @JvmField
     val ADJUSTABLE_BASALT_GEYSER = register(ModBlocks.ADJUSTABLE_BASALT_GEYSER)
 
+    @JvmField
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
 
+    @JvmField
     val SPECTREGLASS_KNIFE = register("spectreglass_knife", ::SoulGlassKnifeItem) {
         durability(16)
         attributes(SoulGlassKnifeItem.attributeModifiers)
@@ -108,16 +126,20 @@ object NetherArchivesItems {
         component(DataComponents.WEAPON, SoulGlassKnifeItem.weaponComponent)
     }
 
+    @JvmField
     val SPECTREGLASS = register(ModBlocks.SPECTREGLASS)
 
+    @JvmField
     val SHATTERED_SPECTREGLASS = register(ModBlocks.SHATTERED_SPECTREGLASS)
 
+    @JvmField
     val SPECTREGLASS_PANE = register(ModBlocks.SPECTREGLASS_PANE)
 
+    @JvmField
     val SHATTERED_SPECTREGLASS_PANE = register(ModBlocks.SHATTERED_SPECTREGLASS_PANE)
 
-    // Registered under minecraft namespace so that in the tooltip it is labeled as coming from minecraft
-    val DUMMY_SOUL_FIRE = register(Identifier.withDefaultNamespace("netherarchives/dummy/soul_fire"))
+    @JvmField
+    val DUMMY_SOUL_FIRE = register("dummy_soul_fire", ::FakeVanillaItem)
 
     const val CREATIVE_TAB_TRANSLATION = "itemGroup.netherarchives.nether_archives"
 
@@ -153,17 +175,15 @@ object NetherArchivesItems {
         }.build()
     )
 
-    private val itemGroups = mapOf(
-        CreativeModeTabs.INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
-        CreativeModeTabs.NATURAL_BLOCKS to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
-        CreativeModeTabs.COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
-        CreativeModeTabs.TOOLS_AND_UTILITIES to setOf(BASALT_SKIS, BASALT_OAR),
-        CreativeModeTabs.FUNCTIONAL_BLOCKS to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE),
-        CreativeModeTabs.REDSTONE_BLOCKS to setOf(ADJUSTABLE_BASALT_GEYSER)
-    )
-
-    fun register() {
-        itemGroups.forEach { (group, items) ->
+    fun init() {
+        mapOf(
+            INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
+            NATURAL_BLOCKS to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
+            COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
+            TOOLS_AND_UTILITIES to setOf(BASALT_SKIS, BASALT_OAR),
+            FUNCTIONAL_BLOCKS to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE),
+            REDSTONE_BLOCKS to setOf(ADJUSTABLE_BASALT_GEYSER)
+        ).forEach { (group, items) ->
             CreativeModeTabEvents.modifyOutputEvent(group).register {
                 items.forEach(it::accept)
             }

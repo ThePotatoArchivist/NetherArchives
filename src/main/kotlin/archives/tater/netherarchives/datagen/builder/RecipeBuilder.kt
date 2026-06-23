@@ -185,7 +185,7 @@ fun RecipeOutput.oreSmelting(
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    smelting(category, cookingCategory, inputItem, outputItem, cookingTime, experience,)
+    smelting(category, cookingCategory, inputItem, outputItem, cookingTime, experience)
     blasting(category, cookingCategory, inputItem, outputItem, cookingTime / 2, experience)
 }
 
@@ -197,7 +197,7 @@ fun RecipeOutput.foodCooking(
     cookingTime: Int = 200,
     experience: Float = 0F
 ) {
-    smelting(category, CookingBookCategory.FOOD, inputItem, outputItem, cookingTime, experience,)
+    smelting(category, CookingBookCategory.FOOD, inputItem, outputItem, cookingTime, experience)
     smoking(category, inputItem, outputItem, cookingTime / 2, experience)
     campfire(category, inputItem, outputItem, cookingTime * 3, experience)
 }

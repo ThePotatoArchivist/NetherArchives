@@ -32,7 +32,8 @@ object NetherArchivesEntities {
             init()
         }
 
+    @JvmField
     val BLAZE_LANTERN: EntityType<BlazeLanternEntity> = registerProjectile("blaze_lantern", ::BlazeLanternEntity)
 
-    fun register() {}
+    fun init() {}
 }

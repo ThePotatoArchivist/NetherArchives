@@ -95,35 +95,41 @@ object NetherArchivesBlocks {
         pushReaction(PushReaction.DESTROY)
     }
 
+    @JvmField
     val BASALT_GEYSER = register("basalt_geyser", ::BasaltGeyserBlock) {
         strength(1.2f, 4.2f)
         sound(SoundType.BASALT)
         requiresCorrectToolForDrops()
     }
 
+    @JvmField
     val ADJUSTABLE_BASALT_GEYSER = register("adjustable_basalt_geyser", ::AdjustableBasaltGeyserBlock) {
         strength(1.2f, 4.2f)
         sound(SoundType.BASALT)
     }
 
+    @JvmField
     val SHATTERED_SPECTREGLASS = register("shattered_spectreglass", ::SoulGlassBlock, BlockSettings.ofFullCopy(Blocks.GLASS))
 
+    @JvmField
     val SPECTREGLASS = register("spectreglass", { ShatterableSoulGlassBlock(SHATTERED_SPECTREGLASS, it) },
         BlockSettings.ofFullCopy(SHATTERED_SPECTREGLASS).apply {
             strength(0.3f, 1f)
         }
     )
 
+    @JvmField
     val SHATTERED_SPECTREGLASS_PANE = register("shattered_spectreglass_pane", { StainedGlassPaneBlock(DyeColor.BLACK, it) }, BlockSettings.ofFullCopy(
         Blocks.GLASS_PANE))
 
+    @JvmField
     val SPECTREGLASS_PANE = register("spectreglass_pane", { ShatterableGlassPaneBlock(SHATTERED_SPECTREGLASS_PANE, it) },
         BlockSettings.ofFullCopy(SHATTERED_SPECTREGLASS_PANE).apply {
             strength(0.3f, 1f)
         }
     )
 
-    fun register() {
+    fun init() {
         FlammableBlockRegistry.getDefaultInstance().add(ROTTEN_FLESH_BLOCK, 15, 30)
     }
 

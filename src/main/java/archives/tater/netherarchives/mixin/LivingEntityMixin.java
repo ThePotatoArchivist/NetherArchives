@@ -7,7 +7,6 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,19 +15,20 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.objectweb.asm.Opcodes;
 
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements AirSkiier {
@@ -52,8 +52,8 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             method = "canStandOnFluid",
             at = @At("HEAD"),
             cancellable = true)
-    private void checkBasaltSkis(FluidState state, CallbackInfoReturnable<Boolean> cir) {
-        if (SkisItem.canSki((LivingEntity) (Object) this, state) && getFluidHeight(FluidTags.WATER) <= SkisItem.MAX_FLUID_DEPTH && getFluidHeight(FluidTags.LAVA) <= SkisItem.MAX_FLUID_DEPTH)
+    private void checkBasaltSkis(FluidState fluid, CallbackInfoReturnable<Boolean> cir) {
+        if (SkisItem.canSki((LivingEntity) (Object) this, fluid) && getFluidHeight(FluidTags.WATER) <= SkisItem.MAX_FLUID_DEPTH && getFluidHeight(FluidTags.LAVA) <= SkisItem.MAX_FLUID_DEPTH)
             cir.setReturnValue(true);
     }
 
@@ -62,11 +62,12 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             method = "travelInAir",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/Block;getFriction()F")
     )
-    private float skiFriction(float original, @Local BlockPos blockPos) {
-        return SkisItem.canSki((LivingEntity) (Object) this, level().getFluidState(blockPos)) ? 1.08f : original;
+    private float skiFriction(float original, @Local(name = "posBelow") BlockPos posBelow) {
+        return SkisItem.canSki((LivingEntity) (Object) this, level().getFluidState(posBelow)) ? 1.08f : original;
         // Air drag is 0.91
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Inject(
             method = "aiStep",
             at = @At("HEAD")
@@ -137,7 +138,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             method = "travelInAir",
             at = @At("TAIL")
     )
-    private void stopAirSkiing(Vec3 movementInput, CallbackInfo ci) {
+    private void stopAirSkiing(Vec3 input, CallbackInfo ci) {
         //noinspection ConstantValue
         if (this.isInWater() || this.isInLava() || this.isFallFlying() || ((Object) this instanceof Player playerEntity && playerEntity.getAbilities().flying))
             netherarchives$isAirSkiing = false;
@@ -156,7 +157,7 @@ public abstract class LivingEntityMixin extends Entity implements AirSkiier {
             method = "checkFallDamage",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;checkFallDamage(DZLnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V")
     )
-    private boolean noFallDamageWhileAirSkiing(Entity instance, double heightDifference, boolean onGround, BlockState state, BlockPos landedPosition) {
+    private boolean noFallDamageWhileAirSkiing(Entity instance, double ya, boolean onGround, BlockState onState, BlockPos pos) {
         if (!onGround || !netherarchives$isAirSkiing) return true;
         netherarchives$isAirSkiing = false;
         resetFallDistance();

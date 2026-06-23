@@ -37,30 +37,30 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
 
     override fun getShape(
         state: BlockState,
-        world: BlockGetter,
+        level: BlockGetter,
         pos: BlockPos,
         context: CollisionContext
     ): VoxelShape = SHAPE
 
-    override fun canSurvive(state: BlockState, world: LevelReader, pos: BlockPos): Boolean {
+    override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
         val blockPos = pos.below()
-        return MultifaceBlock.canAttachTo(world, Direction.DOWN, blockPos, world.getBlockState(blockPos))
+        return MultifaceBlock.canAttachTo(level, Direction.DOWN, blockPos, level.getBlockState(blockPos))
     }
 
     override fun updateShape(
         state: BlockState,
-        world: LevelReader,
-        tickView: ScheduledTickAccess,
+        level: LevelReader,
+        ticks: ScheduledTickAccess,
         pos: BlockPos,
-        direction: Direction,
+        directionToNeighbour: Direction,
         neighborPos: BlockPos,
         neighborState: BlockState,
         random: RandomSource
     ): BlockState {
-        if (!state.canSurvive(world, pos)) {
+        if (!state.canSurvive(level, pos)) {
             return Blocks.AIR.defaultBlockState()
         }
-        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random)
+        return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighborPos, neighborState, random)
     }
 
     override fun propagatesSkylightDown(state: BlockState): Boolean {
@@ -70,7 +70,7 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
     override fun useItemOn(
         stack: ItemStack,
         state: BlockState,
-        world: Level,
+        level: Level,
         pos: BlockPos,
         player: Player,
         hand: InteractionHand,
@@ -78,10 +78,10 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
     ): InteractionResult {
         if (!stack.`is`(Items.FLINT_AND_STEEL) && !stack.`is`(Items.FIRE_CHARGE)) return InteractionResult.TRY_WITH_EMPTY_HAND
 
-        world.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f)
+        level.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0f, level.getRandom().nextFloat() * 0.4f + 0.8f)
         val blockState = ModBlocks.BLAZE_FIRE.defaultBlockState()
-        world.setBlock(pos, blockState, UPDATE_ALL or UPDATE_IMMEDIATE)
-        world.gameEvent(player, GameEvent.BLOCK_PLACE, pos)
+        level.setBlock(pos, blockState, UPDATE_ALL or UPDATE_IMMEDIATE)
+        level.gameEvent(player, GameEvent.BLOCK_PLACE, pos)
         if (player is ServerPlayer)
             CriteriaTriggers.PLACED_BLOCK.trigger(player, pos, stack)
         if (stack.`is`(Items.FLINT_AND_STEEL))
@@ -93,14 +93,14 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
 
     override fun entityInside(
         state: BlockState,
-        world: Level,
+        level: Level,
         pos: BlockPos,
         entity: Entity,
-        handler: InsideBlockEffectApplier,
-        intersects: Boolean
+        effectApplier: InsideBlockEffectApplier,
+        isPrecise: Boolean
     ) {
-        if (!world.isClientSide && entity is Projectile && entity.isOnFire && world is ServerLevel && entity.mayInteract(world, pos)) {
-            world.setBlock(pos, ModBlocks.BLAZE_FIRE.defaultBlockState(), UPDATE_ALL or UPDATE_IMMEDIATE)
+        if (!level.isClientSide && entity is Projectile && entity.isOnFire && level is ServerLevel && entity.mayInteract(level, pos)) {
+            level.setBlock(pos, ModBlocks.BLAZE_FIRE.defaultBlockState(), UPDATE_ALL or UPDATE_IMMEDIATE)
         }
     }
 }

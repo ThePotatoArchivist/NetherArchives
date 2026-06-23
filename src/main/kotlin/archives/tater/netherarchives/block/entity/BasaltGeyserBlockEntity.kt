@@ -20,7 +20,7 @@ class BasaltGeyserBlockEntity(pos: BlockPos, state: BlockState) :
 
     private var updateTicks = 0
 
-    fun updateDistance(world: Level, pos: BlockPos, state: BlockState) {
+    fun updateDistance(level: Level, pos: BlockPos, state: BlockState) {
         if (updateTicks > 0) {
             updateTicks--
             return
@@ -28,8 +28,8 @@ class BasaltGeyserBlockEntity(pos: BlockPos, state: BlockState) :
 
         updateTicks = UPDATE_FREQUENCY
 
-        val geyserBlock = world[pos].block as? BasaltGeyserBlock ?: return
-        pushDistance = geyserBlock.getPushDistance(world, pos, state)
+        val geyserBlock = level[pos].block as? BasaltGeyserBlock ?: return
+        pushDistance = geyserBlock.getPushDistance(level, pos, state)
         if (pushDistance == 0) {
             distance = 0
             return
@@ -37,7 +37,7 @@ class BasaltGeyserBlockEntity(pos: BlockPos, state: BlockState) :
         val facing = state.getValue(FACING)
 
         distance = iterateLinearBlockPos(pos, facing, pushDistance)
-            .indexOfFirst { world[it].run { isFaceSturdy(world, it, facing) or isFaceSturdy(world, it, facing.opposite) } }
+            .indexOfFirst { level[it].run { isFaceSturdy(level, it, facing) or isFaceSturdy(level, it, facing.opposite) } }
             .let { if (it == -1) pushDistance else it }
     }
 

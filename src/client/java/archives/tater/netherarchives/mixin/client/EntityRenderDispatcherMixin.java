@@ -30,15 +30,15 @@ public class EntityRenderDispatcherMixin {
             method = "renderFlame",
             at = @At(value = "FIELD", target = "Lnet/minecraft/client/resources/model/ModelBakery;FIRE_0:Lnet/minecraft/client/resources/model/sprite/SpriteId;", opcode = Opcodes.GETSTATIC)
     )
-    private SpriteId setBlazeFireSprite0(SpriteId original, @Local(argsOnly = true) EntityRenderState renderState) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(renderState.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_0 : original;
+    private SpriteId setBlazeFireSprite0(SpriteId original, @Local(argsOnly = true, name = "state") EntityRenderState state) {
+        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_0 : original;
     }
 
     @ModifyExpressionValue(
             method = "renderFlame",
             at = @At(value = "FIELD", target = "Lnet/minecraft/client/resources/model/ModelBakery;FIRE_1:Lnet/minecraft/client/resources/model/sprite/SpriteId;", opcode = Opcodes.GETSTATIC)
     )
-    private SpriteId setBlazeFireSprite1(SpriteId original, @Local(argsOnly = true) EntityRenderState renderState) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(renderState.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_1 : original;
+    private SpriteId setBlazeFireSprite1(SpriteId original, @Local(argsOnly = true, name = "state") EntityRenderState state) {
+        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_1 : original;
     }
 }

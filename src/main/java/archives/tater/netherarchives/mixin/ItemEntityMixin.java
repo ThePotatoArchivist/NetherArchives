@@ -28,7 +28,7 @@ public abstract class ItemEntityMixin extends Entity {
             method = "hurtServer",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;onDestroyed(Lnet/minecraft/world/entity/item/ItemEntity;)V")
     )
-    private void explodeBeacon(ServerLevel world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    private void explodeBeacon(ServerLevel level, DamageSource source, float damage, CallbackInfoReturnable<Boolean> cir) {
         if (!source.is(DamageTypeTags.IS_EXPLOSION) || !getItem().is(Items.BEACON)) return;
         level().addFreshEntity(new ItemEntity(level(), getX(), getY(), getZ(), Items.NETHER_STAR.getDefaultInstance()));
     }

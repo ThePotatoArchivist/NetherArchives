@@ -31,15 +31,15 @@ public class LivingEntityRendererMixin {
             method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V",
             at = @At("TAIL")
     )
-    private void checkSoulGlass(LivingEntity livingEntity, LivingEntityRenderState livingEntityRenderState, float f, CallbackInfo ci) {
-        livingEntityRenderState.setData(NetherArchivesClient.SOUL_GLASS_REVEALED, NetherArchivesClient.isRevealed(livingEntity));
+    private void checkSoulGlass(LivingEntity entity, LivingEntityRenderState state, float partialTicks, CallbackInfo ci) {
+        state.setData(NetherArchivesClient.SOUL_GLASS_REVEALED, NetherArchivesClient.isRevealed(entity));
     }
 
     @ModifyExpressionValue(
             method = "submit(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;)V",
             at = @At(value = "CONSTANT", args = "intValue=654311423")
     )
-    private int soulColor(int original, @Local(argsOnly = true) LivingEntityRenderState renderState) {
-        return renderState.getDataOrDefault(NetherArchivesClient.SOUL_GLASS_REVEALED, false) ? 0x999FFFFF : original;
+    private int soulColor(int original, @Local(argsOnly = true, name = "state") LivingEntityRenderState state) {
+        return state.getDataOrDefault(NetherArchivesClient.SOUL_GLASS_REVEALED, false) ? 0x999FFFFF : original;
     }
 }

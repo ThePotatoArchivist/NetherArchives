@@ -2,10 +2,10 @@ package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
+import net.minecraft.core.Registry
 import net.minecraft.core.particles.ParticleType
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.Registry
 import net.minecraft.resources.Identifier
 
 object NetherArchivesParticles {
@@ -19,5 +19,5 @@ object NetherArchivesParticles {
     val BLAZE_SPARK: SimpleParticleType = register("blaze_spark", FabricParticleTypes.simple())
     val SMALL_BLAZE_SPARK: SimpleParticleType = register("small_blaze_spark", FabricParticleTypes.simple())
 
-    fun register() {}
+    fun init() {}
 }

@@ -32,39 +32,39 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
 
     override fun isRandomlyTicking(state: BlockState) = true
 
-    override fun randomTick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
+    override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
         if (Direction.entries.any {
-                world.getFluidState(pos.relative(it)).`is`(FluidTags.LAVA)
+                level.getFluidState(pos.relative(it)).`is`(FluidTags.LAVA)
             }) {
-            world.setBlockAndUpdate(pos, ModBlocks.SMOLDERING_MAGNETITE.defaultBlockState())
+            level.setBlockAndUpdate(pos, ModBlocks.SMOLDERING_MAGNETITE.defaultBlockState())
         }
     }
 
-    override fun tick(state: BlockState, world: ServerLevel, pos: BlockPos, random: RandomSource) {
-        world.setBlockAndUpdate(pos, updateDistanceFromLodestone(state, world, pos))
+    override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+        level.setBlockAndUpdate(pos, updateDistanceFromLodestone(state, level, pos))
         if (state.getValue(DISTANCE) == 7) {
-            super.tick(state, world, pos, random)
+            super.tick(state, level, pos, random)
         }
     }
 
-    override fun getDustColor(state: BlockState, world: BlockGetter, pos: BlockPos): Int = 0x25252E
+    override fun getDustColor(state: BlockState, level: BlockGetter, pos: BlockPos): Int = 0x25252E
 
     override fun codec(): MapCodec<out FallingBlock> = CODEC
 
     override fun updateShape(
         state: BlockState,
-        world: LevelReader,
-        tickView: ScheduledTickAccess,
+        level: LevelReader,
+        ticks: ScheduledTickAccess,
         pos: BlockPos,
-        direction: Direction,
+        directionToNeighbour: Direction,
         neighborPos: BlockPos,
         neighborState: BlockState,
         random: RandomSource
     ): BlockState {
         if ((getDistanceFromLodestone(neighborState)) != 0 || state.getValue(DISTANCE) != 0) {
-            tickView.scheduleTick(pos, this, 1)
+            ticks.scheduleTick(pos, this, 1)
         }
-        return super.updateShape(state, world, tickView, pos, direction, neighborPos, neighborState, random)
+        return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighborPos, neighborState, random)
     }
 
     companion object {
@@ -78,8 +78,8 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
             return 7
         }
 
-        private fun updateDistanceFromLodestone(state: BlockState, world: LevelAccessor, pos: BlockPos): BlockState {
-            val minDistance = Direction.entries.minOf { getDistanceFromLodestone(world.getBlockState(pos.relative(it))) }
+        private fun updateDistanceFromLodestone(state: BlockState, level: LevelAccessor, pos: BlockPos): BlockState {
+            val minDistance = Direction.entries.minOf { getDistanceFromLodestone(level.getBlockState(pos.relative(it))) }
             NetherArchives.logger.debug("distance: $minDistance")
             return state.setValue(DISTANCE, if (minDistance < 7) minDistance + 1 else 7)
         }

@@ -8,10 +8,10 @@ import net.minecraft.world.level.block.TorchBlock
 import net.minecraft.world.level.block.state.BlockState
 
 class BlazeTorchBlock(settings: Properties) : TorchBlock(ParticleTypes.FLAME, settings), AbstractBlazeTorchBlock {
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         super<AbstractBlazeTorchBlock>.animateTick(
             state,
-            world,
+            level,
             pos,
             random,
             pos.x.toDouble() + 0.5,
@@ -20,7 +20,7 @@ class BlazeTorchBlock(settings: Properties) : TorchBlock(ParticleTypes.FLAME, se
         )
     }
 
-    override fun onPlace(state: BlockState, world: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
-        super<AbstractBlazeTorchBlock>.onPlace(state, world, pos)
+    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
+        super<AbstractBlazeTorchBlock>.onPlace(state, level, pos)
     }
 }

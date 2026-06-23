@@ -9,12 +9,12 @@ import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.redstone.Orientation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.redstone.Orientation
 
 class AdjustableBasaltGeyserBlock(settings: Properties) : BasaltGeyserBlock(settings) {
     init {
@@ -31,27 +31,27 @@ class AdjustableBasaltGeyserBlock(settings: Properties) : BasaltGeyserBlock(sett
 
     override fun neighborChanged(
         state: BlockState,
-        world: Level,
+        level: Level,
         pos: BlockPos,
         sourceBlock: Block,
         wireOrientation: Orientation?,
         notify: Boolean
     ) {
-        val powered = world.hasNeighborSignal(pos)
+        val powered = level.hasNeighborSignal(pos)
         if (state.getValue(POWERED) != powered)
-            world[pos] = state.setValue(POWERED, powered)
+            level[pos] = state.setValue(POWERED, powered)
     }
 
-    override fun getPushDistance(world: Level, pos: BlockPos, state: BlockState): Int =
-        15 - world.getBestNeighborSignal(pos)
+    override fun getPushDistance(level: Level, pos: BlockPos, state: BlockState): Int =
+        15 - level.getBestNeighborSignal(pos)
 
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
-        val blockEntity = world.getBlockEntity(pos) as? BasaltGeyserBlockEntity ?: return
-        val facing = world[pos].getValue(FACING)
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
+        val blockEntity = level.getBlockEntity(pos) as? BasaltGeyserBlockEntity ?: return
+        val facing = level[pos].getValue(FACING)
         val distance = blockEntity.pushDistance
         if (distance <= 0) return
         repeat(2) {
-            world.addFaceParticle(
+            level.addFaceParticle(
                 ParticleTypes.SMOKE,
                 facing,
                 pos,
@@ -61,7 +61,7 @@ class AdjustableBasaltGeyserBlock(settings: Properties) : BasaltGeyserBlock(sett
         }
     }
 
-    override fun addImportantParticles(world: Level, pos: BlockPos, facing: Direction) {
+    override fun addImportantParticles(level: Level, pos: BlockPos, facing: Direction) {
     }
 
     companion object {

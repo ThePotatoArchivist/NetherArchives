@@ -9,12 +9,12 @@ import net.minecraft.world.level.block.state.BlockState
 
 class WallBlazeTorchBlock(settings: Properties) : WallTorchBlock(ParticleTypes.FLAME, settings),
     AbstractBlazeTorchBlock {
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         val direction = state.getValue(FACING).opposite
 
         super<AbstractBlazeTorchBlock>.animateTick(
             state,
-            world,
+            level,
             pos,
             random,
             pos.x.toDouble() + 0.5 + 0.27 * direction.stepX,
@@ -23,7 +23,7 @@ class WallBlazeTorchBlock(settings: Properties) : WallTorchBlock(ParticleTypes.F
         )
     }
 
-    override fun onPlace(state: BlockState, world: Level, pos: BlockPos, oldState: BlockState, notify: Boolean) {
-        super<AbstractBlazeTorchBlock>.onPlace(state, world, pos)
+    override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
+        super<AbstractBlazeTorchBlock>.onPlace(state, level, pos)
     }
 }

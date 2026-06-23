@@ -22,11 +22,11 @@ public class BlockMixin {
             method = "fallOn",
             at = @At("HEAD"),
             cancellable = true)
-    private void preventFallOnSkis(Level world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {
+    private void preventFallOnSkis(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {
         //noinspection ConstantValue
         if (!((Object) this instanceof LiquidBlock)) return;
         if (!(entity instanceof LivingEntity livingEntity) || !SkisItem.canSki(livingEntity, state.getFluidState())) return;
-        entity.causeFallDamage(fallDistance, 0.0F, world.damageSources().fall());
+        entity.causeFallDamage(fallDistance, 0.0F, level.damageSources().fall());
         ci.cancel();
     }
 }

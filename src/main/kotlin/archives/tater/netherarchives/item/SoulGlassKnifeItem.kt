@@ -22,8 +22,8 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class SoulGlassKnifeItem(settings: Properties) : Item(settings) {
-    override fun use(world: Level, user: Player, hand: InteractionHand): InteractionResult {
-        user.startUsingItem(hand)
+    override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResult {
+        player.startUsingItem(hand)
         return InteractionResult.CONSUME
     }
 
@@ -31,14 +31,14 @@ class SoulGlassKnifeItem(settings: Properties) : Item(settings) {
 
     override fun getUseAnimation(stack: ItemStack): ItemUseAnimation = ItemUseAnimation.SPYGLASS
 
-    override fun finishUsingItem(stack: ItemStack, world: Level, user: LivingEntity): ItemStack {
-        if (world.isClientSide) return stack
-        (user as? ServerPlayer)?.setKnifeCooldown(stack, MAX_USE_TIME)
+    override fun finishUsingItem(stack: ItemStack, level: Level, entity: LivingEntity): ItemStack {
+        if (level.isClientSide) return stack
+        (entity as? ServerPlayer)?.setKnifeCooldown(stack, MAX_USE_TIME)
         return stack
     }
 
-    override fun releaseUsing(stack: ItemStack, world: Level, user: LivingEntity, remainingUseTicks: Int): Boolean {
-        (user as? ServerPlayer)?.setKnifeCooldown(stack, MAX_USE_TIME - remainingUseTicks)
+    override fun releaseUsing(stack: ItemStack, level: Level, entity: LivingEntity, remainingUseTicks: Int): Boolean {
+        (entity as? ServerPlayer)?.setKnifeCooldown(stack, MAX_USE_TIME - remainingUseTicks)
         return true
     }
 
@@ -46,8 +46,8 @@ class SoulGlassKnifeItem(settings: Properties) : Item(settings) {
         cooldowns.addCooldown(stack, usedTicks.coerceAtLeast(20) * 400 / MAX_USE_TIME) // Max 20 seconds
     }
 
-    override fun canDestroyBlock(stack: ItemStack, state: BlockState, world: Level, pos: BlockPos, user: LivingEntity): Boolean =
-        !user.hasInfiniteMaterials()
+    override fun canDestroyBlock(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, entity: LivingEntity): Boolean =
+        !entity.hasInfiniteMaterials()
 
     companion object {
         private const val MAX_USE_TIME = 100 // 5 seconds

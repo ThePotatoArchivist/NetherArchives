@@ -18,5 +18,5 @@ object NetherArchivesTriggers {
     val AIRSKI = register("airski", DefaultBlockInteractionTrigger())
     val FERMENT = register("ferment_rotten_flesh", DefaultBlockInteractionTrigger())
 
-    fun register() {}
+    fun init() {}
 }

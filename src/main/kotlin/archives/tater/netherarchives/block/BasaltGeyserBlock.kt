@@ -43,12 +43,12 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
 
     override fun codec(): MapCodec<out DirectionalBlock> = CODEC
 
-    override fun animateTick(state: BlockState, world: Level, pos: BlockPos, random: RandomSource) {
+    override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         val facing = state.getValue(FACING)
         val coveringPos = pos.relative(facing)
-        if (world[coveringPos].isFaceSturdy(world, coveringPos, facing.opposite)) return
+        if (level[coveringPos].isFaceSturdy(level, coveringPos, facing.opposite)) return
         repeat(4) {
-            world.addFaceParticle(
+            level.addFaceParticle(
                 ParticleTypes.LARGE_SMOKE,
                 facing,
                 pos,
@@ -56,41 +56,41 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
                 posSpread = 0.5,
             )
         }
-        world.addFaceParticle(
+        level.addFaceParticle(
             ParticleTypes.LAVA,
             facing,
             pos,
             random.nextDouble() + 0.5,
             velocityDev = 0.5,
         )
-        world.addFaceParticle(
+        level.addFaceParticle(
             ParticleTypes.CAMPFIRE_COSY_SMOKE,
             facing,
             pos,
-            0.05 * world.random.nextDouble() + 0.05,
+            0.05 * level.random.nextDouble() + 0.05,
             0.25,
         )
     }
 
-    protected open fun addImportantParticles(world: Level, pos: BlockPos, facing: Direction) {
-        world.addFaceParticle(
+    protected open fun addImportantParticles(level: Level, pos: BlockPos, facing: Direction) {
+        level.addFaceParticle(
             ParticleTypes.CAMPFIRE_COSY_SMOKE,
             facing,
             pos,
-            0.05 * world.random.nextDouble() + 0.05,
+            0.05 * level.random.nextDouble() + 0.05,
             posSpread = 0.25,
             alwaysSpawn = true,
         )
     }
 
-    open fun getPushDistance(world: Level, pos: BlockPos, state: BlockState) = BOOST_RANGE
+    open fun getPushDistance(level: Level, pos: BlockPos, state: BlockState) = BOOST_RANGE
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
         return BasaltGeyserBlockEntity(pos, state)
     }
 
     override fun <T : BlockEntity> getTicker(
-        world: Level,
+        level: Level,
         state: BlockState,
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
@@ -105,17 +105,17 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
         private const val MAX_BOOST_VELOCITY = 0.5
         private const val SNEAKING_MAX_BOOST_VELOCITY = 0.12
 
-        override fun tick(world: Level, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
-            val geyserBlock = world[pos].block as? BasaltGeyserBlock ?: return
+        override fun tick(level: Level, pos: BlockPos, state: BlockState, blockEntity: BasaltGeyserBlockEntity) {
+            val geyserBlock = level[pos].block as? BasaltGeyserBlock ?: return
 
             val facing = state.getValue(FACING)
-            blockEntity.updateDistance(world, pos, state)
+            blockEntity.updateDistance(level, pos, state)
             val pushDistance = blockEntity.pushDistance
             val distance = blockEntity.distance
 
             if (distance == 0) return
 
-            world.getEntities(null, AABB.encapsulatingFullBlocks(pos, pos.relative(facing, distance))) { it !is Strider && (it !is Player || !it.abilities.flying) }.forEach {
+            level.getEntities(null, AABB.encapsulatingFullBlocks(pos, pos.relative(facing, distance))) { it !is Strider && (it !is Player || !it.abilities.flying) }.forEach {
                 val closeness = (1 - abs((it.pos - pos.center.relative(facing, 0.5)).get(facing.axis)) / pushDistance.toDouble()).coerceAtLeast(0.0)
 
                 it.deltaMovement += Vec3.ZERO.relative(facing, (if (it.isShiftKeyDown) SNEAKING_MAX_BOOST_VELOCITY else MAX_BOOST_VELOCITY) * closeness)
@@ -128,8 +128,8 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
                 if (facing == Direction.UP)
                     it.resetFallDistance()
             }
-            if (world.isClientSide && world.random.nextFloat() < 0.04) {
-                geyserBlock.addImportantParticles(world, pos, facing)
+            if (level.isClientSide && level.random.nextFloat() < 0.04) {
+                geyserBlock.addImportantParticles(level, pos, facing)
             }
         }
 

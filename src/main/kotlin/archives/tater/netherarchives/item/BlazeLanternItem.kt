@@ -2,30 +2,30 @@ package archives.tater.netherarchives.item
 
 import archives.tater.netherarchives.entity.BlazeLanternEntity
 import archives.tater.netherarchives.util.get
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.stats.Stats
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
-import net.minecraft.sounds.SoundSource
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.stats.Stats
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.InteractionHand
 import net.minecraft.world.level.Level
 
 class BlazeLanternItem(settings: Properties) : Item(settings) {
     // TODO this crashes
 //    init {
 //        DispenserBlock.registerBehavior(ModItems.BLAZE_LANTERN, object: ProjectileDispenserBehavior() {
-//            override fun createProjectile(world: World, position: Position, stack: ItemStack): ProjectileEntity {
+//            override fun createProjectile(level: World, position: Position, stack: ItemStack): ProjectileEntity {
 //                return (Util.make(
-//                    BlazeLanternEntity(world, position.x, position.y, position.z)
+//                    BlazeLanternEntity(level, position.x, position.y, position.z)
 //                ) { entity: BlazeLanternEntity -> entity.setItem(stack) } as ProjectileEntity)
 //            }
 //        })
 //    }
 
-    override fun use(world: Level, user: Player, hand: InteractionHand): InteractionResult {
-        val itemStack = user[hand]
-        world.playSound(
+    override fun use(level: Level, user: Player, hand: InteractionHand): InteractionResult {
+        val stack = user[hand]
+        level.playSound(
             null as Player?,
             user.x,
             user.y,
@@ -33,18 +33,18 @@ class BlazeLanternItem(settings: Properties) : Item(settings) {
             SoundEvents.EGG_THROW,
             SoundSource.NEUTRAL,
             0.5f,
-            0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
+            0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f)
         )
-        if (!world.isClientSide) {
-            val blazeLanternEntity = BlazeLanternEntity(world, user, itemStack)
+        if (!level.isClientSide) {
+            val blazeLanternEntity = BlazeLanternEntity(level, user, stack)
             blazeLanternEntity.shootFromRotation(user, user.xRot, user.yRot, 0.2f, 1f, 1.0f)
-            world.addFreshEntity(blazeLanternEntity)
+            level.addFreshEntity(blazeLanternEntity)
         }
         user.awardStat(Stats.ITEM_USED.get(this))
         if (!user.abilities.instabuild) {
-            itemStack.shrink(1)
-            user.cooldowns.addCooldown(itemStack, 40)
+            stack.shrink(1)
+            user.cooldowns.addCooldown(stack, 40)
         }
-        return InteractionResult.SUCCESS.heldItemTransformedTo(itemStack)
+        return InteractionResult.SUCCESS.heldItemTransformedTo(stack)
     }
 }
