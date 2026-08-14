@@ -4,6 +4,7 @@ import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.isOf
 import archives.tater.netherarchives.util.set
 import net.minecraft.core.BlockPos
+import net.minecraft.core.BlockPos.betweenClosed
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
@@ -32,15 +33,15 @@ class NecroticAshBlock(properties: Properties) : Block(properties) {
     fun shouldCombust(level: ServerLevel, pos: BlockPos): Boolean = !Monster.isDarkEnoughToSpawn(level, pos, FAKE_RANDOM)
 
     fun tryIgnite(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-        if (!shouldCombust(level, pos)) return
+        if (state[LIT] || !shouldCombust(level, pos)) return
 
         level[pos] = state.setValue(LIT, true)
         level.scheduleTick(pos, this, random.nextInt(40, 100))
 
-//        for (check in betweenClosed(pos.x - 1, pos.y - 1, pos.z - 1, pos.x + 1, pos.y + 1, pos.z + 1)) {
-//            if (level[check] isOf this && !level[check][LIT] && !(check isSame pos))
-//                level.scheduleTick(check, this, random.nextInt(2, 6))
-//        }
+        for (check in betweenClosed(pos.x - 1, pos.y - 1, pos.z - 1, pos.x + 1, pos.y + 1, pos.z + 1)) {
+            if (level[check] isOf this && !level[check][LIT] && !(check isSame pos))
+                level.scheduleTick(check, this, random.nextInt(2, 6))
+        }
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
@@ -67,8 +68,8 @@ class NecroticAshBlock(properties: Properties) : Block(properties) {
         isFaceFull(level[pos.below()].getCollisionShape(level, pos.below()), Direction.UP)
 
     override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
-        if (!(oldState isOf this))
-            level.scheduleTick(pos, this, 1)
+        if (level is ServerLevel && !(oldState isOf this))
+            tryIgnite(state, level, pos, level.random)
     }
 
     override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
@@ -97,7 +98,9 @@ class NecroticAshBlock(properties: Properties) : Block(properties) {
                 pos.x + random.nextFloat() * shape.xsize,
                 pos.y + shape.ysize + 1 / 16f,
                 pos.z + random.nextFloat() * shape.zsize,
-                0.0, 0.0, 0.0
+                0.0,
+                1 / 32.0 * random.nextFloat(),
+                0.0
             )
         }
     }
