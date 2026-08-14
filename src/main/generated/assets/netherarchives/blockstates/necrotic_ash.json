@@ -1,7 +1,38 @@
 {
   "variants": {
-    "": {
-      "model": "netherarchives:block/necrotic_ash"
-    }
+    "lit=false": [
+      {
+        "model": "netherarchives:block/necrotic_ash"
+      },
+      {
+        "model": "netherarchives:block/necrotic_ash",
+        "y": 90
+      },
+      {
+        "model": "netherarchives:block/necrotic_ash",
+        "y": 180
+      },
+      {
+        "model": "netherarchives:block/necrotic_ash",
+        "y": 270
+      }
+    ],
+    "lit=true": [
+      {
+        "model": "netherarchives:block/necrotic_ash_lit"
+      },
+      {
+        "model": "netherarchives:block/necrotic_ash_lit",
+        "y": 90
+      },
+      {
+        "model": "netherarchives:block/necrotic_ash_lit",
+        "y": 180
+      },
+      {
+        "model": "netherarchives:block/necrotic_ash_lit",
+        "y": 270
+      }
+    ]
   }
 }

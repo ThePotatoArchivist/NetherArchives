@@ -3,6 +3,7 @@ package archives.tater.netherarchives.datagen
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.builder.*
 import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.ModTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -36,12 +37,7 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
             itemCriterion(ModItems.MAGNETITE)
         }
 
-        shapeless(RecipeCategory.MISC, ModItems.ROTTEN_FLESH_BLOCK) {
-            inputs {
-                9 of Items.ROTTEN_FLESH
-            }
-            itemCriterion(Items.ROTTEN_FLESH)
-        }
+        nineBlockStorageRecipes(RecipeCategory.MISC, Items.ROTTEN_FLESH, RecipeCategory.MISC, ModItems.ROTTEN_FLESH_BLOCK)
 
         shapeless(RecipeCategory.COMBAT, ModItems.BLAZE_DUST, 4) {
             inputs {
@@ -164,6 +160,20 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
                 '%' to ConventionalItemTags.BONES
             }
             itemCriterion(ModItems.SPECTREGLASS_SHARD)
+        }
+
+        shaped(RecipeCategory.TOOLS, ModItems.NECROTIC_URN) {
+            pattern("#P#")
+            pattern("#U#")
+            pattern("BCB")
+            inputs {
+                '#' to ModTags.NECROTIC_URN_FUEL
+                'B' to ConventionalItemTags.BONES
+                'P' to Items.PHANTOM_MEMBRANE
+                'U' to Items.DECORATED_POT
+                'C' to Items.SOUL_CAMPFIRE
+            }
+            itemCriterion(Items.SOUL_CAMPFIRE)
         }
     }
 

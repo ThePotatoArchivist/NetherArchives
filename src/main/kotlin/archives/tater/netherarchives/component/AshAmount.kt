@@ -2,6 +2,7 @@ package archives.tater.netherarchives.component
 
 import archives.tater.netherarchives.registry.ModComponents
 import com.mojang.serialization.Codec
+import net.minecraft.ChatFormatting
 import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.network.chat.Component
 import net.minecraft.network.codec.ByteBufCodecs
@@ -24,7 +25,9 @@ data class AshAmount(val amount: Int) : TooltipProvider {
         flag: TooltipFlag,
         components: DataComponentGetter
     ) {
-        consumer.accept(Component.translatable("item.netherarchives.necrotic_urn.ash", amount, MAX))
+        consumer.accept(Component.translatable("item.netherarchives.necrotic_urn.ash", amount, MAX)
+            .withStyle(ChatFormatting.GRAY)
+        )
     }
     
     companion object {

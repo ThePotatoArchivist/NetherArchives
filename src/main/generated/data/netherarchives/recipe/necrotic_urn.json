@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "#netherarchives:necrotic_urn_fuel",
+    "B": "#c:bones",
+    "C": "minecraft:soul_campfire",
+    "P": "minecraft:phantom_membrane",
+    "U": "minecraft:decorated_pot"
+  },
+  "pattern": [
+    "#P#",
+    "#U#",
+    "BCB"
+  ],
+  "result": {
+    "id": "netherarchives:necrotic_urn"
+  }
+}

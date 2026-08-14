@@ -40,3 +40,5 @@ internal fun BlockSettings.copyLootAndTranslation(block: Block) {
     overrideLootTable(block.lootTable)
     overrideDescription(block.descriptionId)
 }
+
+infix fun Int.ceilDiv(other: Int) = Math.ceilDiv(this, other)

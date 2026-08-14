@@ -90,19 +90,19 @@ class NecroticAshBlock(properties: Properties) : Block(properties) {
             )
         }
 
-        val shape = getShape(state, level, pos, CollisionContext.empty()).bounds()
+//        val shape = getShape(state, level, pos, CollisionContext.empty()).bounds()
 
-        repeat(2) {
-            level.addParticle(
-                ParticleTypes.SMALL_FLAME,
-                pos.x + random.nextFloat() * shape.xsize,
-                pos.y + shape.ysize + 1 / 16f,
-                pos.z + random.nextFloat() * shape.zsize,
-                0.0,
-                1 / 32.0 * random.nextFloat(),
-                0.0
-            )
-        }
+//        repeat(2) {
+//            level.addParticle(
+//                ParticleTypes.SMALL_FLAME,
+//                pos.x + random.nextFloat() * shape.xsize,
+//                pos.y + shape.ysize + 1 / 16f,
+//                pos.z + random.nextFloat() * shape.zsize,
+//                0.0,
+//                1 / 32.0 * random.nextFloat(),
+//                0.0
+//            )
+//        }
     }
 
     override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {

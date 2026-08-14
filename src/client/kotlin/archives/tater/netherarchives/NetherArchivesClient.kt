@@ -5,10 +5,7 @@ import archives.tater.netherarchives.client.render.entity.feature.WitherSkeleton
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
 import archives.tater.netherarchives.client.util.registerArmorRenderer
-import archives.tater.netherarchives.registry.ModItems
-import archives.tater.netherarchives.registry.ModTags
-import archives.tater.netherarchives.registry.NetherArchivesEntities
-import archives.tater.netherarchives.registry.NetherArchivesParticles
+import archives.tater.netherarchives.registry.*
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.isOf
 import net.fabricmc.api.ClientModInitializer
@@ -18,6 +15,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegist
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
+import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.particle.FlameParticle
@@ -115,6 +113,8 @@ object NetherArchivesClient : ClientModInitializer {
             register(NetherArchivesParticles.BLAZE_SPARK, BlazeSparkParticle::Factory)
             register(NetherArchivesParticles.SMALL_BLAZE_SPARK, BlazeSparkParticle::SmallFactory)
         }
+
+        ItemComponentTooltipProviderRegistry.addFirst(ModComponents.ASH_AMOUNT)
 
         ClientTickEvents.START_LEVEL_TICK.register { world ->
             val client = Minecraft.getInstance()

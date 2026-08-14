@@ -2,6 +2,7 @@ package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.block.AdjustableBasaltGeyserBlock
+import archives.tater.netherarchives.block.NecroticAshBlock
 import archives.tater.netherarchives.block.RottenFleshBlock
 import archives.tater.netherarchives.mixin.client.BlockStateModelGeneratorAccessor
 import archives.tater.netherarchives.registry.ModBlocks
@@ -9,12 +10,16 @@ import archives.tater.netherarchives.registry.ModItems
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.minecraft.client.data.models.BlockModelGenerators
-import net.minecraft.client.data.models.BlockModelGenerators.plainVariant
+import net.minecraft.client.data.models.BlockModelGenerators.*
 import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.client.data.models.blockstates.MultiPartGenerator
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator
 import net.minecraft.client.data.models.blockstates.PropertyDispatch
-import net.minecraft.client.data.models.model.*
+import net.minecraft.client.data.models.model.ItemModelUtils
+import net.minecraft.client.data.models.model.ModelLocationUtils.getModelLocation
+import net.minecraft.client.data.models.model.ModelTemplates
+import net.minecraft.client.data.models.model.TextureMapping
+import net.minecraft.client.data.models.model.TextureSlot
 import net.minecraft.client.renderer.block.dispatch.VariantMutator
 import net.minecraft.client.renderer.item.properties.conditional.IsUsingItem
 import net.minecraft.world.level.block.Block
@@ -30,19 +35,26 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerExtendedTorch(ModBlocks.BLAZE_TORCH, ModBlocks.WALL_BLAZE_TORCH)
         blockStateModelGenerator.createGlassBlocks(ModBlocks.SPECTREGLASS, ModBlocks.SPECTREGLASS_PANE)
         blockStateModelGenerator.createGlassBlocks(ModBlocks.SHATTERED_SPECTREGLASS, ModBlocks.SHATTERED_SPECTREGLASS_PANE)
-        blockStateModelGenerator.createTrivialBlock(ModBlocks.NECROTIC_ASH, TexturedModel.CARPET)
+
+        blockStateModelGenerator.blockStateOutput.accept(
+            MultiVariantGenerator.dispatch(ModBlocks.NECROTIC_ASH).with(
+                PropertyDispatch.initial(NecroticAshBlock.LIT)
+                    .select(false, createRotatedVariants(plainModel(getModelLocation(ModBlocks.NECROTIC_ASH))))
+                    .select(true,  createRotatedVariants(plainModel(getModelLocation(ModBlocks.NECROTIC_ASH, "_lit"))))
+            )
+        )
 
         blockStateModelGenerator.blockStateOutput.accept(
             MultiVariantGenerator.dispatch(
                 ModBlocks.BASALT_GEYSER,
-                plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.BASALT_GEYSER))
+                plainVariant(getModelLocation(ModBlocks.BASALT_GEYSER))
             ).with(ROTATIONS_COLUMN_WITH_FACING)
         )
 
         blockStateModelGenerator.blockStateOutput.accept(
             MultiVariantGenerator.dispatch(ModBlocks.ADJUSTABLE_BASALT_GEYSER).with(
                 PropertyDispatch.initial(AdjustableBasaltGeyserBlock.POWERED).generate { powered ->
-                    plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.ADJUSTABLE_BASALT_GEYSER, if (powered) "_on" else ""))
+                    plainVariant(getModelLocation(ModBlocks.ADJUSTABLE_BASALT_GEYSER, if (powered) "_on" else ""))
                 }
             ).with(ROTATIONS_COLUMN_WITH_FACING)
         )
@@ -71,8 +83,8 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
         itemModelGenerator.generateFlatItem(ModItems.SPECTREGLASS_SHARD, ModelTemplates.FLAT_ITEM)
         itemModelGenerator.itemModelOutput.accept(ModItems.SPECTREGLASS_KNIFE, ItemModelUtils.conditional(
             IsUsingItem(),
-            ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(ModItems.SPECTREGLASS_KNIFE, "_viewing")),
-            ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(ModItems.SPECTREGLASS_KNIFE))
+            ItemModelUtils.plainModel(getModelLocation(ModItems.SPECTREGLASS_KNIFE, "_viewing")),
+            ItemModelUtils.plainModel(getModelLocation(ModItems.SPECTREGLASS_KNIFE))
         ))
         itemModelGenerator.generateSpyglass(ModItems.BASALT_OAR)
         itemModelGenerator.generateFlatItem(ModItems.BASALT_ROD, ModelTemplates.FLAT_HANDHELD_ROD_ITEM)
@@ -80,7 +92,7 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
 
         itemModelGenerator.itemModelOutput.accept(ModItems.DUMMY_SOUL_FIRE, ItemModelUtils.plainModel(
             ModelTemplates.FLAT_ITEM.create(
-                ModelLocationUtils.getModelLocation(ModItems.DUMMY_SOUL_FIRE), TextureMapping(
+                getModelLocation(ModItems.DUMMY_SOUL_FIRE), TextureMapping(
                 TextureSlot.LAYER0 to TextureMapping.getBlockTexture(Blocks.SOUL_FIRE, "_0")
             ), itemModelGenerator.modelOutput
             )
