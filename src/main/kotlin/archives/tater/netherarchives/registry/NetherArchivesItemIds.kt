@@ -16,6 +16,7 @@ object NetherArchivesItemIds {
     val BASALT_ROD = create("basalt_rod")
     val SPECTREGLASS_SHARD = create("spectreglass_shard")
     val SPECTREGLASS_KNIFE = create("spectreglass_knife")
+    val NECROTIC_URN = create("necrotic_urn")
     val DUMMY_SOUL_FIRE = create("dummy_soul_fire")
 }
 

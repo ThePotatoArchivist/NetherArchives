@@ -20,6 +20,7 @@ object NetherArchivesBlockItemIds {
     val SHATTERED_SPECTREGLASS = create("shattered_spectreglass")
     val SPECTREGLASS_PANE = create("spectreglass_pane")
     val SHATTERED_SPECTREGLASS_PANE = create("shattered_spectreglass_pane")
+    val NECROTIC_ASH = create("necrotic_ash")
 }
 
 internal typealias ModBlockItemIds = NetherArchivesBlockItemIds

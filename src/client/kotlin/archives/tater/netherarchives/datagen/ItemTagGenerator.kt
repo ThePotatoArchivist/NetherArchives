@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.core.HolderLookup
 import net.minecraft.references.BlockItemIds
+import net.minecraft.references.ItemIds
 import net.minecraft.tags.ItemTags
 import java.util.concurrent.CompletableFuture
 
@@ -25,6 +26,9 @@ class ItemTagGenerator(
         builder(ModTags.ROTTEN_FLESH_FERMENTER_ITEM).apply {
             add(BlockItemIds.SOUL_CAMPFIRE)
             add(ModItemIds.DUMMY_SOUL_FIRE)
+        }
+        with (builder(ModTags.NECROTIC_URN_FUEL)) {
+            add(ItemIds.ROTTEN_FLESH)
         }
         builder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
             ModItemIds.DUMMY_SOUL_FIRE,

@@ -10,8 +10,10 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemAttributeModifiers
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.Property
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.item.Item.Properties as ItemProperties
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties as BlockProperties
@@ -27,7 +29,7 @@ internal infix fun <T: Any> TypedInstance<T>.isIn(tag: TagKey<T>) = this.`is`(ta
 internal infix fun <T: Any> TypedInstance<T>.isIn(set: HolderSet<T>) = this.`is`(set)
 
 internal inline operator fun LivingEntity.get(hand: InteractionHand): ItemStack = getItemInHand(hand)
-internal inline operator fun Level.get(pos: BlockPos): BlockState = getBlockState(pos)
+internal inline operator fun BlockGetter.get(pos: BlockPos): BlockState = getBlockState(pos)
 internal inline operator fun Level.set(pos: BlockPos, state: BlockState) {
     setBlockAndUpdate(pos, state)
 }
@@ -51,3 +53,5 @@ internal inline var Entity.pos: Vec3
     }
 
 internal val Vec3i.center get() = Vec3.atCenterOf(this)
+
+operator fun <T: Comparable<T>> BlockState.get(property: Property<T>) = getValue(property)

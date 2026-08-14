@@ -127,6 +127,16 @@ object NetherArchivesBlocks {
         }
     )
 
+    @JvmField
+    val NECROTIC_ASH = register(ModBlockItemIds.NECROTIC_ASH, ::NecroticAshBlock) {
+        replaceable()
+        randomTicks()
+        noCollision()
+        strength(0.1F)
+        sound(SoundType.SOUL_SAND)
+        pushReaction(PushReaction.DESTROY)
+    }
+
     fun init() {
         FlammableBlockRegistry.getDefaultInstance().add(ROTTEN_FLESH_BLOCK, 15, 30)
     }

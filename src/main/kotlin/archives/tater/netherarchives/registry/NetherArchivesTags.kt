@@ -23,6 +23,7 @@ object NetherArchivesTags {
     val BASALT_EQUIPMENT_REPAIR = create(ITEM, "basalt_equipment_repair")
     val SKIS = create(ITEM, "skis")
     val ROTTEN_FLESH_FERMENTER_ITEM = create(ITEM, "rotten_flesh_fermenter")
+    val NECROTIC_URN_FUEL = create(ITEM, "necrotic_urn_fuel")
 
     @JvmField
     val SKIS_CAN_WALK_ON: TagKey<Fluid> = create(FLUID, "skis_can_walk_on")

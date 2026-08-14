@@ -30,6 +30,7 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
         blockStateModelGenerator.registerExtendedTorch(ModBlocks.BLAZE_TORCH, ModBlocks.WALL_BLAZE_TORCH)
         blockStateModelGenerator.createGlassBlocks(ModBlocks.SPECTREGLASS, ModBlocks.SPECTREGLASS_PANE)
         blockStateModelGenerator.createGlassBlocks(ModBlocks.SHATTERED_SPECTREGLASS, ModBlocks.SHATTERED_SPECTREGLASS_PANE)
+        blockStateModelGenerator.createTrivialBlock(ModBlocks.NECROTIC_ASH, TexturedModel.CARPET)
 
         blockStateModelGenerator.blockStateOutput.accept(
             MultiVariantGenerator.dispatch(
@@ -75,6 +76,7 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
         ))
         itemModelGenerator.generateSpyglass(ModItems.BASALT_OAR)
         itemModelGenerator.generateFlatItem(ModItems.BASALT_ROD, ModelTemplates.FLAT_HANDHELD_ROD_ITEM)
+        itemModelGenerator.generateFlatItem(ModItems.NECROTIC_URN, ModelTemplates.FLAT_ITEM)
 
         itemModelGenerator.itemModelOutput.accept(ModItems.DUMMY_SOUL_FIRE, ItemModelUtils.plainModel(
             ModelTemplates.FLAT_ITEM.create(

@@ -25,6 +25,7 @@ object NetherArchives : ModInitializer {
         // Proceed with mild caution.
         NetherArchivesBlocks.init()
         NetherArchivesBlockEntities.init()
+        NetherArchivesComponents.init()
         NetherArchivesItems.init()
         NetherArchivesEntities.init()
         NetherArchivesDamageTypes.init()

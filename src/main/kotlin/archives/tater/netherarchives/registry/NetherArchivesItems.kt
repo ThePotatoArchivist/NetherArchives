@@ -1,10 +1,8 @@
 package archives.tater.netherarchives.registry
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.item.BlazeLanternItem
-import archives.tater.netherarchives.item.FakeVanillaItem
-import archives.tater.netherarchives.item.OarItem
-import archives.tater.netherarchives.item.SoulGlassKnifeItem
+import archives.tater.netherarchives.component.AshAmount
+import archives.tater.netherarchives.item.*
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab
 import net.minecraft.core.Direction
@@ -131,6 +129,16 @@ object NetherArchivesItems {
     val SHATTERED_SPECTREGLASS_PANE = register(ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE)
 
     @JvmField
+    val NECROTIC_URN = register(ModItemIds.NECROTIC_URN, ::NecroticUrnItem) {
+        stacksTo(1)
+        component(ModComponents.ASH_AMOUNT, AshAmount(0))
+        useCooldown(1f)
+    }
+
+    @JvmField
+    val NECROTIC_ASH = register(ModBlockItemIds.NECROTIC_ASH)
+
+    @JvmField
     val DUMMY_SOUL_FIRE = register(ModItemIds.DUMMY_SOUL_FIRE, ::FakeVanillaItem)
 
     const val CREATIVE_TAB_TRANSLATION = "itemGroup.netherarchives.nether_archives"
@@ -162,6 +170,8 @@ object NetherArchivesItems {
                     accept(SHATTERED_SPECTREGLASS)
                     accept(SPECTREGLASS_PANE)
                     accept(SHATTERED_SPECTREGLASS_PANE)
+                    accept(NECROTIC_URN)
+                    accept(NECROTIC_ASH)
                 }
             }
         }.build()
@@ -172,8 +182,8 @@ object NetherArchivesItems {
             INGREDIENTS to setOf(IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD),
             NATURAL_BLOCKS to setOf(MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER),
             COMBAT to setOf(BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE),
-            TOOLS_AND_UTILITIES to setOf(BASALT_SKIS, BASALT_OAR),
-            FUNCTIONAL_BLOCKS to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE),
+            TOOLS_AND_UTILITIES to setOf(BASALT_SKIS, BASALT_OAR, NECROTIC_URN),
+            FUNCTIONAL_BLOCKS to setOf(BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE, NECROTIC_ASH),
             REDSTONE_BLOCKS to setOf(ADJUSTABLE_BASALT_GEYSER)
         ).forEach { (group, items) ->
             CreativeModeTabEvents.modifyOutputEvent(group).register {

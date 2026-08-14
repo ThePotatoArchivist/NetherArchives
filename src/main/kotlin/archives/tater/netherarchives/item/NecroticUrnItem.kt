@@ -1,0 +1,95 @@
+package archives.tater.netherarchives.item
+
+import archives.tater.netherarchives.component.AshAmount
+import archives.tater.netherarchives.registry.ModBlocks
+import archives.tater.netherarchives.registry.ModComponents
+import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.util.get
+import archives.tater.netherarchives.util.isIn
+import archives.tater.netherarchives.util.set
+import net.minecraft.core.BlockPos
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.SlotAccess
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ClickAction
+import net.minecraft.world.inventory.Slot
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+
+class NecroticUrnItem(properties: Properties) : Item(properties) {
+    override fun use(level: Level, player: Player, hand: InteractionHand): InteractionResult {
+        val stack = player[hand]
+        val ashAmount = AshAmount.get(stack)
+        if (ashAmount <= 0) return InteractionResult.FAIL
+
+        player.playSound(SoundEvents.SOUL_SAND_PLACE)
+
+        if (level.isClientSide) return InteractionResult.SUCCESS
+
+        val center = player.blockPosition()
+        val state = ModBlocks.NECROTIC_ASH.defaultBlockState()
+        for (pos in BlockPos.betweenClosed(center.x - H_RANGE, center.y - V_RANGE, center.z - H_RANGE, center.x + H_RANGE, center.y + H_RANGE, center.z + H_RANGE)) {
+            if (center.distSqr(pos) > H_RANGE * H_RANGE) continue
+            if (!level.isEmptyBlock(pos) || !state.canSurvive(level, pos)) continue
+
+            level[pos] = state
+        }
+
+        if (!player.hasInfiniteMaterials())
+            stack[ModComponents.ASH_AMOUNT] = AshAmount(ashAmount - 1)
+
+        return InteractionResult.SUCCESS
+    }
+
+    override fun overrideOtherStackedOnMe(
+        self: ItemStack,
+        other: ItemStack,
+        slot: Slot,
+        clickAction: ClickAction,
+        player: Player,
+        carriedItem: SlotAccess
+    ): Boolean = tryInsert(other, clickAction, self)
+
+    override fun overrideStackedOnOther(
+        self: ItemStack,
+        slot: Slot,
+        clickAction: ClickAction,
+        player: Player
+    ): Boolean = tryInsert(slot.item, clickAction, self)
+
+    private fun tryInsert(
+        other: ItemStack,
+        clickAction: ClickAction,
+        self: ItemStack
+    ): Boolean {
+        if (!(other isIn ModTags.NECROTIC_URN_FUEL)) return false
+        if (clickAction != ClickAction.PRIMARY) return false
+        val amount = AshAmount.get(self)
+        if (amount >= AshAmount.MAX) return false
+
+        val transferred = (AshAmount.MAX - amount).coerceAtMost(other.count)
+
+        other.shrink(transferred)
+        self[ModComponents.ASH_AMOUNT] = AshAmount(amount + transferred)
+
+        return true
+    }
+
+    override fun getBarColor(stack: ItemStack): Int = 0xff68e2a3u.toInt()
+
+    override fun getBarWidth(stack: ItemStack): Int = when (val amount = AshAmount.get(stack)) {
+        0 -> 0
+        AshAmount.MAX -> 13
+        else -> 11 * (amount - 1) / 64 + 1
+    }
+
+    override fun isBarVisible(stack: ItemStack): Boolean = true
+
+    companion object {
+        const val H_RANGE = 8
+        const val V_RANGE = 3
+    }
+}

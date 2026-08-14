@@ -84,5 +84,7 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
         add(ModBlocks.SPECTREGLASS, createSingleItemTableWithSilkTouch(ModBlocks.SPECTREGLASS, ModBlocks.SHATTERED_SPECTREGLASS))
 
         dropSelf(ModBlocks.SHATTERED_SPECTREGLASS)
+
+        add(ModBlocks.NECROTIC_ASH, noDrop())
     }
 }
