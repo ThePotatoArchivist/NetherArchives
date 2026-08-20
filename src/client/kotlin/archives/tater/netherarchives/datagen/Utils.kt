@@ -14,19 +14,25 @@ import net.minecraft.advancements.predicates.LocationPredicate
 import net.minecraft.advancements.predicates.entity.EntityPredicate
 import net.minecraft.advancements.triggers.Criterion
 import net.minecraft.advancements.triggers.PickedUpItemTrigger
+import net.minecraft.client.data.models.BlockModelGenerators
+import net.minecraft.client.data.models.MultiVariant
 import net.minecraft.client.data.models.model.ModelTemplate
 import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot
 import net.minecraft.client.data.models.model.TexturedModel
+import net.minecraft.client.renderer.block.dispatch.Variant
 import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.core.ClientAsset
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+import net.minecraft.util.random.Weighted
+import net.minecraft.util.random.WeightedList
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import java.util.*
 import java.util.function.Consumer
+import java.util.stream.Stream
 
 internal inline fun ModelTemplate(vararg requiredTextureKeys: TextureSlot, parent: Identifier? = null, variant: String? = null): ModelTemplate =
     ModelTemplate(Optional.ofNullable(parent), Optional.ofNullable(variant), *requiredTextureKeys)
@@ -115,3 +121,7 @@ fun FabricLanguageProvider.TranslationBuilder.addAdvancement(id: Identifier, tit
     add(id.toLanguageKey("advancement", "title"), title)
     add(id.toLanguageKey("advancement", "description"), description)
 }
+
+fun createRotatedVariants(variants: List<Variant>) = MultiVariant(WeightedList.of(variants.stream().flatMap {
+    Stream.of(it, it.with(BlockModelGenerators.Y_ROT_90), it.with(BlockModelGenerators.Y_ROT_180), it.with(BlockModelGenerators.Y_ROT_270))
+}.map { Weighted(it, 1) }.toList()))

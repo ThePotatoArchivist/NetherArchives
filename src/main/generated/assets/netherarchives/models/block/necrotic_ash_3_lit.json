@@ -1,0 +1,6 @@
+{
+  "parent": "netherarchives:block/template_necrotic_ash_lit",
+  "textures": {
+    "all": "netherarchives:block/necrotic_ash_3"
+  }
+}

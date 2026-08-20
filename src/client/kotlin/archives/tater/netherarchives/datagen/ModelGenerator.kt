@@ -10,7 +10,8 @@ import archives.tater.netherarchives.registry.ModItems
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.minecraft.client.data.models.BlockModelGenerators
-import net.minecraft.client.data.models.BlockModelGenerators.*
+import net.minecraft.client.data.models.BlockModelGenerators.plainModel
+import net.minecraft.client.data.models.BlockModelGenerators.plainVariant
 import net.minecraft.client.data.models.ItemModelGenerators
 import net.minecraft.client.data.models.blockstates.MultiPartGenerator
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator
@@ -19,6 +20,7 @@ import net.minecraft.client.data.models.model.ItemModelUtils
 import net.minecraft.client.data.models.model.ModelLocationUtils.getModelLocation
 import net.minecraft.client.data.models.model.ModelTemplates
 import net.minecraft.client.data.models.model.TextureMapping
+import net.minecraft.client.data.models.model.TextureMapping.getBlockTexture
 import net.minecraft.client.data.models.model.TextureSlot
 import net.minecraft.client.renderer.block.dispatch.VariantMutator
 import net.minecraft.client.renderer.item.properties.conditional.IsUsingItem
@@ -38,9 +40,18 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
 
         blockStateModelGenerator.blockStateOutput.accept(
             MultiVariantGenerator.dispatch(ModBlocks.NECROTIC_ASH).with(
-                PropertyDispatch.initial(NecroticAshBlock.LIT)
-                    .select(false, createRotatedVariants(plainModel(getModelLocation(ModBlocks.NECROTIC_ASH))))
-                    .select(true,  createRotatedVariants(plainModel(getModelLocation(ModBlocks.NECROTIC_ASH, "_lit"))))
+                PropertyDispatch.initial(NecroticAshBlock.LIT).generate { lit ->
+                    val model = if (lit) NECROTIC_ASH_LIT else NECROTIC_ASH
+                    createRotatedVariants((1..4).map {
+                        val suffix = "_$it"
+                        plainModel(model.createWithSuffix(
+                            ModBlocks.NECROTIC_ASH,
+                            suffix,
+                            TextureMapping(TextureSlot.ALL to getBlockTexture(ModBlocks.NECROTIC_ASH, suffix)),
+                            blockStateModelGenerator.modelOutput
+                        ))
+                    })
+                }
             )
         )
 
@@ -67,7 +78,7 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
                     ModelTemplates.CUBE_ALL.createWithSuffix(
                         ModBlocks.ROTTEN_FLESH_BLOCK,
                         suffix,
-                        TextureMapping.cube(TextureMapping.getBlockTexture(ModBlocks.ROTTEN_FLESH_BLOCK, suffix)),
+                        TextureMapping.cube(getBlockTexture(ModBlocks.ROTTEN_FLESH_BLOCK, suffix)),
                         blockStateModelGenerator.modelOutput
                     )
                 )
@@ -93,7 +104,7 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
         itemModelGenerator.itemModelOutput.accept(ModItems.DUMMY_SOUL_FIRE, ItemModelUtils.plainModel(
             ModelTemplates.FLAT_ITEM.create(
                 getModelLocation(ModItems.DUMMY_SOUL_FIRE), TextureMapping(
-                TextureSlot.LAYER0 to TextureMapping.getBlockTexture(Blocks.SOUL_FIRE, "_0")
+                TextureSlot.LAYER0 to getBlockTexture(Blocks.SOUL_FIRE, "_0")
             ), itemModelGenerator.modelOutput
             )
         ))
@@ -111,9 +122,12 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
         val ALL_EMISSIVE: TextureSlot = TextureSlot.create("all_emissive")
         val CUBE_ALL_EMISSIVE = ModelTemplate(TextureSlot.ALL, ALL_EMISSIVE, parent = NetherArchives.id("block/cube_all_emissive"))
         val CUBE_ALL_EMISSIVE_TEXTURED = texturedModelFactory(CUBE_ALL_EMISSIVE) { TextureMapping(
-            TextureSlot.ALL to TextureMapping.getBlockTexture(it),
-            ALL_EMISSIVE to TextureMapping.getBlockTexture(it, "_emissive")
+            TextureSlot.ALL to getBlockTexture(it),
+            ALL_EMISSIVE to getBlockTexture(it, "_emissive")
         ) }
+
+        val NECROTIC_ASH = ModelTemplate(TextureSlot.ALL, parent = NetherArchives.id("block/template_necrotic_ash"))
+        val NECROTIC_ASH_LIT = ModelTemplate(TextureSlot.ALL, parent = NetherArchives.id("block/template_necrotic_ash_lit"), variant = "_lit")
 
         /**
          * Copied from [BlockModelGenerators.createSoulFire]

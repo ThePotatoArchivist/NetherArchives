@@ -2,7 +2,6 @@
   "parent": "block/thin_block",
   "textures": {
     "particle": "#all",
-    "all": "netherarchives:block/necrotic_ash",
     "emissive": {
       "sprite": "netherarchives:block/necrotic_ash_lit",
       "force_translucent": true
