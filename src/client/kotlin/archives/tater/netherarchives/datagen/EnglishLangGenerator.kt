@@ -2,6 +2,7 @@ package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.ModBlocks
 import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.ModSounds
 import archives.tater.netherarchives.registry.ModTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -48,6 +49,10 @@ class EnglishLangGenerator(output: FabricPackOutput, registriesFuture: Completab
             addAdvancement(AdvancementGenerator.PADDLE_SKIS, "Hazardous Propulsion", "Propel yourself while skiing on lava")
             addAdvancement(AdvancementGenerator.BOOST_SKIS, "Airskiing", "Get a boost from a basalt geyser")
             addAdvancement(AdvancementGenerator.FERMENT, "All-Organic Vegan Leather", "Ferment rotten flesh into leather over soul fire")
+            add(ModSounds.BLAZE_FIRE_IGNITE, "Blaze fire ignites")
+            add(ModSounds.BLAZE_LANTERN_THROW, "Blaze lantern flies")
+            add(ModSounds.BLAZE_LANTERN_SHATTER, "Blaze lantern shatters")
+            add(ModSounds.BASALT_OAR_PADDLE, "Basalt oar paddles")
         }
     }
 }

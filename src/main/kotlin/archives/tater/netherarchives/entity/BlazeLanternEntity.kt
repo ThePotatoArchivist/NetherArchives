@@ -3,13 +3,13 @@ package archives.tater.netherarchives.entity
 import archives.tater.netherarchives.block.BlazePowderBlock
 import archives.tater.netherarchives.registry.ModBlocks
 import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.ModSounds
 import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.util.center
 import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.util.listCopy
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -33,7 +33,7 @@ class BlazeLanternEntity : ThrowableItemProjectile {
         val pos = hitResult.location
         val blockPos = BlockPos(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
 
-        level().playSound(null, blockPos, SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 0.5f, 1.0f)
+        level().playSound(null, blockPos, ModSounds.BLAZE_LANTERN_SHATTER, SoundSource.NEUTRAL, 0.5f, 1.0f)
 
         level().getEntities(this, AABB.ofSize(blockPos.center, 1.5, 1.5, 1.5)).forEach {
             it.igniteForTicks(20 * 5)

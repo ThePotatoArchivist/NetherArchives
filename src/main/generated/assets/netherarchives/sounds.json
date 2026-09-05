@@ -1,0 +1,44 @@
+{
+  "block.blaze_fire.ignite": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:item.firecharge.use"
+      }
+    ],
+    "subtitle": "subtitles.netherarchives.block.blaze_fire.ignite"
+  },
+  "entity.blaze_lantern.shatter": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:block.glass.break"
+      }
+    ],
+    "subtitle": "subtitles.netherarchives.entity.blaze_lantern.shatter"
+  },
+  "entity.blaze_lantern.throw": {
+    "sounds": [
+      "minecraft:random/bow"
+    ],
+    "subtitle": "subtitles.netherarchives.entity.blaze_lantern.throw"
+  },
+  "item.basalt_oar.paddle": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.boat.paddle_water"
+      }
+    ],
+    "subtitle": "subtitles.netherarchives.item.basalt_oar.paddle"
+  },
+  "item.basalt_oar.paddle.lava": {
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:item.bucket.empty_lava"
+      }
+    ],
+    "subtitle": "subtitles.netherarchives.item.basalt_oar.paddle"
+  }
+}
