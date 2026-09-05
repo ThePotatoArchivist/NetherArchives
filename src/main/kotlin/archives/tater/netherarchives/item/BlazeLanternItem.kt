@@ -1,9 +1,8 @@
 package archives.tater.netherarchives.item
 
 import archives.tater.netherarchives.entity.BlazeLanternEntity
+import archives.tater.netherarchives.registry.ModSounds
 import archives.tater.netherarchives.util.get
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
 import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -25,13 +24,8 @@ class BlazeLanternItem(settings: Properties) : Item(settings) {
 
     override fun use(level: Level, user: Player, hand: InteractionHand): InteractionResult {
         val stack = user[hand]
-        level.playSound(
-            null as Player?,
-            user.x,
-            user.y,
-            user.z,
-            SoundEvents.EGG_THROW,
-            SoundSource.NEUTRAL,
+        user.playSound(
+            ModSounds.BLAZE_LANTERN_THROW,
             0.5f,
             0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f)
         )
@@ -41,10 +35,9 @@ class BlazeLanternItem(settings: Properties) : Item(settings) {
             level.addFreshEntity(blazeLanternEntity)
         }
         user.awardStat(Stats.ITEM_USED.get(this))
-        if (!user.abilities.instabuild) {
-            stack.shrink(1)
+        stack.consume(1, user)
+        if (!user.abilities.instabuild)
             user.cooldowns.addCooldown(stack, 40)
-        }
         return InteractionResult.SUCCESS.heldItemTransformedTo(stack)
     }
 }

@@ -1,5 +1,6 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.registry.ModSounds
 import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.listCopy
@@ -100,7 +101,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
             level.playSound(
                 null,
                 pos,
-                SoundEvents.FIRECHARGE_USE,
+                ModSounds.BLAZE_FIRE_IGNITE,
                 SoundSource.NEUTRAL,
                 1.0f,
                 0.4f + 0.4f * level.random.nextFloat()

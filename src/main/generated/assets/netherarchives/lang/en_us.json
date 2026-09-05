@@ -37,6 +37,10 @@
   "itemGroup.netherarchives.nether_archives": "Nether Archives",
   "netherarchives.emi.explosion": "Any Explosion",
   "netherarchives.emi.projectile": "Impact Projectiles",
+  "subtitles.netherarchives.block.blaze_fire.ignite": "Blaze fire ignites",
+  "subtitles.netherarchives.entity.blaze_lantern.shatter": "Blaze lantern shatters",
+  "subtitles.netherarchives.entity.blaze_lantern.throw": "Blaze lantern flies",
+  "subtitles.netherarchives.item.basalt_oar.paddle": "Basalt oar paddles",
   "tag.item.netherarchives.basalt_equipment_repair": "Repairs Basalt Equipment",
   "tag.item.netherarchives.rotten_flesh_fermenter": "Rotten Flesh Fermenter",
   "tag.item.netherarchives.skis": "Skis"

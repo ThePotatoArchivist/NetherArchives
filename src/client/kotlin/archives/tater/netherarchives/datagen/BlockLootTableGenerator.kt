@@ -11,6 +11,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable.inlineLootTable
 import java.util.concurrent.CompletableFuture
 
 class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
@@ -25,24 +26,27 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
 
         dropSelf(ModBlocks.MAGNETITE)
 
-        add(ModBlocks.SMOLDERING_MAGNETITE) {
-            pool {
-                item(ModItems.IRON_SLAG) {
-                    oreDrops(fortune)
+        add(ModBlocks.SMOLDERING_MAGNETITE, createSilkTouchDispatchTable(
+            ModBlocks.SMOLDERING_MAGNETITE,
+            inlineLootTable(lootTable {
+                pool {
+                    item(ModItems.IRON_SLAG) {
+                        oreDrops(fortune)
+                    }
+                    conditions { survivesExplosion() }
                 }
-                conditions { survivesExplosion() }
-            }
-            pool {
-                item(Items.IRON_NUGGET) {
-                    count(uniform(1, 3))
-                    setWeight(1)
+                pool {
+                    item(Items.IRON_NUGGET) {
+                        count(uniform(1, 3))
+                        setWeight(1)
+                    }
+                    empty {
+                        setWeight(3)
+                    }
+                    conditions { survivesExplosion() }
                 }
-                empty {
-                    setWeight(3)
-                }
-                conditions { survivesExplosion() }
-            }
-        }
+            }.build())
+        ))
 
         dropSelf(ModBlocks.ROTTEN_FLESH_BLOCK)
 
