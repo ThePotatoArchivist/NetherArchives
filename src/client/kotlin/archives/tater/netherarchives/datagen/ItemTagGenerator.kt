@@ -40,7 +40,7 @@ class ItemTagGenerator(
             ModBlockItemIds.SPECTREGLASS_PANE,
             ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE,
         )
-        builder(ItemTags.ARMOR_ENCHANTABLE).add(
+        builder(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(
             ModItemIds.BASALT_SKIS,
         )
         builder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
