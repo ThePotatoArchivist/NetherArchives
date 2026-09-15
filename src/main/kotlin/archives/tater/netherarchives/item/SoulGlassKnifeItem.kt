@@ -74,7 +74,7 @@ class SoulGlassKnifeItem(settings: Properties) : Item(settings) {
             }
 
         val toolComponent: Tool
-            get() = Tool(listOf(), 1f, 2, false)
+            get() = Tool([], 1f, 2, false)
 
         val weaponComponent: Weapon
             get() = Weapon(1)

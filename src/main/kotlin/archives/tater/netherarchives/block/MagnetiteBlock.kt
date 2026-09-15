@@ -22,6 +22,12 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 
 class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()) {
+    init {
+        registerDefaultState(stateDefinition.any()
+            .setValue(DISTANCE, 7)
+        )
+    }
+
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState {
         return updateDistanceFromLodestone(defaultBlockState(), ctx.level, ctx.clickedPos)
     }

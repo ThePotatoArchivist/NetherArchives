@@ -1,42 +1,22 @@
 package archives.tater.netherarchives.modification
 
 import archives.tater.netherarchives.NetherArchives
+import archives.tater.netherarchives.registry.ModPlacedFeatures
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
-import net.minecraft.resources.ResourceKey
-import net.minecraft.core.registries.Registries
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.levelgen.GenerationStep
 
-
-private val MAGNETITE_DELTA =
-    ResourceKey.create(Registries.PLACED_FEATURE, NetherArchives.id("magnetite_delta"))
-private val MAGNETITE_BLOBS =
-    ResourceKey.create(Registries.PLACED_FEATURE, NetherArchives.id("magnetite_blobs"))
-private val BASALT_GEYSER =
-    ResourceKey.create(Registries.PLACED_FEATURE, NetherArchives.id("basalt_geyser"))
-private val BASALT_GEYSER_SUBMERGED =
-    ResourceKey.create(Registries.PLACED_FEATURE, NetherArchives.id("basalt_geyser_submerged"))
-
 internal fun modifyWorldGen() {
-    BiomeModifications.addFeature(
-        BiomeSelectors.includeByKey(Biomes.BASALT_DELTAS),
-        GenerationStep.Decoration.SURFACE_STRUCTURES,
-        MAGNETITE_DELTA
-    )
-    BiomeModifications.addFeature(
-        BiomeSelectors.includeByKey(Biomes.BASALT_DELTAS),
-        GenerationStep.Decoration.SURFACE_STRUCTURES,
-        MAGNETITE_BLOBS
-    )
-    BiomeModifications.addFeature(
-        BiomeSelectors.includeByKey(Biomes.BASALT_DELTAS),
-        GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
-        BASALT_GEYSER
-    )
-    BiomeModifications.addFeature(
-        BiomeSelectors.includeByKey(Biomes.BASALT_DELTAS),
-        GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
-        BASALT_GEYSER_SUBMERGED
-    )
+    with (BiomeModifications.create(NetherArchives.id("basalt_deltas"))) {
+        add(ModificationPhase.ADDITIONS, BiomeSelectors.includeByKey(Biomes.BASALT_DELTAS)) {
+            with (it.generationSettings) {
+                addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.MAGNETITE_DELTA)
+                addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.MAGNETITE_BLOBS)
+                addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.BASALT_GEYSER)
+                addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.BASALT_GEYSER_SUBMERGED)
+            }
+        }
+    }
 }

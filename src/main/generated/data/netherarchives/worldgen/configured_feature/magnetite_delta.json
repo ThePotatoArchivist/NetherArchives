@@ -8,7 +8,10 @@
       }
     },
     "rim": {
-      "Name": "netherarchives:magnetite"
+      "Name": "netherarchives:magnetite",
+      "Properties": {
+        "distance": "7"
+      }
     },
     "rim_size": {
       "type": "minecraft:uniform",
