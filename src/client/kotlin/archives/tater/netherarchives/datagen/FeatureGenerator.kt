@@ -43,25 +43,25 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
 
         entries.add(ModPlacedFeatures.MAGNETITE_BLOBS, PlacedFeature(
             registries.getOrThrow(ModConfiguredFeatures.MAGNETITE_BLOBS),
-            listOf(
+            [
                 CountPlacement.of(10),
                 spread(),
                 uniform(aboveBottom(0), belowTop(0)),
                 biome(),
-            )
+            ]
         ))
 
         entries.add(ModPlacedFeatures.MAGNETITE_DELTA, PlacedFeature(
             registries.getOrThrow(ModConfiguredFeatures.MAGNETITE_DELTA),
-            listOf(
+            [
                 CountOnEveryLayerPlacement.of(20),
                 biome(),
-            )
+            ]
         ))
 
         entries.add(ModPlacedFeatures.BASALT_GEYSER, PlacedFeature(
             registries.getOrThrow(ModConfiguredFeatures.BASALT_GEYSER),
-            listOf(
+            [
                 CountOnEveryLayerPlacement.of(2),
                 RandomOffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
                 BlockPredicateFilter.forPredicate(allOf(
@@ -69,12 +69,12 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
                     matchesTag(NetherArchivesTags.BASALT_GEYSER_REPLACEABLE)
                 )),
                 biome(),
-            )
+            ]
         ))
 
         entries.add(ModPlacedFeatures.BASALT_GEYSER_SUBMERGED, PlacedFeature(
             registries.getOrThrow(ModConfiguredFeatures.BASALT_GEYSER),
-            listOf(
+            [
                 CountOnEveryLayerPlacement.of(4),
                 RandomOffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
                 BlockPredicateFilter.forPredicate(allOf(
@@ -89,7 +89,7 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
                     )
                 )),
                 biome(),
-            )
+            ]
         ))
     }
 

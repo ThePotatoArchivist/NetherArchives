@@ -87,6 +87,7 @@ tasks.withType<JavaCompile>().configureEach {
 kotlin {
 	compilerOptions {
 		jvmTarget = JvmTarget.JVM_25
+		freeCompilerArgs.add("-Xcollection-literals")
 	}
 
 	target.compilations {

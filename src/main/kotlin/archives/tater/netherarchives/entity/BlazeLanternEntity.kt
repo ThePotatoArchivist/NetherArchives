@@ -61,7 +61,7 @@ class BlazeLanternEntity : ThrowableItemProjectile {
                     centerFlammable = remove(blockPos)
                 }.draw(level().random, 4)
 
-                if (centerFlammable) returnedList + listOf(blockPos) else returnedList
+                if (centerFlammable) returnedList + blockPos else returnedList
             }
             .forEach {
                 if (level().getBlockState(it.below()).isAir) {
