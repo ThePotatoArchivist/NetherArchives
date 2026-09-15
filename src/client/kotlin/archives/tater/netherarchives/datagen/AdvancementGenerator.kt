@@ -9,15 +9,17 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.advancements.predicates.ContextAwarePredicate
 import net.minecraft.advancements.predicates.entity.EntityPredicate
 import net.minecraft.advancements.triggers.*
+import net.minecraft.advancements.triggers.PickedUpItemTrigger.TriggerInstance.thrownItemPickedUpByPlayer
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.world.level.material.Fluids
-import net.minecraft.world.level.storage.loot.predicates.LocationCheck
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
+import net.minecraft.world.level.storage.loot.predicates.AllOfCondition.allOf
+import net.minecraft.world.level.storage.loot.predicates.LocationCheck.checkLocation
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock.blockMatches
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
@@ -37,39 +39,42 @@ class AdvancementGenerator(output: FabricPackOutput, registryLookup: Completable
 
         val ironSlag = consumer.advancement(IRON_SLAG, ModItems.SMOLDERING_MAGNETITE) {
             parent(nether)
-            addCriterion("iron_slag", playerPickedUpItemTrigger(ItemPredicate {
-                of(items, ModItems.IRON_SLAG)
-            }))
+            addCriterion("iron_slag", thrownItemPickedUpByPlayer(
+                Optional.empty(),
+                Optional.of(ItemPredicate {
+                    of(items, ModItems.IRON_SLAG)
+                }),
+                Optional.empty()
+            ))
         }
 
         val lightBlazeDust = consumer.advancement(LIGHT_BLAZE_DUST, ModItems.BLAZE_DUST) {
             parent(intoFire)
             addCriterion("light_blaze_fire", CriteriaTriggers.ANY_BLOCK_USE.createCriterion(
-                AnyBlockInteractionTrigger.TriggerInstance(Optional.empty(), Optional.of(ContextAwarePredicate.create(
-                    LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BLAZE_FIRE).build()
-                )))
+                AnyBlockInteractionTrigger.TriggerInstance(Optional.empty(), Optional.of(Holder.direct(
+                    blockMatches(
+                        registryLookup.lookupOrThrow(Registries.BLOCK), ModBlocks.BLAZE_FIRE
+                    ).build())))
             ))
         }
 
         val followBlazeTorch = consumer.advancement(FOLLOW_BLAZE_TORCH, ModItems.BLAZE_TORCH) {
             parent(ohShiny)
-            addCriterion("place_blaze_torch", CriteriaTriggers.PLACED_BLOCK.createCriterion(
-                ItemUsedOnLocationTrigger.TriggerInstance(
-                Optional.empty(),
-                Optional.of(
-                    ContextAwarePredicate.create(
-                    LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BLAZE_TORCH).build(),
-                    LocationCheck.checkLocation(locationPredicate {
-                        setStructures(registryLookup.lookupOrThrow(Registries.STRUCTURE).getOrThrow(ModTags.BLAZE_TORCH_LOCATED))
-                    }).build()
-                ))
-            )))
+            addCriterion("place_blaze_torch", ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(
+                allOf(
+                    blockMatches(
+                        registryLookup.lookupOrThrow(Registries.BLOCK), ModBlocks.BLAZE_TORCH
+                    ),
+                    checkLocation(locationPredicate {
+                        setStructures(registryLookup.getOrThrow(ModTags.BLAZE_TORCH_LOCATED))
+                    }),
+                )
+            ))
         }
 
         val paddleSkis = consumer.advancement(PADDLE_SKIS, ModItems.BASALT_SKIS) {
             parent(nether)
-            addCriterion("paddle_skis", NetherArchivesTriggers.SKIS_PADDLE.createCriterion(
-                ConsumeItemTrigger.TriggerInstance(
+            addCriterion("paddle_skis", NetherArchivesTriggers.SKIS_PADDLE.createCriterion(ConsumeItemTrigger.TriggerInstance(
                 Optional.of(EntityPredicate.wrap(EntityPredicate {
                     steppingOn(locationPredicate {
                         setFluid(fluidPredicate {
@@ -88,12 +93,11 @@ class AdvancementGenerator(output: FabricPackOutput, registryLookup: Completable
 
         val ferment = consumer.advancement(FERMENT, ModItems.ROTTEN_FLESH_BLOCK) {
             parent(nether)
-            addCriterion("ferment", NetherArchivesTriggers.FERMENT.createCriterion(DefaultBlockInteractionTrigger.TriggerInstance(
-                Optional.empty(),
-                Optional.of(ContextAwarePredicate.create(
-                    LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK).build()
-                ))
-            )))
+            addCriterion("ferment", NetherArchivesTriggers.FERMENT.createCriterion(
+                DefaultBlockInteractionTrigger.TriggerInstance(Optional.empty(), Optional.of(Holder.direct(blockMatches(
+                    registryLookup.lookupOrThrow(Registries.BLOCK), ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
+                ).build())))
+            ))
         }
     }
 

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:blaze_torch"
+        "recipes": "netherarchives:blaze_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

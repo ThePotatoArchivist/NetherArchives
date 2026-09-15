@@ -3,7 +3,6 @@ package archives.tater.netherarchives.block
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.ModBlocks
 import archives.tater.netherarchives.registry.ModTags
-import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -55,8 +54,6 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
 
     override fun getDustColor(state: BlockState, level: BlockGetter, pos: BlockPos): Int = 0x25252E
 
-    override fun codec(): MapCodec<out FallingBlock> = CODEC
-
     override fun updateShape(
         state: BlockState,
         level: LevelReader,
@@ -74,8 +71,6 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
     }
 
     companion object {
-        val CODEC: MapCodec<MagnetiteBlock> = simpleCodec(::MagnetiteBlock)
-
         val DISTANCE: IntegerProperty = BlockStateProperties.DISTANCE
 
         private fun getDistanceFromLodestone(state: BlockState): Int {

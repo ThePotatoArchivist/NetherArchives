@@ -6,12 +6,12 @@ import archives.tater.netherarchives.registry.ModItems
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable.inlineLootTable
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.between
 import java.util.concurrent.CompletableFuture
 
 class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
@@ -22,7 +22,7 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
     }
 
     override fun generate() {
-        val fortune = registries.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE)
+        val fortune = enchantments.getOrThrow(Enchantments.FORTUNE)
 
         dropSelf(ModBlocks.MAGNETITE)
 
@@ -37,7 +37,7 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
                 }
                 pool {
                     item(Items.IRON_NUGGET) {
-                        count(uniform(1, 3))
+                        count(between(1, 3))
                         setWeight(1)
                     }
                     empty {
@@ -57,7 +57,7 @@ class BlockLootTableGenerator(output: FabricPackOutput, registriesFuture: Comple
                         `when`(hasSilkTouch())
                     }
                     item(Items.LEATHER) {
-                        count(uniform(1, 3))
+                        count(between(1, 3))
                         oreDrops(fortune)
                     }
                 }

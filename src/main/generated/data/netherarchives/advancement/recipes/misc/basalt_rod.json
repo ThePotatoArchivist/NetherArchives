@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:basalt_rod"
+        "recipes": "netherarchives:basalt_rod"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

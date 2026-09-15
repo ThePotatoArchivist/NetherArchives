@@ -46,7 +46,7 @@ interface Shatterable {
         projectile: Projectile
     ) {
         val pos = hit.blockPos
-        if (level !is ServerLevel || !projectile.mayInteract(level, pos) || !projectile.mayBreak(level) || projectile isIn ModTags.NON_SHATTER_PROJECTILES) return
+        if (level !is ServerLevel || !projectile.mayInteract(level, pos) || !projectile.mayBreak(level, pos) || projectile isIn ModTags.NON_SHATTER_PROJECTILES) return
 
         if (projectile isIn ModTags.NON_CHAIN_SHATTER_PROJECTILES ||
             (projectile is FireworkRocketEntity && !(projectile as FireworkRocketEntityAccessor).invokeHasExplosion())) {
@@ -63,7 +63,7 @@ interface Shatterable {
 
     fun shatterChain(level: Level, pos: BlockPos, state: BlockState, chance: Float) {
         shatter(level, pos, state)
-        for (otherPos in BlockPos.withinManhattan(pos, 1, 1, 1)) {
+        for (otherPos in BlockPos.withinManhattan(pos, 1)) {
             val block = level[otherPos].block
             if (block is Shatterable && level.random.nextFloat() < chance)
                 level.scheduleTick(otherPos, block, level.random.nextIntBetweenInclusive(3, 8))

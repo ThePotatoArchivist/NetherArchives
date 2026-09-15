@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:blaze_lantern"
+        "recipes": "netherarchives:blaze_lantern"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

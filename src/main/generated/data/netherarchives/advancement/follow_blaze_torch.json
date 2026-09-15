@@ -3,18 +3,21 @@
   "criteria": {
     "place_blaze_torch": {
       "conditions": {
-        "location": [
-          {
-            "block": "netherarchives:blaze_torch",
-            "condition": "minecraft:block_state_property"
-          },
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {
-              "structures": "#netherarchives:blaze_torch_located"
+        "location": {
+          "type": "minecraft:all_of",
+          "terms": [
+            {
+              "type": "minecraft:match_block",
+              "blocks": "netherarchives:blaze_torch"
+            },
+            {
+              "type": "minecraft:location_check",
+              "predicate": {
+                "structures": "#netherarchives:blaze_torch_located"
+              }
             }
-          }
-        ]
+          ]
+        }
       },
       "trigger": "minecraft:placed_block"
     }

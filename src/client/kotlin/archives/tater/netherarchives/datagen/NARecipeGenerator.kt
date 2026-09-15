@@ -6,17 +6,20 @@ import archives.tater.netherarchives.registry.ModItems
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.minecraft.advancements.Advancement
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
+import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CookingBookCategory
+import net.minecraft.world.item.crafting.Recipe
 import java.util.concurrent.CompletableFuture
 
-class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutput) :
-    RecipeProvider(registries, exporter) {
+class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOutput: BootstrapContext<Advancement>) :
+    RecipeProvider(recipeOutput, advancementOutput) {
 
     override fun buildRecipes() {
         output.recipes()
@@ -169,10 +172,12 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
 
     class Provider(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
         FabricRecipeProvider(output, registriesFuture) {
+
         override fun createRecipeProvider(
-            registryLookup: HolderLookup.Provider,
-            exporter: RecipeOutput
-        ): RecipeProvider = NARecipeGenerator(registryLookup, exporter)
+            registries: HolderLookup.Provider,
+            recipes: BootstrapContext<Recipe<*>>,
+            advancements: BootstrapContext<Advancement>
+        ): RecipeProvider = NARecipeGenerator(recipes, advancements)
 
         override fun getName(): String = "Recipes"
 

@@ -6,7 +6,6 @@ import archives.tater.netherarchives.item.SkisItem
 import archives.tater.netherarchives.registry.NetherArchivesBlockEntities
 import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import archives.tater.netherarchives.util.*
-import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleOptions
@@ -40,8 +39,6 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
     }
 
     override fun getStateForPlacement(ctx: BlockPlaceContext): BlockState = defaultBlockState().setValue(FACING, ctx.clickedFace)
-
-    override fun codec(): MapCodec<out DirectionalBlock> = CODEC
 
     override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
         val facing = state.getValue(FACING)
@@ -99,8 +96,6 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
     }
 
     companion object : BlockEntityTicker<BasaltGeyserBlockEntity> {
-        val CODEC: MapCodec<BasaltGeyserBlock> = simpleCodec(::BasaltGeyserBlock)
-
         private const val BOOST_RANGE = 8
         private const val MAX_BOOST_VELOCITY = 0.5
         private const val SNEAKING_MAX_BOOST_VELOCITY = 0.12

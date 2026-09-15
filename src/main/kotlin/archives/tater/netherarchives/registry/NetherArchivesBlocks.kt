@@ -49,7 +49,7 @@ object NetherArchivesBlocks {
         instabreak()
         lightLevel { 15 }
         sound(SoundType.WOOL)
-        pushReaction(PushReaction.DESTROY)
+        pushReaction(PushReaction.POPPED)
         noOcclusion()
     }
 
@@ -58,7 +58,7 @@ object NetherArchivesBlocks {
         replaceable()
         noCollision()
         sound(SoundType.SAND)
-        pushReaction(PushReaction.DESTROY)
+        pushReaction(PushReaction.POPPED)
         noOcclusion()
     }
 
@@ -80,7 +80,7 @@ object NetherArchivesBlocks {
         instabreak()
         lightLevel { 15 }
         sound(SoundType.BONE_BLOCK)
-        pushReaction(PushReaction.DESTROY)
+        pushReaction(PushReaction.POPPED)
     }
 
     @JvmField
@@ -90,7 +90,7 @@ object NetherArchivesBlocks {
         instabreak()
         lightLevel { 15 }
         sound(SoundType.BONE_BLOCK)
-        pushReaction(PushReaction.DESTROY)
+        pushReaction(PushReaction.POPPED)
     }
 
     @JvmField

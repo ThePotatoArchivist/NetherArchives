@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:blaze_dust"
+        "recipes": "netherarchives:blaze_dust"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

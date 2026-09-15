@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:spectreglass_pane"
+        "recipes": "netherarchives:spectreglass_pane"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

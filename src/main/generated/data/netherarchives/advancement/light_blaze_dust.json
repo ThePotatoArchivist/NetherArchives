@@ -3,12 +3,10 @@
   "criteria": {
     "light_blaze_fire": {
       "conditions": {
-        "location": [
-          {
-            "block": "netherarchives:blaze_fire",
-            "condition": "minecraft:block_state_property"
-          }
-        ]
+        "location": {
+          "type": "minecraft:match_block",
+          "blocks": "netherarchives:blaze_fire"
+        }
       },
       "trigger": "minecraft:any_block_use"
     }

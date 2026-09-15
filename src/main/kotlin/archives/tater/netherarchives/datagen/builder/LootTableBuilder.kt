@@ -9,34 +9,33 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem
 import net.minecraft.world.level.storage.loot.entries.LootItem
-import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
+import net.minecraft.world.level.storage.loot.entries.UniformContainerBase
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction
 import net.minecraft.world.level.storage.loot.predicates.ConditionUserBuilder
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition
 import net.minecraft.world.level.storage.loot.predicates.MatchTool
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.exactly
 
 fun lootTable(init: LootTable.Builder.() -> Unit): LootTable.Builder {
     return LootTable.lootTable().apply(init)
 }
 
-fun LootTable.Builder.pool(rolls: NumberProvider, init: LootPool.Builder.() -> Unit) {
+fun LootTable.Builder.pool(rolls: Holder<ContextIntProvider>, init: LootPool.Builder.() -> Unit) {
     pool(LootPool.lootPool().setRolls(rolls).apply(init).build())
 }
 
 fun LootTable.Builder.pool(rolls: Int = 1, init: LootPool.Builder.() -> Unit) {
-    pool(constant(rolls), init)
+    pool(exactly(rolls), init)
 }
 
-fun LootPool.Builder.item(drop: ItemLike, init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
+fun LootPool.Builder.item(drop: ItemLike, init: UniformContainerBase.Builder<*>.() -> Unit) {
     add(LootItem.lootTableItem(drop).apply(init).build())
 }
 
-fun LootPool.Builder.empty(init: LootPoolSingletonContainer.Builder<*>.() -> Unit) {
+fun LootPool.Builder.empty(init: UniformContainerBase.Builder<*>.() -> Unit) {
     add(EmptyLootItem.emptyItem().apply(init).build())
 }
 
@@ -48,19 +47,19 @@ fun LootPool.Builder.conditions(init: Conditions.() -> Unit) {
     Conditions(this).init()
 }
 
-fun LootPoolSingletonContainer.Builder<*>.count(count: NumberProvider) {
+fun UniformContainerBase.Builder<*>.count(count: Holder<ContextIntProvider>) {
     apply(SetItemCountFunction.setCount(count))
 }
 
-fun LootPoolSingletonContainer.Builder<*>.oreDrops(enchantment: Holder<Enchantment>) {
+fun UniformContainerBase.Builder<*>.oreDrops(enchantment: Holder<Enchantment>) {
     apply(ApplyBonusCount.addOreBonusCount(enchantment))
 }
 
-fun LootPoolSingletonContainer.Builder<*>.conditions(init: Conditions.() -> Unit) {
+fun UniformContainerBase.Builder<*>.conditions(init: Conditions.() -> Unit) {
     Conditions(this).init()
 }
 
-fun AlternativesEntry.Builder.item(drop: ItemLike, init: LootPoolSingletonContainer.Builder<*>.() -> Unit = {}) {
+fun AlternativesEntry.Builder.item(drop: ItemLike, init: UniformContainerBase.Builder<*>.() -> Unit = {}) {
     otherwise(LootItem.lootTableItem(drop).apply(init))
 }
 
@@ -73,12 +72,6 @@ class Conditions(private val parentBuilder: ConditionUserBuilder<*>) {
         parentBuilder.`when`(MatchTool.toolMatches(ItemPredicate.Builder.item().apply(init)))
     }
 }
-
-fun constant(count: Float): ConstantValue = ConstantValue.exactly(count)
-fun constant(count: Int) = constant(count.toFloat())
-
-fun uniform(min: Float, max: Float): UniformGenerator = UniformGenerator.between(min, max)
-fun uniform(min: Int, max: Int) = uniform(min.toFloat(), max.toFloat())
 
 operator fun LootItemCondition.Builder.not(): LootItemCondition.Builder {
     return this.invert()

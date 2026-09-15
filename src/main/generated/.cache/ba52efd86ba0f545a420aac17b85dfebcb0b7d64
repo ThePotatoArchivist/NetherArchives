@@ -1,0 +1,8 @@
+// 26.3-rc-2	-999999999-01-01T00:00:00	Nether Archives/Features
+052e58660d7914b53327f1b4816ccd913f806366 data/netherarchives/worldgen/feature/basalt_geyser.json
+c50ba29363863e8e859e761762b40df55442d0ba data/netherarchives/worldgen/feature/magnetite_blobs.json
+16a5ea3f4b0f8e50cb565a985f4658b48fa31c1d data/netherarchives/worldgen/feature/magnetite_delta.json
+2298676fb4e1fb804563939ea9f5f0fbef6640ea data/netherarchives/worldgen/placed_feature/basalt_geyser.json
+d72fb3ae03962f7bbfe4344b067f63bbd877b39c data/netherarchives/worldgen/placed_feature/basalt_geyser_submerged.json
+3472d81eda79790d1faf4ed9d88ec82b158d5679 data/netherarchives/worldgen/placed_feature/magnetite_blobs.json
+49848b64f9ef9b6acf5633eefc6a62fa062ed0a2 data/netherarchives/worldgen/placed_feature/magnetite_delta.json

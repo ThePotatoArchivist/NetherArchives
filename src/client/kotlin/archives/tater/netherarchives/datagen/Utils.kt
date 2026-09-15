@@ -7,13 +7,10 @@ import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.DisplayInfo
-import net.minecraft.advancements.predicates.ContextAwarePredicate
 import net.minecraft.advancements.predicates.FluidPredicate
 import net.minecraft.advancements.predicates.ItemPredicate
 import net.minecraft.advancements.predicates.LocationPredicate
 import net.minecraft.advancements.predicates.entity.EntityPredicate
-import net.minecraft.advancements.triggers.Criterion
-import net.minecraft.advancements.triggers.PickedUpItemTrigger
 import net.minecraft.client.data.models.model.ModelTemplate
 import net.minecraft.client.data.models.model.TextureMapping
 import net.minecraft.client.data.models.model.TextureSlot
@@ -92,16 +89,6 @@ fun Consumer<AdvancementHolder>.advancement(
     background: ClientAsset.ResourceTexture? = null,
     init: Advancement.Builder.() -> Unit
 ): AdvancementHolder = advancement(id, ItemStackTemplate(icon.asItem()), type, showToast, announceChat, hidden, background, init)
-
-fun playerPickedUpItemTrigger(
-    item: ItemPredicate? = null,
-    player: ContextAwarePredicate? = null,
-    entity: ContextAwarePredicate? = null,
-): Criterion<PickedUpItemTrigger.TriggerInstance> = PickedUpItemTrigger.TriggerInstance.thrownItemPickedUpByPlayer(
-    Optional.ofNullable(player),
-    Optional.ofNullable(item),
-    Optional.ofNullable(entity)
-)
 
 fun ItemPredicate(init: ItemPredicate.Builder.() -> Unit): ItemPredicate = ItemPredicate.Builder.item().apply(init).build()
 

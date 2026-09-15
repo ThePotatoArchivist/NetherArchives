@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:compass_from_magnetite"
+        "recipes": "netherarchives:compass_from_magnetite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

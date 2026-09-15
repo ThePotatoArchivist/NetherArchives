@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:spectreglass_from_smelting_shattered_spectreglass"
+        "recipes": "netherarchives:spectreglass_from_smelting_shattered_spectreglass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:spectreglass_knife"
+        "recipes": "netherarchives:spectreglass_knife"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

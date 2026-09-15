@@ -26,16 +26,15 @@ abstract class EntityEyesFeatureRenderer<T : EntityRenderState, M : EntityModel<
     ) {
         queue.order(1).submitModel(
             parentModel,
-                state,
-                matrices,
-                getEyesTexture(state),
+            state,
+            matrices,
+            getEyesTexture(state),
             FULL_SKY,
-                OverlayTexture.NO_OVERLAY,
-                -1,
-                null,
-                state.outlineColor,
-                null
-            )
+            OverlayTexture.NO_OVERLAY,
+            -1,
+            null,
+            state.outlineColor,
+        )
     }
 
     abstract fun getEyesTexture(state: T?): RenderType

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:basalt_oar"
+        "recipes": "netherarchives:basalt_oar"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

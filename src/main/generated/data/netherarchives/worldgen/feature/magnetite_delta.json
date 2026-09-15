@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:delta_feature",
+  "contents": "minecraft:lava",
+  "rim": "netherarchives:magnetite",
+  "rim_size": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 3,
+    "min_inclusive": 1
+  },
+  "size": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 6,
+    "min_inclusive": 2
+  }
+}

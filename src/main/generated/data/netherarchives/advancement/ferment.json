@@ -3,12 +3,10 @@
   "criteria": {
     "ferment": {
       "conditions": {
-        "location": [
-          {
-            "block": "netherarchives:fermented_rotten_flesh_block",
-            "condition": "minecraft:block_state_property"
-          }
-        ]
+        "location": {
+          "type": "minecraft:match_block",
+          "blocks": "netherarchives:fermented_rotten_flesh_block"
+        }
       },
       "trigger": "netherarchives:ferment_rotten_flesh"
     }

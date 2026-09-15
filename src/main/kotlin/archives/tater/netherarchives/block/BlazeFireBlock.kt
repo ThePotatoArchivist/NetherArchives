@@ -4,7 +4,6 @@ import archives.tater.netherarchives.registry.ModSounds
 import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.listCopy
-import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -42,8 +41,6 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
         return MultifaceBlock.canAttachTo(level, Direction.DOWN, blockPos, level.getBlockState(blockPos))
     }
 
-    override fun codec(): MapCodec<out BaseFireBlock> = CODEC
-
     override fun updateShape(
         state: BlockState,
         level: LevelReader,
@@ -80,7 +77,7 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
             return
         }
 
-        BlockPos.withinManhattan(pos, 1, 1, 1)
+        BlockPos.withinManhattan(pos, 1)
             .listCopy()
             .filter { level.getBlockState(it).block is BlazePowderBlock }
             .also {
@@ -152,7 +149,5 @@ class BlazeFireBlock(settings: Properties) : BaseFireBlock(settings, 2.0f) {
         val AGE: IntegerProperty = BlockStateProperties.AGE_15
 
         private fun getFireTickDelay(random: RandomSource) = 20 + random.nextInt(20)
-
-        val CODEC: MapCodec<BlazeFireBlock> = simpleCodec(::BlazeFireBlock)
     }
 }

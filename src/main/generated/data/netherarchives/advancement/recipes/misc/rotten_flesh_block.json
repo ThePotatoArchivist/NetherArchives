@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "netherarchives:rotten_flesh_block"
+        "recipes": "netherarchives:rotten_flesh_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

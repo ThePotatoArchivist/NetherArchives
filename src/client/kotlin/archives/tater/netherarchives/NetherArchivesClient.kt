@@ -90,7 +90,6 @@ object NetherArchivesClient : ClientModInitializer {
                 light,
                 OverlayTexture.NO_OVERLAY,
                 bipedEntityRenderState.outlineColor,
-                null
             )
         }
 
