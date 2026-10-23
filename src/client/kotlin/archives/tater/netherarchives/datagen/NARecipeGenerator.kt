@@ -97,6 +97,8 @@ class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOu
             itemCriterion(ModItems.BASALT_ROD)
         }
 
+        colorWithDye(Items.DYE.asList(), ModItems.DYED_BASALT_SKIS.asList(), ModItems.BASALT_SKIS, "basalt_skis_dye", RecipeCategory.TRANSPORTATION)
+
         shaped(RecipeCategory.TOOLS, ModItems.BASALT_OAR) {
             pattern("%")
             pattern("%")

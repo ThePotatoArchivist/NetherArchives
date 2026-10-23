@@ -7,6 +7,7 @@ import archives.tater.netherarchives.registry.ModTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
+import net.minecraft.world.level.block.ColorCollection
 import java.util.concurrent.CompletableFuture
 
 class EnglishLangGenerator(output: FabricPackOutput, registriesFuture: CompletableFuture<HolderLookup.Provider>) :
@@ -31,6 +32,9 @@ class EnglishLangGenerator(output: FabricPackOutput, registriesFuture: Completab
             add(ModItems.IRON_SLAG, "Iron Slag")
             add(ModItems.DUMMY_SOUL_FIRE, "Soul Fire")
             add(ModItems.BASALT_SKIS, "Basalt Skis")
+            ColorCollection.zipApply(ModItems.DYED_BASALT_SKIS, ColorCollection.NAMES) { item, color ->
+                add(item, "${snakeCaseToTitleCase(color)} Basalt Skis")
+            }
             add(ModItems.BASALT_OAR, "Basalt Oar")
             add(ModItems.BASALT_ROD, "Basalt Rod")
             add(ModItems.SPECTREGLASS_SHARD, "Spectreglass Shard")

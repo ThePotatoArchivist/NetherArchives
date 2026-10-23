@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "netherarchives:item/lime_basalt_skis"
+  }
+}

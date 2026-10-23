@@ -20,7 +20,9 @@ import net.minecraft.world.item.CreativeModeTabs.*
 import net.minecraft.world.item.equipment.ArmorMaterial
 import net.minecraft.world.item.equipment.ArmorMaterials
 import net.minecraft.world.item.equipment.ArmorType
+import net.minecraft.world.item.equipment.EquipmentAsset
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.ColorCollection
 
 
 object NetherArchivesItems {
@@ -76,21 +78,28 @@ object NetherArchivesItems {
         )
     }
 
-    val BASALT_ARMOR_MATERIAL = ArmorMaterial(
+    private fun createSkisMaterial(assetId: ResourceKey<EquipmentAsset>): ArmorMaterial = ArmorMaterial(
         ArmorMaterials.CHAINMAIL.durability,
         ArmorMaterials.CHAINMAIL.defense,
         ArmorMaterials.CHAINMAIL.enchantmentValue,
-//            // TODO add custom sound?
+        // TODO add custom sound?
         SoundEvents.ARMOR_EQUIP_GENERIC,
         ArmorMaterials.CHAINMAIL.toughness,
         ArmorMaterials.CHAINMAIL.knockbackResistance,
         ModTags.BASALT_EQUIPMENT_REPAIR,
-        NetherArchivesEquipmentAssets.BASALT_SKIS
+        assetId
     )
 
     @JvmField
-    val BASALT_SKIS = register(ModItemIds.BASALT_SKIS, ::Item) {
-        humanoidArmor(BASALT_ARMOR_MATERIAL, ArmorType.BOOTS)
+    val BASALT_SKIS = register(ModItemIds.BASALT_SKIS) {
+        humanoidArmor(createSkisMaterial(ModEquipmentAssets.BASALT_SKIS), ArmorType.BOOTS)
+    }
+
+    @JvmField
+    val DYED_BASALT_SKIS = ColorCollection.zipMap(ModItemIds.DYED_BASALT_SKIS, ModEquipmentAssets.DYED_BASALT_SKIS) { id, assetId ->
+        register(id) {
+            humanoidArmor(createSkisMaterial(assetId), ArmorType.BOOTS)
+        }
     }
 
     @JvmField
@@ -154,6 +163,7 @@ object NetherArchivesItems {
                     accept(BLAZE_TORCH)
                     accept(BASALT_ROD)
                     accept(BASALT_SKIS)
+                    DYED_BASALT_SKIS.forEach { accept(it) }
                     accept(BASALT_OAR)
                     accept(BASALT_GEYSER)
                     accept(ADJUSTABLE_BASALT_GEYSER)
@@ -173,7 +183,11 @@ object NetherArchivesItems {
             INGREDIENTS to [IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD],
             NATURAL_BLOCKS to [MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER],
             COMBAT to [BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE],
-            TOOLS_AND_UTILITIES to [BASALT_SKIS, BASALT_OAR],
+            TOOLS_AND_UTILITIES to buildList {
+                add(BASALT_SKIS)
+                DYED_BASALT_SKIS.forEach { add(it) }
+                add(BASALT_OAR)
+            },
             FUNCTIONAL_BLOCKS to [BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE],
             REDSTONE_BLOCKS to [ADJUSTABLE_BASALT_GEYSER]
         ).forEach { (group, items) ->

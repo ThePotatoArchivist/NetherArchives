@@ -102,3 +102,5 @@ fun FabricLanguageProvider.TranslationBuilder.addAdvancement(id: Identifier, tit
     add(id.toLanguageKey("advancement", "title"), title)
     add(id.toLanguageKey("advancement", "description"), description)
 }
+
+fun snakeCaseToTitleCase(s: String) = s.split('_').joinToString(separator = " ") { it.replaceFirstChar(Char::titlecase) }

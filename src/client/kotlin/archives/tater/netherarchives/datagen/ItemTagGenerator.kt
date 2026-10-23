@@ -19,9 +19,10 @@ class ItemTagGenerator(
         builder(ModTags.BASALT_EQUIPMENT_REPAIR).add(
             BlockItemIds.POLISHED_BASALT,
         )
-        builder(ModTags.SKIS).add(
-            ModItemIds.BASALT_SKIS,
-        )
+        with (builder(ModTags.SKIS)) {
+            add(ModItemIds.BASALT_SKIS)
+            ModItemIds.DYED_BASALT_SKIS.forEach { add(it) }
+        }
         builder(ModTags.ROTTEN_FLESH_FERMENTER_ITEM).apply {
             add(BlockItemIds.SOUL_CAMPFIRE)
             add(ModItemIds.DUMMY_SOUL_FIRE)
