@@ -155,6 +155,25 @@ object NetherArchivesItems {
             title(Component.translatable(CREATIVE_TAB_TRANSLATION))
             icon { BLAZE_LANTERN.defaultInstance }
             displayItems { _, output ->
+                val gameplayColorOrder = [
+                    DyeColor.WHITE,
+                    DyeColor.LIGHT_GRAY,
+                    DyeColor.GRAY,
+                    DyeColor.BLACK,
+                    DyeColor.BROWN,
+                    DyeColor.RED,
+                    DyeColor.ORANGE,
+                    DyeColor.YELLOW,
+                    DyeColor.LIME,
+                    DyeColor.GREEN,
+                    DyeColor.CYAN,
+                    DyeColor.LIGHT_BLUE,
+                    DyeColor.BLUE,
+                    DyeColor.PURPLE,
+                    DyeColor.MAGENTA,
+                    DyeColor.PINK
+                ]
+
                 with (output) {
                     accept(ROTTEN_FLESH_BLOCK)
                     accept(FERMENTED_ROTTEN_FLESH_BLOCK)
@@ -166,7 +185,8 @@ object NetherArchivesItems {
                     accept(BLAZE_TORCH)
                     accept(BASALT_ROD)
                     accept(BASALT_SKIS)
-                    DYED_BASALT_SKIS.forEach { accept(it) }
+                    for (color in gameplayColorOrder)
+                        accept(DYED_BASALT_SKIS.pick(color))
                     accept(BASALT_OAR)
                     accept(BASALT_GEYSER)
                     accept(ADJUSTABLE_BASALT_GEYSER)
