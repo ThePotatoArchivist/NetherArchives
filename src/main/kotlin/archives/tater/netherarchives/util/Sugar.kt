@@ -3,6 +3,9 @@
 package archives.tater.netherarchives.util
 
 import net.minecraft.core.*
+import net.minecraft.core.component.DataComponentGetter
+import net.minecraft.core.component.DataComponentHolder
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
@@ -51,3 +54,7 @@ internal inline var Entity.pos: Vec3
     }
 
 internal val Vec3i.center get() = Vec3.atCenterOf(this)
+
+internal typealias McUnit = net.minecraft.util.Unit
+
+internal inline operator fun DataComponentHolder.contains(type: DataComponentType<*>) = has(type)

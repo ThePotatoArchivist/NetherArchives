@@ -5,6 +5,7 @@ import archives.tater.netherarchives.item.BlazeLanternItem
 import archives.tater.netherarchives.item.FakeVanillaItem
 import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
+import archives.tater.netherarchives.util.McUnit
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab
 import net.minecraft.core.Direction
@@ -93,12 +94,14 @@ object NetherArchivesItems {
     @JvmField
     val BASALT_SKIS = register(ModItemIds.BASALT_SKIS) {
         humanoidArmor(createSkisMaterial(ModEquipmentAssets.BASALT_SKIS), ArmorType.BOOTS)
+        component(ModComponents.SKIS, McUnit.INSTANCE)
     }
 
     @JvmField
     val DYED_BASALT_SKIS = ColorCollection.zipMap(ModItemIds.DYED_BASALT_SKIS, ModEquipmentAssets.DYED_BASALT_SKIS) { id, assetId ->
         register(id) {
             humanoidArmor(createSkisMaterial(assetId), ArmorType.BOOTS)
+            component(ModComponents.SKIS, McUnit.INSTANCE)
         }
     }
 
