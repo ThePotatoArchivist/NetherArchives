@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.registry.ModBlockTags
 import archives.tater.netherarchives.registry.ModBlocks
 import archives.tater.netherarchives.registry.ModFeatures
 import archives.tater.netherarchives.registry.ModPlacedFeatures
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.core.HolderLookup
@@ -46,7 +46,7 @@ object FeatureGenerator : MultiRegistryBootstrap {
                 OffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
                 BlockPredicateFilter.forPredicate(allOf(
                     matchesBlocks(Vec3i(0, 1, 0), [Blocks.AIR]),
-                    matchesTag(NetherArchivesTags.BASALT_GEYSER_REPLACEABLE)
+                    matchesTag(ModBlockTags.BASALT_GEYSER_REPLACEABLE)
                 )),
                 biome(),
             ]
@@ -58,7 +58,7 @@ object FeatureGenerator : MultiRegistryBootstrap {
                 CountOnEveryLayerPlacement.of(4),
                 OffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
                 BlockPredicateFilter.forPredicate(allOf(
-                    matchesTag(NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED),
+                    matchesTag(ModBlockTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED),
                     MatchingFluidsPredicate(Vec3i(0, 1, 0), fluids.getOrThrow(FluidTags.LAVA)),
                     anyOf(
                         matchesBlocks(Vec3i(0, 2, 0), [Blocks.AIR]),

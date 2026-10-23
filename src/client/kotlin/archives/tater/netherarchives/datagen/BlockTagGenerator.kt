@@ -2,7 +2,7 @@ package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.ModBlockIds
 import archives.tater.netherarchives.registry.ModBlockItemIds
-import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.registry.ModBlockTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
@@ -41,18 +41,18 @@ class BlockTagGenerator(output: FabricPackOutput, completableFuture: Completable
             ModBlockItemIds.SPECTREGLASS,
             ModBlockItemIds.SHATTERED_SPECTREGLASS,
         )
-        builder(ModTags.MAGNETIC).add(
+        builder(ModBlockTags.MAGNETIC).add(
             BlockItemIds.LODESTONE,
             BlockItemIds.NETHERITE_BLOCK,
         )
-        builder(ModTags.ROTTEN_FLESH_FERMENTER).apply {
+        builder(ModBlockTags.ROTTEN_FLESH_FERMENTER).apply {
             add(BlockIds.SOUL_FIRE)
             add(BlockItemIds.SOUL_CAMPFIRE)
         }
-        builder(ModTags.BASALT_GEYSER_REPLACEABLE).add(
+        builder(ModBlockTags.BASALT_GEYSER_REPLACEABLE).add(
             BlockItemIds.BASALT
         )
-        builder(ModTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
+        builder(ModBlockTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
             forceAddTag(BlockTags.BASE_STONE_NETHER)
             add(ModBlockItemIds.MAGNETITE)
         }
@@ -64,11 +64,11 @@ class BlockTagGenerator(output: FabricPackOutput, completableFuture: Completable
             ModBlockItemIds.SPECTREGLASS_PANE,
             ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE,
         )
-        builder(ModTags.REVEALS_INVISIBLES).add(
+        builder(ModBlockTags.REVEALS_INVISIBLES).add(
             ModBlockItemIds.SPECTREGLASS,
             ModBlockItemIds.SPECTREGLASS_PANE,
         )
-        builder(ModTags.INVERTS_BEACON).add(
+        builder(ModBlockTags.INVERTS_BEACON).add(
             ModBlockItemIds.SPECTREGLASS,
             ModBlockItemIds.SHATTERED_SPECTREGLASS,
             ModBlockItemIds.SPECTREGLASS_PANE,

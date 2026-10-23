@@ -5,8 +5,8 @@ import archives.tater.netherarchives.client.render.entity.layer.WitherEyesLayer
 import archives.tater.netherarchives.client.render.entity.layer.WitherSkeletonEyesLayer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
+import archives.tater.netherarchives.registry.ModBlockTags
 import archives.tater.netherarchives.registry.ModItems
-import archives.tater.netherarchives.registry.ModTags
 import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.util.isIn
@@ -116,7 +116,7 @@ object NetherArchivesClient : ClientModInitializer {
                     ClipBlockStateContext(
                         cameraPos,
                         Vec3(entity.x, entity.getY(0.5), entity.z),
-                    ) { it isIn ModTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
+                    ) { it isIn ModBlockTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
             }
         }
     }

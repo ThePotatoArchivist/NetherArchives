@@ -2,7 +2,7 @@ package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.ModBlockItemIds
 import archives.tater.netherarchives.registry.ModItemIds
-import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.registry.ModItemTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -16,14 +16,14 @@ class ItemTagGenerator(
     registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagsProvider.ItemTagsProvider(output, registriesFuture) {
     override fun addTags(arg: HolderLookup.Provider) {
-        builder(ModTags.BASALT_EQUIPMENT_REPAIR).add(
+        builder(ModItemTags.BASALT_EQUIPMENT_REPAIR).add(
             BlockItemIds.POLISHED_BASALT,
         )
-        with (builder(ModTags.SKIS)) {
+        with (builder(ModItemTags.SKIS)) {
             add(ModItemIds.BASALT_SKIS)
             ModItemIds.DYED_BASALT_SKIS.forEach { add(it) }
         }
-        builder(ModTags.ROTTEN_FLESH_FERMENTER_ITEM).apply {
+        builder(ModItemTags.ROTTEN_FLESH_FERMENTER_ITEM).apply {
             add(BlockItemIds.SOUL_CAMPFIRE)
             add(ModItemIds.DUMMY_SOUL_FIRE)
         }
@@ -42,12 +42,12 @@ class ItemTagGenerator(
             ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE,
         )
         builder(ItemTags.FOOT_ARMOR_ENCHANTABLE)
-            .addTag(ModTags.SKIS)
+            .addTag(ModItemTags.SKIS)
         builder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
             ModItemIds.SPECTREGLASS_KNIFE,
         )
         with (builder(ItemTags.DURABILITY_ENCHANTABLE)) {
-            addTag(ModTags.SKIS)
+            addTag(ModItemTags.SKIS)
             add(ModItemIds.BASALT_OAR, ModItemIds.SPECTREGLASS_KNIFE)
         }
         builder(ItemTags.BREAKS_DECORATED_POTS).add(

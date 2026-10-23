@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.item
 
+import archives.tater.netherarchives.registry.ModFluidTags
 import archives.tater.netherarchives.registry.ModSounds
-import archives.tater.netherarchives.registry.ModTags
 import archives.tater.netherarchives.registry.NetherArchivesDamageTypes.paddleBurn
 import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import archives.tater.netherarchives.util.get
@@ -33,7 +33,7 @@ class OarItem(settings: Properties) : Item(settings) {
                 .yRot(-yawRads)
         }
 
-        if (level is ServerLevel && fluidState isIn ModTags.BURNS_WHEN_PADDLE)
+        if (level is ServerLevel && fluidState isIn ModFluidTags.BURNS_WHEN_PADDLE)
             player.hurtServer(level, level.damageSources().paddleBurn, 1f)
         if (fluidState isIn FluidTags.LAVA)
             player.playSound(ModSounds.BASALT_OAR_PADDLE_LAVA, 1f, 1f)

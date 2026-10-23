@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.mixin.FireworkRocketEntityAccessor
-import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.registry.ModEntityTags
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.set
@@ -46,9 +46,9 @@ interface Shatterable {
         projectile: Projectile
     ) {
         val pos = hit.blockPos
-        if (level !is ServerLevel || !projectile.mayInteract(level, pos) || !projectile.mayBreak(level, pos) || projectile isIn ModTags.NON_SHATTER_PROJECTILES) return
+        if (level !is ServerLevel || !projectile.mayInteract(level, pos) || !projectile.mayBreak(level, pos) || projectile isIn ModEntityTags.NON_SHATTER_PROJECTILES) return
 
-        if (projectile isIn ModTags.NON_CHAIN_SHATTER_PROJECTILES ||
+        if (projectile isIn ModEntityTags.NON_CHAIN_SHATTER_PROJECTILES ||
             (projectile is FireworkRocketEntity && !(projectile as FireworkRocketEntityAccessor).invokeHasExplosion())) {
 
             shatter(level, pos, state)
