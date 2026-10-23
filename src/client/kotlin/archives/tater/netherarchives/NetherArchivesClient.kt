@@ -1,10 +1,10 @@
 package archives.tater.netherarchives
 
-import archives.tater.netherarchives.client.render.entity.feature.WitherEyesFeatureRenderer
-import archives.tater.netherarchives.client.render.entity.feature.WitherSkeletonEyesFeatureRenderer
+import archives.tater.netherarchives.client.render.entity.layer.SkisLayer
+import archives.tater.netherarchives.client.render.entity.layer.WitherEyesLayer
+import archives.tater.netherarchives.client.render.entity.layer.WitherSkeletonEyesLayer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
-import archives.tater.netherarchives.client.util.registerArmorRenderer
 import archives.tater.netherarchives.registry.ModItems
 import archives.tater.netherarchives.registry.ModTags
 import archives.tater.netherarchives.registry.NetherArchivesEntities
@@ -22,13 +22,8 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.particle.FlameParticle
 import net.minecraft.client.renderer.RenderPipelines
-import net.minecraft.client.renderer.entity.EntityRenderers
-import net.minecraft.client.renderer.entity.ThrownItemRenderer
-import net.minecraft.client.renderer.entity.WitherBossRenderer
-import net.minecraft.client.renderer.entity.WitherSkeletonRenderer
-import net.minecraft.client.renderer.entity.state.HumanoidRenderState
-import net.minecraft.client.renderer.rendertype.RenderTypes
-import net.minecraft.client.renderer.texture.OverlayTexture
+import net.minecraft.client.renderer.entity.*
+import net.minecraft.client.renderer.entity.player.AvatarRenderer
 import net.minecraft.util.Mth.clamp
 import net.minecraft.world.entity.EntityTypes
 import net.minecraft.world.entity.LivingEntity
@@ -49,10 +44,7 @@ object NetherArchivesClient : ClientModInitializer {
     @JvmField
     internal var usingSoulKnife = false // TODO rename
 
-    private val SKIS_MODEL_LAYER = ModelLayerLocation(NetherArchives.id("skis"), "main")
-
-    private val BASALT_SKIS_LOCATION = NetherArchives.id("textures/models/basalt_skis.png")
-    private lateinit var basaltSkisModel: SkisEntityModel<HumanoidRenderState>
+    val SKIS_MODEL_LAYER = ModelLayerLocation(NetherArchives.id("skis"), "main")
 
     @JvmStatic
     fun isRevealed(entity: LivingEntity) = usingSoulKnife || spectreglassRevealed.getOrDefault(entity, false)
@@ -64,34 +56,20 @@ object NetherArchivesClient : ClientModInitializer {
         // This entrypoint is suitable for setting up client-specific logic, such as rendering.
         EntityRenderers.register(NetherArchivesEntities.BLAZE_LANTERN, ::ThrownItemRenderer)
 
-        LivingEntityRenderLayerRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, _ ->
+        LivingEntityRenderLayerRegistrationCallback.EVENT.register { entityType, entityRenderer, registrationHelper, context ->
+            if (entityRenderer is HumanoidMobRenderer)
+                registrationHelper.register(SkisLayer(entityRenderer, context.modelSet, context.equipmentRenderer))
+            if (entityRenderer is AvatarRenderer)
+                registrationHelper.register(SkisLayer(entityRenderer, context.modelSet, context.equipmentRenderer))
+
             if (NetherArchivesClientConfig.config.skeletonEyes)
-                registrationHelper.register(when (entityType) {
-                    EntityTypes.WITHER_SKELETON -> WitherSkeletonEyesFeatureRenderer(entityRenderer as WitherSkeletonRenderer)
-                    EntityTypes.WITHER -> WitherEyesFeatureRenderer(entityRenderer as WitherBossRenderer)
-                    else -> return@register
-                })
+                when (entityRenderer) {
+                    is WitherSkeletonRenderer if entityType == EntityTypes.WITHER_SKELETON -> registrationHelper.register(WitherSkeletonEyesLayer(entityRenderer))
+                    is WitherBossRenderer if entityType == EntityTypes.WITHER -> registrationHelper.register(WitherEyesLayer(entityRenderer))
+                }
         }
 
         ModelLayerRegistry.registerModelLayer(SKIS_MODEL_LAYER, SkisEntityModel.Companion::getTexturedModelData)
-
-        registerArmorRenderer(ModItems.BASALT_SKIS) { matrices, queue, _, bipedEntityRenderState, _, light, _ ->
-            if (!::basaltSkisModel.isInitialized) {
-                basaltSkisModel = SkisEntityModel(Minecraft.getInstance().entityModels.bakeLayer(SKIS_MODEL_LAYER))
-            }
-
-            basaltSkisModel.resetPose()
-            basaltSkisModel.setupAnim(bipedEntityRenderState)
-            queue.order(1).submitModel(
-                basaltSkisModel,
-                bipedEntityRenderState,
-                matrices,
-                RenderTypes.armorCutoutNoCull(BASALT_SKIS_LOCATION),
-                light,
-                OverlayTexture.NO_OVERLAY,
-                bipedEntityRenderState.outlineColor,
-            )
-        }
 
         HudElementRegistry.addFirst(NetherArchives.id("soul_glass_knife")) { context, _ ->
             if (usingSoulKnife)

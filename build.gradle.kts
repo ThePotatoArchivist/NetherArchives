@@ -42,6 +42,8 @@ loom {
 			sourceSet(sourceSets.getByName("client"))
 		}
 	}
+
+	accessWidenerPath = file("src/main/resources/netherarchives.accesswidener")
 }
 
 fabricApi {

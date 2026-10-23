@@ -1,4 +1,4 @@
-package archives.tater.netherarchives.client.render.entity.feature
+package archives.tater.netherarchives.client.render.entity.layer
 
 import archives.tater.netherarchives.NetherArchives
 import net.minecraft.client.model.monster.skeleton.SkeletonModel
@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.state.SkeletonRenderState
 import net.minecraft.client.renderer.rendertype.RenderType
 import net.minecraft.client.renderer.rendertype.RenderTypes
 
-class WitherSkeletonEyesFeatureRenderer<T : SkeletonRenderState>(featureRendererContext: RenderLayerParent<T, SkeletonModel<T>>) :
+class WitherSkeletonEyesLayer<T : SkeletonRenderState>(featureRendererContext: RenderLayerParent<T, SkeletonModel<T>>) :
     EyesLayer<T, SkeletonModel<T>>(featureRendererContext) {
 
     companion object {

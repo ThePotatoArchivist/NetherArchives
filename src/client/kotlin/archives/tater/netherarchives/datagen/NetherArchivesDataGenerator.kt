@@ -23,6 +23,7 @@ object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
             addProvider(::EnglishLangGenerator)
             addProvider(::SoundsGenerator)
             addProvider(FeatureGenerator::Provider)
+            addProvider(::EquipmentGenerator)
         }
     }
 }

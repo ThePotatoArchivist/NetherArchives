@@ -17,7 +17,9 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.*
 import net.minecraft.world.item.CreativeModeTabs.*
-import net.minecraft.world.item.equipment.*
+import net.minecraft.world.item.equipment.ArmorMaterial
+import net.minecraft.world.item.equipment.ArmorMaterials
+import net.minecraft.world.item.equipment.ArmorType
 import net.minecraft.world.level.block.Block
 
 
@@ -74,7 +76,6 @@ object NetherArchivesItems {
         )
     }
 
-    val BASALT_EQUIPMENT: ResourceKey<EquipmentAsset> = ResourceKey.create(EquipmentAssets.ROOT_ID, NetherArchives.id("basalt"))
     val BASALT_ARMOR_MATERIAL = ArmorMaterial(
         ArmorMaterials.CHAINMAIL.durability,
         ArmorMaterials.CHAINMAIL.defense,
@@ -84,7 +85,7 @@ object NetherArchivesItems {
         ArmorMaterials.CHAINMAIL.toughness,
         ArmorMaterials.CHAINMAIL.knockbackResistance,
         ModTags.BASALT_EQUIPMENT_REPAIR,
-        BASALT_EQUIPMENT
+        NetherArchivesEquipmentAssets.BASALT_SKIS
     )
 
     @JvmField
