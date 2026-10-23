@@ -14,9 +14,9 @@ object NetherArchivesTriggers {
         trigger
     )
 
-    val SKIS_PADDLE = register("skis_paddle", ConsumeItemTrigger())
-    val AIRSKI = register("airski", DefaultBlockInteractionTrigger())
-    val FERMENT = register("ferment_rotten_flesh", DefaultBlockInteractionTrigger())
+    @JvmField val SKIS_PADDLE = register("skis_paddle", ConsumeItemTrigger())
+    @JvmField val AIRSKI = register("airski", DefaultBlockInteractionTrigger())
+    @JvmField val FERMENT = register("ferment_rotten_flesh", DefaultBlockInteractionTrigger())
 
     fun init() {}
 }

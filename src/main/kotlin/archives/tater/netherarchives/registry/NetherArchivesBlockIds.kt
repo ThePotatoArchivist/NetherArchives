@@ -9,6 +9,6 @@ object NetherArchivesBlockIds {
     private fun create(id: Identifier) = ResourceKey.create(Registries.BLOCK, id)
     private fun create(path: String) = create(NetherArchives.id(path))
 
-    val WALL_BLAZE_TORCH = create("wall_blaze_torch")
-    val BLAZE_FIRE = create("blaze_fire")
+    @JvmField val WALL_BLAZE_TORCH = create("wall_blaze_torch")
+    @JvmField val BLAZE_FIRE = create("blaze_fire")
 }

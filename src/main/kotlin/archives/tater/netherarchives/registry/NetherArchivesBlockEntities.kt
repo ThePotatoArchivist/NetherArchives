@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
 object NetherArchivesBlockEntities {
-    private fun <T: BlockEntity> register(
+    private fun <T : BlockEntity> register(
         path: String,
         blockEntity: (pos: BlockPos, state: BlockState) -> T,
         vararg blocks: Block
@@ -25,16 +25,15 @@ object NetherArchivesBlockEntities {
         )
 
     @JvmField
-    val BLAZE_TORCH_ENTITY =
-        register(
-            "blaze_torch",
-            ::BlazeTorchBlockEntity,
-            NetherArchivesBlocks.BLAZE_TORCH,
-            NetherArchivesBlocks.WALL_BLAZE_TORCH
-        )
+    val BLAZE_TORCH = register(
+        "blaze_torch",
+        ::BlazeTorchBlockEntity,
+        NetherArchivesBlocks.BLAZE_TORCH,
+        NetherArchivesBlocks.WALL_BLAZE_TORCH
+    )
 
     @JvmField
-    val BASALT_GEYSER_ENTITY = register(
+    val BASALT_GEYSER = register(
         "basalt_geyser",
         ::BasaltGeyserBlockEntity,
         NetherArchivesBlocks.BASALT_GEYSER,

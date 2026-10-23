@@ -10,13 +10,13 @@ object NetherArchivesItemIds {
     private fun create(id: Identifier) = ResourceKey.create(Registries.ITEM, id)
     private fun create(path: String) = create(NetherArchives.id(path))
 
-    val IRON_SLAG = create("iron_slag")
-    val BLAZE_LANTERN = create("blaze_lantern")
-    val BASALT_SKIS = create("basalt_skis")
-    val DYED_BASALT_SKIS = ColorCollection.NAMES.map { color -> create("${color}_basalt_skis") }
-    val BASALT_OAR = create("basalt_oar")
-    val BASALT_ROD = create("basalt_rod")
-    val SPECTREGLASS_SHARD = create("spectreglass_shard")
-    val SPECTREGLASS_KNIFE = create("spectreglass_knife")
-    val DUMMY_SOUL_FIRE = create("dummy_soul_fire")
+    @JvmField val IRON_SLAG = create("iron_slag")
+    @JvmField val BLAZE_LANTERN = create("blaze_lantern")
+    @JvmField val BASALT_SKIS = create("basalt_skis")
+    @JvmField val DYED_BASALT_SKIS = ColorCollection.NAMES.map { color -> create("${color}_basalt_skis") }
+    @JvmField val BASALT_OAR = create("basalt_oar")
+    @JvmField val BASALT_ROD = create("basalt_rod")
+    @JvmField val SPECTREGLASS_SHARD = create("spectreglass_shard")
+    @JvmField val SPECTREGLASS_KNIFE = create("spectreglass_knife")
+    @JvmField val DUMMY_SOUL_FIRE = create("dummy_soul_fire")
 }

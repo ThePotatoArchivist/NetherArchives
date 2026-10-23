@@ -19,7 +19,7 @@ import kotlin.math.sqrt
 
 
 class BlazeTorchBlockEntity(pos: BlockPos, state: BlockState) :
-    BlockEntity(NetherArchivesBlockEntities.BLAZE_TORCH_ENTITY, pos, state) {
+    BlockEntity(NetherArchivesBlockEntities.BLAZE_TORCH, pos, state) {
     companion object {
         const val TARGET_KEY = "targetPos"
     }

@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING
 
 class BasaltGeyserBlockEntity(pos: BlockPos, state: BlockState) :
-    BlockEntity(NetherArchivesBlockEntities.BASALT_GEYSER_ENTITY, pos, state) {
+    BlockEntity(NetherArchivesBlockEntities.BASALT_GEYSER, pos, state) {
 
     var pushDistance = 0
         private set
