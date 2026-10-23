@@ -33,7 +33,7 @@ class SkisLayer<S : HumanoidRenderState, M : HumanoidModel<S>, A : HumanoidModel
         val equipment = state.feetEquipment
         val assetId = equipment[DataComponents.EQUIPPABLE]?.assetId?.getOrNull() ?: return
         equipmentRenderer.renderLayers(
-            EquipmentClientInfo.LayerType.NETHERARCHIVES_HUMANOID_SKIS,
+            EquipmentClientInfo.LayerType.NETHERARCHIVES_SKIS,
             assetId,
             model,
             state,

@@ -1,2 +1,2 @@
 classTweaker v2 official
-extend-enum net/minecraft/client/resources/model/EquipmentClientInfo$LayerType NETHERARCHIVES_HUMANOID_SKIS
+extend-enum net/minecraft/client/resources/model/EquipmentClientInfo$LayerType NETHERARCHIVES_SKIS

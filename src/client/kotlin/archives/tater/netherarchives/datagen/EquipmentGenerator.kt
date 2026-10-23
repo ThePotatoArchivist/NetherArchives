@@ -25,7 +25,7 @@ class EquipmentGenerator(
         fun registerSkis(key: ResourceKey<EquipmentAsset>, name: String) {
             provider.accept(key.identifier(), EquipmentClientInfo(mapOf(
                 EquipmentClientInfo.LayerType.HUMANOID to [EquipmentClientInfo.Layer(NetherArchives.id("basalt_skis/$name"))],
-                EquipmentClientInfo.LayerType.NETHERARCHIVES_HUMANOID_SKIS to [EquipmentClientInfo.Layer(NetherArchives.id(name))]
+                EquipmentClientInfo.LayerType.NETHERARCHIVES_SKIS to [EquipmentClientInfo.Layer(NetherArchives.id(name))]
             ), listOf()))
         }
 

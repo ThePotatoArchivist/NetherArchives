@@ -9,7 +9,7 @@ import net.minecraft.client.resources.model.EquipmentClientInfo;
 
 @Mixin(EquipmentClientInfo.LayerType.class)
 public enum EquipmentClientInfoLayerTypeMixin {
-    NETHERARCHIVES_HUMANOID_SKIS(NetherArchives.MOD_ID + "_humanoid_skis");
+    NETHERARCHIVES_SKIS(NetherArchives.MOD_ID + "_skis");
 
     @Shadow
     EquipmentClientInfoLayerTypeMixin(String id) {
