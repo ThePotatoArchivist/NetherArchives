@@ -41,17 +41,15 @@ class ItemTagGenerator(
             ModBlockItemIds.SPECTREGLASS_PANE,
             ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE,
         )
-        builder(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(
-            ModItemIds.BASALT_SKIS,
-        )
+        builder(ItemTags.FOOT_ARMOR_ENCHANTABLE)
+            .addTag(ModTags.SKIS)
         builder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
             ModItemIds.SPECTREGLASS_KNIFE,
         )
-        builder(ItemTags.DURABILITY_ENCHANTABLE).add(
-            ModItemIds.BASALT_SKIS,
-            ModItemIds.BASALT_OAR,
-            ModItemIds.SPECTREGLASS_KNIFE,
-        )
+        with (builder(ItemTags.DURABILITY_ENCHANTABLE)) {
+            addTag(ModTags.SKIS)
+            add(ModItemIds.BASALT_OAR, ModItemIds.SPECTREGLASS_KNIFE)
+        }
         builder(ItemTags.BREAKS_DECORATED_POTS).add(
             ModItemIds.SPECTREGLASS_KNIFE,
         )

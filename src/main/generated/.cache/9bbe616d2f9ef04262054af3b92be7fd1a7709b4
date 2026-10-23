@@ -5,8 +5,8 @@ d0ce52695227d2e3fb0f68864a69bcdd1d3531d6 data/c/tags/item/glass_blocks.json
 8bee4b06e4da303a33404fd93cf8a3b4970d8e8a data/c/tags/item/raw_materials/iron.json
 cda67c0d82a8d0b44d79c4e00574387b972330f0 data/c/tags/item/tools/melee_weapon.json
 cda67c0d82a8d0b44d79c4e00574387b972330f0 data/minecraft/tags/item/breaks_decorated_pots.json
-d1cb0420244ddeed6462d89fd5fae1bb94c25114 data/minecraft/tags/item/enchantable/durability.json
-642f2082e56a433b1fe57ad24c29804f34f9f4cf data/minecraft/tags/item/enchantable/foot_armor.json
+5c83182c1d5b58e89e41957cf5ebda37bac493b4 data/minecraft/tags/item/enchantable/durability.json
+0d7a17e03ddfaa5f9c01036ad386bdee3ec68399 data/minecraft/tags/item/enchantable/foot_armor.json
 cda67c0d82a8d0b44d79c4e00574387b972330f0 data/minecraft/tags/item/enchantable/sharp_weapon.json
 49f568df9c122bf6dfebd0659b0dea2af7b48ca4 data/minecraft/tags/item/soul_fire_base_blocks.json
 71709baeaddce5d950d8402358d6601a3cd9ad52 data/minecraft/tags/item/sulfur_cube_archetype/fast_flat.json
