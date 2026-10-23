@@ -20,5 +20,3 @@ object NetherArchivesItemIds {
     val SPECTREGLASS_KNIFE = create("spectreglass_knife")
     val DUMMY_SOUL_FIRE = create("dummy_soul_fire")
 }
-
-internal typealias ModItemIds = NetherArchivesItemIds

@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.registry.ModEquipmentAssets
+import archives.tater.netherarchives.registry.NetherArchivesEquipmentAssets
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricCodecDataProvider
 import net.minecraft.client.resources.model.EquipmentClientInfo
@@ -24,15 +24,23 @@ class EquipmentGenerator(
     ) {
 
         fun registerSkis(key: ResourceKey<EquipmentAsset>, name: String) {
-            provider.accept(key.identifier(), EquipmentClientInfo(mapOf(
-                EquipmentClientInfo.LayerType.HUMANOID to [EquipmentClientInfo.Layer(NetherArchives.id("basalt_skis/$name"))],
-                EquipmentClientInfo.LayerType.NETHERARCHIVES_SKIS to [EquipmentClientInfo.Layer(NetherArchives.id(name))]
-            ), listOf()))
+            provider.accept(
+                key.identifier(), EquipmentClientInfo(
+                    mapOf(
+                        EquipmentClientInfo.LayerType.HUMANOID to [EquipmentClientInfo.Layer(NetherArchives.id("basalt_skis/$name"))],
+                        EquipmentClientInfo.LayerType.NETHERARCHIVES_SKIS to [EquipmentClientInfo.Layer(
+                            NetherArchives.id(
+                                name
+                            )
+                        )]
+                    ), listOf()
+                )
+            )
         }
 
-        registerSkis(ModEquipmentAssets.BASALT_SKIS, "base")
+        registerSkis(NetherArchivesEquipmentAssets.BASALT_SKIS, "base")
 
-        ColorCollection.zipApply(ModEquipmentAssets.DYED_BASALT_SKIS, ColorCollection.NAMES) { item, color ->
+        ColorCollection.zipApply(NetherArchivesEquipmentAssets.DYED_BASALT_SKIS, ColorCollection.NAMES) { item, color ->
             registerSkis(item, color)
         }
     }

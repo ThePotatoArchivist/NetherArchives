@@ -5,9 +5,9 @@ import archives.tater.netherarchives.client.render.entity.layer.WitherEyesLayer
 import archives.tater.netherarchives.client.render.entity.layer.WitherSkeletonEyesLayer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
-import archives.tater.netherarchives.registry.ModBlockTags
-import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.NetherArchivesBlockTags
 import archives.tater.netherarchives.registry.NetherArchivesEntities
+import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.registry.NetherArchivesParticles
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.isOf
@@ -97,7 +97,7 @@ object NetherArchivesClient : ClientModInitializer {
             val client = Minecraft.getInstance()
             val camera = client.gameRenderer.mainCamera()
             usingSoulKnife = !camera.isDetached && client.player == client.cameraEntity && (
-                    client.player?.useItem?.isOf(ModItems.SPECTREGLASS_KNIFE) == true
+                    client.player?.useItem?.isOf(NetherArchivesItems.SPECTREGLASS_KNIFE) == true
                     /*|| NetherArchives.EXPOSURE_INSTALLED && CameraClient.viewfinder()?.run { isLookingThrough && Attachment.FILTER.get(camera().itemStack).forReading isOf ModItems.SPECTREGLASS_PANE } == true*/
             )
 
@@ -116,7 +116,7 @@ object NetherArchivesClient : ClientModInitializer {
                     ClipBlockStateContext(
                         cameraPos,
                         Vec3(entity.x, entity.getY(0.5), entity.z),
-                    ) { it isIn ModBlockTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
+                    ) { it isIn NetherArchivesBlockTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
             }
         }
     }

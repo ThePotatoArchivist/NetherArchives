@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.NetherArchives
-import archives.tater.netherarchives.registry.ModBlocks
-import archives.tater.netherarchives.registry.ModItems
-import archives.tater.netherarchives.registry.ModStructureTags
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesStructureTags
 import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
@@ -37,67 +37,99 @@ class AdvancementGenerator(output: FabricPackOutput, registryLookup: Completable
         val intoFire = createRef(Identifier.withDefaultNamespace("nether/obtain_blaze_rod"))
         val ohShiny = createRef(Identifier.withDefaultNamespace("nether/distract_piglin"))
 
-        val ironSlag = consumer.advancement(IRON_SLAG, ModItems.SMOLDERING_MAGNETITE) {
+        val ironSlag = consumer.advancement(IRON_SLAG, NetherArchivesItems.SMOLDERING_MAGNETITE) {
             parent(nether)
-            addCriterion("iron_slag", thrownItemPickedUpByPlayer(
-                Optional.empty(),
-                Optional.of(ItemPredicate {
-                    of(items, ModItems.IRON_SLAG)
-                }),
-                Optional.empty()
-            ))
-        }
-
-        val lightBlazeDust = consumer.advancement(LIGHT_BLAZE_DUST, ModItems.BLAZE_DUST) {
-            parent(intoFire)
-            addCriterion("light_blaze_fire", CriteriaTriggers.ANY_BLOCK_USE.createCriterion(
-                AnyBlockInteractionTrigger.TriggerInstance(Optional.empty(), Optional.of(Holder.direct(
-                    blockMatches(
-                        registryLookup.lookupOrThrow(Registries.BLOCK), ModBlocks.BLAZE_FIRE
-                    ).build())))
-            ))
-        }
-
-        val followBlazeTorch = consumer.advancement(FOLLOW_BLAZE_TORCH, ModItems.BLAZE_TORCH) {
-            parent(ohShiny)
-            addCriterion("place_blaze_torch", ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(
-                allOf(
-                    blockMatches(
-                        registryLookup.lookupOrThrow(Registries.BLOCK), ModBlocks.BLAZE_TORCH
-                    ),
-                    checkLocation(locationPredicate {
-                        setStructures(registryLookup.getOrThrow(ModStructureTags.BLAZE_TORCH_LOCATED))
+            addCriterion(
+                "iron_slag", thrownItemPickedUpByPlayer(
+                    Optional.empty(),
+                    Optional.of(ItemPredicate {
+                        of(items, NetherArchivesItems.IRON_SLAG)
                     }),
+                    Optional.empty()
                 )
-            ))
+            )
         }
 
-        val paddleSkis = consumer.advancement(PADDLE_SKIS, ModItems.BASALT_SKIS) {
+        val lightBlazeDust = consumer.advancement(LIGHT_BLAZE_DUST, NetherArchivesItems.BLAZE_DUST) {
+            parent(intoFire)
+            addCriterion(
+                "light_blaze_fire", CriteriaTriggers.ANY_BLOCK_USE.createCriterion(
+                    AnyBlockInteractionTrigger.TriggerInstance(
+                        Optional.empty(), Optional.of(
+                            Holder.direct(
+                                blockMatches(
+                                    registryLookup.lookupOrThrow(Registries.BLOCK), NetherArchivesBlocks.BLAZE_FIRE
+                                ).build()
+                            )
+                        )
+                    )
+                )
+            )
+        }
+
+        val followBlazeTorch = consumer.advancement(FOLLOW_BLAZE_TORCH, NetherArchivesItems.BLAZE_TORCH) {
+            parent(ohShiny)
+            addCriterion(
+                "place_blaze_torch", ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(
+                    allOf(
+                        blockMatches(
+                            registryLookup.lookupOrThrow(Registries.BLOCK), NetherArchivesBlocks.BLAZE_TORCH
+                        ),
+                        checkLocation(locationPredicate {
+                            setStructures(registryLookup.getOrThrow(NetherArchivesStructureTags.BLAZE_TORCH_LOCATED))
+                        }),
+                    )
+                )
+            )
+        }
+
+        val paddleSkis = consumer.advancement(PADDLE_SKIS, NetherArchivesItems.BASALT_SKIS) {
             parent(nether)
-            addCriterion("paddle_skis", NetherArchivesTriggers.SKIS_PADDLE.createCriterion(ConsumeItemTrigger.TriggerInstance(
-                Optional.of(EntityPredicate.wrap(EntityPredicate {
-                    steppingOn(locationPredicate {
-                        setFluid(fluidPredicate {
-                            of(Fluids.LAVA)
-                        })
-                    })
-                })),
-                Optional.empty()
-            )))
+            addCriterion(
+                "paddle_skis", NetherArchivesTriggers.SKIS_PADDLE.createCriterion(
+                    ConsumeItemTrigger.TriggerInstance(
+                        Optional.of(EntityPredicate.wrap(EntityPredicate {
+                            steppingOn(locationPredicate {
+                                setFluid(fluidPredicate {
+                                    of(Fluids.LAVA)
+                                })
+                            })
+                        })),
+                        Optional.empty()
+                    )
+                )
+            )
         }
 
-        val boostSkis = consumer.advancement(BOOST_SKIS, ModItems.BASALT_GEYSER) {
+        val boostSkis = consumer.advancement(BOOST_SKIS, NetherArchivesItems.BASALT_GEYSER) {
             parent(paddleSkis)
-            addCriterion("boost_skis", NetherArchivesTriggers.AIRSKI.createCriterion(DefaultBlockInteractionTrigger.TriggerInstance(Optional.empty(), Optional.empty())))
+            addCriterion(
+                "boost_skis",
+                NetherArchivesTriggers.AIRSKI.createCriterion(
+                    DefaultBlockInteractionTrigger.TriggerInstance(
+                        Optional.empty(),
+                        Optional.empty()
+                    )
+                )
+            )
         }
 
-        val ferment = consumer.advancement(FERMENT, ModItems.ROTTEN_FLESH_BLOCK) {
+        val ferment = consumer.advancement(FERMENT, NetherArchivesItems.ROTTEN_FLESH_BLOCK) {
             parent(nether)
-            addCriterion("ferment", NetherArchivesTriggers.FERMENT.createCriterion(
-                DefaultBlockInteractionTrigger.TriggerInstance(Optional.empty(), Optional.of(Holder.direct(blockMatches(
-                    registryLookup.lookupOrThrow(Registries.BLOCK), ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
-                ).build())))
-            ))
+            addCriterion(
+                "ferment", NetherArchivesTriggers.FERMENT.createCriterion(
+                    DefaultBlockInteractionTrigger.TriggerInstance(
+                        Optional.empty(), Optional.of(
+                            Holder.direct(
+                                blockMatches(
+                                    registryLookup.lookupOrThrow(Registries.BLOCK),
+                                    NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK
+                                ).build()
+                            )
+                        )
+                    )
+                )
+            )
         }
     }
 

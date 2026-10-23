@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.item
 
 import archives.tater.netherarchives.entity.BlazeLanternEntity
-import archives.tater.netherarchives.registry.ModSounds
+import archives.tater.netherarchives.registry.NetherArchivesSounds
 import archives.tater.netherarchives.util.get
 import net.minecraft.stats.Stats
 import net.minecraft.world.InteractionHand
@@ -25,7 +25,7 @@ class BlazeLanternItem(settings: Properties) : Item(settings) {
     override fun use(level: Level, user: Player, hand: InteractionHand): InteractionResult {
         val stack = user[hand]
         user.playSound(
-            ModSounds.BLAZE_LANTERN_THROW,
+            NetherArchivesSounds.BLAZE_LANTERN_THROW,
             0.5f,
             0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f)
         )

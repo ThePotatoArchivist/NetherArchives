@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.item
 
-import archives.tater.netherarchives.registry.ModComponents
-import archives.tater.netherarchives.registry.ModFluidTags
+import archives.tater.netherarchives.registry.NetherArchivesComponents
+import archives.tater.netherarchives.registry.NetherArchivesFluidTags
 import archives.tater.netherarchives.util.contains
 import archives.tater.netherarchives.util.isIn
 import net.minecraft.world.entity.Entity
@@ -26,13 +26,15 @@ object SkisItem {
 
     @JvmStatic
     fun wearsSkis(entity: Entity?) = entity is LivingEntity && wearsSkis(entity)
+
     @JvmStatic
-    fun wearsSkis(entity: LivingEntity) = EquipmentSlot.VALUES.any { ModComponents.SKIS in entity.getItemBySlot(it) }
+    fun wearsSkis(entity: LivingEntity) =
+        EquipmentSlot.VALUES.any { NetherArchivesComponents.SKIS in entity.getItemBySlot(it) }
 
     @JvmStatic
     fun canSki(entity: LivingEntity, fluidState: FluidState) =
         wearsSkis(entity) &&
-        fluidState isIn ModFluidTags.SKIS_CAN_WALK_ON
+        fluidState isIn NetherArchivesFluidTags.SKIS_CAN_WALK_ON
     @JvmStatic
     fun isSkiing(entity: LivingEntity) = entity.onGround() && canSki(entity,
         entity.level().getFluidState(entity.blockPosition()))

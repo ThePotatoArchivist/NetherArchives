@@ -29,13 +29,13 @@ object NetherArchivesBlocks {
         register(id.block, block, properties)
 
     @JvmField
-    val MAGNETITE = register(ModBlockItemIds.MAGNETITE, ::MagnetiteBlock) {
+    val MAGNETITE = register(NetherArchivesBlockItemIds.MAGNETITE, ::MagnetiteBlock) {
         strength(0.8f, 9.0f)
         sound(SoundType.BASALT)
     }
 
     @JvmField
-    val SMOLDERING_MAGNETITE = register(ModBlockItemIds.SMOLDERING_MAGNETITE, ::SmolderingMagnetiteBlock) {
+    val SMOLDERING_MAGNETITE = register(NetherArchivesBlockItemIds.SMOLDERING_MAGNETITE, ::SmolderingMagnetiteBlock) {
         strength(0.6f, 1.25f)
         sound(SoundType.BASALT)
         lightLevel { 3 }
@@ -43,7 +43,7 @@ object NetherArchivesBlocks {
     }
 
     @JvmField
-    val BLAZE_FIRE = register(ModBlockIds.BLAZE_FIRE, ::BlazeFireBlock) {
+    val BLAZE_FIRE = register(NetherArchivesBlockIds.BLAZE_FIRE, ::BlazeFireBlock) {
         replaceable()
         noCollision()
         instabreak()
@@ -54,7 +54,7 @@ object NetherArchivesBlocks {
     }
 
     @JvmField
-    val BLAZE_DUST = register(ModBlockItemIds.BLAZE_DUST, ::BlazePowderBlock) {
+    val BLAZE_DUST = register(NetherArchivesBlockItemIds.BLAZE_DUST, ::BlazePowderBlock) {
         replaceable()
         noCollision()
         sound(SoundType.SAND)
@@ -63,19 +63,19 @@ object NetherArchivesBlocks {
     }
 
     @JvmField
-    val FERMENTED_ROTTEN_FLESH_BLOCK = register(ModBlockItemIds.FERMENTED_ROTTEN_FLESH_BLOCK) {
+    val FERMENTED_ROTTEN_FLESH_BLOCK = register(NetherArchivesBlockItemIds.FERMENTED_ROTTEN_FLESH_BLOCK) {
         strength(1.5f, 1f)
         sound(SoundType.CORAL_BLOCK)
     }
 
     @JvmField
-    val ROTTEN_FLESH_BLOCK = register(ModBlockItemIds.ROTTEN_FLESH_BLOCK, ::RottenFleshBlock) {
+    val ROTTEN_FLESH_BLOCK = register(NetherArchivesBlockItemIds.ROTTEN_FLESH_BLOCK, ::RottenFleshBlock) {
         strength(0.7f, 0.7f)
         sound(SoundType.CORAL_BLOCK)
     }
 
     @JvmField
-    val BLAZE_TORCH = register(ModBlockItemIds.BLAZE_TORCH, ::BlazeTorchBlock) {
+    val BLAZE_TORCH = register(NetherArchivesBlockItemIds.BLAZE_TORCH, ::BlazeTorchBlock) {
         noCollision()
         instabreak()
         lightLevel { 15 }
@@ -84,7 +84,7 @@ object NetherArchivesBlocks {
     }
 
     @JvmField
-    val WALL_BLAZE_TORCH = register(ModBlockIds.WALL_BLAZE_TORCH, ::WallBlazeTorchBlock) {
+    val WALL_BLAZE_TORCH = register(NetherArchivesBlockIds.WALL_BLAZE_TORCH, ::WallBlazeTorchBlock) {
         copyLootAndTranslation(BLAZE_TORCH)
         noCollision()
         instabreak()
@@ -94,34 +94,46 @@ object NetherArchivesBlocks {
     }
 
     @JvmField
-    val BASALT_GEYSER = register(ModBlockItemIds.BASALT_GEYSER, ::BasaltGeyserBlock) {
+    val BASALT_GEYSER = register(NetherArchivesBlockItemIds.BASALT_GEYSER, ::BasaltGeyserBlock) {
         strength(1.2f, 4.2f)
         sound(SoundType.BASALT)
         requiresCorrectToolForDrops()
     }
 
     @JvmField
-    val ADJUSTABLE_BASALT_GEYSER = register(ModBlockItemIds.ADJUSTABLE_BASALT_GEYSER, ::AdjustableBasaltGeyserBlock) {
-        strength(1.2f, 4.2f)
-        sound(SoundType.BASALT)
-    }
+    val ADJUSTABLE_BASALT_GEYSER =
+        register(NetherArchivesBlockItemIds.ADJUSTABLE_BASALT_GEYSER, ::AdjustableBasaltGeyserBlock) {
+            strength(1.2f, 4.2f)
+            sound(SoundType.BASALT)
+        }
 
     @JvmField
-    val SHATTERED_SPECTREGLASS = register(ModBlockItemIds.SHATTERED_SPECTREGLASS, ::SoulGlassBlock, BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS))
+    val SHATTERED_SPECTREGLASS = register(
+        NetherArchivesBlockItemIds.SHATTERED_SPECTREGLASS,
+        ::SoulGlassBlock,
+        BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+    )
 
     @JvmField
-    val SPECTREGLASS = register(ModBlockItemIds.SPECTREGLASS, { ShatterableSoulGlassBlock(SHATTERED_SPECTREGLASS, it) },
+    val SPECTREGLASS = register(
+        NetherArchivesBlockItemIds.SPECTREGLASS, { ShatterableSoulGlassBlock(SHATTERED_SPECTREGLASS, it) },
         BlockBehaviour.Properties.ofFullCopy(SHATTERED_SPECTREGLASS).apply {
             strength(0.3f, 1f)
         }
     )
 
     @JvmField
-    val SHATTERED_SPECTREGLASS_PANE = register(ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE, { StainedGlassPaneBlock(DyeColor.BLACK, it) }, BlockBehaviour.Properties.ofFullCopy(
-        Blocks.GLASS_PANE))
+    val SHATTERED_SPECTREGLASS_PANE = register(
+        NetherArchivesBlockItemIds.SHATTERED_SPECTREGLASS_PANE,
+        { StainedGlassPaneBlock(DyeColor.BLACK, it) },
+        BlockBehaviour.Properties.ofFullCopy(
+            Blocks.GLASS_PANE
+        )
+    )
 
     @JvmField
-    val SPECTREGLASS_PANE = register(ModBlockItemIds.SPECTREGLASS_PANE, { ShatterableGlassPaneBlock(SHATTERED_SPECTREGLASS_PANE, it) },
+    val SPECTREGLASS_PANE = register(
+        NetherArchivesBlockItemIds.SPECTREGLASS_PANE, { ShatterableGlassPaneBlock(SHATTERED_SPECTREGLASS_PANE, it) },
         BlockBehaviour.Properties.ofFullCopy(SHATTERED_SPECTREGLASS_PANE).apply {
             strength(0.3f, 1f)
         }
@@ -132,5 +144,3 @@ object NetherArchivesBlocks {
     }
 
 }
-
-internal typealias ModBlocks = NetherArchivesBlocks

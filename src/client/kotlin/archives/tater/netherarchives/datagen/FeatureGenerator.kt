@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.ModBlockTags
-import archives.tater.netherarchives.registry.ModBlocks
-import archives.tater.netherarchives.registry.ModFeatures
-import archives.tater.netherarchives.registry.ModPlacedFeatures
+import archives.tater.netherarchives.registry.NetherArchivesBlockTags
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesFeatures
+import archives.tater.netherarchives.registry.NetherArchivesPlacements
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.core.HolderLookup
@@ -37,67 +37,89 @@ object FeatureGenerator : MultiRegistryBootstrap {
         val placedFeatures = registries[Registries.PLACED_FEATURE]
         val fluids = features.lookup(Registries.FLUID)
 
-        val basaltGeyser = features.register(ModFeatures.BASALT_GEYSER, SimpleBlockFeature(BlockStateProvider.of(ModBlocks.BASALT_GEYSER)))
+        val basaltGeyser = features.register(
+            NetherArchivesFeatures.BASALT_GEYSER, SimpleBlockFeature(
+                BlockStateProvider.of(
+                    NetherArchivesBlocks.BASALT_GEYSER
+                )
+            )
+        )
 
-        placedFeatures.register(ModPlacedFeatures.BASALT_GEYSER, PlacedFeature(
-            basaltGeyser,
-            [
-                CountOnEveryLayerPlacement.of(2),
-                OffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
-                BlockPredicateFilter.forPredicate(allOf(
-                    matchesBlocks(Vec3i(0, 1, 0), [Blocks.AIR]),
-                    matchesTag(ModBlockTags.BASALT_GEYSER_REPLACEABLE)
-                )),
-                biome(),
-            ]
-        ))
-
-        placedFeatures.register(ModPlacedFeatures.BASALT_GEYSER_SUBMERGED, PlacedFeature(
-            basaltGeyser,
-            [
-                CountOnEveryLayerPlacement.of(4),
-                OffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
-                BlockPredicateFilter.forPredicate(allOf(
-                    matchesTag(ModBlockTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED),
-                    MatchingFluidsPredicate(Vec3i(0, 1, 0), fluids.getOrThrow(FluidTags.LAVA)),
-                    anyOf(
-                        matchesBlocks(Vec3i(0, 2, 0), [Blocks.AIR]),
+        placedFeatures.register(
+            NetherArchivesPlacements.BASALT_GEYSER, PlacedFeature(
+                basaltGeyser,
+                [
+                    CountOnEveryLayerPlacement.of(2),
+                    OffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
+                    BlockPredicateFilter.forPredicate(
                         allOf(
-                            MatchingFluidsPredicate(Vec3i(0, 2, 0), fluids.getOrThrow(FluidTags.LAVA)),
-                            matchesBlocks(Vec3i(0, 3, 0), [Blocks.AIR]),
+                            matchesBlocks(Vec3i(0, 1, 0), [Blocks.AIR]),
+                            matchesTag(NetherArchivesBlockTags.BASALT_GEYSER_REPLACEABLE)
                         )
+                    ),
+                    biome(),
+                ]
+            )
+        )
+
+        placedFeatures.register(
+            NetherArchivesPlacements.BASALT_GEYSER_SUBMERGED, PlacedFeature(
+                basaltGeyser,
+                [
+                    CountOnEveryLayerPlacement.of(4),
+                    OffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
+                    BlockPredicateFilter.forPredicate(
+                        allOf(
+                            matchesTag(NetherArchivesBlockTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED),
+                            MatchingFluidsPredicate(Vec3i(0, 1, 0), fluids.getOrThrow(FluidTags.LAVA)),
+                            anyOf(
+                                matchesBlocks(Vec3i(0, 2, 0), [Blocks.AIR]),
+                                allOf(
+                                    MatchingFluidsPredicate(Vec3i(0, 2, 0), fluids.getOrThrow(FluidTags.LAVA)),
+                                    matchesBlocks(Vec3i(0, 3, 0), [Blocks.AIR]),
+                                )
+                            )
+                        )
+                    ),
+                    biome(),
+                ]
+            )
+        )
+
+        placedFeatures.register(
+            NetherArchivesPlacements.MAGNETITE_BLOBS, PlacedFeature(
+                features.register(
+                    NetherArchivesFeatures.MAGNETITE_BLOBS, ReplaceBlobsFeature(
+                        Blocks.NETHERRACK.defaultBlockState(),
+                        NetherArchivesBlocks.MAGNETITE.defaultBlockState(),
+                        UniformInt.of(3, 7)
                     )
-                )),
-                biome(),
-            ]
-        ))
+                ),
+                [
+                    CountPlacement.of(10),
+                    spread(),
+                    uniform(aboveBottom(0), belowTop(0)),
+                    biome(),
+                ]
+            )
+        )
 
-        placedFeatures.register(ModPlacedFeatures.MAGNETITE_BLOBS, PlacedFeature(
-            features.register(ModFeatures.MAGNETITE_BLOBS, ReplaceBlobsFeature(
-                Blocks.NETHERRACK.defaultBlockState(),
-                ModBlocks.MAGNETITE.defaultBlockState(),
-                UniformInt.of(3, 7)
-            )),
-            [
-                CountPlacement.of(10),
-                spread(),
-                uniform(aboveBottom(0), belowTop(0)),
-                biome(),
-            ]
-        ))
-
-        placedFeatures.register(ModPlacedFeatures.MAGNETITE_DELTA, PlacedFeature(
-            features.register(ModFeatures.MAGNETITE_DELTA, DeltaFeature(
-                Blocks.LAVA.defaultBlockState(),
-                ModBlocks.MAGNETITE.defaultBlockState(),
-                UniformInt.of(2, 6),
-                UniformInt.of(1, 3),
-            )),
-            [
-                CountOnEveryLayerPlacement.of(20),
-                biome(),
-            ]
-        ))
+        placedFeatures.register(
+            NetherArchivesPlacements.MAGNETITE_DELTA, PlacedFeature(
+                features.register(
+                    NetherArchivesFeatures.MAGNETITE_DELTA, DeltaFeature(
+                        Blocks.LAVA.defaultBlockState(),
+                        NetherArchivesBlocks.MAGNETITE.defaultBlockState(),
+                        UniformInt.of(2, 6),
+                        UniformInt.of(1, 3),
+                    )
+                ),
+                [
+                    CountOnEveryLayerPlacement.of(20),
+                    biome(),
+                ]
+            )
+        )
     }
 
     override fun requestedRegistries(): Set<ResourceKey<out Registry<*>>> = [

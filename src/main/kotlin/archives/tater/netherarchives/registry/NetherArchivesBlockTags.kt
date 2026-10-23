@@ -14,5 +14,3 @@ object NetherArchivesBlockTags {
     @JvmField val INVERTS_BEACON = create("inverts_beacon")
     @JvmField val REVEALS_INVISIBLES = create("reveals_invisibles")
 }
-
-internal typealias ModBlockTags = NetherArchivesBlockTags

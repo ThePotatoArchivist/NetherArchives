@@ -11,5 +11,3 @@ object NetherArchivesEquipmentAssets {
     @JvmField val BASALT_SKIS = create("basalt_skis")
     @JvmField val DYED_BASALT_SKIS = ColorCollection.NAMES.map { color -> create("${color}_basalt_skis") }
 }
-
-internal typealias ModEquipmentAssets = NetherArchivesEquipmentAssets

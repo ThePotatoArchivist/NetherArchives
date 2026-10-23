@@ -21,5 +21,3 @@ object NetherArchivesBlockItemIds {
     val SPECTREGLASS_PANE = create("spectreglass_pane")
     val SHATTERED_SPECTREGLASS_PANE = create("shattered_spectreglass_pane")
 }
-
-internal typealias ModBlockItemIds = NetherArchivesBlockItemIds

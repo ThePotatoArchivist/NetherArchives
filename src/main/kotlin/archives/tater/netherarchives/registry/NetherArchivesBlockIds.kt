@@ -12,5 +12,3 @@ object NetherArchivesBlockIds {
     val WALL_BLAZE_TORCH = create("wall_blaze_torch")
     val BLAZE_FIRE = create("blaze_fire")
 }
-
-internal typealias ModBlockIds = NetherArchivesBlockIds

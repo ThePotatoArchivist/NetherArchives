@@ -23,5 +23,3 @@ object NetherArchivesSounds {
 
     fun init() {}
 }
-
-internal typealias ModSounds = NetherArchivesSounds

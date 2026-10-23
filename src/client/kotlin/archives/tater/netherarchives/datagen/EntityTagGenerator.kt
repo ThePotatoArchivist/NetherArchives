@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.ModEntityTags
+import archives.tater.netherarchives.registry.NetherArchivesEntityTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.minecraft.core.HolderLookup
@@ -13,17 +13,17 @@ class EntityTagGenerator(
 ) : FabricTagsProvider.EntityTypeTagsProvider(output, registriesFuture) {
 
     override fun addTags(wrapperLookup: HolderLookup.Provider) {
-        builder(ModEntityTags.NON_CHAIN_SHATTER_PROJECTILES).add(
+        builder(NetherArchivesEntityTags.NON_CHAIN_SHATTER_PROJECTILES).add(
             EntityTypeIds.EGG,
             EntityTypeIds.SNOWBALL,
             EntityTypeIds.SMALL_FIREBALL,
             EntityTypeIds.WIND_CHARGE,
         )
-        builder(ModEntityTags.NON_SHATTER_PROJECTILES).add(
+        builder(NetherArchivesEntityTags.NON_SHATTER_PROJECTILES).add(
             EntityTypeIds.FIREBALL,
             EntityTypeIds.WITHER_SKULL,
         )
-        builder(ModEntityTags.BLAZE_COLORED_FIRE).add(
+        builder(NetherArchivesEntityTags.BLAZE_COLORED_FIRE).add(
             EntityTypeIds.BLAZE,
         )
     }

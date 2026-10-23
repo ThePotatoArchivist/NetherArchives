@@ -5,7 +5,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 
-object NetherArchivesPlacedFeatures {
+object NetherArchivesPlacements {
     private fun create(path: String): ResourceKey<PlacedFeature> =
         ResourceKey.create(Registries.PLACED_FEATURE, NetherArchives.id(path))
 
@@ -14,5 +14,3 @@ object NetherArchivesPlacedFeatures {
     val BASALT_GEYSER = create("basalt_geyser")
     val BASALT_GEYSER_SUBMERGED = create("basalt_geyser_submerged")
 }
-
-internal typealias ModPlacedFeatures = NetherArchivesPlacedFeatures

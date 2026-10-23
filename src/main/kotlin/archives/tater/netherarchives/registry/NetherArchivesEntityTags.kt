@@ -11,5 +11,3 @@ object NetherArchivesEntityTags {
     @JvmField val NON_CHAIN_SHATTER_PROJECTILES = create("non_chain_shatter_projectile")
     @JvmField val BLAZE_COLORED_FIRE = create("blaze_colored_fire")
 }
-
-internal typealias ModEntityTags = NetherArchivesEntityTags

@@ -11,5 +11,3 @@ object NetherArchivesFluidTags {
     @JvmField val SKIS_CAN_WALK_ON: TagKey<Fluid> = create("skis_can_walk_on")
     @JvmField val BURNS_WHEN_PADDLE: TagKey<Fluid> = create("burns_when_paddle")
 }
-
-internal typealias ModFluidTags = NetherArchivesFluidTags

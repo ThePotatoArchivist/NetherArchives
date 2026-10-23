@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.registry.ModBlocks
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
@@ -20,7 +20,7 @@ class SmolderingMagnetiteBlock(settings: Properties) : Block(settings.randomTick
         if (Direction.entries.none {
                 level.getFluidState(pos.relative(it)).`is`(FluidTags.LAVA)
             }) {
-            level.setBlockAndUpdate(pos, ModBlocks.MAGNETITE.defaultBlockState())
+            level.setBlockAndUpdate(pos, NetherArchivesBlocks.MAGNETITE.defaultBlockState())
         }
 
     }

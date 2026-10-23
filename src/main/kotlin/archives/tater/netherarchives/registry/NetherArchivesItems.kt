@@ -47,33 +47,33 @@ object NetherArchivesItems {
         register(id, item, Item.Properties())
 
     @JvmField
-    val MAGNETITE = register(ModBlockItemIds.MAGNETITE)
+    val MAGNETITE = register(NetherArchivesBlockItemIds.MAGNETITE)
 
     @JvmField
-    val SMOLDERING_MAGNETITE = register(ModBlockItemIds.SMOLDERING_MAGNETITE)
+    val SMOLDERING_MAGNETITE = register(NetherArchivesBlockItemIds.SMOLDERING_MAGNETITE)
 
     @JvmField
-    val ROTTEN_FLESH_BLOCK = register(ModBlockItemIds.ROTTEN_FLESH_BLOCK)
+    val ROTTEN_FLESH_BLOCK = register(NetherArchivesBlockItemIds.ROTTEN_FLESH_BLOCK)
 
     @JvmField
-    val FERMENTED_ROTTEN_FLESH_BLOCK = register(ModBlockItemIds.FERMENTED_ROTTEN_FLESH_BLOCK)
+    val FERMENTED_ROTTEN_FLESH_BLOCK = register(NetherArchivesBlockItemIds.FERMENTED_ROTTEN_FLESH_BLOCK)
 
     @JvmField
-    val IRON_SLAG = register(ModItemIds.IRON_SLAG)
+    val IRON_SLAG = register(NetherArchivesItemIds.IRON_SLAG)
 
     @JvmField
-    val BLAZE_DUST = register(ModBlockItemIds.BLAZE_DUST)
+    val BLAZE_DUST = register(NetherArchivesBlockItemIds.BLAZE_DUST)
 
     @JvmField
-    val BLAZE_LANTERN = register(ModItemIds.BLAZE_LANTERN, ::BlazeLanternItem) {
+    val BLAZE_LANTERN = register(NetherArchivesItemIds.BLAZE_LANTERN, ::BlazeLanternItem) {
         stacksTo(16)
     }
 
     @JvmField
-    val BLAZE_TORCH = register(ModBlockItemIds.BLAZE_TORCH) { block, settings ->
+    val BLAZE_TORCH = register(NetherArchivesBlockItemIds.BLAZE_TORCH) { block, settings ->
         StandingAndWallBlockItem(
             block,
-            ModBlocks.WALL_BLAZE_TORCH,
+            NetherArchivesBlocks.WALL_BLAZE_TORCH,
             Direction.DOWN,
             settings
         )
@@ -87,44 +87,47 @@ object NetherArchivesItems {
         SoundEvents.ARMOR_EQUIP_GENERIC,
         ArmorMaterials.CHAINMAIL.toughness,
         ArmorMaterials.CHAINMAIL.knockbackResistance,
-        ModItemTags.BASALT_EQUIPMENT_REPAIR,
+        NetherArchivesItemTags.BASALT_EQUIPMENT_REPAIR,
         assetId
     )
 
     @JvmField
-    val BASALT_SKIS = register(ModItemIds.BASALT_SKIS) {
-        humanoidArmor(createSkisMaterial(ModEquipmentAssets.BASALT_SKIS), ArmorType.BOOTS)
-        component(ModComponents.SKIS, McUnit.INSTANCE)
+    val BASALT_SKIS = register(NetherArchivesItemIds.BASALT_SKIS) {
+        humanoidArmor(createSkisMaterial(NetherArchivesEquipmentAssets.BASALT_SKIS), ArmorType.BOOTS)
+        component(NetherArchivesComponents.SKIS, McUnit.INSTANCE)
     }
 
     @JvmField
-    val DYED_BASALT_SKIS = ColorCollection.zipMap(ModItemIds.DYED_BASALT_SKIS, ModEquipmentAssets.DYED_BASALT_SKIS) { id, assetId ->
+    val DYED_BASALT_SKIS = ColorCollection.zipMap(
+        NetherArchivesItemIds.DYED_BASALT_SKIS,
+        NetherArchivesEquipmentAssets.DYED_BASALT_SKIS
+    ) { id, assetId ->
         register(id) {
             humanoidArmor(createSkisMaterial(assetId), ArmorType.BOOTS)
-            component(ModComponents.SKIS, McUnit.INSTANCE)
+            component(NetherArchivesComponents.SKIS, McUnit.INSTANCE)
         }
     }
 
     @JvmField
-    val BASALT_OAR = register(ModItemIds.BASALT_OAR, ::OarItem) {
+    val BASALT_OAR = register(NetherArchivesItemIds.BASALT_OAR, ::OarItem) {
         stacksTo(1)
         durability(ToolMaterial.STONE.durability)
     }
 
     @JvmField
-    val BASALT_ROD = register(ModItemIds.BASALT_ROD)
+    val BASALT_ROD = register(NetherArchivesItemIds.BASALT_ROD)
 
     @JvmField
-    val BASALT_GEYSER = register(ModBlockItemIds.BASALT_GEYSER)
+    val BASALT_GEYSER = register(NetherArchivesBlockItemIds.BASALT_GEYSER)
 
     @JvmField
-    val ADJUSTABLE_BASALT_GEYSER = register(ModBlockItemIds.ADJUSTABLE_BASALT_GEYSER)
+    val ADJUSTABLE_BASALT_GEYSER = register(NetherArchivesBlockItemIds.ADJUSTABLE_BASALT_GEYSER)
 
     @JvmField
-    val SPECTREGLASS_SHARD = register(ModItemIds.SPECTREGLASS_SHARD)
+    val SPECTREGLASS_SHARD = register(NetherArchivesItemIds.SPECTREGLASS_SHARD)
 
     @JvmField
-    val SPECTREGLASS_KNIFE = register(ModItemIds.SPECTREGLASS_KNIFE, ::SoulGlassKnifeItem) {
+    val SPECTREGLASS_KNIFE = register(NetherArchivesItemIds.SPECTREGLASS_KNIFE, ::SoulGlassKnifeItem) {
         durability(16)
         attributes(SoulGlassKnifeItem.attributeModifiers)
         component(DataComponents.TOOL, SoulGlassKnifeItem.toolComponent)
@@ -132,19 +135,19 @@ object NetherArchivesItems {
     }
 
     @JvmField
-    val SPECTREGLASS = register(ModBlockItemIds.SPECTREGLASS)
+    val SPECTREGLASS = register(NetherArchivesBlockItemIds.SPECTREGLASS)
 
     @JvmField
-    val SHATTERED_SPECTREGLASS = register(ModBlockItemIds.SHATTERED_SPECTREGLASS)
+    val SHATTERED_SPECTREGLASS = register(NetherArchivesBlockItemIds.SHATTERED_SPECTREGLASS)
 
     @JvmField
-    val SPECTREGLASS_PANE = register(ModBlockItemIds.SPECTREGLASS_PANE)
+    val SPECTREGLASS_PANE = register(NetherArchivesBlockItemIds.SPECTREGLASS_PANE)
 
     @JvmField
-    val SHATTERED_SPECTREGLASS_PANE = register(ModBlockItemIds.SHATTERED_SPECTREGLASS_PANE)
+    val SHATTERED_SPECTREGLASS_PANE = register(NetherArchivesBlockItemIds.SHATTERED_SPECTREGLASS_PANE)
 
     @JvmField
-    val DUMMY_SOUL_FIRE = register(ModItemIds.DUMMY_SOUL_FIRE, ::FakeVanillaItem)
+    val DUMMY_SOUL_FIRE = register(NetherArchivesItemIds.DUMMY_SOUL_FIRE, ::FakeVanillaItem)
 
     const val CREATIVE_TAB_TRANSLATION = "itemGroup.netherarchives.nether_archives"
 
@@ -220,5 +223,3 @@ object NetherArchivesItems {
         }
     }
 }
-
-internal typealias ModItems = NetherArchivesItems

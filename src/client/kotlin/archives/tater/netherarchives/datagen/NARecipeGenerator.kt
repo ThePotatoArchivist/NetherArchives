@@ -2,7 +2,7 @@ package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.datagen.builder.*
-import archives.tater.netherarchives.registry.ModItems
+import archives.tater.netherarchives.registry.NetherArchivesItems
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -26,7 +26,13 @@ class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOu
     }
 
     private fun RecipeOutput.recipes() {
-        oreSmelting(RecipeCategory.MISC, CookingBookCategory.MISC, ModItems.IRON_SLAG, Items.IRON_INGOT, experience = 0.5F)
+        oreSmelting(
+            RecipeCategory.MISC,
+            CookingBookCategory.MISC,
+            NetherArchivesItems.IRON_SLAG,
+            Items.IRON_INGOT,
+            experience = 0.5F
+        )
 
         shaped(RecipeCategory.TOOLS, Items.COMPASS, recipeId = NetherArchives.id("compass_from_magnetite")) {
             pattern(" # ")
@@ -34,26 +40,26 @@ class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOu
             pattern(" # ")
             inputs {
                 '#' to ConventionalItemTags.IRON_INGOTS
-                'X' to ModItems.MAGNETITE
+                'X' to NetherArchivesItems.MAGNETITE
             }
-            itemCriterion(ModItems.MAGNETITE)
+            itemCriterion(NetherArchivesItems.MAGNETITE)
         }
 
-        shapeless(RecipeCategory.MISC, ModItems.ROTTEN_FLESH_BLOCK) {
+        shapeless(RecipeCategory.MISC, NetherArchivesItems.ROTTEN_FLESH_BLOCK) {
             inputs {
                 9 of Items.ROTTEN_FLESH
             }
             itemCriterion(Items.ROTTEN_FLESH)
         }
 
-        shapeless(RecipeCategory.COMBAT, ModItems.BLAZE_DUST, 4) {
+        shapeless(RecipeCategory.COMBAT, NetherArchivesItems.BLAZE_DUST, 4) {
             inputs {
                 +Items.BLAZE_POWDER
             }
             itemCriterion(Items.BLAZE_POWDER)
         }
 
-        shaped(RecipeCategory.COMBAT, ModItems.BLAZE_LANTERN) {
+        shaped(RecipeCategory.COMBAT, NetherArchivesItems.BLAZE_LANTERN) {
             pattern("###")
             pattern("#X#")
             pattern("###")
@@ -64,7 +70,7 @@ class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOu
             itemCriterion(Items.BLAZE_POWDER)
         }
 
-        shaped(RecipeCategory.DECORATIONS, ModItems.BLAZE_TORCH, 2) {
+        shaped(RecipeCategory.DECORATIONS, NetherArchivesItems.BLAZE_TORCH, 2) {
             pattern("X")
             pattern("#")
             pattern("B")
@@ -76,7 +82,7 @@ class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOu
             itemCriterion(Items.BLAZE_POWDER)
         }
 
-        shaped(RecipeCategory.MISC, ModItems.BASALT_ROD, 2) {
+        shaped(RecipeCategory.MISC, NetherArchivesItems.BASALT_ROD, 2) {
             pattern("  #")
             pattern(" # ")
             pattern("#  ")
@@ -86,28 +92,34 @@ class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOu
             itemCriterion(Items.BASALT)
         }
 
-        shaped(RecipeCategory.TOOLS, ModItems.BASALT_SKIS) {
+        shaped(RecipeCategory.TOOLS, NetherArchivesItems.BASALT_SKIS) {
             pattern("# #")
             pattern("# #")
             pattern("% %")
             inputs {
                 '#' to Items.POLISHED_BASALT
-                '%' to ModItems.BASALT_ROD
+                '%' to NetherArchivesItems.BASALT_ROD
             }
-            itemCriterion(ModItems.BASALT_ROD)
+            itemCriterion(NetherArchivesItems.BASALT_ROD)
         }
 
-        colorWithDye(Items.DYE.asList(), ModItems.DYED_BASALT_SKIS.asList(), ModItems.BASALT_SKIS, "basalt_skis_dye", RecipeCategory.TRANSPORTATION)
+        colorWithDye(
+            Items.DYE.asList(),
+            NetherArchivesItems.DYED_BASALT_SKIS.asList(),
+            NetherArchivesItems.BASALT_SKIS,
+            "basalt_skis_dye",
+            RecipeCategory.TRANSPORTATION
+        )
 
-        shaped(RecipeCategory.TOOLS, ModItems.BASALT_OAR) {
+        shaped(RecipeCategory.TOOLS, NetherArchivesItems.BASALT_OAR) {
             pattern("%")
             pattern("%")
             pattern("#")
             inputs {
                 '#' to Items.POLISHED_BASALT
-                '%' to ModItems.BASALT_ROD
+                '%' to NetherArchivesItems.BASALT_ROD
             }
-            itemCriterion(ModItems.BASALT_ROD)
+            itemCriterion(NetherArchivesItems.BASALT_ROD)
         }
 
         shaped(RecipeCategory.MISC, Items.LODESTONE, recipeId = NetherArchives.id("lodestone_from_magnetite")) {
@@ -116,59 +128,66 @@ class NARecipeGenerator(recipeOutput: BootstrapContext<Recipe<*>>, advancementOu
             pattern("###")
             inputs {
                 '#' to Items.CHISELED_STONE_BRICKS
-                '%' to ModItems.MAGNETITE
+                '%' to NetherArchivesItems.MAGNETITE
             }
-            itemCriterion(ModItems.MAGNETITE)
+            itemCriterion(NetherArchivesItems.MAGNETITE)
         }
 
-        shaped(RecipeCategory.REDSTONE, ModItems.ADJUSTABLE_BASALT_GEYSER) {
+        shaped(RecipeCategory.REDSTONE, NetherArchivesItems.ADJUSTABLE_BASALT_GEYSER) {
             pattern(" & ")
             pattern("#$#")
             pattern(" % ")
             inputs {
                 '&' to Items.IRON_TRAPDOOR
                 '#' to ConventionalItemTags.IRON_INGOTS
-                '$' to ModItems.BASALT_GEYSER
+                '$' to NetherArchivesItems.BASALT_GEYSER
                 '%' to ConventionalItemTags.REDSTONE_DUSTS
             }
-            itemCriterion(ModItems.BASALT_GEYSER)
+            itemCriterion(NetherArchivesItems.BASALT_GEYSER)
         }
 
         smelting(
             RecipeCategory.DECORATIONS,
             CookingBookCategory.MISC,
             Items.SOUL_SAND,
-            ModItems.SPECTREGLASS_SHARD,
+            NetherArchivesItems.SPECTREGLASS_SHARD,
             experience = 0.1f,
         )
 
-        twoByTwoPacker(RecipeCategory.DECORATIONS, ModItems.SHATTERED_SPECTREGLASS, ModItems.SPECTREGLASS_SHARD)
+        twoByTwoPacker(
+            RecipeCategory.DECORATIONS,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS,
+            NetherArchivesItems.SPECTREGLASS_SHARD
+        )
 
-        stainedGlassPaneFromStainedGlass(ModItems.SPECTREGLASS_PANE, ModItems.SPECTREGLASS)
-        stainedGlassPaneFromStainedGlass(ModItems.SHATTERED_SPECTREGLASS_PANE, ModItems.SHATTERED_SPECTREGLASS)
+        stainedGlassPaneFromStainedGlass(NetherArchivesItems.SPECTREGLASS_PANE, NetherArchivesItems.SPECTREGLASS)
+        stainedGlassPaneFromStainedGlass(
+            NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS
+        )
 
         smelting(
             RecipeCategory.DECORATIONS,
             CookingBookCategory.BLOCKS,
-            ModItems.SHATTERED_SPECTREGLASS,
-            ModItems.SPECTREGLASS,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS,
+            NetherArchivesItems.SPECTREGLASS,
         )
         smelting(
             RecipeCategory.DECORATIONS,
             CookingBookCategory.BLOCKS,
-            ModItems.SHATTERED_SPECTREGLASS_PANE,
-            ModItems.SPECTREGLASS_PANE,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE,
+            NetherArchivesItems.SPECTREGLASS_PANE,
         )
 
-        shaped(RecipeCategory.COMBAT, ModItems.SPECTREGLASS_KNIFE) {
+        shaped(RecipeCategory.COMBAT, NetherArchivesItems.SPECTREGLASS_KNIFE) {
             pattern("#")
             pattern("#")
             pattern("%")
             inputs {
-                '#' to ModItems.SPECTREGLASS_SHARD
+                '#' to NetherArchivesItems.SPECTREGLASS_SHARD
                 '%' to ConventionalItemTags.BONES
             }
-            itemCriterion(ModItems.SPECTREGLASS_SHARD)
+            itemCriterion(NetherArchivesItems.SPECTREGLASS_SHARD)
         }
     }
 

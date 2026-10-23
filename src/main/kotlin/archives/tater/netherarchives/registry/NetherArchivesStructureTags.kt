@@ -10,5 +10,3 @@ object NetherArchivesStructureTags {
 
     @JvmField val BLAZE_TORCH_LOCATED: TagKey<Structure> = create("blaze_torch_located")
 }
-
-internal typealias ModStructureTags = NetherArchivesStructureTags

@@ -11,5 +11,3 @@ object NetherArchivesItemTags {
     @JvmField val SKIS = create("skis")
     @JvmField val ROTTEN_FLESH_FERMENTER_ITEM = create("rotten_flesh_fermenter")
 }
-
-internal typealias ModItemTags = NetherArchivesItemTags
