@@ -22,7 +22,7 @@ class ItemTagGenerator(
             add(NetherArchivesItems.BASALT_SKIS)
             NetherArchivesItems.DYED_BASALT_SKIS.forEach { (_, item) -> add(item) }
         }
-        valueLookupBuilder(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
+        valueLookupBuilder(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER).add(
             Items.SOUL_CAMPFIRE,
             NetherArchivesItems.DUMMY_SOUL_FIRE
         )

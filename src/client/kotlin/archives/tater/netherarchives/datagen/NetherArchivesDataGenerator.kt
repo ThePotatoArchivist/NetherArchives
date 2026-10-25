@@ -8,6 +8,7 @@ import net.minecraft.core.registries.Registries
 object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
     override fun buildRegistry(registryBuilder: RegistrySetBuilder) {
         registryBuilder.add(Registries.CONFIGURED_FEATURE, FeatureGenerator)
+        registryBuilder.add(Registries.DAMAGE_TYPE, DamageTypeGenerator)
     }
 
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
@@ -24,6 +25,8 @@ object NetherArchivesDataGenerator : DataGeneratorEntrypoint {
             addProvider(::EnglishLangGenerator)
             addProvider(::SoundsGenerator)
             addProvider(::FeatureGenerator)
+            addProvider(::DamageTypeGenerator)
+            addProvider(::DamageTypeTagGenerator)
             addProvider(::EquipmentGenerator)
         }
     }

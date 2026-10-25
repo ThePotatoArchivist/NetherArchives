@@ -9,5 +9,5 @@ object NetherArchivesItemTags {
 
     @JvmField val BASALT_EQUIPMENT_REPAIR = create("basalt_equipment_repair")
     @JvmField val SKIS = create("skis")
-    @JvmField val ROTTEN_FLESH_FERMENTER_ITEM = create("rotten_flesh_fermenter")
+    @JvmField val ROTTEN_FLESH_FERMENTER = create("rotten_flesh_fermenter")
 }
