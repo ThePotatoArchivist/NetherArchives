@@ -94,7 +94,7 @@ object NetherArchivesItems {
         SoundEvents.ARMOR_EQUIP_GENERIC,
         ArmorMaterials.CHAINMAIL.toughness,
         ArmorMaterials.CHAINMAIL.knockbackResistance,
-        NetherArchivesTags.BASALT_EQUIPMENT_REPAIR,
+        NetherArchivesItemTags.BASALT_EQUIPMENT_REPAIR,
         assetId
     )
 

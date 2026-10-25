@@ -5,10 +5,10 @@ import archives.tater.netherarchives.client.render.entity.layer.WitherEyesLayer
 import archives.tater.netherarchives.client.render.entity.layer.WitherSkeletonEyesLayer
 import archives.tater.netherarchives.client.render.entity.model.SkisEntityModel
 import archives.tater.netherarchives.client.render.particle.BlazeSparkParticle
+import archives.tater.netherarchives.registry.NetherArchivesBlockTags
 import archives.tater.netherarchives.registry.NetherArchivesEntities
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.registry.NetherArchivesParticles
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.util.isIn
 import archives.tater.netherarchives.util.isOf
 import net.fabricmc.api.ClientModInitializer
@@ -116,7 +116,7 @@ object NetherArchivesClient : ClientModInitializer {
                     ClipBlockStateContext(
                         cameraPos,
                         Vec3(entity.x, entity.getY(0.5), entity.z),
-                    ) { it isIn NetherArchivesTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
+                    ) { it isIn NetherArchivesBlockTags.REVEALS_INVISIBLES }).type != HitResult.Type.MISS
             }
         }
     }

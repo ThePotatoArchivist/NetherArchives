@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.block
 
+import archives.tater.netherarchives.registry.NetherArchivesBlockTags
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import archives.tater.netherarchives.util.get
 import archives.tater.netherarchives.util.listCopy
@@ -40,7 +40,7 @@ class RottenFleshBlock(settings: Properties) : Block(settings.randomTicks()) {
     private fun findCampfireDistance(level: Level, pos: BlockPos): Int {
         // [Iterable.find] stops iterating when it finds the block so the object should still be on the same value
         val campfire = BlockPos.betweenClosed(pos, pos.below(15)).find {
-            level.getBlockState(it).`is`(NetherArchivesTags.ROTTEN_FLESH_FERMENTER)
+            level.getBlockState(it).`is`(NetherArchivesBlockTags.ROTTEN_FLESH_FERMENTER)
         }
         if (campfire == null) return Integer.MAX_VALUE
 

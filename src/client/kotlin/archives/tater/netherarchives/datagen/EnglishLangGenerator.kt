@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.datagen
 
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
+import archives.tater.netherarchives.registry.NetherArchivesItemTags
 import archives.tater.netherarchives.registry.NetherArchivesItems
 import archives.tater.netherarchives.registry.NetherArchivesSounds
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.minecraft.core.HolderLookup
@@ -38,9 +38,9 @@ class EnglishLangGenerator(output: FabricPackOutput, registriesFuture: Completab
             add(NetherArchivesItems.BASALT_ROD, "Basalt Rod")
             add(NetherArchivesItems.SPECTREGLASS_SHARD, "Spectreglass Shard")
             add(NetherArchivesItems.SPECTREGLASS_KNIFE, "Spectreglass Knife")
-            add(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR, "Repairs Basalt Equipment")
-            add(NetherArchivesTags.SKIS, "Skis")
-            add(NetherArchivesTags.ROTTEN_FLESH_FERMENTER_ITEM, "Rotten Flesh Fermenter")
+            add(NetherArchivesItemTags.BASALT_EQUIPMENT_REPAIR, "Repairs Basalt Equipment")
+            add(NetherArchivesItemTags.SKIS, "Skis")
+            add(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER_ITEM, "Rotten Flesh Fermenter")
             add("death.attack.netherarchives.paddleBurn", "%s wiped out into lava")
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
             add("netherarchives.emi.explosion", "Any Explosion")

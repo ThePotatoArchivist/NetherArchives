@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.registry.NetherArchivesItemTags
 import archives.tater.netherarchives.registry.NetherArchivesItems
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -15,14 +15,14 @@ class ItemTagGenerator(
     registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagsProvider.ItemTagsProvider(output, registriesFuture) {
     override fun addTags(arg: HolderLookup.Provider) {
-        valueLookupBuilder(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR).add(
+        valueLookupBuilder(NetherArchivesItemTags.BASALT_EQUIPMENT_REPAIR).add(
             Items.POLISHED_BASALT,
         )
-        with(valueLookupBuilder(NetherArchivesTags.SKIS)) {
+        with(valueLookupBuilder(NetherArchivesItemTags.SKIS)) {
             add(NetherArchivesItems.BASALT_SKIS)
             NetherArchivesItems.DYED_BASALT_SKIS.forEach { (_, item) -> add(item) }
         }
-        valueLookupBuilder(NetherArchivesTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
+        valueLookupBuilder(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
             Items.SOUL_CAMPFIRE,
             NetherArchivesItems.DUMMY_SOUL_FIRE
         )
@@ -41,12 +41,12 @@ class ItemTagGenerator(
             NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE,
         )
         valueLookupBuilder(ItemTags.FOOT_ARMOR_ENCHANTABLE)
-            .addTag(NetherArchivesTags.SKIS)
+            .addTag(NetherArchivesItemTags.SKIS)
         valueLookupBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
             NetherArchivesItems.SPECTREGLASS_KNIFE,
         )
         with(valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE)) {
-            addTag(NetherArchivesTags.SKIS)
+            addTag(NetherArchivesItemTags.SKIS)
             add(NetherArchivesItems.BASALT_OAR, NetherArchivesItems.SPECTREGLASS_KNIFE)
         }
         valueLookupBuilder(ItemTags.BREAKS_DECORATED_POTS).add(

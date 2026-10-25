@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.registry.NetherArchivesBlockTags
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags
@@ -39,18 +39,18 @@ class BlockTagGenerator(output: FabricPackOutput, completableFuture: Completable
             NetherArchivesBlocks.SPECTREGLASS,
             NetherArchivesBlocks.SHATTERED_SPECTREGLASS,
         )
-        valueLookupBuilder(NetherArchivesTags.MAGNETIC).add(
+        valueLookupBuilder(NetherArchivesBlockTags.MAGNETIC).add(
             Blocks.LODESTONE,
             Blocks.NETHERITE_BLOCK,
         )
-        valueLookupBuilder(NetherArchivesTags.ROTTEN_FLESH_FERMENTER).add(
+        valueLookupBuilder(NetherArchivesBlockTags.ROTTEN_FLESH_FERMENTER).add(
             Blocks.SOUL_FIRE,
             Blocks.SOUL_CAMPFIRE
         )
-        valueLookupBuilder(NetherArchivesTags.BASALT_GEYSER_REPLACEABLE).add(
+        valueLookupBuilder(NetherArchivesBlockTags.BASALT_GEYSER_REPLACEABLE).add(
             Blocks.BASALT
         )
-        valueLookupBuilder(NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
+        valueLookupBuilder(NetherArchivesBlockTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED).apply {
             forceAddTag(BlockTags.BASE_STONE_NETHER)
             add(NetherArchivesBlocks.MAGNETITE)
         }
@@ -62,11 +62,11 @@ class BlockTagGenerator(output: FabricPackOutput, completableFuture: Completable
             NetherArchivesBlocks.SPECTREGLASS_PANE,
             NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE,
         )
-        valueLookupBuilder(NetherArchivesTags.REVEALS_INVISIBLES).add(
+        valueLookupBuilder(NetherArchivesBlockTags.REVEALS_INVISIBLES).add(
             NetherArchivesBlocks.SPECTREGLASS,
             NetherArchivesBlocks.SPECTREGLASS_PANE,
         )
-        valueLookupBuilder(NetherArchivesTags.INVERTS_BEACON).add(
+        valueLookupBuilder(NetherArchivesBlockTags.INVERTS_BEACON).add(
             NetherArchivesBlocks.SPECTREGLASS,
             NetherArchivesBlocks.SHATTERED_SPECTREGLASS,
             NetherArchivesBlocks.SPECTREGLASS_PANE,

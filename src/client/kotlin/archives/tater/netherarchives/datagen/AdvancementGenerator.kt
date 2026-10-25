@@ -3,7 +3,7 @@ package archives.tater.netherarchives.datagen
 import archives.tater.netherarchives.NetherArchives
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesItems
-import archives.tater.netherarchives.registry.NetherArchivesTags
+import archives.tater.netherarchives.registry.NetherArchivesStructureTags
 import archives.tater.netherarchives.registry.NetherArchivesTriggers
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
@@ -70,7 +70,7 @@ class AdvancementGenerator(output: FabricPackOutput, registryLookup: Completable
                                 LocationCheck.checkLocation(locationPredicate {
                                     setStructures(
                                         registryLookup.lookupOrThrow(Registries.STRUCTURE)
-                                            .getOrThrow(NetherArchivesTags.BLAZE_TORCH_LOCATED)
+                                            .getOrThrow(NetherArchivesStructureTags.BLAZE_TORCH_LOCATED)
                                     )
                                 }).build()
                             )

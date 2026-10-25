@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.mixin.client;
 
 import archives.tater.netherarchives.NetherArchives;
-import archives.tater.netherarchives.registry.NetherArchivesTags;
+import archives.tater.netherarchives.registry.NetherArchivesEntityTags;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -31,7 +31,7 @@ public class EntityRenderDispatcherMixin {
             at = @At(value = "FIELD", target = "Lnet/minecraft/client/resources/model/ModelBakery;FIRE_0:Lnet/minecraft/client/resources/model/sprite/SpriteId;", opcode = Opcodes.GETSTATIC)
     )
     private SpriteId setBlazeFireSprite0(SpriteId original, @Local(argsOnly = true, name = "state") EntityRenderState state) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_0 : original;
+        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesEntityTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_0 : original;
     }
 
     @ModifyExpressionValue(
@@ -39,6 +39,6 @@ public class EntityRenderDispatcherMixin {
             at = @At(value = "FIELD", target = "Lnet/minecraft/client/resources/model/ModelBakery;FIRE_1:Lnet/minecraft/client/resources/model/sprite/SpriteId;", opcode = Opcodes.GETSTATIC)
     )
     private SpriteId setBlazeFireSprite1(SpriteId original, @Local(argsOnly = true, name = "state") EntityRenderState state) {
-        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_1 : original;
+        return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(state.entityType).is(NetherArchivesEntityTags.BLAZE_COLORED_FIRE) ? BLAZE_FIRE_1 : original;
     }
 }

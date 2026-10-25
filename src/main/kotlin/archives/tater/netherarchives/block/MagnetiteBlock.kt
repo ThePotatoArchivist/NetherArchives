@@ -1,8 +1,8 @@
 package archives.tater.netherarchives.block
 
 import archives.tater.netherarchives.NetherArchives
+import archives.tater.netherarchives.registry.NetherArchivesBlockTags
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -79,7 +79,7 @@ class MagnetiteBlock(settings: Properties) : FallingBlock(settings.randomTicks()
         val DISTANCE: IntegerProperty = BlockStateProperties.DISTANCE
 
         private fun getDistanceFromLodestone(state: BlockState): Int {
-            if (state.`is`(NetherArchivesTags.MAGNETIC)) return 0
+            if (state.`is`(NetherArchivesBlockTags.MAGNETIC)) return 0
             if (state.block == NetherArchivesBlocks.MAGNETITE) return state.getValue(DISTANCE)
             return 7
         }

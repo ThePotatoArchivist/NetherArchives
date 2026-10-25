@@ -1,9 +1,9 @@
 package archives.tater.netherarchives.datagen
 
+import archives.tater.netherarchives.registry.NetherArchivesBlockTags
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesConfiguredFeatures
 import archives.tater.netherarchives.registry.NetherArchivesPlacedFeatures
-import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.core.HolderLookup
@@ -72,7 +72,7 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
                     BlockPredicateFilter.forPredicate(
                         allOf(
                             matchesBlocks(Vec3i(0, 1, 0), Blocks.AIR),
-                            matchesTag(NetherArchivesTags.BASALT_GEYSER_REPLACEABLE)
+                            matchesTag(NetherArchivesBlockTags.BASALT_GEYSER_REPLACEABLE)
                         )
                     ),
                     biome(),
@@ -88,7 +88,7 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
                     RandomOffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
                     BlockPredicateFilter.forPredicate(
                         allOf(
-                            matchesTag(NetherArchivesTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED),
+                            matchesTag(NetherArchivesBlockTags.BASALT_GEYSER_REPLACEABLE_SUBMERGED),
                             MatchingFluidsPredicate(Vec3i(0, 1, 0), registries.getOrThrow(FluidTags.LAVA)),
                             anyOf(
                                 matchesBlocks(Vec3i(0, 2, 0), Blocks.AIR),
