@@ -19,5 +19,3 @@ object NetherArchivesComponents {
 
     fun init() {}
 }
-
-internal typealias ModComponents = NetherArchivesComponents

@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.ModSounds
+import archives.tater.netherarchives.registry.NetherArchivesSounds
 import net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder
 import net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.RegistrationBuilder.ofEvent
 import net.fabricmc.fabric.api.client.datagen.v1.builder.SoundTypeBuilder.RegistrationBuilder.ofFile
@@ -21,25 +21,27 @@ class SoundsGenerator(output: PackOutput, registriesFuture: CompletableFuture<Ho
         exporter: SoundExporter
     ) {
         with (exporter) {
-            add(ModSounds.BLAZE_FIRE_IGNITE) {
+            add(NetherArchivesSounds.BLAZE_FIRE_IGNITE) {
                 soundEvent(SoundEvents.FIRECHARGE_USE)
             }
 
-            add(ModSounds.BLAZE_LANTERN_THROW) {
+            add(NetherArchivesSounds.BLAZE_LANTERN_THROW) {
                 soundFile(Identifier.withDefaultNamespace("random/bow"))
             }
 
-            add(ModSounds.BLAZE_LANTERN_SHATTER) {
+            add(NetherArchivesSounds.BLAZE_LANTERN_SHATTER) {
                 soundEvent(SoundEvents.GLASS_BREAK)
             }
 
-            add(ModSounds.BASALT_OAR_PADDLE) {
+            add(NetherArchivesSounds.BASALT_OAR_PADDLE) {
                 soundEvent(SoundEvents.BOAT_PADDLE_WATER)
             }
 
-            add(ModSounds.BASALT_OAR_PADDLE_LAVA, SoundTypeBuilder.of(ModSounds.BASALT_OAR_PADDLE).apply {
-                sound(ofEvent(SoundEvents.BUCKET_EMPTY_LAVA))
-            })
+            add(
+                NetherArchivesSounds.BASALT_OAR_PADDLE_LAVA,
+                SoundTypeBuilder.of(NetherArchivesSounds.BASALT_OAR_PADDLE).apply {
+                    sound(ofEvent(SoundEvents.BUCKET_EMPTY_LAVA))
+                })
         }
     }
 

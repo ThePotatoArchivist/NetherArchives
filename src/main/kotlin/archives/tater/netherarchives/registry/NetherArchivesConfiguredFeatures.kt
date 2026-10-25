@@ -11,5 +11,3 @@ object NetherArchivesConfiguredFeatures {
     val MAGNETITE_BLOBS = create("magnetite_blobs")
     val MAGNETITE_DELTA = create("magnetite_delta")
 }
-
-internal typealias ModConfiguredFeatures = NetherArchivesConfiguredFeatures

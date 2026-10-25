@@ -1,10 +1,10 @@
 package archives.tater.netherarchives.entity
 
 import archives.tater.netherarchives.block.BlazePowderBlock
-import archives.tater.netherarchives.registry.ModBlocks
-import archives.tater.netherarchives.registry.ModItems
-import archives.tater.netherarchives.registry.ModSounds
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesEntities
+import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesSounds
 import archives.tater.netherarchives.util.draw
 import archives.tater.netherarchives.util.listCopy
 import net.minecraft.core.BlockPos
@@ -24,7 +24,7 @@ class BlazeLanternEntity : ThrowableItemProjectile {
     constructor(type: EntityType<BlazeLanternEntity>, level: Level) : super(type, level)
     constructor(level: Level, owner: LivingEntity, stack: ItemStack) : super(NetherArchivesEntities.BLAZE_LANTERN, owner, level, stack)
 
-    override fun getDefaultItem(): Item = ModItems.BLAZE_LANTERN
+    override fun getDefaultItem(): Item = NetherArchivesItems.BLAZE_LANTERN
 
     override fun onHit(hitResult: HitResult) {
         super.onHit(hitResult)
@@ -32,7 +32,7 @@ class BlazeLanternEntity : ThrowableItemProjectile {
         val pos = hitResult.location
         val blockPos = BlockPos(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
 
-        level().playSound(null, blockPos, ModSounds.BLAZE_LANTERN_SHATTER, SoundSource.NEUTRAL, 0.5f, 1.0f)
+        level().playSound(null, blockPos, NetherArchivesSounds.BLAZE_LANTERN_SHATTER, SoundSource.NEUTRAL, 0.5f, 1.0f)
 
         level().getEntities(this, AABB.ofSize(blockPos.center, 1.5, 1.5, 1.5)).forEach {
             it.igniteForTicks(20 * 5)
@@ -48,8 +48,9 @@ class BlazeLanternEntity : ThrowableItemProjectile {
                 if (!blockState.isAir && !(blockState.canBeReplaced() && blockState.ignitedByLava())) return@filter false
 
                 // Must be able to place blaze fire here or let it fall
-                if (!level().getBlockState(it.below()).isAir && !ModBlocks.BLAZE_FIRE.defaultBlockState()
-                        .canSurvive(level(), it)) return@filter false
+                if (!level().getBlockState(it.below()).isAir && !NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState()
+                        .canSurvive(level(), it)
+                ) return@filter false
 
                 true
             }
@@ -64,9 +65,9 @@ class BlazeLanternEntity : ThrowableItemProjectile {
             }
             .forEach {
                 if (level().getBlockState(it.below()).isAir) {
-                    FallingBlockEntity.fall(level(), it, ModBlocks.BLAZE_FIRE.defaultBlockState())
+                    FallingBlockEntity.fall(level(), it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
                 } else {
-                    level().setBlockAndUpdate(it, ModBlocks.BLAZE_FIRE.defaultBlockState())
+                    level().setBlockAndUpdate(it, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState())
                 }
             }
         discard()

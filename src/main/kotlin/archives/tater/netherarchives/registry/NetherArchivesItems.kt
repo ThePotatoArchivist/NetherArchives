@@ -54,22 +54,22 @@ object NetherArchivesItems {
         register(block, ::BlockItem, properties)
 
     @JvmField
-    val MAGNETITE = register(ModBlocks.MAGNETITE)
+    val MAGNETITE = register(NetherArchivesBlocks.MAGNETITE)
 
     @JvmField
-    val SMOLDERING_MAGNETITE = register(ModBlocks.SMOLDERING_MAGNETITE)
+    val SMOLDERING_MAGNETITE = register(NetherArchivesBlocks.SMOLDERING_MAGNETITE)
 
     @JvmField
-    val ROTTEN_FLESH_BLOCK = register(ModBlocks.ROTTEN_FLESH_BLOCK)
+    val ROTTEN_FLESH_BLOCK = register(NetherArchivesBlocks.ROTTEN_FLESH_BLOCK)
 
     @JvmField
-    val FERMENTED_ROTTEN_FLESH_BLOCK = register(ModBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
+    val FERMENTED_ROTTEN_FLESH_BLOCK = register(NetherArchivesBlocks.FERMENTED_ROTTEN_FLESH_BLOCK)
 
     @JvmField
     val IRON_SLAG = register("iron_slag")
 
     @JvmField
-    val BLAZE_DUST = register(ModBlocks.BLAZE_DUST)
+    val BLAZE_DUST = register(NetherArchivesBlocks.BLAZE_DUST)
 
     @JvmField
     val BLAZE_LANTERN = register("blaze_lantern", ::BlazeLanternItem) {
@@ -77,10 +77,10 @@ object NetherArchivesItems {
     }
 
     @JvmField
-    val BLAZE_TORCH = register(ModBlocks.BLAZE_TORCH) { block, settings ->
+    val BLAZE_TORCH = register(NetherArchivesBlocks.BLAZE_TORCH) { block, settings ->
         StandingAndWallBlockItem(
             block,
-            ModBlocks.WALL_BLAZE_TORCH,
+            NetherArchivesBlocks.WALL_BLAZE_TORCH,
             Direction.DOWN,
             settings
         )
@@ -94,21 +94,21 @@ object NetherArchivesItems {
         SoundEvents.ARMOR_EQUIP_GENERIC,
         ArmorMaterials.CHAINMAIL.toughness,
         ArmorMaterials.CHAINMAIL.knockbackResistance,
-        ModTags.BASALT_EQUIPMENT_REPAIR,
+        NetherArchivesTags.BASALT_EQUIPMENT_REPAIR,
         assetId
     )
 
     @JvmField
     val BASALT_SKIS = register("basalt_skis") {
-        humanoidArmor(createSkisMaterial(ModEquipmentAssets.BASALT_SKIS), ArmorType.BOOTS)
-        component(ModComponents.SKIS, McUnit.INSTANCE)
+        humanoidArmor(createSkisMaterial(NetherArchivesEquipmentAssets.BASALT_SKIS), ArmorType.BOOTS)
+        component(NetherArchivesComponents.SKIS, McUnit.INSTANCE)
     }
 
     @JvmField
-    val DYED_BASALT_SKIS = ModEquipmentAssets.DYED_BASALT_SKIS.mapValues { (color, assetId) ->
+    val DYED_BASALT_SKIS = NetherArchivesEquipmentAssets.DYED_BASALT_SKIS.mapValues { (color, assetId) ->
         register(color.serializedName + "_basalt_skis") {
             humanoidArmor(createSkisMaterial(assetId), ArmorType.BOOTS)
-            component(ModComponents.SKIS, McUnit.INSTANCE)
+            component(NetherArchivesComponents.SKIS, McUnit.INSTANCE)
         }
     }
 
@@ -122,10 +122,10 @@ object NetherArchivesItems {
     val BASALT_ROD = register("basalt_rod")
 
     @JvmField
-    val BASALT_GEYSER = register(ModBlocks.BASALT_GEYSER)
+    val BASALT_GEYSER = register(NetherArchivesBlocks.BASALT_GEYSER)
 
     @JvmField
-    val ADJUSTABLE_BASALT_GEYSER = register(ModBlocks.ADJUSTABLE_BASALT_GEYSER)
+    val ADJUSTABLE_BASALT_GEYSER = register(NetherArchivesBlocks.ADJUSTABLE_BASALT_GEYSER)
 
     @JvmField
     val SPECTREGLASS_SHARD = register("spectreglass_shard")
@@ -139,16 +139,16 @@ object NetherArchivesItems {
     }
 
     @JvmField
-    val SPECTREGLASS = register(ModBlocks.SPECTREGLASS)
+    val SPECTREGLASS = register(NetherArchivesBlocks.SPECTREGLASS)
 
     @JvmField
-    val SHATTERED_SPECTREGLASS = register(ModBlocks.SHATTERED_SPECTREGLASS)
+    val SHATTERED_SPECTREGLASS = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS)
 
     @JvmField
-    val SPECTREGLASS_PANE = register(ModBlocks.SPECTREGLASS_PANE)
+    val SPECTREGLASS_PANE = register(NetherArchivesBlocks.SPECTREGLASS_PANE)
 
     @JvmField
-    val SHATTERED_SPECTREGLASS_PANE = register(ModBlocks.SHATTERED_SPECTREGLASS_PANE)
+    val SHATTERED_SPECTREGLASS_PANE = register(NetherArchivesBlocks.SHATTERED_SPECTREGLASS_PANE)
 
     @JvmField
     val DUMMY_SOUL_FIRE = register("dummy_soul_fire", ::FakeVanillaItem)
@@ -227,5 +227,3 @@ object NetherArchivesItems {
         }
     }
 }
-
-internal typealias ModItems = NetherArchivesItems

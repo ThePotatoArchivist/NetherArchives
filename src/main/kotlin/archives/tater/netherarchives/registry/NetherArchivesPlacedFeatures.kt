@@ -14,5 +14,3 @@ object NetherArchivesPlacedFeatures {
     val BASALT_GEYSER = create("basalt_geyser")
     val BASALT_GEYSER_SUBMERGED = create("basalt_geyser_submerged")
 }
-
-internal typealias ModPlacedFeatures = NetherArchivesPlacedFeatures

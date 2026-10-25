@@ -1,6 +1,6 @@
 package archives.tater.netherarchives.block
 
-import archives.tater.netherarchives.registry.ModBlocks
+import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -79,7 +79,7 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
         if (!stack.`is`(Items.FLINT_AND_STEEL) && !stack.`is`(Items.FIRE_CHARGE)) return InteractionResult.TRY_WITH_EMPTY_HAND
 
         level.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0f, level.getRandom().nextFloat() * 0.4f + 0.8f)
-        val blockState = ModBlocks.BLAZE_FIRE.defaultBlockState()
+        val blockState = NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState()
         level.setBlock(pos, blockState, UPDATE_ALL or UPDATE_IMMEDIATE)
         level.gameEvent(player, GameEvent.BLOCK_PLACE, pos)
         if (player is ServerPlayer)
@@ -100,7 +100,7 @@ class BlazePowderBlock(settings: Properties) : Block(settings) {
         isPrecise: Boolean
     ) {
         if (!level.isClientSide && entity is Projectile && entity.isOnFire && level is ServerLevel && entity.mayInteract(level, pos)) {
-            level.setBlock(pos, ModBlocks.BLAZE_FIRE.defaultBlockState(), UPDATE_ALL or UPDATE_IMMEDIATE)
+            level.setBlock(pos, NetherArchivesBlocks.BLAZE_FIRE.defaultBlockState(), UPDATE_ALL or UPDATE_IMMEDIATE)
         }
     }
 }

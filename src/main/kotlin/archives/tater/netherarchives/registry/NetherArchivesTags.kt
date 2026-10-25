@@ -35,5 +35,3 @@ object NetherArchivesTags {
 
     val BLAZE_TORCH_LOCATED: TagKey<Structure> = create(STRUCTURE, "blaze_torch_located")
 }
-
-internal typealias ModTags = NetherArchivesTags

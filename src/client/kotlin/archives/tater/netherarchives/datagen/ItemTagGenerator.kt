@@ -1,7 +1,7 @@
 package archives.tater.netherarchives.datagen
 
-import archives.tater.netherarchives.registry.ModItems
-import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.registry.NetherArchivesItems
+import archives.tater.netherarchives.registry.NetherArchivesTags
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -15,48 +15,48 @@ class ItemTagGenerator(
     registriesFuture: CompletableFuture<HolderLookup.Provider>
 ) : FabricTagsProvider.ItemTagsProvider(output, registriesFuture) {
     override fun addTags(arg: HolderLookup.Provider) {
-        valueLookupBuilder(ModTags.BASALT_EQUIPMENT_REPAIR).add(
+        valueLookupBuilder(NetherArchivesTags.BASALT_EQUIPMENT_REPAIR).add(
             Items.POLISHED_BASALT,
         )
-        with(valueLookupBuilder(ModTags.SKIS)) {
-            add(ModItems.BASALT_SKIS)
-            ModItems.DYED_BASALT_SKIS.forEach { (_, item) -> add(item) }
+        with(valueLookupBuilder(NetherArchivesTags.SKIS)) {
+            add(NetherArchivesItems.BASALT_SKIS)
+            NetherArchivesItems.DYED_BASALT_SKIS.forEach { (_, item) -> add(item) }
         }
-        valueLookupBuilder(ModTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
+        valueLookupBuilder(NetherArchivesTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
             Items.SOUL_CAMPFIRE,
-            ModItems.DUMMY_SOUL_FIRE
+            NetherArchivesItems.DUMMY_SOUL_FIRE
         )
         valueLookupBuilder(ConventionalItemTags.HIDDEN_FROM_RECIPE_VIEWERS).add(
-            ModItems.DUMMY_SOUL_FIRE,
+            NetherArchivesItems.DUMMY_SOUL_FIRE,
         )
         valueLookupBuilder(ItemTags.SOUL_FIRE_BASE_BLOCKS).add(
-            ModItems.FERMENTED_ROTTEN_FLESH_BLOCK,
+            NetherArchivesItems.FERMENTED_ROTTEN_FLESH_BLOCK,
         )
         valueLookupBuilder(ConventionalItemTags.GLASS_BLOCKS).add(
-            ModItems.SPECTREGLASS,
-            ModItems.SHATTERED_SPECTREGLASS,
+            NetherArchivesItems.SPECTREGLASS,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS,
         )
         valueLookupBuilder(ConventionalItemTags.GLASS_PANES).add(
-            ModItems.SPECTREGLASS_PANE,
-            ModItems.SHATTERED_SPECTREGLASS_PANE,
+            NetherArchivesItems.SPECTREGLASS_PANE,
+            NetherArchivesItems.SHATTERED_SPECTREGLASS_PANE,
         )
         valueLookupBuilder(ItemTags.FOOT_ARMOR_ENCHANTABLE)
-            .addTag(ModTags.SKIS)
+            .addTag(NetherArchivesTags.SKIS)
         valueLookupBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
-            ModItems.SPECTREGLASS_KNIFE,
+            NetherArchivesItems.SPECTREGLASS_KNIFE,
         )
-        with (valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE)) {
-            addTag(ModTags.SKIS)
-            add(ModItems.BASALT_OAR, ModItems.SPECTREGLASS_KNIFE)
+        with(valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE)) {
+            addTag(NetherArchivesTags.SKIS)
+            add(NetherArchivesItems.BASALT_OAR, NetherArchivesItems.SPECTREGLASS_KNIFE)
         }
         valueLookupBuilder(ItemTags.BREAKS_DECORATED_POTS).add(
-            ModItems.SPECTREGLASS_KNIFE,
+            NetherArchivesItems.SPECTREGLASS_KNIFE,
         )
         valueLookupBuilder(ItemTags.SHARP_WEAPON_ENCHANTABLE).add(
-            ModItems.SPECTREGLASS_KNIFE,
+            NetherArchivesItems.SPECTREGLASS_KNIFE,
         )
         valueLookupBuilder(ConventionalItemTags.IRON_RAW_MATERIALS).add(
-            ModItems.IRON_SLAG,
+            NetherArchivesItems.IRON_SLAG,
         )
 //        if (NetherArchives.EXPOSURE_INSTALLED)
 //            valueLookupBuilder(Exposure.Tags.Items.FILTERS).add(
