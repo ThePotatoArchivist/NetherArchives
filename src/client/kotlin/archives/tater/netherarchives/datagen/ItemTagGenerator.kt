@@ -18,9 +18,10 @@ class ItemTagGenerator(
         valueLookupBuilder(ModTags.BASALT_EQUIPMENT_REPAIR).add(
             Items.POLISHED_BASALT,
         )
-        valueLookupBuilder(ModTags.SKIS).add(
-            ModItems.BASALT_SKIS,
-        )
+        with(valueLookupBuilder(ModTags.SKIS)) {
+            add(ModItems.BASALT_SKIS)
+            ModItems.DYED_BASALT_SKIS.forEach { (_, item) -> add(item) }
+        }
         valueLookupBuilder(ModTags.ROTTEN_FLESH_FERMENTER_ITEM).add(
             Items.SOUL_CAMPFIRE,
             ModItems.DUMMY_SOUL_FIRE
@@ -39,17 +40,15 @@ class ItemTagGenerator(
             ModItems.SPECTREGLASS_PANE,
             ModItems.SHATTERED_SPECTREGLASS_PANE,
         )
-        valueLookupBuilder(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(
-            ModItems.BASALT_SKIS,
-        )
+        valueLookupBuilder(ItemTags.FOOT_ARMOR_ENCHANTABLE)
+            .addTag(ModTags.SKIS)
         valueLookupBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS).add(
             ModItems.SPECTREGLASS_KNIFE,
         )
-        valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE).add(
-            ModItems.BASALT_SKIS,
-            ModItems.BASALT_OAR,
-            ModItems.SPECTREGLASS_KNIFE,
-        )
+        with (valueLookupBuilder(ItemTags.DURABILITY_ENCHANTABLE)) {
+            addTag(ModTags.SKIS)
+            add(ModItems.BASALT_OAR, ModItems.SPECTREGLASS_KNIFE)
+        }
         valueLookupBuilder(ItemTags.BREAKS_DECORATED_POTS).add(
             ModItems.SPECTREGLASS_KNIFE,
         )

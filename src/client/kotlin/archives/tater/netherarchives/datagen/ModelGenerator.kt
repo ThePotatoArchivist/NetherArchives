@@ -67,6 +67,9 @@ class ModelGenerator(generator: FabricPackOutput) : FabricModelProvider(generato
         itemModelGenerator.generateFlatItem(ModItems.BLAZE_DUST, ModelTemplates.FLAT_ITEM)
         itemModelGenerator.generateFlatItem(ModItems.BLAZE_LANTERN, ModelTemplates.FLAT_ITEM)
         itemModelGenerator.generateFlatItem(ModItems.BASALT_SKIS, ModelTemplates.FLAT_ITEM)
+        ModItems.DYED_BASALT_SKIS.forEach { (_, item) ->
+            itemModelGenerator.generateFlatItem(item, ModelTemplates.FLAT_ITEM)
+        }
         itemModelGenerator.generateFlatItem(ModItems.SPECTREGLASS_SHARD, ModelTemplates.FLAT_ITEM)
         itemModelGenerator.itemModelOutput.accept(ModItems.SPECTREGLASS_KNIFE, ItemModelUtils.conditional(
             IsUsingItem(),

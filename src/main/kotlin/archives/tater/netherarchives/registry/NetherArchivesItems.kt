@@ -6,6 +6,7 @@ import archives.tater.netherarchives.item.FakeVanillaItem
 import archives.tater.netherarchives.item.OarItem
 import archives.tater.netherarchives.item.SoulGlassKnifeItem
 import archives.tater.netherarchives.util.ItemProperties
+import archives.tater.netherarchives.util.McUnit
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab
 import net.minecraft.core.Direction
@@ -19,7 +20,10 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.*
 import net.minecraft.world.item.CreativeModeTabs.*
-import net.minecraft.world.item.equipment.*
+import net.minecraft.world.item.equipment.ArmorMaterial
+import net.minecraft.world.item.equipment.ArmorMaterials
+import net.minecraft.world.item.equipment.ArmorType
+import net.minecraft.world.item.equipment.EquipmentAsset
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.item.Item.Properties as ItemProperties
 
@@ -82,22 +86,30 @@ object NetherArchivesItems {
         )
     }
 
-    val BASALT_EQUIPMENT: ResourceKey<EquipmentAsset> = ResourceKey.create(EquipmentAssets.ROOT_ID, NetherArchives.id("basalt"))
-    val BASALT_ARMOR_MATERIAL = ArmorMaterial(
+    private fun createSkisMaterial(assetId: ResourceKey<EquipmentAsset>): ArmorMaterial = ArmorMaterial(
         ArmorMaterials.CHAINMAIL.durability,
         ArmorMaterials.CHAINMAIL.defense,
         ArmorMaterials.CHAINMAIL.enchantmentValue,
-//            // TODO add custom sound?
+        // TODO add custom sound?
         SoundEvents.ARMOR_EQUIP_GENERIC,
         ArmorMaterials.CHAINMAIL.toughness,
         ArmorMaterials.CHAINMAIL.knockbackResistance,
         ModTags.BASALT_EQUIPMENT_REPAIR,
-        BASALT_EQUIPMENT
+        assetId
     )
 
     @JvmField
-    val BASALT_SKIS = register("basalt_skis", ::Item) {
-        humanoidArmor(BASALT_ARMOR_MATERIAL, ArmorType.BOOTS)
+    val BASALT_SKIS = register("basalt_skis") {
+        humanoidArmor(createSkisMaterial(ModEquipmentAssets.BASALT_SKIS), ArmorType.BOOTS)
+        component(ModComponents.SKIS, McUnit.INSTANCE)
+    }
+
+    @JvmField
+    val DYED_BASALT_SKIS = ModEquipmentAssets.DYED_BASALT_SKIS.mapValues { (color, assetId) ->
+        register(color.serializedName + "_basalt_skis") {
+            humanoidArmor(createSkisMaterial(assetId), ArmorType.BOOTS)
+            component(ModComponents.SKIS, McUnit.INSTANCE)
+        }
     }
 
     @JvmField
@@ -150,6 +162,25 @@ object NetherArchivesItems {
             title(Component.translatable(CREATIVE_TAB_TRANSLATION))
             icon { BLAZE_LANTERN.defaultInstance }
             displayItems { _, output ->
+                val gameplayColorOrder = [
+                    DyeColor.WHITE,
+                    DyeColor.LIGHT_GRAY,
+                    DyeColor.GRAY,
+                    DyeColor.BLACK,
+                    DyeColor.BROWN,
+                    DyeColor.RED,
+                    DyeColor.ORANGE,
+                    DyeColor.YELLOW,
+                    DyeColor.LIME,
+                    DyeColor.GREEN,
+                    DyeColor.CYAN,
+                    DyeColor.LIGHT_BLUE,
+                    DyeColor.BLUE,
+                    DyeColor.PURPLE,
+                    DyeColor.MAGENTA,
+                    DyeColor.PINK
+                ]
+
                 with (output) {
                     accept(ROTTEN_FLESH_BLOCK)
                     accept(FERMENTED_ROTTEN_FLESH_BLOCK)
@@ -161,6 +192,8 @@ object NetherArchivesItems {
                     accept(BLAZE_TORCH)
                     accept(BASALT_ROD)
                     accept(BASALT_SKIS)
+                    for (color in gameplayColorOrder)
+                        accept(DYED_BASALT_SKIS[color]!!)
                     accept(BASALT_OAR)
                     accept(BASALT_GEYSER)
                     accept(ADJUSTABLE_BASALT_GEYSER)
@@ -180,7 +213,11 @@ object NetherArchivesItems {
             INGREDIENTS to [IRON_SLAG, BASALT_ROD, SPECTREGLASS_SHARD],
             NATURAL_BLOCKS to [MAGNETITE, SMOLDERING_MAGNETITE, ROTTEN_FLESH_BLOCK, FERMENTED_ROTTEN_FLESH_BLOCK, BASALT_GEYSER],
             COMBAT to [BLAZE_DUST, BLAZE_LANTERN, SPECTREGLASS_KNIFE],
-            TOOLS_AND_UTILITIES to [BASALT_SKIS, BASALT_OAR],
+            TOOLS_AND_UTILITIES to buildList {
+                add(BASALT_SKIS)
+                DYED_BASALT_SKIS.forEach { (_, item) -> add(item) }
+                add(BASALT_OAR)
+            },
             FUNCTIONAL_BLOCKS to [BLAZE_TORCH, SPECTREGLASS, SHATTERED_SPECTREGLASS, SPECTREGLASS_PANE, SHATTERED_SPECTREGLASS_PANE],
             REDSTONE_BLOCKS to [ADJUSTABLE_BASALT_GEYSER]
         ).forEach { (group, items) ->

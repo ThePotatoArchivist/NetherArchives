@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "netherarchives:basalt_skis/red"
+      }
+    ],
+    "netherarchives_skis": [
+      {
+        "texture": "netherarchives:red"
+      }
+    ]
+  }
+}

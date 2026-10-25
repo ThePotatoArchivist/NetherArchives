@@ -1,0 +1,14 @@
+// 26.1.2	-999999999-01-01T00:00:00	Nether Archives/Tags for minecraft:item
+d0ce52695227d2e3fb0f68864a69bcdd1d3531d6 data/c/tags/item/glass_blocks.json
+52df0e64c523825cd95373826a62fb759a4ba731 data/c/tags/item/glass_panes.json
+431ee320c28636d6daac8092cc815e9c22b91782 data/c/tags/item/hidden_from_recipe_viewers.json
+8bee4b06e4da303a33404fd93cf8a3b4970d8e8a data/c/tags/item/raw_materials/iron.json
+cda67c0d82a8d0b44d79c4e00574387b972330f0 data/c/tags/item/tools/melee_weapon.json
+cda67c0d82a8d0b44d79c4e00574387b972330f0 data/minecraft/tags/item/breaks_decorated_pots.json
+5c83182c1d5b58e89e41957cf5ebda37bac493b4 data/minecraft/tags/item/enchantable/durability.json
+0d7a17e03ddfaa5f9c01036ad386bdee3ec68399 data/minecraft/tags/item/enchantable/foot_armor.json
+cda67c0d82a8d0b44d79c4e00574387b972330f0 data/minecraft/tags/item/enchantable/sharp_weapon.json
+49f568df9c122bf6dfebd0659b0dea2af7b48ca4 data/minecraft/tags/item/soul_fire_base_blocks.json
+e8f04117404ae535a2f734f714c81a2e50a80199 data/netherarchives/tags/item/basalt_equipment_repair.json
+baa2f8df99d0fb5969d572f24de8f57ee039fa22 data/netherarchives/tags/item/rotten_flesh_fermenter.json
+9ad88f1603c49b0221adb7d17a61b7eea576f26b data/netherarchives/tags/item/skis.json

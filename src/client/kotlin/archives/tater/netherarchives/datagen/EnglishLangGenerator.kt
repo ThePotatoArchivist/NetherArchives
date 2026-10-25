@@ -31,6 +31,9 @@ class EnglishLangGenerator(output: FabricPackOutput, registriesFuture: Completab
             add(ModItems.IRON_SLAG, "Iron Slag")
             add(ModItems.DUMMY_SOUL_FIRE, "Soul Fire")
             add(ModItems.BASALT_SKIS, "Basalt Skis")
+            ModItems.DYED_BASALT_SKIS.forEach { (color, item) ->
+                add(item, "${snakeCaseToTitleCase(color.serializedName)} Basalt Skis")
+            }
             add(ModItems.BASALT_OAR, "Basalt Oar")
             add(ModItems.BASALT_ROD, "Basalt Rod")
             add(ModItems.SPECTREGLASS_SHARD, "Spectreglass Shard")

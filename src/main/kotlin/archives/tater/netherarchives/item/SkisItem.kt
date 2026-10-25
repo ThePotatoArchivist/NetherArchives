@@ -1,6 +1,8 @@
 package archives.tater.netherarchives.item
 
+import archives.tater.netherarchives.registry.ModComponents
 import archives.tater.netherarchives.registry.ModTags
+import archives.tater.netherarchives.util.contains
 import archives.tater.netherarchives.util.isIn
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EquipmentSlot
@@ -23,9 +25,9 @@ object SkisItem {
     val FLUID_SKI_HEIGHT_COLLISION_SHAPE: VoxelShape = Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0) // box entity must be above to not sink
 
     @JvmStatic
-    fun wearsSkis(entity: Entity?) = if (entity is LivingEntity) wearsSkis(entity) else false
+    fun wearsSkis(entity: Entity?) = entity is LivingEntity && wearsSkis(entity)
     @JvmStatic
-    fun wearsSkis(entity: LivingEntity) = entity.getItemBySlot(EquipmentSlot.FEET) isIn ModTags.SKIS
+    fun wearsSkis(entity: LivingEntity) = EquipmentSlot.VALUES.any { ModComponents.SKIS in entity.getItemBySlot(it) }
 
     @JvmStatic
     fun canSki(entity: LivingEntity, fluidState: FluidState) =

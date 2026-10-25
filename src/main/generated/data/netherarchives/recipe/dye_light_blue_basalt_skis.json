@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "basalt_skis_dye",
+  "ingredients": [
+    "minecraft:light_blue_dye",
+    [
+      "netherarchives:white_basalt_skis",
+      "netherarchives:orange_basalt_skis",
+      "netherarchives:magenta_basalt_skis",
+      "netherarchives:yellow_basalt_skis",
+      "netherarchives:lime_basalt_skis",
+      "netherarchives:pink_basalt_skis",
+      "netherarchives:gray_basalt_skis",
+      "netherarchives:light_gray_basalt_skis",
+      "netherarchives:cyan_basalt_skis",
+      "netherarchives:purple_basalt_skis",
+      "netherarchives:blue_basalt_skis",
+      "netherarchives:brown_basalt_skis",
+      "netherarchives:green_basalt_skis",
+      "netherarchives:red_basalt_skis",
+      "netherarchives:black_basalt_skis",
+      "netherarchives:basalt_skis"
+    ]
+  ],
+  "result": {
+    "id": "netherarchives:light_blue_basalt_skis"
+  }
+}

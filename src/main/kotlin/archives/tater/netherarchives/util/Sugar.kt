@@ -6,6 +6,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.TypedInstance
+import net.minecraft.core.Vec3i
+import net.minecraft.core.component.DataComponentGetter
+import net.minecraft.core.component.DataComponentHolder
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
@@ -51,3 +55,7 @@ internal inline var Entity.pos: Vec3
     set(value) {
         setPos(value)
     }
+
+internal typealias McUnit = net.minecraft.util.Unit
+
+internal inline operator fun DataComponentHolder.contains(type: DataComponentType<*>) = has(type)

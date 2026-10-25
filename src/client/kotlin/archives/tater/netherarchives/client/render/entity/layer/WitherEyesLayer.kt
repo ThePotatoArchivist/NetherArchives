@@ -1,4 +1,4 @@
-package archives.tater.netherarchives.client.render.entity.feature
+package archives.tater.netherarchives.client.render.entity.layer
 
 import archives.tater.netherarchives.NetherArchives
 import net.minecraft.client.model.monster.wither.WitherBossModel
@@ -8,8 +8,8 @@ import net.minecraft.client.renderer.rendertype.RenderType
 import net.minecraft.client.renderer.rendertype.RenderTypes
 import net.minecraft.util.Mth
 
-class WitherEyesFeatureRenderer(featureRendererContext: RenderLayerParent<WitherRenderState, WitherBossModel>) :
-    EntityEyesFeatureRenderer<WitherRenderState, WitherBossModel>(featureRendererContext) {
+class WitherEyesLayer(featureRendererContext: RenderLayerParent<WitherRenderState, WitherBossModel>) :
+    EntityEyesLayer<WitherRenderState, WitherBossModel>(featureRendererContext) {
 
     override fun getEyesTexture(state: WitherRenderState?): RenderType {
         if (state == null) return SKIN

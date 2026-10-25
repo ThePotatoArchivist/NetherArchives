@@ -16,18 +16,12 @@ class SkisEntityModel<T : HumanoidRenderState>(root: ModelPart) : HumanoidModel<
         fun getTexturedModelData(): LayerDefinition = LayerDefinition.create(MeshDefinition { root.apply {
             addOrReplaceChild(PartNames.RIGHT_LEG, CubeListBuilder.create().apply {
                 texOffs(0, 0)
-                addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, CubeDeformation(1.0F))
-
-                texOffs(-16, 0)
                 addBox(-1.5F, 11.75F, -16.0F, 3.0F, 0.0F, 32.0F, CubeDeformation.NONE)
             }, PartPose.offset(-1.9F, 12.25F, 0.0F))
 
             addOrReplaceChild(PartNames.LEFT_LEG, CubeListBuilder.create().apply {
                 texOffs(0, 0)
                 mirror()
-                addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, CubeDeformation(1.0F))
-
-                texOffs(-16, 0)
                 addBox(-1.3F, 11.75F, -16.0F, 3.0F, 0.0F, 32.0F, CubeDeformation.NONE)
             }, PartPose.offset(1.9F, 12.25F, 0.0F))
 

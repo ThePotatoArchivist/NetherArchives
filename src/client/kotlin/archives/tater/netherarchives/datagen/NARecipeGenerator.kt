@@ -94,6 +94,27 @@ class NARecipeGenerator(registries: HolderLookup.Provider, exporter: RecipeOutpu
             itemCriterion(ModItems.BASALT_ROD)
         }
 
+        val dyes = [
+            Items.WHITE_DYE,
+            Items.ORANGE_DYE,
+            Items.MAGENTA_DYE,
+            Items.LIGHT_BLUE_DYE,
+            Items.YELLOW_DYE,
+            Items.LIME_DYE,
+            Items.PINK_DYE,
+            Items.GRAY_DYE,
+            Items.LIGHT_GRAY_DYE,
+            Items.CYAN_DYE,
+            Items.PURPLE_DYE,
+            Items.BLUE_DYE,
+            Items.BROWN_DYE,
+            Items.GREEN_DYE,
+            Items.RED_DYE,
+            Items.BLACK_DYE,
+        ]
+
+        colorWithDye(dyes, ModItems.DYED_BASALT_SKIS.values.toList(), ModItems.BASALT_SKIS, "basalt_skis_dye", RecipeCategory.TRANSPORTATION)
+
         shaped(RecipeCategory.TOOLS, ModItems.BASALT_OAR) {
             pattern("%")
             pattern("%")
