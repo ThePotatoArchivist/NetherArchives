@@ -41,7 +41,7 @@ class EnglishLangGenerator(output: FabricPackOutput, registriesFuture: Completab
             add(NetherArchivesItems.SPECTREGLASS_KNIFE, "Spectreglass Knife")
             add(NetherArchivesItemTags.BASALT_EQUIPMENT_REPAIR, "Repairs Basalt Equipment")
             add(NetherArchivesItemTags.SKIS, "Skis")
-            add(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER_ITEM, "Rotten Flesh Fermenter")
+            add(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER, "Rotten Flesh Fermenter")
             add("death.attack.netherarchives.paddleBurn", "%s wiped out into lava")
             add("death.attack.netherarchives.paddleBurn.player", "%s wiped out into lava while trying to escape %s")
             add("netherarchives.emi.explosion", "Any Explosion")

@@ -23,7 +23,7 @@ class ItemTagGenerator(
             add(NetherArchivesItemIds.BASALT_SKIS)
             NetherArchivesItemIds.DYED_BASALT_SKIS.forEach { add(it) }
         }
-        builder(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER_ITEM).apply {
+        builder(NetherArchivesItemTags.ROTTEN_FLESH_FERMENTER).apply {
             add(BlockItemIds.SOUL_CAMPFIRE)
             add(NetherArchivesItemIds.DUMMY_SOUL_FIRE)
         }
