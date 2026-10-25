@@ -3,7 +3,7 @@ package archives.tater.netherarchives.datagen
 import archives.tater.netherarchives.registry.NetherArchivesBlockTags
 import archives.tater.netherarchives.registry.NetherArchivesBlocks
 import archives.tater.netherarchives.registry.NetherArchivesConfiguredFeatures
-import archives.tater.netherarchives.registry.NetherArchivesPlacedFeatures
+import archives.tater.netherarchives.registry.NetherArchivesPlacements
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.core.HolderLookup
@@ -42,7 +42,7 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
         entries.addAll(registries.lookupOrThrow(Registries.CONFIGURED_FEATURE))
 
         entries.add(
-            NetherArchivesPlacedFeatures.MAGNETITE_BLOBS, PlacedFeature(
+            NetherArchivesPlacements.MAGNETITE_BLOBS, PlacedFeature(
                 registries.getOrThrow(NetherArchivesConfiguredFeatures.MAGNETITE_BLOBS),
                 [
                     CountPlacement.of(10),
@@ -54,7 +54,7 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
         )
 
         entries.add(
-            NetherArchivesPlacedFeatures.MAGNETITE_DELTA, PlacedFeature(
+            NetherArchivesPlacements.MAGNETITE_DELTA, PlacedFeature(
                 registries.getOrThrow(NetherArchivesConfiguredFeatures.MAGNETITE_DELTA),
                 [
                     CountOnEveryLayerPlacement.of(20),
@@ -64,7 +64,7 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
         )
 
         entries.add(
-            NetherArchivesPlacedFeatures.BASALT_GEYSER, PlacedFeature(
+            NetherArchivesPlacements.BASALT_GEYSER, PlacedFeature(
                 registries.getOrThrow(NetherArchivesConfiguredFeatures.BASALT_GEYSER),
                 [
                     CountOnEveryLayerPlacement.of(2),
@@ -81,7 +81,7 @@ class FeatureGenerator(output: FabricPackOutput, registriesFuture: CompletableFu
         )
 
         entries.add(
-            NetherArchivesPlacedFeatures.BASALT_GEYSER_SUBMERGED, PlacedFeature(
+            NetherArchivesPlacements.BASALT_GEYSER_SUBMERGED, PlacedFeature(
                 registries.getOrThrow(NetherArchivesConfiguredFeatures.BASALT_GEYSER),
                 [
                     CountOnEveryLayerPlacement.of(4),

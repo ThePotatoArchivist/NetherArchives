@@ -7,11 +7,11 @@ import net.minecraft.resources.Identifier
 import net.minecraft.sounds.SoundEvent
 
 object NetherArchivesSounds {
-    val BLAZE_FIRE_IGNITE = register("block.blaze_fire.ignite")
-    val BLAZE_LANTERN_THROW = register("entity.blaze_lantern.throw")
-    val BLAZE_LANTERN_SHATTER = register("entity.blaze_lantern.shatter")
-    val BASALT_OAR_PADDLE = register("item.basalt_oar.paddle")
-    val BASALT_OAR_PADDLE_LAVA = register("item.basalt_oar.paddle.lava")
+    @JvmField val BLAZE_FIRE_IGNITE = register("block.blaze_fire.ignite")
+    @JvmField val BLAZE_LANTERN_THROW = register("entity.blaze_lantern.throw")
+    @JvmField val BLAZE_LANTERN_SHATTER = register("entity.blaze_lantern.shatter")
+    @JvmField val BASALT_OAR_PADDLE = register("item.basalt_oar.paddle")
+    @JvmField val BASALT_OAR_PADDLE_LAVA = register("item.basalt_oar.paddle.lava")
 
     private fun register(path: String) = register(NetherArchives.id(path))
 

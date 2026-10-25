@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceKey
 object NetherArchivesConfiguredFeatures {
     private fun create(path: String) = ResourceKey.create(Registries.CONFIGURED_FEATURE, NetherArchives.id(path))
 
-    val BASALT_GEYSER = create("basalt_geyser")
-    val MAGNETITE_BLOBS = create("magnetite_blobs")
-    val MAGNETITE_DELTA = create("magnetite_delta")
+    @JvmField val BASALT_GEYSER = create("basalt_geyser")
+    @JvmField val MAGNETITE_BLOBS = create("magnetite_blobs")
+    @JvmField val MAGNETITE_DELTA = create("magnetite_delta")
 }

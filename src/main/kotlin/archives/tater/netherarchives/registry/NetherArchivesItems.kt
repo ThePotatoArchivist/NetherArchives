@@ -155,6 +155,7 @@ object NetherArchivesItems {
 
     const val CREATIVE_TAB_TRANSLATION = "itemGroup.netherarchives.nether_archives"
 
+    @JvmField
     val CREATIVE_TAB: CreativeModeTab = Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,
         NetherArchives.id("nether_archives"),

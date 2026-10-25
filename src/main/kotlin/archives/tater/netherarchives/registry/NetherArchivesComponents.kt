@@ -15,6 +15,7 @@ object NetherArchivesComponents {
         networkSynchronized(McUnit.STREAM_CODEC)
     }
 
+    @JvmField
     val SKIS = registerUnit("skis")
 
     fun init() {}

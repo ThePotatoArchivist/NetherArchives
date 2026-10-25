@@ -25,7 +25,7 @@ object NetherArchivesBlockEntities {
         )
 
     @JvmField
-    val BLAZE_TORCH_ENTITY =
+    val BLAZE_TORCH =
         register(
             "blaze_torch",
             ::BlazeTorchBlockEntity,
@@ -34,7 +34,7 @@ object NetherArchivesBlockEntities {
         )
 
     @JvmField
-    val BASALT_GEYSER_ENTITY = register(
+    val BASALT_GEYSER = register(
         "basalt_geyser",
         ::BasaltGeyserBlockEntity,
         NetherArchivesBlocks.BASALT_GEYSER,

@@ -95,7 +95,7 @@ open class BasaltGeyserBlock(settings: Properties) : DirectionalBlock(settings),
         type: BlockEntityType<T>
     ): BlockEntityTicker<T>? {
         @Suppress("UNCHECKED_CAST")
-        return if (type == NetherArchivesBlockEntities.BASALT_GEYSER_ENTITY) Companion as BlockEntityTicker<T> else null
+        return if (type == NetherArchivesBlockEntities.BASALT_GEYSER) Companion as BlockEntityTicker<T> else null
     }
 
     companion object : BlockEntityTicker<BasaltGeyserBlockEntity> {
